@@ -7,6 +7,7 @@
 
 const { app, BrowserWindow, Tray, Menu, dialog, clipboard, shell } = require("electron");
 const path = require("path");
+const fs = require("fs");
 const stage = require("./server.js");
 
 const PORT = Number(process.env.PORT) || 8080;
@@ -30,7 +31,37 @@ function reveal() {
   win.focus();
 }
 
+// Put the launcher on the Desktop the first time this machine runs the app.
+// Guarded by a marker rather than a file-exists check, so deleting the icon
+// on purpose makes it stay deleted.
+function ensureShortcuts() {
+  if (process.platform !== "win32") return;
+  const marker = path.join(app.getPath("userData"), "shortcuts-created");
+  if (fs.existsSync(marker)) return;
+
+  const opts = {
+    target: process.execPath,
+    args: ".",
+    cwd: __dirname,
+    icon: path.join(__dirname, "icon.ico"),
+    iconIndex: 0,
+    description: "SPro Countdown - stage timer"
+  };
+
+  for (const spot of [app.getPath("desktop"), __dirname]) {
+    try {
+      shell.writeShortcutLink(path.join(spot, "SPro Countdown.lnk"), "create", opts);
+    } catch (e) {}
+  }
+
+  try {
+    fs.mkdirSync(path.dirname(marker), { recursive: true });
+    fs.writeFileSync(marker, new Date().toISOString());
+  } catch (e) {}
+}
+
 function boot() {
+  ensureShortcuts();
   stage.start({
     port: PORT,
     onReady: function (handle) {
