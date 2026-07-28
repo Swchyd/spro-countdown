@@ -514,6 +514,134 @@
   #stageWrap.full #labelZone { padding-top: max(2cqh, env(safe-area-inset-top)); }
   #stageWrap.full #clock { top: max(2cqh, env(safe-area-inset-top)); }
 
+  /* ---------- standalone chrome (iPad drives itself) ---------- */
+  #soloOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    display: none;
+    pointer-events: none;
+  }
+  #soloOverlay.on { display: block; }
+  #soloOverlay > * { pointer-events: auto; }
+
+  #controls.floating {
+    position: fixed;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    flex-wrap: nowrap;
+    background: rgba(22,26,34,.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: .35;
+    transition: opacity .25s;
+  }
+  #controls.floating:hover,
+  #soloOverlay.paused #controls.floating { opacity: 1; }
+
+  #soloExit {
+    position: fixed;
+    top: max(10px, env(safe-area-inset-top));
+    left: 14px;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: rgba(22,26,34,.88);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 14px;
+    font-weight: 600;
+    opacity: .35;
+    transition: opacity .25s;
+  }
+  #soloExit:hover, #soloOverlay.paused #soloExit { opacity: 1; }
+
+  #pausedBadge {
+    position: fixed;
+    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 86px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(22,26,34,.88);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 18px;
+    display: none;
+  }
+  #soloOverlay.paused #pausedBadge { display: block; }
+
+  #drawer {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translate(100%, -50%);
+    transition: transform .3s ease;
+    display: flex;
+  }
+  #drawer.open { transform: translate(0, -50%); }
+  #drawerTab {
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 72px;
+    background: rgba(22,26,34,.88);
+    border: 1px solid var(--line);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    color: var(--ink-dim);
+    font-size: 22px;
+    opacity: .35;
+    transition: opacity .25s;
+  }
+  #drawerTab:hover, #drawer.open #drawerTab, #soloOverlay.paused #drawerTab { opacity: 1; }
+  #drawerBody {
+    width: 300px;
+    max-height: 84vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-right: none;
+    border-radius: var(--radius) 0 0 var(--radius);
+    padding: 12px;
+  }
+  #drawerBody .op-grid { max-width: none; gap: 12px; }
+
+  /* the drawer is narrower than the media query can see */
+  .op-grid.stacked { grid-template-columns: 1fr; }
+
+  /* ---------- edit the title straight off the stage ---------- */
+  #labelEdit {
+    display: none;
+    width: 92%;
+    max-height: 100%;
+    font-size: min(8.5cqw, 11cqh);
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.15;
+    background: var(--panel);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: .05em .2em;
+    font-family: inherit;
+    resize: none;
+    overflow-y: auto;
+  }
+  #labelZone.editing #labelText { display: none; }
+  #labelZone.editing #labelEdit { display: block; }
+  #stage.swapped #labelEdit { font-size: min(5.8cqw, 10cqh); letter-spacing: .08em; }
+  body.solo-mode #labelText { cursor: pointer; }
+
   /* ---------- display device chrome ---------- */
   #dispBar {
     position: fixed;
@@ -696,6 +824,7 @@
 
     <button type="button" class="mode-btn" id="pickOp">Operator</button>
     <button type="button" class="mode-btn" id="pickDisp">Display</button>
+    <button type="button" class="mode-btn" id="pickSolo">Standalone</button>
 
     <div id="setupClock">00:00:00</div>
   </div>
@@ -830,13 +959,26 @@
 <!-- ============ the mirrored stage (moved into preview or fullscreen) ============ -->
 <div id="stageWrap" class="stage-wrap" style="display:none">
   <div id="stage">
-    <div id="labelZone"><div id="labelText"></div></div>
+    <div id="labelZone">
+      <div id="labelText"></div>
+      <textarea id="labelEdit" rows="1" autocomplete="off" aria-label="Edit title"></textarea>
+    </div>
     <div id="timeZone"><div id="timeText">10:00</div></div>
     <div id="clock">00:00:00</div>
     <div id="standby">
       <div class="big">Standing by</div>
       <div class="sub" id="standbySub"></div>
     </div>
+  </div>
+</div>
+
+<!-- ============ standalone chrome, laid over the fullscreen stage ============ -->
+<div id="soloOverlay">
+  <button type="button" id="soloExit">✕ Exit</button>
+  <div id="pausedBadge">Paused</div>
+  <div id="drawer">
+    <button type="button" id="drawerTab" aria-label="Settings">‹</button>
+    <div id="drawerBody"></div>
   </div>
 </div>
 
@@ -1153,6 +1295,7 @@ if ("serviceWorker" in navigator) {
 
   // ---- operator side ----
   function broadcast() {
+    if (role === "solo") return;   // nothing to talk to
     if (LOCAL) { pushLocal(); return; }
     var msg = JSON.stringify({ t: "s", d: snapshot() });
     conns.forEach(function (c) {
@@ -1336,6 +1479,7 @@ if ("serviceWorker" in navigator) {
 
   function goMenu() {
     closeLink();
+    if (document.body.classList.contains("solo-mode")) leaveSolo();
     role = "";
     linkState = "";
     document.body.classList.remove("display-mode");
@@ -1349,8 +1493,20 @@ if ("serviceWorker" in navigator) {
     role = "op";
     show("setup");
     renderSetup();
+    applyTransportUI();
     if (LOCAL) hostLocal();
     else hostRoom(cfg.room || randomRoom(), false);
+  });
+
+  // Standalone needs no link at all — one device does everything.
+  $("pickSolo").addEventListener("click", function () {
+    role = "solo";
+    closeLink();
+    setLink("", "");
+    show("setup");
+    renderSetup();
+    $("roomRow").hidden = true;
+    $("urlRow").hidden = true;
   });
 
   // On a local network there is nothing to pair — the server already knows
@@ -1647,14 +1803,19 @@ if ("serviceWorker" in navigator) {
   //  Operator: the console
   // ============================================================
   var opLabelInput = $("opLabelInput");
-  var previewBox = $("previewBox");
+  var previewBox = $("previewBox"), opBody = $("opBody");
   var playBtn = $("playBtn"), flashBtn = $("flashBtn");
   var nextMin = $("nextMin"), nextSec = $("nextSec");
+  var controlsEl = $("controls"), opGrid = document.querySelector(".op-grid");
+  var soloOverlay = $("soloOverlay"), drawer = $("drawer");
+  var drawerTab = $("drawerTab"), drawerBody = $("drawerBody");
+  var labelZone = $("labelZone"), labelEdit = $("labelEdit");
 
   function commit() {
     renderStage();
     playBtn.textContent = T.playing ? "❚❚" : "▶";
     flashBtn.classList.toggle("on", !!T.flashing);
+    soloOverlay.classList.toggle("paused", !T.playing);
     broadcast();
   }
 
@@ -1704,18 +1865,97 @@ if ("serviceWorker" in navigator) {
     nextMin.value = cfg.minutes;
     nextSec.value = pad2(cfg.seconds);
 
-    show("opScreen");
-    mountStage(previewBox, false);
+    if (role === "solo") {
+      enterSolo();
+    } else {
+      show("opScreen");
+      mountStage(previewBox, false);
+    }
     armTimer((cfg.minutes * 60 + cfg.seconds) * 1000, true);
   });
 
-  $("opExit").addEventListener("click", function () {
+  function stopTimer() {
     T.live = false;
     T.playing = false;
     T.flashing = false;
     commit();
     show("setup");
     renderSetup();
+  }
+
+  $("opExit").addEventListener("click", stopTimer);
+
+  // ---- standalone: the controls and settings panels move onto the stage ----
+  function enterSolo() {
+    document.body.classList.add("solo-mode");
+    show("");
+    stageWrap.classList.add("full");
+    mountStage(stageWrap, true);
+    controlsEl.classList.add("floating");
+    soloOverlay.appendChild(controlsEl);
+    opGrid.classList.add("stacked");
+    drawerBody.appendChild(opGrid);
+    setDrawer(false);
+    soloOverlay.classList.add("on");
+    requestWakeLock();
+  }
+
+  function leaveSolo() {
+    setDrawer(false);
+    soloOverlay.classList.remove("on");
+    document.body.classList.remove("solo-mode");
+    controlsEl.classList.remove("floating");
+    opGrid.classList.remove("stacked");
+    labelZone.classList.remove("editing");
+    stageWrap.classList.remove("full");
+    stageWrap.style.display = "none";
+    opBody.appendChild(controlsEl);   // restores previewBox / controls / grid
+    opBody.appendChild(opGrid);
+    releaseWakeLock();
+  }
+
+  $("soloExit").addEventListener("click", function () {
+    leaveSolo();
+    stopTimer();
+  });
+
+  function setDrawer(open) {
+    drawer.classList.toggle("open", open);
+    drawerTab.textContent = open ? "›" : "‹";
+  }
+
+  drawerTab.addEventListener("click", function (e) {
+    e.stopPropagation();
+    setDrawer(!drawer.classList.contains("open"));
+  });
+
+  // ---- tap the title on stage to retype it, timer keeps running ----
+  function growLabelEdit() {
+    labelEdit.style.height = "auto";
+    labelEdit.style.height = labelEdit.scrollHeight + "px";
+  }
+
+  labelZone.addEventListener("click", function (e) {
+    if (!document.body.classList.contains("solo-mode")) return;
+    if (labelZone.classList.contains("editing")) return;
+    e.stopPropagation();
+    labelEdit.value = T.label;
+    labelZone.classList.add("editing");
+    growLabelEdit();
+    labelEdit.focus();
+    labelEdit.select();
+  });
+
+  labelEdit.addEventListener("input", growLabelEdit);
+  labelEdit.addEventListener("blur", function () {
+    var v = labelEdit.value.trim();   // clearing it removes the title from stage
+    labelZone.classList.remove("editing");
+    saveToBank(v);
+    setLabel(v);
+  });
+  labelEdit.addEventListener("keydown", function (e) {
+    e.stopPropagation();              // Enter adds a line; tap outside to finish
+    if (e.key === "Escape") { labelEdit.value = T.label; labelEdit.blur(); }
   });
 
   $("restartBtn").addEventListener("click", function () { armTimer(T.totalMs, false); });
@@ -1757,6 +1997,7 @@ if ("serviceWorker" in navigator) {
     persist();
     renderSetup();
     armTimer((cfg.minutes * 60 + cfg.seconds) * 1000, true);
+    setDrawer(false);
   });
 
   // ----- wake lock (keeps the screen on while the timer runs) -----
@@ -1771,14 +2012,16 @@ if ("serviceWorker" in navigator) {
     if (wakeLock) { wakeLock.release().catch(function () {}); wakeLock = null; }
   }
   document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible" && document.body.classList.contains("display-mode")) {
-      requestWakeLock();
-    }
+    var onStage = document.body.classList.contains("display-mode") ||
+                  document.body.classList.contains("solo-mode");
+    if (document.visibilityState === "visible" && onStage) requestWakeLock();
   });
 
   // ----- keyboard shortcuts on the operator console -----
   document.addEventListener("keydown", function (e) {
-    if (role !== "op" || !$("opScreen").classList.contains("on")) return;
+    var driving = (role === "op" && $("opScreen").classList.contains("on")) ||
+                  (role === "solo" && document.body.classList.contains("solo-mode"));
+    if (!driving) return;
     var tag = (e.target.tagName || "").toLowerCase();
     if (tag === "input" || tag === "textarea") return;
     if (e.code === "Space") { e.preventDefault(); setPlaying(!T.playing); }
