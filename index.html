@@ -363,12 +363,18 @@
 
   /* ---------- the stage (mirrored on both devices) ---------- */
   .stage-wrap {
-    container-type: size;
     position: relative;
     background: var(--stage);
     overflow: hidden;
   }
+  /* Everything on the stage is sized from --sw/--sh, which JS sets to the
+     real pixel size of this box. Container query units would be tidier, but
+     where they are unsupported they silently fall back to the viewport — the
+     preview then renders at full-screen scale inside a small box and is
+     clipped away to nothing. These custom properties work everywhere. */
   #stage {
+    --sw: 100vw;
+    --sh: 100vh;
     position: absolute;
     inset: 0;
     display: flex;
@@ -379,11 +385,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2cqh 4cqw 0;
+    padding: calc(var(--sh) * .02) calc(var(--sw) * .04) 0;
     min-height: 0;
   }
   #labelText {
-    font-size: min(8.5cqw, 11cqh);
+    font-size: min(calc(var(--sw) * .085), calc(var(--sh) * .11));
     font-weight: 800;
     letter-spacing: .14em;
     text-transform: uppercase;
@@ -395,10 +401,10 @@
   }
   #clock {
     position: absolute;
-    top: 2cqh;
-    right: 2.5cqw;
+    top: calc(var(--sh) * .02);
+    right: calc(var(--sw) * .025);
     z-index: 3;
-    font-size: min(5cqw, 6.5cqh);
+    font-size: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
     font-weight: 700;
     font-variant-numeric: tabular-nums;
     letter-spacing: .04em;
@@ -413,7 +419,7 @@
     min-height: 0;
   }
   #timeText {
-    font-size: min(29cqw, 54cqh);
+    font-size: min(calc(var(--sw) * .29), calc(var(--sh) * .54));
     font-weight: 800;
     font-variant-numeric: tabular-nums;
     letter-spacing: .02em;
@@ -435,12 +441,15 @@
   #stage.swapped #timeZone {
     order: -1;
     flex: 0 0 25%;
-    padding-top: 2cqh;
+    padding-top: calc(var(--sh) * .02);
   }
-  #stage.swapped #timeText { font-size: min(10cqw, 15cqh); }
-  #stage.swapped #labelZone { flex: 1 1 75%; padding: 0 4cqw; }
+  #stage.swapped #timeText {
+    font-size: min(calc(var(--sw) * .10), calc(var(--sh) * .15));
+  }
+  #stage.swapped #labelZone { flex: 1 1 75%; padding: 0 calc(var(--sw) * .04); }
   #stage.swapped #labelText {
-    font-size: min(5.8cqw, 10cqh); /* ~20 uppercase characters per line */
+    /* ~20 uppercase characters per line */
+    font-size: min(calc(var(--sw) * .058), calc(var(--sh) * .10));
     letter-spacing: .08em;
   }
 
@@ -453,19 +462,23 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 2cqh;
+    gap: calc(var(--sh) * .02);
     text-align: center;
-    padding: 4cqw;
+    padding: calc(var(--sw) * .04);
   }
   #stage.standby #standby { display: flex; }
   #standby .big {
-    font-size: min(6cqw, 9cqh);
+    font-size: min(calc(var(--sw) * .06), calc(var(--sh) * .09));
     font-weight: 800;
     letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--ink-dim);
   }
-  #standby .sub { font-size: min(2.6cqw, 4cqh); color: #5B6474; letter-spacing: .1em; }
+  #standby .sub {
+    font-size: min(calc(var(--sw) * .026), calc(var(--sh) * .04));
+    color: #5B6474;
+    letter-spacing: .1em;
+  }
 
   /* attention flash (red/blue) */
   #stage.flashing { animation: flashRB .8s linear infinite; }
@@ -485,8 +498,8 @@
     height: 100%;
     z-index: 50;
   }
-  #stageWrap.full #labelZone { padding-top: max(2cqh, env(safe-area-inset-top)); }
-  #stageWrap.full #clock { top: max(2cqh, env(safe-area-inset-top)); }
+  #stageWrap.full #labelZone { padding-top: max(calc(var(--sh) * .02), env(safe-area-inset-top)); }
+  #stageWrap.full #clock { top: max(calc(var(--sh) * .02), env(safe-area-inset-top)); }
 
   /* ---------- standalone chrome (iPad drives itself) ---------- */
   #soloOverlay {
@@ -596,7 +609,7 @@
     display: none;
     width: 92%;
     max-height: 100%;
-    font-size: min(8.5cqw, 11cqh);
+    font-size: min(calc(var(--sw) * .085), calc(var(--sh) * .11));
     font-weight: 800;
     letter-spacing: .14em;
     text-transform: uppercase;
@@ -613,7 +626,10 @@
   }
   #labelZone.editing #labelText { display: none; }
   #labelZone.editing #labelEdit { display: block; }
-  #stage.swapped #labelEdit { font-size: min(5.8cqw, 10cqh); letter-spacing: .08em; }
+  #stage.swapped #labelEdit {
+    font-size: min(calc(var(--sw) * .058), calc(var(--sh) * .10));
+    letter-spacing: .08em;
+  }
   body.solo-mode #labelText { cursor: pointer; }
 
   /* ---------- display device chrome ---------- */
@@ -1114,11 +1130,31 @@ if ("serviceWorker" in navigator) {
   var opClockEl = $("opClock");
   var setupClockEl = $("setupClock"), setupClockEl2 = $("setupClock2");
 
+  // Feeds the stage its own pixel size, which every font size is derived
+  // from. Nothing here depends on container query support.
+  function measureStage() {
+    var r = stage.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    stage.style.setProperty("--sw", r.width + "px");
+    stage.style.setProperty("--sh", r.height + "px");
+  }
+
+  if (window.ResizeObserver) {
+    new ResizeObserver(measureStage).observe(stage);
+  } else {
+    window.addEventListener("resize", measureStage);
+    window.addEventListener("orientationchange", measureStage);
+    setInterval(measureStage, 1000);
+  }
+
   function mountStage(parent, full) {
     parent.appendChild(stage);
     stageWrap.style.display = full ? "" : "none";
     shownTime = ""; shownClock = ""; shownLabel = null;
+    measureStage();
     renderStage();
+    // The box may still be settling right after a screen swap.
+    setTimeout(measureStage, 60);
   }
 
   // ============================================================
