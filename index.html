@@ -708,10 +708,16 @@
     gap: 16px;
     padding: 16px 16px 32px;
   }
+  /* #opBody is a flex column, and a flex item shrinks before the column
+     scrolls. On a short screen that squeezed the preview down to nothing
+     instead of letting the page scroll, so pin the heights. */
+  #previewBox, #controls, .op-grid { flex: 0 0 auto; }
+
   #previewBox {
     width: 100%;
     max-width: 620px;
     aspect-ratio: 4 / 3;
+    min-height: 180px;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     box-shadow: 0 10px 30px rgba(0,0,0,.45);
