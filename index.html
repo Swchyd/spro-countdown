@@ -1273,7 +1273,7 @@ if ("serviceWorker" in navigator) {
 
   function openLocalStream(asRole, onState) {
     if (localES) { try { localES.close(); } catch (e) {} }
-    var es = new EventSource("events?role=" + asRole);
+    var es = new EventSource("events?role=" + asRole + "&room=" + roomCode);
     localES = es;
 
     es.onopen = function () {
@@ -1294,8 +1294,13 @@ if ("serviceWorker" in navigator) {
     };
   }
 
-  function hostLocal() {
+  function hostLocal(code) {
     closeLink();
+    roomCode = code;
+    cfg.room = code;
+    persist();
+    $("roomCode").textContent = code;
+    $("opRoomCode").textContent = code;
     setLink("connecting", "Starting…");
     // Deadlines are written in server time, so the operator syncs too — this
     // stays correct even if the console is opened from a second machine.
@@ -1305,9 +1310,12 @@ if ("serviceWorker" in navigator) {
     openLocalStream("op", null);
   }
 
-  function joinLocal() {
+  function joinLocal(code) {
     closeLink();
-    setLink("connecting");
+    roomCode = code;
+    cfg.join = code;
+    persist();
+    setLink("connecting", "Connecting to room " + code + "…");
     burstSync(5);
     clearInterval(localSyncTimer);
     localSyncTimer = setInterval(sampleServerClock, 30000);
@@ -1315,7 +1323,7 @@ if ("serviceWorker" in navigator) {
   }
 
   function pushLocal() {
-    fetch("state", {
+    fetch("state?room=" + roomCode, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(snapshot())
@@ -1544,8 +1552,9 @@ if ("serviceWorker" in navigator) {
     renderSetup();
     $("setupHeading").textContent = "Operator";
     applyTransportUI();
-    if (LOCAL) hostLocal();
-    else hostRoom(cfg.room || randomRoom());
+    var code = cfg.room || randomRoom();
+    if (LOCAL) hostLocal(code);
+    else hostRoom(code);
   });
 
   // Standalone needs no link at all — one device does everything.
@@ -1562,11 +1571,8 @@ if ("serviceWorker" in navigator) {
     $("opLink1").hidden = true;
   });
 
-  // On a local network there is nothing to pair — the server already knows
-  // both devices, so the display goes straight to the stage.
   $("pickDisp").addEventListener("click", function () {
     role = "display";
-    if (LOCAL) { enterDisplay(); joinLocal(); return; }
     show("join");
     $("codeInput").value = cfg.join || "";
     setLink("", "");
@@ -1601,7 +1607,8 @@ if ("serviceWorker" in navigator) {
       return;
     }
     enterDisplay();
-    joinRoom(code);
+    if (LOCAL) joinLocal(code);
+    else joinRoom(code);
   });
 
   $("dispExit").addEventListener("click", goMenu);
@@ -1650,7 +1657,9 @@ if ("serviceWorker" in navigator) {
 
   $("newRoomBtn").addEventListener("click", function () {
     idRetries = 0;
-    hostRoom(randomRoom());
+    var code = randomRoom();
+    if (LOCAL) hostLocal(code);
+    else hostRoom(code);
   });
 
   // ============================================================
@@ -2111,11 +2120,10 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("beforeunload", destroyPeer);
 
   // ----- boot -----
-  // The room code only means anything to the PeerJS transport; on a local
-  // network the server already knows both devices. Addresses for the iPad
-  // live in the tray menu rather than on this screen.
+  // Both transports pair by room code now, so the operator screen looks the
+  // same either way. Addresses for the iPad live in the tray menu.
   function applyTransportUI() {
-    $("roomRow").hidden = LOCAL;
+    $("roomRow").hidden = false;
     $("opLink1").hidden = false;
   }
 

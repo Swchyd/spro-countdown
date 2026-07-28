@@ -1,8 +1,8 @@
 {
   "name": "spro-countdown",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": true,
-  "description": "Stage countdown timer — operator, display and standalone roles",
+  "description": "Stage countdown timer - operator, display and standalone roles",
   "author": "Swchyd",
   "main": "main.js",
   "scripts": {

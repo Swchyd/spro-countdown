@@ -36,8 +36,17 @@ var ASSETS = {
 };
 
 function createStage(conf) {
-  var state = null;    // last snapshot pushed by the operator
-  var clients = [];    // open SSE responses, each { res, role }
+  // Keyed by room code, exactly like the PeerJS path — so the operator always
+  // shows a code and a display always joins one, whichever transport is in
+  // play. It also keeps two operators on one network from colliding.
+  var rooms = Object.create(null);
+
+  function roomOf(req) {
+    var code = String(req || "").replace(/\D/g, "").slice(0, 4);
+    if (code.length !== 4) code = "0000";
+    if (!rooms[code]) rooms[code] = { state: null, clients: [] };
+    return rooms[code];
+  }
 
   function addresses() {
     var out = [];
@@ -57,14 +66,17 @@ function createStage(conf) {
     return out;
   }
 
-  function displayCount() {
-    return clients.filter(function (c) { return c.role === "display"; }).length;
+  function fanout(room, obj) {
+    var frame = "data: " + JSON.stringify(obj) + "\n\n";
+    room.clients.forEach(function (c) {
+      try { c.res.write(frame); } catch (e) {}
+    });
   }
 
-  function fanout(obj) {
-    var frame = "data: " + JSON.stringify(obj) + "\n\n";
-    clients.forEach(function (c) {
-      try { c.res.write(frame); } catch (e) {}
+  function announcePeers(room) {
+    fanout(room, {
+      t: "peers",
+      n: room.clients.filter(function (c) { return c.role === "display"; }).length
     });
   }
 
@@ -120,17 +132,18 @@ function createStage(conf) {
 
     // ---- operator pushes a state snapshot --------------------------------
     if (p === "/state" && req.method === "POST") {
+      var target = roomOf(u.searchParams.get("room"));
       var body = "";
       req.on("data", function (c) {
         body += c;
         if (body.length > 65536) req.destroy();
       });
       req.on("end", function () {
-        try { state = JSON.parse(body); } catch (e) {
+        try { target.state = JSON.parse(body); } catch (e) {
           res.writeHead(400).end();
           return;
         }
-        fanout({ t: "state", d: state });
+        fanout(target, { t: "state", d: target.state });
         res.writeHead(204).end();
       });
       return;
@@ -146,11 +159,14 @@ function createStage(conf) {
       });
       res.write("retry: 1000\n\n");
 
+      var room = roomOf(u.searchParams.get("room"));
       var client = { res: res, role: u.searchParams.get("role") === "op" ? "op" : "display" };
-      clients.push(client);
+      room.clients.push(client);
 
-      if (state) res.write("data: " + JSON.stringify({ t: "state", d: state }) + "\n\n");
-      fanout({ t: "peers", n: displayCount() });
+      if (room.state) {
+        res.write("data: " + JSON.stringify({ t: "state", d: room.state }) + "\n\n");
+      }
+      announcePeers(room);
 
       // Sleeping Wi-Fi radios drop idle sockets; this keeps the pipe warm.
       var keep = setInterval(function () {
@@ -159,8 +175,8 @@ function createStage(conf) {
 
       var gone = function () {
         clearInterval(keep);
-        clients = clients.filter(function (c) { return c !== client; });
-        fanout({ t: "peers", n: displayCount() });
+        room.clients = room.clients.filter(function (c) { return c !== client; });
+        announcePeers(room);
       };
       req.on("close", gone);
       req.on("error", gone);
