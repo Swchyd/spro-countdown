@@ -23,6 +23,7 @@
     --accent: #E3A44A;
     --bright: #FFD60A;
     --over: #E25C4A;
+    --ok: #4ADE80;
     --radius: 14px;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -48,12 +49,13 @@
     outline-offset: 2px;
   }
 
-  /* ---------- Setup screen ---------- */
-  #setup {
-    height: 100%;
+  /* ---------- screens ---------- */
+  .screen { display: none; height: 100%; }
+  .screen.on { display: flex; }
+
+  #menu, #setup, #join {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    display: flex;
     justify-content: center;
     padding: 24px 16px 48px;
   }
@@ -63,7 +65,9 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
+    margin: auto 0;
   }
+  #setup .card, #menu .card { margin: 0; }
   .brand {
     display: flex;
     align-items: baseline;
@@ -83,7 +87,6 @@
     align-self: center;
     box-shadow: 0 0 8px rgba(226,92,74,.7);
   }
-  .brand span { color: var(--ink-dim); font-size: 13px; }
   label.field-label {
     display: block;
     font-size: 11px;
@@ -93,7 +96,26 @@
     color: var(--ink-dim);
     margin-bottom: 7px;
   }
-  #labelInput {
+  /* ---------- mode menu ---------- */
+  .mode-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 18px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    transition: border-color .2s, background .2s;
+  }
+  .mode-btn:hover { border-color: var(--accent); }
+  .mode-btn:active { background: var(--panel-2); }
+
+  /* ---------- shared form bits ---------- */
+  .textinput {
     width: 100%;
     background: var(--panel);
     border: 1px solid var(--line);
@@ -108,12 +130,11 @@
     resize: none;
     line-height: 1.3;
   }
-  #labelInput::placeholder { color: #5B6474; font-weight: 500; }
+  .textinput::placeholder { color: #5B6474; font-weight: 500; }
 
-  /* ---------- Title bank dropdown ---------- */
   .title-wrap { position: relative; }
-  .title-wrap #labelInput { padding-right: 106px; }
-  #bankToggle, #bankAdd {
+  .title-wrap .textinput { padding-right: 106px; }
+  .bank-toggle, .bank-add {
     position: absolute;
     top: 6px;
     width: 44px;
@@ -124,12 +145,12 @@
     font-size: 16px;
     transition: transform .2s;
   }
-  #bankToggle { right: 6px; }
-  #bankAdd { right: 56px; font-size: 20px; }
-  #bankAdd.saved { color: var(--accent); }
-  #bankToggle:active, #bankAdd:active { background: var(--line); }
-  .title-wrap.open #bankToggle { transform: rotate(180deg); color: var(--accent); }
-  #bankList {
+  .bank-toggle { right: 6px; }
+  .bank-add { right: 56px; font-size: 20px; }
+  .bank-add.saved { color: var(--accent); }
+  .bank-toggle:active, .bank-add:active { background: var(--line); }
+  .title-wrap.open .bank-toggle { transform: rotate(180deg); color: var(--accent); }
+  .bank-list {
     display: none;
     position: absolute;
     top: calc(100% + 6px);
@@ -144,7 +165,7 @@
     box-shadow: 0 12px 32px rgba(0,0,0,.5);
     z-index: 10;
   }
-  .title-wrap.open #bankList { display: block; }
+  .title-wrap.open .bank-list { display: block; }
   .bank-item {
     display: flex;
     align-items: center;
@@ -176,6 +197,7 @@
     min-width: 0;
   }
   .bank-item .pick:active { background: var(--line); }
+  .bank-item .pick.active { color: var(--accent); }
   .bank-item .del {
     flex: 0 0 44px;
     height: 44px;
@@ -192,18 +214,6 @@
     text-align: center;
   }
 
-  /* title bank inside the timer drawer */
-  #drawerBank {
-    max-height: 30vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    background: var(--panel-2);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-  }
-  #drawerBank .pick { font-size: 13px; padding: 11px 12px; }
-  #drawerBank .pick.active { color: var(--accent); }
-  #drawerBank .bank-empty { padding: 12px; font-size: 12px; }
   .settings {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -248,17 +258,14 @@
     text-align: center;
     padding: 2px 0;
   }
-  .stepper .val input:focus {
-    background: var(--panel-2);
-  }
+  .stepper .val input:focus { background: var(--panel-2); }
   .stepper .val small {
     display: block;
     font-size: 11px;
     font-weight: 500;
     color: var(--ink-dim);
   }
-  #startBtn {
-    margin-top: 4px;
+  .primary {
     padding: 18px;
     border-radius: var(--radius);
     background: var(--accent);
@@ -267,7 +274,17 @@
     font-weight: 700;
     letter-spacing: .02em;
   }
-  #startBtn:active { filter: brightness(.92); }
+  .primary:active { filter: brightness(.92); }
+  .ghost {
+    padding: 14px;
+    border-radius: var(--radius);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .ghost:active { background: var(--panel-2); }
   #setupClock {
     text-align: center;
     font-size: 36px;
@@ -277,25 +294,93 @@
     color: var(--bright);
   }
 
-  /* ---------- Timer screen ---------- */
-  #timerScreen {
-    position: fixed;
-    inset: 0;
-    display: none;
-    flex-direction: column;
-    background: var(--stage);
+  /* ---------- room code chip ---------- */
+  .room-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
   }
-  #timerScreen.active { display: flex; }
+  .room-row .rl {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .room-code {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: .28em;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    margin-right: auto;
+    padding-left: 4px;
+  }
+  .room-row .ghost { padding: 9px 12px; font-size: 12px; }
 
+  .link-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+  }
+  .link-status .led {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--ink-dim);
+    flex: 0 0 auto;
+    transition: background .25s, box-shadow .25s;
+  }
+  .link-status.live .led { background: var(--ok); box-shadow: 0 0 8px rgba(74,222,128,.7); }
+  .link-status.warn .led { background: var(--accent); box-shadow: 0 0 8px rgba(227,164,74,.7); }
+  .link-status.down .led { background: var(--over); box-shadow: 0 0 8px rgba(226,92,74,.7); }
+
+  /* ---------- join screen (iPad) ---------- */
+  #codeInput {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink);
+    padding: 18px 16px;
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: .38em;
+    text-indent: .38em;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-family: inherit;
+  }
+  #codeInput::placeholder { color: #3A4252; letter-spacing: .38em; }
+
+  /* ---------- the stage (mirrored on both devices) ---------- */
+  .stage-wrap {
+    container-type: size;
+    position: relative;
+    background: var(--stage);
+    overflow: hidden;
+  }
+  #stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
   #labelZone {
     flex: 0 0 25%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: max(10px, env(safe-area-inset-top)) 16px 0;
+    padding: 2cqh 4cqw 0;
+    min-height: 0;
   }
   #labelText {
-    font-size: min(8.5vw, 11vh);
+    font-size: min(8.5cqw, 11cqh);
     font-weight: 800;
     letter-spacing: .14em;
     text-transform: uppercase;
@@ -304,44 +389,18 @@
     text-wrap: balance;
     white-space: pre-line;
     line-height: 1.15;
-    cursor: pointer;
-    border-bottom: 3px dashed transparent;
   }
-  #timerScreen.paused #labelText { border-bottom-color: var(--line); }
-  #labelEdit {
-    display: none;
-    width: 92%;
-    max-height: 100%;
-    font-size: min(8.5vw, 11vh);
-    font-weight: 800;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--ink);
-    text-align: center;
-    line-height: 1.15;
-    background: var(--panel);
-    border: 2px solid var(--accent);
-    border-radius: var(--radius);
-    padding: .05em .2em;
-    font-family: inherit;
-    resize: none;
-    overflow-y: auto;
-  }
-  #labelZone.editing #labelText { display: none; }
-  #labelZone.editing #labelEdit { display: block; }
-
   #clock {
     position: absolute;
-    top: max(10px, env(safe-area-inset-top));
-    right: 14px;
+    top: 2cqh;
+    right: 2.5cqw;
     z-index: 3;
-    font-size: min(5vw, 6.5vh);
+    font-size: min(5cqw, 6.5cqh);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
     letter-spacing: .04em;
     color: var(--bright);
   }
-
   #timeZone {
     flex: 1 1 75%;
     display: flex;
@@ -351,7 +410,7 @@
     min-height: 0;
   }
   #timeText {
-    font-size: min(29vw, 54vh);
+    font-size: min(29cqw, 54cqh);
     font-weight: 800;
     font-variant-numeric: tabular-nums;
     letter-spacing: .02em;
@@ -363,75 +422,187 @@
     color: var(--over);
     animation: overPulse 1s ease-in-out infinite;
   }
-  #timeText.over .plus { font-size: .55em; vertical-align: .28em; margin-right: .04em; }
-  @keyframes overPulse {
-    50% { opacity: .55; }
-  }
+  #timeText .plus { font-size: .55em; vertical-align: .28em; margin-right: .04em; }
+  @keyframes overPulse { 50% { opacity: .55; } }
   @media (prefers-reduced-motion: reduce) {
     #timeText.over { animation: none; }
   }
 
   /* swapped: title fills the middle, countdown small on top */
-  #timerScreen.swapped #timeZone {
+  #stage.swapped #timeZone {
     order: -1;
     flex: 0 0 25%;
-    padding-top: max(10px, env(safe-area-inset-top));
+    padding-top: 2cqh;
   }
-  #timerScreen.swapped #timeText { font-size: min(10vw, 15vh); }
-  #timerScreen.swapped #labelZone {
-    flex: 1 1 75%;
-    padding: 0 16px;
-  }
-  #timerScreen.swapped #labelText,
-  #timerScreen.swapped #labelEdit {
-    font-size: min(5.8vw, 10vh); /* ~20 uppercase characters per line */
+  #stage.swapped #timeText { font-size: min(10cqw, 15cqh); }
+  #stage.swapped #labelZone { flex: 1 1 75%; padding: 0 4cqw; }
+  #stage.swapped #labelText {
+    font-size: min(5.8cqw, 10cqh); /* ~20 uppercase characters per line */
     letter-spacing: .08em;
   }
 
-  #pausedBadge {
+  /* standby (display connected, operator has not started yet) */
+  #stage.standby #labelZone, #stage.standby #timeZone { visibility: hidden; }
+  #standby {
     position: absolute;
-    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 82px);
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: .16em;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2cqh;
+    text-align: center;
+    padding: 4cqw;
+  }
+  #stage.standby #standby { display: flex; }
+  #standby .big {
+    font-size: min(6cqw, 9cqh);
+    font-weight: 800;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--ink-dim);
+  }
+  #standby .sub { font-size: min(2.6cqw, 4cqh); color: #5B6474; letter-spacing: .1em; }
+
+  /* attention flash (red/blue) */
+  #stage.flashing { animation: flashRB .8s linear infinite; }
+  @keyframes flashRB {
+    0%, 49% { background-color: #B30E1E; }
+    50%, 100% { background-color: #1440C4; }
+  }
+  #stage.flashing #timeText, #stage.flashing #timeText.over {
+    color: #FFFFFF;
+    animation: none;
+  }
+
+  /* stage as the whole screen (display device / fullscreen) */
+  #stageWrap.full {
+    position: fixed;
+    inset: 0;
+    height: 100%;
+    z-index: 50;
+  }
+  #stageWrap.full #labelZone { padding-top: max(2cqh, env(safe-area-inset-top)); }
+  #stageWrap.full #clock { top: max(2cqh, env(safe-area-inset-top)); }
+
+  /* ---------- display device chrome ---------- */
+  #dispBar {
+    position: fixed;
+    top: max(10px, env(safe-area-inset-top));
+    left: 14px;
+    z-index: 60;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
     background: rgba(22,26,34,.88);
     border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 7px 18px;
-    display: none;
+    font-size: 12.5px;
+    opacity: .28;
+    transition: opacity .25s;
   }
-  #timerScreen.paused #pausedBadge { display: block; }
+  #dispBar:hover, #dispBar.alert { opacity: 1; }
+  body.display-mode #dispBar { display: flex; }
+  #dispExit {
+    color: var(--ink-dim);
+    font-size: 13px;
+    font-weight: 600;
+    padding-left: 10px;
+    margin-left: 2px;
+    border-left: 1px solid var(--line);
+  }
 
-  #controls {
-    position: absolute;
-    bottom: max(12px, env(safe-area-inset-bottom));
-    left: 50%;
-    transform: translateX(-50%);
+  /* ---------- operator console ---------- */
+  #opScreen { flex-direction: column; padding: 0; }
+  #opHead {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  #opHead .brand { margin: 0; }
+  #opHead .spacer { flex: 1 1 auto; }
+  #opHead .chip {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(22,26,34,.88);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+  }
+  #opHead .chip b {
+    color: var(--accent);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    font-variant-numeric: tabular-nums;
+  }
+  #opClock {
+    font-size: 32px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .04em;
+    color: var(--bright);
+  }
+  #opExit {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #opExit:active { background: var(--panel-2); color: var(--over); }
+
+  #opBody {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 16px 32px;
+  }
+  #previewBox {
+    width: 100%;
+    max-width: 620px;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,.45);
+  }
+  #controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 999px;
     padding: 8px;
-    z-index: 3;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    opacity: .35;
-    transition: opacity .25s;
   }
-  #controls:hover, #timerScreen.paused #controls { opacity: 1; }
   #controls button {
-    min-width: 56px;
-    height: 56px;
+    min-width: 60px;
+    height: 60px;
     border-radius: 999px;
     background: transparent;
     color: var(--ink);
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     display: flex;
     flex-direction: column;
@@ -451,117 +622,78 @@
   #playBtn {
     background: var(--accent) !important;
     color: #1A1408 !important;
-    min-width: 68px !important;
-    font-size: 24px !important;
+    min-width: 76px !important;
+    font-size: 26px !important;
   }
-  #exitBtn {
-    position: absolute;
-    top: max(10px, env(safe-area-inset-top));
-    left: 14px;
-    z-index: 3;
-    height: 44px;
-    padding: 0 16px;
-    border-radius: 999px;
-    background: rgba(22,26,34,.88);
-    border: 1px solid var(--line);
-    color: var(--ink-dim);
-    font-size: 14px;
-    font-weight: 600;
-    opacity: .35;
-    transition: opacity .25s;
-  }
-  #exitBtn:hover, #timerScreen.paused #exitBtn { opacity: 1; }
+  #flashBtn.on { background: var(--over); color: #fff; }
+  #flashBtn.on small { color: rgba(255,255,255,.8); }
 
-  /* ---------- Attention flash (red/blue) ---------- */
-  #timerScreen.flashing { animation: flashRB .8s linear infinite; }
-  @keyframes flashRB {
-    0%, 49% { background-color: #B30E1E; }
-    50%, 100% { background-color: #1440C4; }
+  .op-grid {
+    width: 100%;
+    max-width: 620px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: start;
   }
-  #timerScreen.flashing #timeText,
-  #timerScreen.flashing #timeText.over { color: #FFFFFF; animation: none; }
-  #timerScreen.flashing #flashBtn {
-    background: var(--over);
-    color: #fff;
-  }
-  #timerScreen.flashing #flashBtn small { color: rgba(255,255,255,.8); }
-
-  /* ---------- Slide-in time drawer ---------- */
-  #drawer {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translate(100%, -50%);
-    transition: transform .3s ease;
-    z-index: 4;
-  }
-  #drawer.open { transform: translate(0, -50%); }
-  #drawerTab {
-    position: absolute;
-    left: -40px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 72px;
-    background: rgba(22,26,34,.88);
-    border: 1px solid var(--line);
-    border-right: none;
-    border-radius: 12px 0 0 12px;
-    color: var(--ink-dim);
-    font-size: 22px;
-    opacity: .35;
-    transition: opacity .25s;
-  }
-  #drawerTab:hover, #drawer.open #drawerTab, #timerScreen.paused #drawerTab { opacity: 1; }
-  #drawerBody {
-    width: 240px;
+  @media (max-width: 620px) { .op-grid { grid-template-columns: 1fr; } }
+  .op-panel {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-right: none;
-    border-radius: var(--radius) 0 0 var(--radius);
+    border-radius: var(--radius);
     padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
+    min-width: 0;
   }
-  #drawerBody .stepper button {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    background: var(--panel-2);
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  #drawerBody .stepper button:active { background: var(--line); }
-  #applyTimeBtn {
-    padding: 13px;
-    border-radius: 10px;
-    background: var(--accent);
-    color: #1A1408;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: .04em;
-  }
-  #applyTimeBtn:active { filter: brightness(.92); }
+  .op-panel .textinput { font-size: 16px; padding: 12px 14px; }
+  .op-panel .title-wrap .textinput { padding-right: 100px; }
+  .op-panel .bank-toggle, .op-panel .bank-add { top: 4px; width: 42px; height: 42px; }
+  .op-panel .bank-add { right: 52px; }
+  .op-panel .stepper button { width: 40px; height: 40px; font-size: 18px; }
+  #applyTimeBtn { padding: 13px; font-size: 14px; letter-spacing: .04em; }
 </style>
 </head>
 <body>
 
-<div id="setup">
+<!-- ============ mode menu ============ -->
+<div id="menu" class="screen">
   <div class="card">
     <div class="brand">
       <div class="dot"></div>
       <h1>SPro Countdown</h1>
-      <span>countdown &amp; overtime</span>
     </div>
+
+    <button type="button" class="mode-btn" id="pickOp">Operator</button>
+    <button type="button" class="mode-btn" id="pickDisp">Display</button>
+
+    <div id="setupClock">00:00:00</div>
+  </div>
+</div>
+
+<!-- ============ operator setup ============ -->
+<div id="setup" class="screen">
+  <div class="card">
+    <div class="brand">
+      <div class="dot"></div>
+      <h1>Operator</h1>
+    </div>
+
+    <div class="room-row">
+      <span class="rl">Room</span>
+      <span class="room-code" id="roomCode">····</span>
+      <button type="button" class="ghost" id="newRoomBtn">New code</button>
+    </div>
+    <div class="link-status" id="opLink1"><span class="led"></span><span class="txt"></span></div>
 
     <div>
       <label class="field-label" for="labelInput">Title</label>
       <div class="title-wrap" id="titleWrap">
-        <textarea id="labelInput" rows="2" placeholder="ADD A TITLE…" autocomplete="off"></textarea>
-        <button type="button" id="bankAdd" aria-label="Save title to list">＋</button>
-        <button type="button" id="bankToggle" aria-label="Saved titles">▾</button>
-        <div id="bankList"></div>
+        <textarea id="labelInput" class="textinput" rows="2" placeholder="ADD A TITLE…" autocomplete="off"></textarea>
+        <button type="button" class="bank-add" id="bankAdd" aria-label="Save title to list">＋</button>
+        <button type="button" class="bank-toggle" id="bankToggle" aria-label="Saved titles">▾</button>
+        <div class="bank-list" id="bankList"></div>
       </div>
     </div>
 
@@ -584,51 +716,103 @@
       </div>
     </div>
 
-    <button id="startBtn" type="button">START TIMER</button>
-    <div id="setupClock">00:00:00</div>
+    <button id="startBtn" class="primary" type="button">START TIMER</button>
+    <button id="setupBack" class="ghost" type="button">‹ Back</button>
+    <div id="setupClock2">00:00:00</div>
   </div>
 </div>
 
-<div id="timerScreen">
-  <div id="labelZone">
-    <div id="labelText"></div>
-    <textarea id="labelEdit" rows="1" autocomplete="off" aria-label="Edit title"></textarea>
+<!-- ============ display join ============ -->
+<div id="join" class="screen">
+  <div class="card">
+    <div class="brand">
+      <div class="dot"></div>
+      <h1>Display</h1>
+    </div>
+
+    <div>
+      <label class="field-label" for="codeInput">Room code</label>
+      <input id="codeInput" type="text" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off" aria-label="Room code">
+    </div>
+
+    <div class="link-status" id="joinLink"><span class="led"></span><span class="txt"></span></div>
+
+    <button id="joinBtn" class="primary" type="button">CONNECT</button>
+    <button id="joinBack" class="ghost" type="button">‹ Back</button>
   </div>
-  <div id="timeZone">
-    <div id="timeText">10:00</div>
+</div>
+
+<!-- ============ operator console ============ -->
+<div id="opScreen" class="screen">
+  <div id="opHead">
+    <button type="button" id="opExit" aria-label="End session">✕</button>
+    <div class="brand"><div class="dot"></div><h1>SPro Countdown</h1></div>
+    <div class="chip"><span>ROOM</span><b id="opRoomCode">····</b></div>
+    <div class="link-status" id="opLink2"><span class="led"></span><span class="txt"></span></div>
+    <div class="spacer"></div>
+    <div id="opClock">00:00:00</div>
   </div>
-  <div id="pausedBadge">Paused</div>
-  <button id="exitBtn" type="button">✕ Exit</button>
-  <div id="clock">00:00:00</div>
-  <div id="controls">
-    <button type="button" id="restartBtn">⟲<small>Restart</small></button>
-    <button type="button" id="minusBtn">−1<small>min</small></button>
-    <button type="button" id="playBtn" aria-label="Play or pause">▶</button>
-    <button type="button" id="plusBtn">+1<small>min</small></button>
-    <button type="button" id="swapBtn">⇅<small>Swap</small></button>
-    <button type="button" id="flashBtn">⚡<small>Flash</small></button>
-  </div>
-  <div id="drawer">
-    <button type="button" id="drawerTab" aria-label="Set new time">‹</button>
-    <div id="drawerBody">
-      <label class="field-label">Title</label>
-      <div id="drawerBank"></div>
-      <label class="field-label">Set New Time</label>
-      <div class="stepper">
-        <button type="button" data-nstep="min" data-d="-1" aria-label="Fewer minutes">−</button>
-        <div class="val"><input id="nextMin" type="text" inputmode="numeric" value="10" autocomplete="off" aria-label="Minutes"><small>min</small></div>
-        <button type="button" data-nstep="min" data-d="1" aria-label="More minutes">+</button>
+
+  <div id="opBody">
+    <div id="previewBox" class="stage-wrap"></div>
+
+    <div id="controls">
+      <button type="button" id="restartBtn">⟲<small>Restart</small></button>
+      <button type="button" id="minusBtn">−1<small>min</small></button>
+      <button type="button" id="playBtn" aria-label="Play or pause">▶</button>
+      <button type="button" id="plusBtn">+1<small>min</small></button>
+      <button type="button" id="swapBtn">⇅<small>Swap</small></button>
+      <button type="button" id="flashBtn">⚡<small>Flash</small></button>
+    </div>
+
+    <div class="op-grid">
+      <div class="op-panel">
+        <label class="field-label" for="opLabelInput">Title</label>
+        <div class="title-wrap" id="opTitleWrap">
+          <textarea id="opLabelInput" class="textinput" rows="2" placeholder="NO TITLE" autocomplete="off"></textarea>
+          <button type="button" class="bank-add" id="opBankAdd" aria-label="Save title to list">＋</button>
+          <button type="button" class="bank-toggle" id="opBankToggle" aria-label="Saved titles">▾</button>
+          <div class="bank-list" id="opBankList"></div>
+        </div>
       </div>
-      <div class="stepper">
-        <button type="button" data-nstep="sec" data-d="-1" aria-label="Fewer seconds">−</button>
-        <div class="val"><input id="nextSec" type="text" inputmode="numeric" value="00" autocomplete="off" aria-label="Seconds"><small>sec</small></div>
-        <button type="button" data-nstep="sec" data-d="1" aria-label="More seconds">+</button>
+
+      <div class="op-panel">
+        <label class="field-label">New time</label>
+        <div class="stepper">
+          <button type="button" data-nstep="min" data-d="-1" aria-label="Fewer minutes">−</button>
+          <div class="val"><input id="nextMin" type="text" inputmode="numeric" value="10" autocomplete="off" aria-label="Minutes"><small>min</small></div>
+          <button type="button" data-nstep="min" data-d="1" aria-label="More minutes">+</button>
+        </div>
+        <div class="stepper">
+          <button type="button" data-nstep="sec" data-d="-1" aria-label="Fewer seconds">−</button>
+          <div class="val"><input id="nextSec" type="text" inputmode="numeric" value="00" autocomplete="off" aria-label="Seconds"><small>sec</small></div>
+          <button type="button" data-nstep="sec" data-d="1" aria-label="More seconds">+</button>
+        </div>
+        <button type="button" id="applyTimeBtn" class="primary">APPLY &amp; RESTART</button>
       </div>
-      <button type="button" id="applyTimeBtn">APPLY &amp; RESTART</button>
     </div>
   </div>
 </div>
 
+<!-- ============ the mirrored stage (moved into preview or fullscreen) ============ -->
+<div id="stageWrap" class="stage-wrap" style="display:none">
+  <div id="stage">
+    <div id="labelZone"><div id="labelText"></div></div>
+    <div id="timeZone"><div id="timeText">10:00</div></div>
+    <div id="clock">00:00:00</div>
+    <div id="standby">
+      <div class="big">Standing by</div>
+      <div class="sub" id="standbySub"></div>
+    </div>
+  </div>
+</div>
+
+<div id="dispBar">
+  <span class="link-status" id="dispLink"><span class="led"></span><span class="txt"></span></span>
+  <button type="button" id="dispExit" aria-label="Exit">✕</button>
+</div>
+
+<script src="peerjs.min.js"></script>
 <script>
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js").catch(function () {});
@@ -638,51 +822,439 @@ if ("serviceWorker" in navigator) {
   "use strict";
 
   var LS_KEY = "stagetimer-v1";
+  var PEER_PREFIX = "spro-countdown-v2-";
 
-  var state = {
+  // ----- persisted config -----
+  var cfg = {
     label: "",
     minutes: 10,
     seconds: 0,
-    bank: []              // saved titles, most recent first
+    bank: [],        // saved titles, in the order they were added
+    room: "",        // operator's own room code
+    join: ""         // last room code this display joined
   };
 
-  // ----- persistence -----
   try {
     var saved = JSON.parse(localStorage.getItem(LS_KEY) || "null");
     if (saved && typeof saved === "object") {
-      for (var k in state) if (k in saved) state[k] = saved[k];
+      for (var k in cfg) if (k in saved) cfg[k] = saved[k];
     }
   } catch (e) {}
-  if (!Array.isArray(state.bank)) state.bank = [];
+  if (!Array.isArray(cfg.bank)) cfg.bank = [];
 
   function persist() {
-    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+    try { localStorage.setItem(LS_KEY, JSON.stringify(cfg)); } catch (e) {}
   }
 
-  // ----- elements -----
   var $ = function (id) { return document.getElementById(id); };
-  var setup = $("setup"), screen = $("timerScreen");
-  var labelInput = $("labelInput"), labelText = $("labelText");
-  var labelZone = $("labelZone"), labelEdit = $("labelEdit");
-  var timeText = $("timeText"), timeZone = $("timeZone");
-  var clockEl = $("clock");
-  var playBtn = $("playBtn");
 
-  // ----- setup screen wiring -----
-  labelInput.value = state.label;
+  // ============================================================
+  //  Timer model
+  //
+  //  The operator owns the truth. What travels over the wire is not a
+  //  ticking number but a deadline: `endAt` is the wall-clock instant the
+  //  countdown reaches zero. Each device renders from its own clock, so the
+  //  display never waits on a packet to update — and it keeps counting
+  //  correctly even if the link drops mid-service.
+  // ============================================================
+  var T = {
+    live: false,        // timer screen is showing (vs. standby)
+    playing: false,
+    totalMs: 600000,    // configured duration, used by Restart
+    remainMs: 600000,   // authoritative while paused
+    endAt: 0,           // authoritative while playing (epoch ms)
+    label: "",
+    swapped: false,
+    flashing: false
+  };
 
-  var minVal = $("minVal"), secVal = $("secVal");
+  var clockOffset = 0;  // display: add to Date.now() to match the operator
+  function now() { return Date.now() + clockOffset; }
+
+  function remainingMs() {
+    return T.playing ? T.endAt - now() : T.remainMs;
+  }
+
+  function snapshot() {
+    return {
+      live: T.live, playing: T.playing, totalMs: T.totalMs,
+      remainMs: T.remainMs, endAt: T.endAt, label: T.label,
+      swapped: T.swapped, flashing: T.flashing
+    };
+  }
+
+  // ============================================================
+  //  Stage rendering — identical code drives the iPad and the preview
+  // ============================================================
+  var stageWrap = $("stageWrap"), stage = $("stage");
+  var labelText = $("labelText"), timeText = $("timeText"), clockEl = $("clock");
+  var shownTime = "", shownClock = "", shownLabel = null;
+
+  function fmt(totalSec) {
+    var m = Math.floor(totalSec / 60);
+    var s = totalSec % 60;
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+  function nowHMS() {
+    var d = new Date();
+    return pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds());
+  }
+
+  function renderStage() {
+    stage.classList.toggle("swapped", !!T.swapped);
+    stage.classList.toggle("flashing", !!T.flashing);
+    stage.classList.toggle("standby", !T.live);
+
+    if (T.label !== shownLabel) {
+      shownLabel = T.label;
+      labelText.textContent = T.label;
+    }
+
+    var remain = remainingMs();
+    var over = remain <= 0;
+    var txt = over ? "+" + fmt(Math.floor(-remain / 1000)) : fmt(Math.ceil(remain / 1000));
+    if (txt !== shownTime) {
+      shownTime = txt;
+      if (over) {
+        timeText.innerHTML = '<span class="plus">−</span>' + txt.slice(1);
+        timeText.classList.add("over");
+      } else {
+        timeText.textContent = txt;
+        timeText.classList.remove("over");
+      }
+    }
+
+    var t = nowHMS();
+    if (t !== shownClock) {
+      shownClock = t;
+      clockEl.textContent = t;
+      if (opClockEl) opClockEl.textContent = t;
+      if (setupClockEl) setupClockEl.textContent = t;
+      if (setupClockEl2) setupClockEl2.textContent = t;
+    }
+  }
+
+  // 4 ticks/s is plenty for a once-per-second display and lets the CPU idle.
+  setInterval(renderStage, 250);
+
+  var opClockEl = $("opClock");
+  var setupClockEl = $("setupClock"), setupClockEl2 = $("setupClock2");
+
+  function mountStage(parent, full) {
+    parent.appendChild(stage);
+    stageWrap.style.display = full ? "" : "none";
+    shownTime = ""; shownClock = ""; shownLabel = null;
+    renderStage();
+  }
+
+  // ============================================================
+  //  Link — PeerJS data channel, operator hosts, displays connect in
+  // ============================================================
+  var peer = null;
+  var conns = [];        // operator: every connected display
+  var dispConn = null;   // display: the one link home
+  var role = "";         // "op" | "display"
+  var linkState = "";    // "", "connecting", "ready", "linked", "lost", "error"
+  var linkNote = "";
+  var retryTimer = 0;
+
+  function setLink(stateName, note) {
+    linkState = stateName;
+    linkNote = note || "";
+    renderLink();
+  }
+
+  function renderLink() {
+    var cls = "", txt = linkNote;
+    if (role === "op") {
+      if (linkState === "ready") {
+        var n = conns.length;
+        cls = n ? "live" : "warn";
+        txt = n ? (n + (n === 1 ? " display connected" : " displays connected")) : "Waiting for a display";
+      } else if (linkState === "connecting") { cls = "warn"; txt = txt || "Connecting…"; }
+      else if (linkState === "error") { cls = "down"; }
+    } else {
+      if (linkState === "linked") { cls = "live"; txt = txt || "Connected"; }
+      else if (linkState === "connecting") { cls = "warn"; txt = txt || "Connecting…"; }
+      else if (linkState === "lost") { cls = "down"; txt = txt || "Link lost — timer still running"; }
+      else if (linkState === "error") { cls = "down"; }
+    }
+    ["opLink1", "opLink2", "joinLink", "dispLink"].forEach(function (id) {
+      var el = $(id);
+      if (!el) return;
+      el.className = "link-status" + (cls ? " " + cls : "");
+      el.querySelector(".txt").textContent = txt;
+    });
+    var bar = $("dispBar");
+    if (bar) bar.classList.toggle("alert", cls === "down" || cls === "warn");
+    if (role === "display") $("standbySub").textContent = txt;
+  }
+
+  function havePeerJS() { return typeof Peer !== "undefined"; }
+
+  function randomRoom() {
+    return String(Math.floor(1000 + Math.random() * 9000));
+  }
+
+  function destroyPeer() {
+    clearTimeout(retryTimer);
+    conns = [];
+    dispConn = null;
+    if (peer) { try { peer.destroy(); } catch (e) {} peer = null; }
+  }
+
+  // ---- operator side ----
+  function broadcast() {
+    var msg = JSON.stringify({ t: "s", d: snapshot() });
+    conns.forEach(function (c) {
+      if (c.open) { try { c.send(msg); } catch (e) {} }
+    });
+  }
+
+  function hostRoom(code, isRetry) {
+    destroyPeer();
+    if (!havePeerJS()) {
+      setLink("error", "Connection module failed to load — reload the page.");
+      return;
+    }
+    cfg.room = code;
+    persist();
+    $("roomCode").textContent = code;
+    $("opRoomCode").textContent = code;
+    setLink("connecting", "Connecting…");
+
+    peer = new Peer(PEER_PREFIX + code, { debug: 0 });
+
+    peer.on("open", function () { setLink("ready"); });
+
+    peer.on("connection", function (conn) {
+      conn.on("open", function () {
+        conns.push(conn);
+        renderLink();
+        try { conn.send(JSON.stringify({ t: "s", d: snapshot() })); } catch (e) {}
+      });
+      conn.on("data", function (raw) {
+        var m;
+        try { m = JSON.parse(raw); } catch (e) { return; }
+        if (m.t === "ping") {
+          try { conn.send(JSON.stringify({ t: "pong", c: m.c, s: Date.now() })); } catch (e) {}
+        } else if (m.t === "hello") {
+          try { conn.send(JSON.stringify({ t: "s", d: snapshot() })); } catch (e) {}
+        }
+      });
+      var drop = function () {
+        conns = conns.filter(function (c) { return c !== conn; });
+        renderLink();
+      };
+      conn.on("close", drop);
+      conn.on("error", drop);
+    });
+
+    peer.on("error", function (err) {
+      if (err && err.type === "unavailable-id") {
+        // Someone (possibly a stale session of ours) holds this code.
+        if (isRetry) {
+          setLink("error", "Code " + code + " is already in use — pick a new code.");
+        } else {
+          retryTimer = setTimeout(function () { hostRoom(code, true); }, 1500);
+          setLink("connecting", "Reclaiming code…");
+        }
+      } else if (err && err.type === "network") {
+        setLink("error", "Signalling server unreachable — retrying…");
+        retryTimer = setTimeout(function () { hostRoom(code, false); }, 4000);
+      } else if (err && err.type !== "peer-unavailable") {
+        setLink("error", "Connection error: " + (err.type || "unknown"));
+      }
+    });
+
+    peer.on("disconnected", function () {
+      if (peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} }
+    });
+  }
+
+  // ---- display side ----
+  var pingTimer = 0, syncSamples = [];
+
+  function sendPing() {
+    if (!dispConn || !dispConn.open) return;
+    try { dispConn.send(JSON.stringify({ t: "ping", c: Date.now() })); } catch (e) {}
+  }
+
+  function absorbPong(m) {
+    var rtt = Date.now() - m.c;
+    // Standard NTP estimate: assume the trip is symmetric.
+    var offset = m.s + rtt / 2 - Date.now();
+    syncSamples.push({ rtt: rtt, offset: offset });
+    if (syncSamples.length > 8) syncSamples.shift();
+    // The lowest-latency sample is the least distorted one.
+    var best = syncSamples[0];
+    syncSamples.forEach(function (s) { if (s.rtt < best.rtt) best = s; });
+    clockOffset = best.offset;
+  }
+
+  function joinRoom(code) {
+    destroyPeer();
+    if (!havePeerJS()) {
+      setLink("error", "Connection module failed to load — reload the page.");
+      return;
+    }
+    cfg.join = code;
+    persist();
+    setLink("connecting", "Connecting to room " + code + "…");
+
+    peer = new Peer({ debug: 0 });
+
+    peer.on("open", function () { openConn(code); });
+
+    peer.on("error", function (err) {
+      if (err && err.type === "peer-unavailable") {
+        setLink("connecting", "Room " + code + " is not live yet — waiting…");
+        clearTimeout(retryTimer);
+        retryTimer = setTimeout(function () { openConn(code); }, 3000);
+      } else if (err && err.type === "network") {
+        setLink("lost", "Signalling server unreachable — retrying…");
+        clearTimeout(retryTimer);
+        retryTimer = setTimeout(function () { joinRoom(code); }, 4000);
+      } else if (err) {
+        setLink("error", "Connection error: " + (err.type || "unknown"));
+      }
+    });
+
+    peer.on("disconnected", function () {
+      if (peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} }
+    });
+  }
+
+  function openConn(code) {
+    if (!peer || peer.destroyed) return;
+    var conn = peer.connect(PEER_PREFIX + code, { reliable: true });
+    if (!conn) return;
+    dispConn = conn;
+
+    conn.on("open", function () {
+      setLink("linked");
+      syncSamples = [];
+      try { conn.send(JSON.stringify({ t: "hello" })); } catch (e) {}
+      // A quick burst first, then a slow keep-honest ping.
+      var burst = 0;
+      var b = setInterval(function () {
+        sendPing();
+        if (++burst >= 5) clearInterval(b);
+      }, 200);
+      clearInterval(pingTimer);
+      pingTimer = setInterval(sendPing, 20000);
+    });
+
+    conn.on("data", function (raw) {
+      var m;
+      try { m = JSON.parse(raw); } catch (e) { return; }
+      if (m.t === "s") {
+        var d = m.d;
+        for (var key in d) if (key in T) T[key] = d[key];
+        renderStage();
+      } else if (m.t === "pong") {
+        absorbPong(m);
+      }
+    });
+
+    var lost = function () {
+      // A stale link closing must not tear down the one that replaced it.
+      if (dispConn !== conn) return;
+      clearInterval(pingTimer);
+      dispConn = null;
+      setLink("lost");
+      clearTimeout(retryTimer);
+      retryTimer = setTimeout(function () { openConn(code); }, 2000);
+    };
+    conn.on("close", lost);
+    conn.on("error", lost);
+  }
+
+  // ============================================================
+  //  Screens
+  // ============================================================
+  function show(id) {
+    ["menu", "setup", "join", "opScreen"].forEach(function (s) {
+      $(s).classList.toggle("on", s === id);
+    });
+  }
+
+  function goMenu() {
+    destroyPeer();
+    clearInterval(pingTimer);
+    role = "";
+    linkState = "";
+    document.body.classList.remove("display-mode");
+    stageWrap.classList.remove("full");
+    stageWrap.style.display = "none";
+    releaseWakeLock();
+    show("menu");
+  }
+
+  $("pickOp").addEventListener("click", function () {
+    role = "op";
+    show("setup");
+    renderSetup();
+    hostRoom(cfg.room || randomRoom(), false);
+  });
+
+  $("pickDisp").addEventListener("click", function () {
+    role = "display";
+    show("join");
+    $("codeInput").value = cfg.join || "";
+    setLink("", "");
+  });
+
+  $("setupBack").addEventListener("click", goMenu);
+  $("joinBack").addEventListener("click", goMenu);
+
+  // ----- display: join flow -----
+  var codeInput = $("codeInput");
+  codeInput.addEventListener("input", function () {
+    var v = codeInput.value.replace(/\D/g, "").slice(0, 4);
+    if (v !== codeInput.value) codeInput.value = v;
+  });
+  codeInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") $("joinBtn").click();
+  });
+
+  $("joinBtn").addEventListener("click", function () {
+    var code = codeInput.value.replace(/\D/g, "");
+    if (code.length !== 4) {
+      setLink("error", "Enter the 4-digit room code.");
+      return;
+    }
+    document.body.classList.add("display-mode");
+    stageWrap.classList.add("full");
+    show("");
+    mountStage(stageWrap, true);
+    T.live = false;
+    requestWakeLock();
+    joinRoom(code);
+  });
+
+  $("dispExit").addEventListener("click", goMenu);
+
+  // ============================================================
+  //  Operator: setup screen
+  // ============================================================
+  var labelInput = $("labelInput"), minVal = $("minVal"), secVal = $("secVal");
+  labelInput.value = cfg.label;
 
   function renderSetup() {
-    minVal.value = state.minutes;
-    secVal.value = (state.seconds < 10 ? "0" : "") + state.seconds;
+    minVal.value = cfg.minutes;
+    secVal.value = pad2(cfg.seconds);
+    labelInput.value = cfg.label;
   }
 
   document.querySelectorAll("[data-step]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var d = Number(btn.dataset.d);
-      if (btn.dataset.step === "min") state.minutes = Math.min(180, Math.max(0, state.minutes + d));
-      if (btn.dataset.step === "sec") state.seconds = (state.seconds + d * 5 + 60) % 60;
+      if (btn.dataset.step === "min") cfg.minutes = Math.min(180, Math.max(0, cfg.minutes + d));
+      if (btn.dataset.step === "sec") cfg.seconds = (cfg.seconds + d * 5 + 60) % 60;
       renderSetup(); persist();
     });
   });
@@ -700,81 +1272,38 @@ if ("serviceWorker" in navigator) {
       if (e.key === "Enter") input.blur();
     });
   }
-  wireTypedValue(minVal, 180, function (v) { state.minutes = v; });
-  wireTypedValue(secVal, 59, function (v) { state.seconds = v; });
+  wireTypedValue(minVal, 180, function (v) { cfg.minutes = v; });
+  wireTypedValue(secVal, 59, function (v) { cfg.seconds = v; });
 
   labelInput.addEventListener("input", function () {
-    state.label = labelInput.value;
+    cfg.label = labelInput.value;
     persist();
   });
 
-  renderSetup();
+  $("newRoomBtn").addEventListener("click", function () {
+    hostRoom(randomRoom(), false);
+  });
 
-  // ----- title bank dropdown -----
-  var titleWrap = $("titleWrap"), bankToggle = $("bankToggle"), bankList = $("bankList");
-
+  // ============================================================
+  //  Title bank — shared by the setup screen and the console
+  // ============================================================
   function saveToBank(title) {
-    title = title.trim();
+    title = (title || "").trim();
     if (!title) return;
-    state.bank = state.bank.filter(function (t) {
-      return t.toUpperCase() !== title.toUpperCase();
+    // Already saved? Leave it where it sits — the order the operator
+    // built by hand matters more than recency.
+    var exists = cfg.bank.some(function (t) {
+      return t.toUpperCase() === title.toUpperCase();
     });
-    state.bank.unshift(title);
-    if (state.bank.length > 30) state.bank.length = 30;
+    if (exists) return;
+    cfg.bank.push(title);                          // newest goes to the bottom
+    if (cfg.bank.length > 30) cfg.bank.shift();    // cap drops the oldest
     persist();
-  }
-
-  function renderBank() {
-    bankList.textContent = "";
-    if (!state.bank.length) {
-      var empty = document.createElement("div");
-      empty.className = "bank-empty";
-      empty.textContent = "Belum ada judul tersimpan — judul otomatis disimpan saat timer dimulai.";
-      bankList.appendChild(empty);
-      return;
-    }
-    state.bank.forEach(function (title) {
-      var row = document.createElement("div");
-      row.className = "bank-item";
-      row.dataset.title = title;
-
-      var pick = document.createElement("button");
-      pick.type = "button";
-      pick.className = "pick";
-      pick.textContent = title;
-      pick.addEventListener("click", function () {
-        state.label = title;
-        labelInput.value = title;
-        persist();
-        setBank(false);
-      });
-
-      var del = document.createElement("button");
-      del.type = "button";
-      del.className = "del";
-      del.textContent = "✕";
-      del.setAttribute("aria-label", "Delete saved title");
-      del.addEventListener("click", function (e) {
-        e.stopPropagation();
-        state.bank = state.bank.filter(function (t) { return t !== title; });
-        persist();
-        renderBank();
-      });
-
-      row.appendChild(pick);
-      row.appendChild(del);
-      bankList.appendChild(row);
-    });
-  }
-
-  function setBank(open) {
-    titleWrap.classList.toggle("open", open);
-    if (open) renderBank();
   }
 
   // touch: long-press (0.4 s) a bank row, then drag up/down to reorder
   // mouse: press and drag right away
-  function enableReorder(container) {
+  function enableReorder(container, onDone) {
     var pressTimer = 0, dragRow = null, pendingRow = null, active = false;
     var startY = 0, isMouse = false;
 
@@ -791,8 +1320,8 @@ if ("serviceWorker" in navigator) {
     function onMove(e) {
       if (!active) {
         if (Math.abs(e.clientY - startY) > 8) {
-          if (isMouse) activate();   // mouse drags immediately
-          else { cancelPress(); return; } // touch move = scroll
+          if (isMouse) activate();          // mouse drags immediately
+          else { cancelPress(); return; }   // touch move = scroll
         } else {
           return;
         }
@@ -823,11 +1352,12 @@ if ("serviceWorker" in navigator) {
       dragRow = null;
       pendingRow = null;
       // save the new order as it now stands in the DOM
-      state.bank = Array.prototype.map.call(
+      cfg.bank = Array.prototype.map.call(
         container.querySelectorAll(".bank-item"),
         function (el) { return el.dataset.title; }
       );
       persist();
+      if (onDone) onDone();
       // swallow the click that follows the drop so it doesn't pick a title
       container.addEventListener("click", function (e) {
         e.stopPropagation(); e.preventDefault();
@@ -853,250 +1383,194 @@ if ("serviceWorker" in navigator) {
     }, { passive: false });
   }
 
-  enableReorder(bankList);
+  // wires one title field: textarea + save + dropdown + reorderable list.
+  // opts: { onPick, isActive, closeOnPick }
+  function makeTitleField(wrap, input, list, addBtn, toggleBtn, opts) {
+    function render() {
+      list.textContent = "";
+      if (!cfg.bank.length) {
+        var empty = document.createElement("div");
+        empty.className = "bank-empty";
+        empty.textContent = "No saved titles yet.";
+        list.appendChild(empty);
+        return;
+      }
+      cfg.bank.forEach(function (title) {
+        var row = document.createElement("div");
+        row.className = "bank-item";
+        row.dataset.title = title;
 
-  bankToggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    setBank(!titleWrap.classList.contains("open"));
-  });
+        var pick = document.createElement("button");
+        pick.type = "button";
+        pick.className = "pick" + (opts.isActive && opts.isActive(title) ? " active" : "");
+        pick.textContent = title;
+        pick.addEventListener("click", function (e) {
+          e.stopPropagation();
+          input.value = title;
+          opts.onPick(title);
+          if (opts.closeOnPick) setOpen(false);
+        });
 
-  // save the typed title to the bank right away (no need to start the timer)
-  var bankAdd = $("bankAdd"), bankAddTimer = 0;
-  bankAdd.addEventListener("click", function (e) {
-    e.stopPropagation();
-    if (!labelInput.value.trim()) return;
-    saveToBank(labelInput.value);
-    if (titleWrap.classList.contains("open")) renderBank();
-    bankAdd.textContent = "✓";
-    bankAdd.classList.add("saved");
-    clearTimeout(bankAddTimer);
-    bankAddTimer = setTimeout(function () {
-      bankAdd.textContent = "＋";
-      bankAdd.classList.remove("saved");
-    }, 900);
-  });
+        var del = document.createElement("button");
+        del.type = "button";
+        del.className = "del";
+        del.textContent = "✕";
+        del.setAttribute("aria-label", "Delete saved title");
+        del.addEventListener("click", function (e) {
+          e.stopPropagation();
+          cfg.bank = cfg.bank.filter(function (t) { return t !== title; });
+          persist();
+          render();
+        });
 
-  // tap anywhere else on the setup screen closes the dropdown
-  setup.addEventListener("click", function (e) {
-    if (!titleWrap.contains(e.target)) setBank(false);
-  });
-
-  // ----- timer state -----
-  var running = false;      // timer screen is open
-  var playing = false;      // clock advancing
-  var elapsedMs = 0;        // time spent so far
-  var extraMs = 0;          // live +1/−1 adjustments
-  var lastTick = 0;
-  var timerId = 0;
-  var wakeLock = null;
-  var shownTime = "";       // last rendered strings — skip DOM writes
-  var shownClock = "";      // when nothing changed (battery)
-
-  function totalMs() {
-    return (state.minutes * 60 + state.seconds) * 1000 + extraMs;
-  }
-
-  function fmt(totalSec) {
-    var m = Math.floor(totalSec / 60);
-    var s = totalSec % 60;
-    return m + ":" + (s < 10 ? "0" : "") + s;
-  }
-
-  function renderTimer() {
-    var remainMs = totalMs() - elapsedMs;
-    var over = remainMs <= 0;
-    var txt = over ? "+" + fmt(Math.floor(-remainMs / 1000)) : fmt(Math.ceil(remainMs / 1000));
-    if (txt === shownTime) return;
-    shownTime = txt;
-    if (over) {
-      timeText.innerHTML = '<span class="plus">−</span>' + txt.slice(1);
-      timeText.classList.add("over");
-    } else {
-      timeText.textContent = txt;
-      timeText.classList.remove("over");
+        row.appendChild(pick);
+        row.appendChild(del);
+        list.appendChild(row);
+      });
     }
-  }
 
-  function pad2(n) { return (n < 10 ? "0" : "") + n; }
-
-  function nowHMS() {
-    var d = new Date();
-    return pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds());
-  }
-
-  function renderClock() {
-    var t = nowHMS();
-    if (t === shownClock) return;
-    shownClock = t;
-    clockEl.textContent = t;
-  }
-
-  var setupClock = $("setupClock");
-  var shownSetupClock = "";
-  function renderSetupClock() {
-    var t = nowHMS();
-    if (t === shownSetupClock) return;
-    shownSetupClock = t;
-    setupClock.textContent = t;
-  }
-  renderSetupClock();
-  setInterval(renderSetupClock, 250);
-
-  // 4 ticks/s (instead of a 60–120 fps rAF loop) is plenty for a
-  // once-per-second display and lets the CPU/GPU idle between updates.
-  function tick() {
-    if (!running) return;
-    var now = performance.now();
-    if (playing) {
-      elapsedMs += now - lastTick;
-      renderTimer();
+    function setOpen(open) {
+      wrap.classList.toggle("open", open);
+      if (open) render();
     }
-    lastTick = now;
-    renderClock();
+
+    enableReorder(list, render);
+
+    toggleBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      setOpen(!wrap.classList.contains("open"));
+    });
+
+    // save the typed title to the bank right away (no need to start the timer)
+    var flashTimer = 0;
+    addBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (!input.value.trim()) return;
+      saveToBank(input.value);
+      if (wrap.classList.contains("open")) render();
+      addBtn.textContent = "✓";
+      addBtn.classList.add("saved");
+      clearTimeout(flashTimer);
+      flashTimer = setTimeout(function () {
+        addBtn.textContent = "＋";
+        addBtn.classList.remove("saved");
+      }, 900);
+    });
+
+    return { render: render, setOpen: setOpen };
+  }
+
+  var setupTitle = makeTitleField(
+    $("titleWrap"), labelInput, $("bankList"), $("bankAdd"), $("bankToggle"),
+    {
+      onPick: function (title) { cfg.label = title; persist(); },
+      closeOnPick: true
+    }
+  );
+
+  // The console list stays open after a pick so titles can be flipped
+  // one after another without reopening the dropdown mid-service.
+  var opTitle = makeTitleField(
+    $("opTitleWrap"), $("opLabelInput"), $("opBankList"), $("opBankAdd"), $("opBankToggle"),
+    {
+      onPick: function (title) { setLabel(title); },
+      isActive: function (title) { return title === T.label; }
+    }
+  );
+
+  // tap anywhere else closes an open dropdown
+  document.addEventListener("click", function (e) {
+    if (!$("titleWrap").contains(e.target)) setupTitle.setOpen(false);
+    if (!$("opTitleWrap").contains(e.target)) opTitle.setOpen(false);
+  });
+
+  // ============================================================
+  //  Operator: the console
+  // ============================================================
+  var opLabelInput = $("opLabelInput");
+  var previewBox = $("previewBox");
+  var playBtn = $("playBtn"), flashBtn = $("flashBtn");
+  var nextMin = $("nextMin"), nextSec = $("nextSec");
+
+  function commit() {
+    renderStage();
+    playBtn.textContent = T.playing ? "❚❚" : "▶";
+    flashBtn.classList.toggle("on", !!T.flashing);
+    broadcast();
+  }
+
+  function setLabel(v) {
+    T.label = v;
+    cfg.label = v;
+    persist();
+    if (opLabelInput.value !== v) opLabelInput.value = v;
+    commit();
+    opTitle.render();
   }
 
   function setPlaying(p) {
-    playing = p;
-    screen.classList.toggle("paused", !p);
-    playBtn.textContent = p ? "❚❚" : "▶";
+    if (p === T.playing) return;
+    if (p) T.endAt = Date.now() + T.remainMs;
+    else T.remainMs = T.endAt - Date.now();
+    T.playing = p;
+    commit();
   }
 
-  function enterTimer() {
-    state.label = labelInput.value.trim(); // empty = show no title on stage
-    labelInput.value = state.label;
-    saveToBank(state.label);
-    setBank(false);
+  function adjust(ms) {
+    if (T.playing) T.endAt += ms;
+    else T.remainMs += ms;
+    commit();
+  }
+
+  function armTimer(totalMs, play) {
+    T.totalMs = totalMs;
+    T.remainMs = totalMs;
+    T.endAt = Date.now() + totalMs;
+    T.playing = !!play;
+    commit();
+  }
+
+  $("startBtn").addEventListener("click", function () {
+    cfg.label = labelInput.value.trim();  // empty = show no title on stage
+    labelInput.value = cfg.label;
+    saveToBank(cfg.label);
+    setupTitle.setOpen(false);
     persist();
-    labelText.textContent = state.label;
-    elapsedMs = 0;
-    extraMs = 0;
-    shownTime = "";
-    shownClock = "";
-    renderTimer();
-    renderClock();
-    setup.style.display = "none";
-    screen.classList.remove("swapped");
-    screen.classList.remove("flashing");
-    setDrawer(false);
-    screen.classList.add("active");
-    setPlaying(true);
-    running = true;
-    lastTick = performance.now();
-    timerId = setInterval(tick, 250);
-    requestWakeLock();
-  }
 
-  function exitTimer() {
-    running = false;
-    clearInterval(timerId);
-    releaseWakeLock();
-    screen.classList.remove("active");
-    screen.classList.remove("flashing");
-    setDrawer(false);
-    setup.style.display = "flex";
-  }
+    T.label = cfg.label;
+    T.swapped = false;
+    T.flashing = false;
+    T.live = true;
+    opLabelInput.value = cfg.label;
+    nextMin.value = cfg.minutes;
+    nextSec.value = pad2(cfg.seconds);
 
-  function restart() {
-    elapsedMs = 0;
-    extraMs = 0;
-    renderTimer();
-    setPlaying(false);
-  }
-
-  // ----- wake lock (keeps the screen on while the timer runs) -----
-  function requestWakeLock() {
-    if (!("wakeLock" in navigator)) return;
-    navigator.wakeLock.request("screen").then(function (wl) {
-      wakeLock = wl;
-    }).catch(function () {});
-  }
-  function releaseWakeLock() {
-    if (wakeLock) { wakeLock.release().catch(function () {}); wakeLock = null; }
-  }
-  document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible" && running) requestWakeLock();
+    show("opScreen");
+    mountStage(previewBox, false);
+    armTimer((cfg.minutes * 60 + cfg.seconds) * 1000, true);
   });
 
-  // ----- controls -----
-  $("startBtn").addEventListener("click", enterTimer);
-  $("exitBtn").addEventListener("click", function (e) { e.stopPropagation(); exitTimer(); });
-  $("restartBtn").addEventListener("click", function (e) { e.stopPropagation(); restart(); });
-  playBtn.addEventListener("click", function (e) { e.stopPropagation(); setPlaying(!playing); });
-  $("plusBtn").addEventListener("click", function (e) {
-    e.stopPropagation(); extraMs += 60000; renderTimer();
-  });
-  $("minusBtn").addEventListener("click", function (e) {
-    e.stopPropagation(); extraMs -= 60000; renderTimer();
-  });
-  $("swapBtn").addEventListener("click", function (e) {
-    e.stopPropagation(); screen.classList.toggle("swapped");
-  });
-  document.querySelectorAll("#controls, #exitBtn, #drawer").forEach(function (el) {
-    el.addEventListener("click", function (e) { e.stopPropagation(); });
+  $("opExit").addEventListener("click", function () {
+    T.live = false;
+    T.playing = false;
+    T.flashing = false;
+    commit();
+    show("setup");
+    renderSetup();
   });
 
-  // ----- attention flash (red/blue) -----
-  $("flashBtn").addEventListener("click", function (e) {
-    e.stopPropagation();
-    screen.classList.toggle("flashing");
-  });
+  $("restartBtn").addEventListener("click", function () { armTimer(T.totalMs, false); });
+  $("minusBtn").addEventListener("click", function () { adjust(-60000); });
+  $("plusBtn").addEventListener("click", function () { adjust(60000); });
+  playBtn.addEventListener("click", function () { setPlaying(!T.playing); });
+  $("swapBtn").addEventListener("click", function () { T.swapped = !T.swapped; commit(); });
+  flashBtn.addEventListener("click", function () { T.flashing = !T.flashing; commit(); });
 
-  // ----- slide-in drawer: prepare a new time while the timer keeps running -----
-  var drawer = $("drawer"), drawerTab = $("drawerTab");
-  var nextMin = $("nextMin"), nextSec = $("nextSec");
-
-  function fillDrawer() {
-    nextMin.value = state.minutes;
-    nextSec.value = pad2(state.seconds);
-  }
-
-  // title bank inside the drawer: tap a title to put it on screen right away
-  var drawerBank = $("drawerBank");
-  function renderDrawerBank() {
-    drawerBank.textContent = "";
-    if (!state.bank.length) {
-      var empty = document.createElement("div");
-      empty.className = "bank-empty";
-      empty.textContent = "Belum ada judul tersimpan.";
-      drawerBank.appendChild(empty);
-      return;
-    }
-    state.bank.forEach(function (title) {
-      var row = document.createElement("div");
-      row.className = "bank-item";
-      row.dataset.title = title;
-      var pick = document.createElement("button");
-      pick.type = "button";
-      pick.className = "pick" + (title === state.label ? " active" : "");
-      pick.textContent = title;
-      pick.addEventListener("click", function (e) {
-        e.stopPropagation();
-        state.label = title;
-        labelInput.value = title;
-        labelText.textContent = title;
-        persist();
-        renderDrawerBank();
-      });
-      row.appendChild(pick);
-      drawerBank.appendChild(row);
-    });
-  }
-  enableReorder(drawerBank);
-
-  function setDrawer(open) {
-    drawer.classList.toggle("open", open);
-    drawerTab.textContent = open ? "›" : "‹";
-    if (open) { fillDrawer(); renderDrawerBank(); }
-  }
-
-  drawerTab.addEventListener("click", function (e) {
-    e.stopPropagation();
-    setDrawer(!drawer.classList.contains("open"));
-  });
+  opLabelInput.addEventListener("input", function () { setLabel(opLabelInput.value); });
+  opLabelInput.addEventListener("keydown", function (e) { e.stopPropagation(); });
 
   document.querySelectorAll("[data-nstep]").forEach(function (btn) {
-    btn.addEventListener("click", function (e) {
-      e.stopPropagation();
+    btn.addEventListener("click", function () {
       var d = Number(btn.dataset.d);
       if (btn.dataset.nstep === "min") {
         nextMin.value = Math.min(180, Math.max(0, (Number(nextMin.value) || 0) + d));
@@ -1118,59 +1592,50 @@ if ("serviceWorker" in navigator) {
     });
   });
 
-  $("applyTimeBtn").addEventListener("click", function (e) {
-    e.stopPropagation();
-    state.minutes = Math.min(180, Math.max(0, Number(nextMin.value) || 0));
-    state.seconds = Math.min(59, Number(nextSec.value) || 0);
+  $("applyTimeBtn").addEventListener("click", function () {
+    cfg.minutes = Math.min(180, Math.max(0, Number(nextMin.value) || 0));
+    cfg.seconds = Math.min(59, Number(nextSec.value) || 0);
     persist();
     renderSetup();
-    elapsedMs = 0;
-    extraMs = 0;
-    renderTimer();
-    setPlaying(true);
-    setDrawer(false);
+    armTimer((cfg.minutes * 60 + cfg.seconds) * 1000, true);
   });
 
-  // ----- edit title in place (timer keeps running) -----
-  function commitLabel() {
-    var v = labelEdit.value.trim();
-    state.label = v; // clearing the text removes the title from the stage
-    labelInput.value = v;
-    if (v) saveToBank(v);
-    persist();
-    labelText.textContent = state.label;
-    labelZone.classList.remove("editing");
+  // ----- wake lock (keeps the screen on while the timer runs) -----
+  var wakeLock = null;
+  function requestWakeLock() {
+    if (!("wakeLock" in navigator)) return;
+    navigator.wakeLock.request("screen").then(function (wl) {
+      wakeLock = wl;
+    }).catch(function () {});
   }
-
-  function growLabelEdit() {
-    labelEdit.style.height = "auto";
-    labelEdit.style.height = labelEdit.scrollHeight + "px";
+  function releaseWakeLock() {
+    if (wakeLock) { wakeLock.release().catch(function () {}); wakeLock = null; }
   }
-
-  labelZone.addEventListener("click", function (e) {
-    e.stopPropagation(); // don't toggle pause
-    if (labelZone.classList.contains("editing")) return;
-    labelEdit.value = state.label;
-    labelZone.classList.add("editing");
-    growLabelEdit();
-    labelEdit.focus();
-    labelEdit.select();
-  });
-  labelEdit.addEventListener("input", growLabelEdit);
-  labelEdit.addEventListener("blur", commitLabel);
-  labelEdit.addEventListener("keydown", function (e) {
-    e.stopPropagation(); // Enter adds a new line; hide keyboard / tap outside finishes
-    if (e.key === "Escape") { labelEdit.value = state.label; labelEdit.blur(); }
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && document.body.classList.contains("display-mode")) {
+      requestWakeLock();
+    }
   });
 
-  // Keyboard (handy on a computer or with an iPad keyboard)
+  // ----- keyboard shortcuts on the operator console -----
   document.addEventListener("keydown", function (e) {
-    if (!running) return;
-    if (e.code === "Space") { e.preventDefault(); setPlaying(!playing); }
-    if (e.key === "ArrowUp") { extraMs += 60000; renderTimer(); }
-    if (e.key === "ArrowDown") { extraMs -= 60000; renderTimer(); }
-    if (e.key === "Escape") exitTimer();
+    if (role !== "op" || !$("opScreen").classList.contains("on")) return;
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea") return;
+    if (e.code === "Space") { e.preventDefault(); setPlaying(!T.playing); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); adjust(60000); }
+    else if (e.key === "ArrowDown") { e.preventDefault(); adjust(-60000); }
+    else if (e.key === "r" || e.key === "R") armTimer(T.totalMs, false);
+    else if (e.key === "f" || e.key === "F") { T.flashing = !T.flashing; commit(); }
+    else if (e.key === "s" || e.key === "S") { T.swapped = !T.swapped; commit(); }
   });
+
+  window.addEventListener("beforeunload", destroyPeer);
+
+  // ----- boot -----
+  renderSetup();
+  show("menu");
+  renderStage();
 })();
 </script>
 </body>
