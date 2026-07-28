@@ -18,10 +18,16 @@ self.addEventListener("activate", function (e) {
   );
 });
 
+// Endpoints of the local stage server. /events is an endless SSE stream — put
+// it through the caching path below and the clone never settles.
+var LIVE = ["/events", "/time", "/info", "/state"];
+
 // Network first (always fresh when online), cache fallback (works offline)
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET") return;
-  if (new URL(e.request.url).origin !== self.location.origin) return;
+  var u = new URL(e.request.url);
+  if (u.origin !== self.location.origin) return;
+  if (LIVE.indexOf(u.pathname) !== -1) return;
   e.respondWith(
     fetch(e.request).then(function (res) {
       if (res && res.ok) {

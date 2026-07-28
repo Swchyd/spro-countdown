@@ -322,6 +322,35 @@
   }
   .room-row .ghost { padding: 9px 12px; font-size: 12px; }
 
+  [hidden] { display: none !important; }
+  .mode-btn:disabled { opacity: .45; cursor: default; }
+
+  .url-row {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .url-row .rl {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 8px;
+  }
+  .url-item {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: .02em;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    word-break: break-all;
+    line-height: 1.35;
+  }
+  .url-none { font-size: 13px; color: var(--over); line-height: 1.5; }
+
   .link-status {
     display: flex;
     align-items: center;
@@ -680,10 +709,14 @@
       <h1>Operator</h1>
     </div>
 
-    <div class="room-row">
+    <div class="room-row" id="roomRow">
       <span class="rl">Room</span>
       <span class="room-code" id="roomCode">····</span>
       <button type="button" class="ghost" id="newRoomBtn">New code</button>
+    </div>
+    <div class="url-row" id="urlRow" hidden>
+      <span class="rl">Open this on the iPad</span>
+      <div id="urlList"></div>
     </div>
     <div class="link-status" id="opLink1"><span class="led"></span><span class="txt"></span></div>
 
@@ -953,6 +986,15 @@ if ("serviceWorker" in navigator) {
   // ============================================================
   //  Link — PeerJS data channel, operator hosts, displays connect in
   // ============================================================
+  //  Two transports, picked automatically at boot:
+  //
+  //  LOCAL  — the page came from the stage server on this network, so state
+  //           goes over plain HTTP + Server-Sent Events. No internet at all.
+  //  CLOUD  — the page came from GitHub Pages, so devices pair through a
+  //           PeerJS room code and talk peer-to-peer.
+  var LOCAL = false;
+  var localPeers = 0;    // displays connected, reported by the stage server
+  var localES = null;    // EventSource, both roles
   var peer = null;
   var conns = [];        // operator: every connected display
   var dispConn = null;   // display: the one link home
@@ -971,7 +1013,7 @@ if ("serviceWorker" in navigator) {
     var cls = "", txt = linkNote;
     if (role === "op") {
       if (linkState === "ready") {
-        var n = conns.length;
+        var n = LOCAL ? localPeers : conns.length;
         cls = n ? "live" : "warn";
         txt = n ? (n + (n === 1 ? " display connected" : " displays connected")) : "Waiting for a display";
       } else if (linkState === "connecting") { cls = "warn"; txt = txt || "Connecting…"; }
@@ -1006,8 +1048,112 @@ if ("serviceWorker" in navigator) {
     if (peer) { try { peer.destroy(); } catch (e) {} peer = null; }
   }
 
+  function closeLink() {
+    destroyPeer();
+    clearInterval(pingTimer);
+    clearInterval(localSyncTimer);
+    localPeers = 0;
+    if (localES) { try { localES.close(); } catch (e) {} localES = null; }
+  }
+
+  // ---- local transport (stage server on this network) ----
+  var localSyncTimer = 0;
+
+  // Is a stage server answering on this origin? Decides the transport.
+  function detectLocal(done) {
+    if (/\.github\.io$/i.test(location.hostname) || location.protocol === "file:") {
+      done(false);
+      return;
+    }
+    var settled = false;
+    var give = function (v) { if (!settled) { settled = true; clearTimeout(t); done(v); } };
+    var t = setTimeout(function () { give(false); }, 2000);
+    fetch("time", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (j) { give(typeof j.s === "number"); })
+      .catch(function () { give(false); });
+  }
+
+  // One clock-offset sample; keeps the least-delayed of the last few.
+  function sampleServerClock() {
+    var t0 = Date.now();
+    fetch("time", { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        var rtt = Date.now() - t0;
+        absorbSample(rtt, j.s + rtt / 2 - Date.now());
+      })
+      .catch(function () {});
+  }
+
+  function burstSync(n) {
+    var i = 0;
+    var step = function () {
+      if (i++ >= n) return;
+      sampleServerClock();
+      setTimeout(step, 150);
+    };
+    step();
+  }
+
+  function openLocalStream(asRole, onState) {
+    if (localES) { try { localES.close(); } catch (e) {} }
+    var es = new EventSource("events?role=" + asRole);
+    localES = es;
+
+    es.onopen = function () {
+      setLink(asRole === "op" ? "ready" : "linked");
+    };
+
+    es.onmessage = function (ev) {
+      var m;
+      try { m = JSON.parse(ev.data); } catch (e) { return; }
+      if (m.t === "peers") { localPeers = m.n; renderLink(); }
+      else if (m.t === "state" && onState) onState(m.d);
+    };
+
+    // EventSource reconnects on its own; just reflect the state.
+    es.onerror = function () {
+      if (localES !== es) return;
+      setLink(asRole === "op" ? "connecting" : "lost");
+    };
+  }
+
+  function hostLocal() {
+    closeLink();
+    setLink("connecting", "Starting…");
+    // Deadlines are written in server time, so the operator syncs too — this
+    // stays correct even if the console is opened from a second machine.
+    burstSync(5);
+    clearInterval(localSyncTimer);
+    localSyncTimer = setInterval(sampleServerClock, 30000);
+    openLocalStream("op", null);
+    fetch("info", { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { showDisplayURL(j.urls || []); })
+      .catch(function () {});
+  }
+
+  function joinLocal() {
+    closeLink();
+    setLink("connecting");
+    burstSync(5);
+    clearInterval(localSyncTimer);
+    localSyncTimer = setInterval(sampleServerClock, 30000);
+    openLocalStream("display", applyState);
+  }
+
+  function pushLocal() {
+    fetch("state", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(snapshot())
+    }).catch(function () {});
+  }
+
   // ---- operator side ----
   function broadcast() {
+    if (LOCAL) { pushLocal(); return; }
     var msg = JSON.stringify({ t: "s", d: snapshot() });
     conns.forEach(function (c) {
       if (c.open) { try { c.send(msg); } catch (e) {} }
@@ -1083,16 +1229,24 @@ if ("serviceWorker" in navigator) {
     try { dispConn.send(JSON.stringify({ t: "ping", c: Date.now() })); } catch (e) {}
   }
 
-  function absorbPong(m) {
-    var rtt = Date.now() - m.c;
-    // Standard NTP estimate: assume the trip is symmetric.
-    var offset = m.s + rtt / 2 - Date.now();
+  function absorbSample(rtt, offset) {
     syncSamples.push({ rtt: rtt, offset: offset });
     if (syncSamples.length > 8) syncSamples.shift();
     // The lowest-latency sample is the least distorted one.
     var best = syncSamples[0];
     syncSamples.forEach(function (s) { if (s.rtt < best.rtt) best = s; });
     clockOffset = best.offset;
+  }
+
+  function absorbPong(m) {
+    var rtt = Date.now() - m.c;
+    // Standard NTP estimate: assume the trip is symmetric.
+    absorbSample(rtt, m.s + rtt / 2 - Date.now());
+  }
+
+  function applyState(d) {
+    for (var key in d) if (key in T) T[key] = d[key];
+    renderStage();
   }
 
   function joinRoom(code) {
@@ -1152,9 +1306,7 @@ if ("serviceWorker" in navigator) {
       var m;
       try { m = JSON.parse(raw); } catch (e) { return; }
       if (m.t === "s") {
-        var d = m.d;
-        for (var key in d) if (key in T) T[key] = d[key];
-        renderStage();
+        applyState(m.d);
       } else if (m.t === "pong") {
         absorbPong(m);
       }
@@ -1183,8 +1335,7 @@ if ("serviceWorker" in navigator) {
   }
 
   function goMenu() {
-    destroyPeer();
-    clearInterval(pingTimer);
+    closeLink();
     role = "";
     linkState = "";
     document.body.classList.remove("display-mode");
@@ -1198,15 +1349,28 @@ if ("serviceWorker" in navigator) {
     role = "op";
     show("setup");
     renderSetup();
-    hostRoom(cfg.room || randomRoom(), false);
+    if (LOCAL) hostLocal();
+    else hostRoom(cfg.room || randomRoom(), false);
   });
 
+  // On a local network there is nothing to pair — the server already knows
+  // both devices, so the display goes straight to the stage.
   $("pickDisp").addEventListener("click", function () {
     role = "display";
+    if (LOCAL) { enterDisplay(); joinLocal(); return; }
     show("join");
     $("codeInput").value = cfg.join || "";
     setLink("", "");
   });
+
+  function enterDisplay() {
+    document.body.classList.add("display-mode");
+    stageWrap.classList.add("full");
+    show("");
+    mountStage(stageWrap, true);
+    T.live = false;
+    requestWakeLock();
+  }
 
   $("setupBack").addEventListener("click", goMenu);
   $("joinBack").addEventListener("click", goMenu);
@@ -1227,12 +1391,7 @@ if ("serviceWorker" in navigator) {
       setLink("error", "Enter the 4-digit room code.");
       return;
     }
-    document.body.classList.add("display-mode");
-    stageWrap.classList.add("full");
-    show("");
-    mountStage(stageWrap, true);
-    T.live = false;
-    requestWakeLock();
+    enterDisplay();
     joinRoom(code);
   });
 
@@ -1510,8 +1669,8 @@ if ("serviceWorker" in navigator) {
 
   function setPlaying(p) {
     if (p === T.playing) return;
-    if (p) T.endAt = Date.now() + T.remainMs;
-    else T.remainMs = T.endAt - Date.now();
+    if (p) T.endAt = now() + T.remainMs;
+    else T.remainMs = T.endAt - now();
     T.playing = p;
     commit();
   }
@@ -1525,7 +1684,7 @@ if ("serviceWorker" in navigator) {
   function armTimer(totalMs, play) {
     T.totalMs = totalMs;
     T.remainMs = totalMs;
-    T.endAt = Date.now() + totalMs;
+    T.endAt = now() + totalMs;
     T.playing = !!play;
     commit();
   }
@@ -1633,9 +1792,43 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("beforeunload", destroyPeer);
 
   // ----- boot -----
+  function showDisplayURL(urls) {
+    var list = $("urlList");
+    list.textContent = "";
+    if (!urls.length) {
+      var warn = document.createElement("div");
+      warn.className = "url-none";
+      warn.textContent = "No network found. Turn on Mobile Hotspot, then restart the server window.";
+      list.appendChild(warn);
+      return;
+    }
+    urls.forEach(function (u) {
+      var row = document.createElement("div");
+      row.className = "url-item";
+      row.textContent = u.url;
+      list.appendChild(row);
+    });
+  }
+
+  function applyTransportUI() {
+    $("roomRow").hidden = LOCAL;
+    $("urlRow").hidden = !LOCAL;
+  }
+
   renderSetup();
-  show("menu");
   renderStage();
+  show("menu");
+
+  // Hold the role buttons until we know which transport this page has, so a
+  // fast tap cannot start the wrong one.
+  $("pickOp").disabled = true;
+  $("pickDisp").disabled = true;
+  detectLocal(function (isLocal) {
+    LOCAL = isLocal;
+    applyTransportUI();
+    $("pickOp").disabled = false;
+    $("pickDisp").disabled = false;
+  });
 })();
 </script>
 </body>
