@@ -1,17 +1,46 @@
 {
   "name": "spro-countdown",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Stage countdown timer — operator, display and standalone roles",
+  "author": "Swchyd",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "server": "node server.js"
+    "server": "node server.js",
+    "dist": "node tools/build.js"
   },
   "devDependencies": {
-    "electron": "^38.0.0"
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0"
   },
   "dependencies": {
     "node-forge": "^1.4.0"
+  },
+  "build": {
+    "appId": "io.github.swchyd.sprocountdown",
+    "productName": "SPro Countdown",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "server.js",
+      "certs.js",
+      "index.html",
+      "sw.js",
+      "manifest.json",
+      "peerjs.min.js",
+      "icon-180.png",
+      "icon.ico",
+      "node_modules/node-forge/**/*"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "icon.ico"
+    },
+    "portable": {
+      "artifactName": "SPro-Countdown-${version}.exe"
+    }
   }
 }

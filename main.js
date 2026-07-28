@@ -36,6 +36,9 @@ function reveal() {
 // on purpose makes it stay deleted.
 function ensureShortcuts() {
   if (process.platform !== "win32") return;
+  // A portable build is extracted to a new temp folder on every run, so a
+  // shortcut to it would point at nothing next time. The .exe is the icon.
+  if (app.isPackaged) return;
   const marker = path.join(app.getPath("userData"), "shortcuts-created");
   if (fs.existsSync(marker)) return;
 
@@ -64,6 +67,10 @@ function boot() {
   ensureShortcuts();
   stage.start({
     port: PORT,
+    // Inside a packaged build the app folder is read-only, so the keys have
+    // to live somewhere writable — and somewhere that survives, since the CA
+    // is what the iPad trusts.
+    certDir: path.join(app.getPath("userData"), "certs"),
     onReady: function (handle) {
       server = handle;
       createWindow();

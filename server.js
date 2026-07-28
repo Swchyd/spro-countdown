@@ -200,7 +200,7 @@ function start(opts) {
   // and the operator can still run the service.
   var tls = null, tlsError = null;
   try {
-    tls = require("./certs.js").ensure();
+    tls = require("./certs.js").ensure(opts.certDir);
   } catch (e) {
     tlsError = e;
   }

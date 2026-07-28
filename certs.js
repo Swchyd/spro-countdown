@@ -16,12 +16,21 @@ var os = require("os");
 var crypto = require("crypto");
 var forge = require("node-forge");
 
-var DIR = path.join(__dirname, ".certs");
-var CA_CERT = path.join(DIR, "ca.crt.pem");
-var CA_KEY = path.join(DIR, "ca.key.pem");
-var TLS_CERT = path.join(DIR, "server.crt.pem");
-var TLS_KEY = path.join(DIR, "server.key.pem");
-var TLS_META = path.join(DIR, "server.json");
+// Where the keys live. Run from source this sits beside the code, but a
+// packaged build is read-only inside the asar, so the shell hands us a
+// writable folder instead.
+var DEFAULT_DIR = path.join(__dirname, ".certs");
+
+function paths(dir) {
+  return {
+    dir: dir,
+    caCert: path.join(dir, "ca.crt.pem"),
+    caKey: path.join(dir, "ca.key.pem"),
+    tlsCert: path.join(dir, "server.crt.pem"),
+    tlsKey: path.join(dir, "server.key.pem"),
+    meta: path.join(dir, "server.json")
+  };
+}
 
 // iOS rejects TLS certificates valid for more than 398 days. notBefore is
 // backdated a day to tolerate clock skew, so keep a margin under the limit.
@@ -113,31 +122,32 @@ function makeLeaf(ca, ips) {
   return { cert: cert, keyPem: keys.privatePem };
 }
 
-function loadCA() {
-  if (fs.existsSync(CA_CERT) && fs.existsSync(CA_KEY)) {
+function loadCA(P) {
+  if (fs.existsSync(P.caCert) && fs.existsSync(P.caKey)) {
     return {
-      cert: forge.pki.certificateFromPem(fs.readFileSync(CA_CERT, "utf8")),
-      keyPem: fs.readFileSync(CA_KEY, "utf8")
+      cert: forge.pki.certificateFromPem(fs.readFileSync(P.caCert, "utf8")),
+      keyPem: fs.readFileSync(P.caKey, "utf8")
     };
   }
   var ca = makeCA();
-  fs.mkdirSync(DIR, { recursive: true });
-  fs.writeFileSync(CA_CERT, forge.pki.certificateToPem(ca.cert));
-  fs.writeFileSync(CA_KEY, ca.keyPem);
+  fs.writeFileSync(P.caCert, forge.pki.certificateToPem(ca.cert));
+  fs.writeFileSync(P.caKey, ca.keyPem);
   return ca;
 }
 
-// Returns { key, cert, ca, der, ips, freshCA } ready to hand to https.
-function ensure() {
-  fs.mkdirSync(DIR, { recursive: true });
-  var freshCA = !fs.existsSync(CA_CERT);
-  var ca = loadCA();
+// Returns { key, cert, caPem, caDer, ips, freshCA } ready to hand to https.
+function ensure(dir) {
+  var P = paths(dir || DEFAULT_DIR);
+  fs.mkdirSync(P.dir, { recursive: true });
+
+  var freshCA = !fs.existsSync(P.caCert);
+  var ca = loadCA(P);
   var ips = hostIPs();
 
   var reuse = false;
-  if (fs.existsSync(TLS_CERT) && fs.existsSync(TLS_KEY) && fs.existsSync(TLS_META)) {
+  if (fs.existsSync(P.tlsCert) && fs.existsSync(P.tlsKey) && fs.existsSync(P.meta)) {
     try {
-      var meta = JSON.parse(fs.readFileSync(TLS_META, "utf8"));
+      var meta = JSON.parse(fs.readFileSync(P.meta, "utf8"));
       var sameIPs = JSON.stringify(meta.ips) === JSON.stringify(ips);
       var stillValid = new Date(meta.notAfter).getTime() - Date.now() > 7 * 24 * 3600 * 1000;
       reuse = sameIPs && stillValid;
@@ -146,9 +156,9 @@ function ensure() {
 
   if (!reuse) {
     var leaf = makeLeaf(ca, ips);
-    fs.writeFileSync(TLS_CERT, forge.pki.certificateToPem(leaf.cert));
-    fs.writeFileSync(TLS_KEY, leaf.keyPem);
-    fs.writeFileSync(TLS_META, JSON.stringify({
+    fs.writeFileSync(P.tlsCert, forge.pki.certificateToPem(leaf.cert));
+    fs.writeFileSync(P.tlsKey, leaf.keyPem);
+    fs.writeFileSync(P.meta, JSON.stringify({
       ips: ips,
       notAfter: leaf.cert.validity.notAfter.toISOString()
     }, null, 2));
@@ -157,9 +167,9 @@ function ensure() {
   var caDer = forge.asn1.toDer(forge.pki.certificateToAsn1(ca.cert)).getBytes();
 
   return {
-    key: fs.readFileSync(TLS_KEY),
-    cert: fs.readFileSync(TLS_CERT),
-    caPem: fs.readFileSync(CA_CERT),
+    key: fs.readFileSync(P.tlsKey),
+    cert: fs.readFileSync(P.tlsCert),
+    caPem: fs.readFileSync(P.caCert),
     caDer: Buffer.from(caDer, "binary"),
     ips: ips,
     freshCA: freshCA,
@@ -167,4 +177,4 @@ function ensure() {
   };
 }
 
-module.exports = { ensure: ensure, dir: DIR };
+module.exports = { ensure: ensure, defaultDir: DEFAULT_DIR };
