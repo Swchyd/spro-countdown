@@ -70,12 +70,11 @@ function boot() {
       createTray();
     },
     onError: function (err) {
-      const busy = err.code === "EADDRINUSE";
       dialog.showErrorBox(
         "SPro Countdown",
-        busy
-          ? `Port ${PORT} is already in use.\n\nAnother copy of the timer — or the ` +
-            `start-timer.bat window — is probably still running. Close it and open ` +
+        err.code === "EADDRINUSE"
+          ? `Port ${err.port} is already in use.\n\nAnother copy of the timer — or a ` +
+            `start-timer.bat window — is probably still running. Close it, then open ` +
             `this again.`
           : `Could not start the local server.\n\n${err.message}`
       );

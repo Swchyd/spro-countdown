@@ -831,6 +831,25 @@
   .op-panel .bank-add { right: 52px; }
   .op-panel .stepper button { width: 40px; height: 40px; font-size: 18px; }
   #applyTimeBtn { padding: 13px; font-size: 14px; letter-spacing: .04em; }
+
+  /* Typing must not reach the stage — this button is what sends it. */
+  #titleApply {
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: #5B6474;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  #titleApply.dirty {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1A1408;
+  }
+  #titleApply.dirty:active { filter: brightness(.92); }
 </style>
 </head>
 <body>
@@ -957,6 +976,7 @@
           <button type="button" class="bank-toggle" id="opBankToggle" aria-label="Saved titles">▾</button>
           <div class="bank-list" id="opBankList"></div>
         </div>
+        <button type="button" id="titleApply">TITLE ON SCREEN</button>
       </div>
 
       <div class="op-panel">
@@ -1161,10 +1181,14 @@ if ("serviceWorker" in navigator) {
   var peer = null;
   var conns = [];        // operator: every connected display
   var dispConn = null;   // display: the one link home
-  var role = "";         // "op" | "display"
+  var role = "";         // "op" | "display" | "solo"
   var linkState = "";    // "", "connecting", "ready", "linked", "lost", "error"
   var linkNote = "";
   var retryTimer = 0;
+  var roomCode = "";     // the code this session owns or joined
+  var idRetries = 0;     // consecutive "that id is taken" refusals
+  var watchdog = 0;
+  var dialing = 0;       // when the current connect attempt started
 
   function setLink(stateName, note) {
     linkState = stateName;
@@ -1208,16 +1232,55 @@ if ("serviceWorker" in navigator) {
     clearTimeout(retryTimer);
     conns = [];
     dispConn = null;
+    dialing = 0;   // any dial in flight died with the peer
     if (peer) { try { peer.destroy(); } catch (e) {} peer = null; }
   }
 
   function closeLink() {
+    clearInterval(watchdog);
+    watchdog = 0;
+    roomCode = "";
+    idRetries = 0;
+    dialing = 0;
     destroyPeer();
     clearInterval(pingTimer);
     clearInterval(localSyncTimer);
     localPeers = 0;
     if (localES) { try { localES.close(); } catch (e) {} localES = null; }
   }
+
+  // ---- keeping the pairing alive ----
+  //
+  // Losing wi-fi tears down the peer and often the signalling socket with it.
+  // PeerJS will not rebuild either on its own, so this watches the link and
+  // reassembles whatever is missing — always with the same room code, so the
+  // pairing survives an outage without anyone retyping anything.
+  function superviseLink() {
+    if (LOCAL || role === "solo" || !roomCode) return;
+    if (navigator.onLine === false) return;   // wait for the network to exist
+
+    if (!peer || peer.destroyed) {
+      if (role === "op") hostRoom(roomCode);
+      else joinRoom(roomCode);
+      return;
+    }
+    if (peer.disconnected) {
+      try { peer.reconnect(); } catch (e) {}
+      return;
+    }
+    if (role === "display" && (!dispConn || !dispConn.open)) openConn(roomCode);
+  }
+
+  function startWatchdog() {
+    clearInterval(watchdog);
+    watchdog = setInterval(superviseLink, 3000);
+  }
+
+  // The browser tells us the moment the network is back; do not wait a tick.
+  window.addEventListener("online", function () { setTimeout(superviseLink, 300); });
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") setTimeout(superviseLink, 300);
+  });
 
   // ---- local transport (stage server on this network) ----
   var localSyncTimer = 0;
@@ -1324,21 +1387,23 @@ if ("serviceWorker" in navigator) {
     });
   }
 
-  function hostRoom(code, isRetry) {
+  function hostRoom(code) {
     destroyPeer();
     if (!havePeerJS()) {
       setLink("error", "Connection module failed to load — reload the page.");
       return;
     }
+    roomCode = code;
     cfg.room = code;
     persist();
     $("roomCode").textContent = code;
     $("opRoomCode").textContent = code;
     setLink("connecting", "Connecting…");
+    startWatchdog();
 
     peer = new Peer(PEER_PREFIX + code, { debug: 0 });
 
-    peer.on("open", function () { setLink("ready"); });
+    peer.on("open", function () { idRetries = 0; setLink("ready"); });
 
     peer.on("connection", function (conn) {
       conn.on("open", function () {
@@ -1364,23 +1429,31 @@ if ("serviceWorker" in navigator) {
     });
 
     peer.on("error", function (err) {
-      if (err && err.type === "unavailable-id") {
-        // Someone (possibly a stale session of ours) holds this code.
-        if (isRetry) {
-          setLink("error", "Code " + code + " is already in use — pick a new code.");
-        } else {
-          retryTimer = setTimeout(function () { hostRoom(code, true); }, 1500);
-          setLink("connecting", "Reclaiming code…");
+      if (!err) return;
+      if (err.type === "unavailable-id") {
+        // Our own previous session still holds this id on the broker. It is
+        // released a little after the socket dies, so keep asking rather than
+        // making the operator invent a new code.
+        idRetries++;
+        clearTimeout(retryTimer);
+        if (idRetries > 20) {
+          setLink("error", "Code " + code + " will not free up — use New code.");
+          return;
         }
-      } else if (err && err.type === "network") {
-        setLink("error", "Signalling server unreachable — retrying…");
-        retryTimer = setTimeout(function () { hostRoom(code, false); }, 4000);
-      } else if (err && err.type !== "peer-unavailable") {
-        setLink("error", "Connection error: " + (err.type || "unknown"));
+        setLink("connecting", "Reclaiming code " + code + "…");
+        retryTimer = setTimeout(function () { hostRoom(code); },
+                                Math.min(6000, 1000 + idRetries * 500));
+      } else if (err.type === "network" || err.type === "socket-error" ||
+                 err.type === "socket-closed" || err.type === "server-error") {
+        // The watchdog rebuilds this; just say what is happening.
+        setLink("connecting", "Network lost — reconnecting…");
+      } else if (err.type !== "peer-unavailable") {
+        setLink("connecting", "Reconnecting… (" + err.type + ")");
       }
     });
 
     peer.on("disconnected", function () {
+      setLink("connecting", "Reconnecting…");
       if (peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} }
     });
   }
@@ -1419,25 +1492,28 @@ if ("serviceWorker" in navigator) {
       setLink("error", "Connection module failed to load — reload the page.");
       return;
     }
+    roomCode = code;
     cfg.join = code;
     persist();
     setLink("connecting", "Connecting to room " + code + "…");
+    startWatchdog();
 
     peer = new Peer({ debug: 0 });
 
     peer.on("open", function () { openConn(code); });
 
     peer.on("error", function (err) {
-      if (err && err.type === "peer-unavailable") {
-        setLink("connecting", "Room " + code + " is not live yet — waiting…");
-        clearTimeout(retryTimer);
-        retryTimer = setTimeout(function () { openConn(code); }, 3000);
-      } else if (err && err.type === "network") {
-        setLink("lost", "Signalling server unreachable — retrying…");
-        clearTimeout(retryTimer);
-        retryTimer = setTimeout(function () { joinRoom(code); }, 4000);
-      } else if (err) {
-        setLink("error", "Connection error: " + (err.type || "unknown"));
+      if (!err) return;
+      if (err.type === "peer-unavailable") {
+        // The operator is not up yet, or is itself reconnecting. Keep waiting;
+        // the watchdog dials again on its own schedule.
+        setLink("connecting", "Waiting for the operator in room " + code + "…");
+        dialing = 0;
+      } else if (err.type === "network" || err.type === "socket-error" ||
+                 err.type === "socket-closed" || err.type === "server-error") {
+        setLink(T.live ? "lost" : "connecting", "Network lost — reconnecting…");
+      } else {
+        setLink("connecting", "Reconnecting… (" + err.type + ")");
       }
     });
 
@@ -1447,12 +1523,18 @@ if ("serviceWorker" in navigator) {
   }
 
   function openConn(code) {
-    if (!peer || peer.destroyed) return;
+    if (!peer || peer.destroyed || peer.disconnected) return;
+    if (dispConn && dispConn.open) return;
+    // A dial in flight gets a few seconds before we try another one.
+    if (dialing && Date.now() - dialing < 6000) return;
+    dialing = Date.now();
+
     var conn = peer.connect(PEER_PREFIX + code, { reliable: true });
-    if (!conn) return;
+    if (!conn) { dialing = 0; return; }
     dispConn = conn;
 
     conn.on("open", function () {
+      dialing = 0;
       setLink("linked");
       syncSamples = [];
       try { conn.send(JSON.stringify({ t: "hello" })); } catch (e) {}
@@ -1481,9 +1563,10 @@ if ("serviceWorker" in navigator) {
       if (dispConn !== conn) return;
       clearInterval(pingTimer);
       dispConn = null;
+      dialing = 0;
       setLink("lost");
       clearTimeout(retryTimer);
-      retryTimer = setTimeout(function () { openConn(code); }, 2000);
+      retryTimer = setTimeout(function () { openConn(code); }, 1500);
     };
     conn.on("close", lost);
     conn.on("error", lost);
@@ -1516,7 +1599,7 @@ if ("serviceWorker" in navigator) {
     renderSetup();
     applyTransportUI();
     if (LOCAL) hostLocal();
-    else hostRoom(cfg.room || randomRoom(), false);
+    else hostRoom(cfg.room || randomRoom());
   });
 
   // Standalone needs no link at all — one device does everything.
@@ -1617,7 +1700,8 @@ if ("serviceWorker" in navigator) {
   });
 
   $("newRoomBtn").addEventListener("click", function () {
-    hostRoom(randomRoom(), false);
+    idRetries = 0;
+    hostRoom(randomRoom());
   });
 
   // ============================================================
@@ -1809,7 +1893,9 @@ if ("serviceWorker" in navigator) {
   var opTitle = makeTitleField(
     $("opTitleWrap"), $("opLabelInput"), $("opBankList"), $("opBankAdd"), $("opBankToggle"),
     {
-      onPick: function (title) { setLabel(title); },
+      // Picking a saved title only loads it into the field — sending it to
+      // the stage is still a deliberate press of Apply.
+      onPick: function () { refreshTitleApply(); },
       isActive: function (title) { return title === T.label; }
     }
   );
@@ -1837,6 +1923,7 @@ if ("serviceWorker" in navigator) {
     playBtn.textContent = T.playing ? "❚❚" : "▶";
     flashBtn.classList.toggle("on", !!T.flashing);
     soloOverlay.classList.toggle("paused", !T.playing);
+    refreshTitleApply();
     broadcast();
   }
 
@@ -1986,8 +2073,27 @@ if ("serviceWorker" in navigator) {
   $("swapBtn").addEventListener("click", function () { T.swapped = !T.swapped; commit(); });
   flashBtn.addEventListener("click", function () { T.flashing = !T.flashing; commit(); });
 
-  opLabelInput.addEventListener("input", function () { setLabel(opLabelInput.value); });
-  opLabelInput.addEventListener("keydown", function (e) { e.stopPropagation(); });
+  // The title is staged, not streamed: the operator can prepare the next one
+  // while the current one is still on the stage, and send it on cue.
+  var titleApply = $("titleApply");
+
+  function refreshTitleApply() {
+    var pending = opLabelInput.value.trim() !== (T.label || "");
+    titleApply.classList.toggle("dirty", pending);
+    titleApply.textContent = pending ? "APPLY TITLE" : "TITLE ON SCREEN";
+  }
+
+  opLabelInput.addEventListener("input", refreshTitleApply);
+  opLabelInput.addEventListener("keydown", function (e) {
+    e.stopPropagation();                       // Enter still makes a new line
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      titleApply.click();
+    }
+  });
+  titleApply.addEventListener("click", function () {
+    setLabel(opLabelInput.value.trim());
+  });
 
   document.querySelectorAll("[data-nstep]").forEach(function (btn) {
     btn.addEventListener("click", function () {

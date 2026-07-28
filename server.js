@@ -289,8 +289,10 @@ if (require.main === module) {
     onError: function (err) {
       console.log("");
       if (err.code === "EADDRINUSE") {
-        console.log("  Port is already in use - another copy is probably running.");
-        console.log("  Close it, or pick another port:   set PORT=8081 && node server.js");
+        console.log("  Port " + err.port + " is already in use.");
+        console.log("  The desktop app or another copy of this window is probably");
+        console.log("  running. Close it, or pick other ports:");
+        console.log("      set PORT=8081 && set TLS_PORT=8444 && node server.js");
       } else {
         console.log("  Server error: " + err.message);
       }
