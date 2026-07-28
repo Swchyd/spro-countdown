@@ -1,22 +1,31 @@
 // SPro Countdown — offline stage server.
 //
 // Serves the app to every device on the local network and relays timer state
-// between them. No internet, no router, no npm install: plain Node, plain HTTP.
+// between them. No internet, no router.
 //
 //   node server.js          run it on its own
 //   require("./server")     embed it (the desktop app does this)
 //
+// Two listeners share one handler and one pile of state:
+//
+//   http  :8080   the operator's own window (localhost is already a secure
+//                 origin) and the one-time CA download for the iPad
+//   https :8443   what the iPad installs from — Safari will not register a
+//                 service worker on an insecure origin, and without one there
+//                 is no offline cache
+//
 // Transport is Server-Sent Events rather than WebSockets — the payload is a
 // few hundred bytes a handful of times per service, EventSource reconnects on
-// its own, and it keeps this file dependency-free.
+// its own, and it needs no protocol code of our own.
 
 var http = require("http");
+var https = require("https");
 var fs = require("fs");
 var path = require("path");
 var os = require("os");
 
 // Only these ever leave the machine. An allowlist rather than a path check,
-// so node_modules and anything else dropped in this folder stays private.
+// so node_modules, the private key and anything else in this folder stays put.
 var ASSETS = {
   "/": ["index.html", "text/html; charset=utf-8"],
   "/index.html": ["index.html", "text/html; charset=utf-8"],
@@ -26,18 +35,23 @@ var ASSETS = {
   "/icon-180.png": ["icon-180.png", "image/png"]
 };
 
-function createStage(port) {
+function createStage(conf) {
   var state = null;    // last snapshot pushed by the operator
   var clients = [];    // open SSE responses, each { res, role }
 
-  function lanURLs() {
+  function addresses() {
     var out = [];
     var ifs = os.networkInterfaces();
     Object.keys(ifs).forEach(function (name) {
       (ifs[name] || []).forEach(function (a) {
-        if (a.family === "IPv4" && !a.internal) {
-          out.push({ iface: name, url: "http://" + a.address + ":" + port });
-        }
+        if (a.family !== "IPv4" || a.internal) return;
+        out.push({
+          iface: name,
+          app: conf.tls
+            ? "https://" + a.address + ":" + conf.tlsPort
+            : "http://" + a.address + ":" + conf.port,
+          ca: "http://" + a.address + ":" + conf.port + "/ca"
+        });
       });
     });
     return out;
@@ -61,7 +75,7 @@ function createStage(port) {
     });
   }
 
-  var server = http.createServer(function (req, res) {
+  function handler(req, res) {
     var u = new URL(req.url, "http://localhost");
     var p = u.pathname;
 
@@ -77,7 +91,30 @@ function createStage(port) {
     // ---- where to point the iPad ----------------------------------------
     if (p === "/info") {
       noCache(res, "application/json; charset=utf-8");
-      res.end(JSON.stringify({ urls: lanURLs(), port: port }));
+      res.end(JSON.stringify({
+        addresses: addresses(),
+        port: conf.port,
+        tlsPort: conf.tlsPort,
+        secure: !!conf.tls
+      }));
+      return;
+    }
+
+    // ---- one-time trust anchor for the iPad ------------------------------
+    // Served over plain HTTP on purpose: this is what makes HTTPS trusted,
+    // so it cannot itself depend on HTTPS being trusted yet.
+    if (p === "/ca") {
+      if (!conf.tls) {
+        res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+        res.end("HTTPS is not running");
+        return;
+      }
+      res.writeHead(200, {
+        "Content-Type": "application/x-x509-ca-cert",
+        "Content-Disposition": 'attachment; filename="SPro-Countdown-CA.cer"',
+        "Cache-Control": "no-store"
+      });
+      res.end(conf.tls.caDer);
       return;
     }
 
@@ -147,11 +184,9 @@ function createStage(port) {
       res.writeHead(200, { "Content-Type": asset[1], "Cache-Control": "no-cache" });
       res.end(req.method === "HEAD" ? undefined : data);
     });
-  });
+  }
 
-  server.lanURLs = lanURLs;
-  server.port = port;
-  return server;
+  return { handler: handler, addresses: addresses };
 }
 
 // Starts listening. onError is called instead of throwing, so an embedding
@@ -159,18 +194,57 @@ function createStage(port) {
 function start(opts) {
   opts = opts || {};
   var port = Number(opts.port || process.env.PORT || 8080);
-  var server = createStage(port);
+  var tlsPort = Number(opts.tlsPort || process.env.TLS_PORT || 8443);
 
-  server.on("error", function (err) {
+  // TLS is a nicety, not a requirement — if issuing fails, HTTP still works
+  // and the operator can still run the service.
+  var tls = null, tlsError = null;
+  try {
+    tls = require("./certs.js").ensure();
+  } catch (e) {
+    tlsError = e;
+  }
+
+  var stage = createStage({ port: port, tlsPort: tlsPort, tls: tls });
+  var httpServer = http.createServer(stage.handler);
+  var httpsServer = tls
+    ? https.createServer({ key: tls.key, cert: tls.cert }, stage.handler)
+    : null;
+
+  var pending = httpsServer ? 2 : 1;
+  var failed = false;
+
+  function fail(err) {
+    if (failed) return;
+    failed = true;
     if (opts.onError) opts.onError(err);
     else throw err;
-  });
+  }
 
-  server.listen(port, "0.0.0.0", function () {
-    if (opts.onReady) opts.onReady(server);
-  });
+  function up() {
+    if (failed || --pending > 0) return;
+    if (opts.onReady) {
+      opts.onReady({
+        addresses: stage.addresses,
+        port: port,
+        tlsPort: tlsPort,
+        secure: !!tls,
+        tlsError: tlsError,
+        freshCA: tls && tls.freshCA,
+        close: function () {
+          try { httpServer.close(); } catch (e) {}
+          if (httpsServer) { try { httpsServer.close(); } catch (e) {} }
+        }
+      });
+    }
+  }
 
-  return server;
+  httpServer.on("error", fail);
+  httpServer.listen(port, "0.0.0.0", up);
+  if (httpsServer) {
+    httpsServer.on("error", fail);
+    httpsServer.listen(tlsPort, "0.0.0.0", up);
+  }
 }
 
 module.exports = { start: start };
@@ -178,21 +252,31 @@ module.exports = { start: start };
 // ---- run directly: print the banner and stay up ------------------------
 if (require.main === module) {
   start({
-    onReady: function (server) {
-      var urls = server.lanURLs();
+    onReady: function (s) {
+      var list = s.addresses();
       console.log("");
       console.log("  ================================================");
       console.log("   SPro Countdown  -  server running");
       console.log("  ================================================");
       console.log("");
       console.log("   On this laptop (operator):");
-      console.log("      http://localhost:" + server.port);
+      console.log("      http://localhost:" + s.port);
       console.log("");
-      if (urls.length) {
-        console.log("   On the iPad (display) - type one of these:");
-        urls.forEach(function (u) {
-          console.log("      " + u.url + "     [" + u.iface + "]");
+      if (!s.secure) {
+        console.log("   HTTPS is OFF" + (s.tlsError ? " (" + s.tlsError.message + ")" : ""));
+        console.log("   The iPad can still connect, but cannot cache the app.");
+        console.log("");
+      }
+      if (list.length) {
+        console.log("   On the iPad:");
+        list.forEach(function (a) {
+          console.log("      " + a.app + "     [" + a.iface + "]");
         });
+        if (s.secure) {
+          console.log("");
+          console.log("   First time only - install the trust profile from:");
+          list.forEach(function (a) { console.log("      " + a.ca); });
+        }
       } else {
         console.log("   No network found yet.");
         console.log("   Turn on Mobile Hotspot, then restart this window.");

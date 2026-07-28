@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "electron": "^38.0.0"
+  },
+  "dependencies": {
+    "node-forge": "^1.4.0"
   }
 }

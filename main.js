@@ -31,9 +31,10 @@ function reveal() {
 }
 
 function boot() {
-  server = stage.start({
+  stage.start({
     port: PORT,
-    onReady: function () {
+    onReady: function (handle) {
+      server = handle;
       createWindow();
       createTray();
     },
@@ -96,20 +97,32 @@ function createTray() {
 
 function refreshTrayMenu() {
   if (!tray || tray.isDestroyed()) return;
-  const urls = server && server.lanURLs ? server.lanURLs() : [];
+  const list = server && server.addresses ? server.addresses() : [];
 
-  const addressItems = urls.length
-    ? urls.map((u) => ({
-        label: `Copy  ${u.url}`,
-        click: () => clipboard.writeText(u.url)
+  const addressItems = list.length
+    ? list.map((a) => ({
+        label: `Copy  ${a.app}`,
+        click: () => clipboard.writeText(a.app)
       }))
     : [{ label: "No network — turn on Mobile Hotspot", enabled: false }];
+
+  const caItems = list.length && server.secure
+    ? [
+        { type: "separator" },
+        { label: "Trust profile (first time only)", enabled: false },
+        ...list.map((a) => ({
+          label: `Copy  ${a.ca}`,
+          click: () => clipboard.writeText(a.ca)
+        }))
+      ]
+    : [];
 
   tray.setContextMenu(Menu.buildFromTemplate([
     { label: "Show window", click: reveal },
     { type: "separator" },
     { label: "iPad address", enabled: false },
     ...addressItems,
+    ...caItems,
     { type: "separator" },
     { label: "Quit", click: () => app.quit() }
   ]));

@@ -350,6 +350,27 @@
     line-height: 1.35;
   }
   .url-none { font-size: 13px; color: var(--over); line-height: 1.5; }
+  .url-ca {
+    margin-top: 12px;
+    padding-top: 11px;
+    border-top: 1px solid var(--line);
+  }
+  .url-ca .cap {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #5B6474;
+    margin-bottom: 5px;
+  }
+  .url-ca .addr {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-dim);
+    word-break: break-all;
+    line-height: 1.4;
+  }
 
   .link-status {
     display: flex;
@@ -1272,7 +1293,7 @@ if ("serviceWorker" in navigator) {
     openLocalStream("op", null);
     fetch("info", { cache: "no-store" })
       .then(function (r) { return r.json(); })
-      .then(function (j) { showDisplayURL(j.urls || []); })
+      .then(showDisplayURL)
       .catch(function () {});
   }
 
@@ -2035,22 +2056,42 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("beforeunload", destroyPeer);
 
   // ----- boot -----
-  function showDisplayURL(urls) {
+  function showDisplayURL(info) {
     var list = $("urlList");
+    var addrs = (info && info.addresses) || [];
     list.textContent = "";
-    if (!urls.length) {
+
+    if (!addrs.length) {
       var warn = document.createElement("div");
       warn.className = "url-none";
-      warn.textContent = "No network found. Turn on Mobile Hotspot, then restart the server window.";
+      warn.textContent = "No network found. Turn on Mobile Hotspot, then reopen the app.";
       list.appendChild(warn);
       return;
     }
-    urls.forEach(function (u) {
+
+    addrs.forEach(function (a) {
       var row = document.createElement("div");
       row.className = "url-item";
-      row.textContent = u.url;
+      row.textContent = a.app;
       list.appendChild(row);
     });
+
+    // The trust profile is a one-time step, so it stays quiet underneath.
+    if (info.secure) {
+      var ca = document.createElement("div");
+      ca.className = "url-ca";
+      var cap = document.createElement("span");
+      cap.className = "cap";
+      cap.textContent = "First time on a new iPad — install from";
+      ca.appendChild(cap);
+      addrs.forEach(function (a) {
+        var line = document.createElement("div");
+        line.className = "addr";
+        line.textContent = a.ca;
+        ca.appendChild(line);
+      });
+      list.appendChild(ca);
+    }
   }
 
   function applyTransportUI() {
