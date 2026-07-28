@@ -285,7 +285,7 @@
     font-weight: 600;
   }
   .ghost:active { background: var(--panel-2); }
-  #setupClock {
+  #setupClock, #setupClock2 {
     text-align: center;
     font-size: 36px;
     font-weight: 700;
@@ -324,53 +324,6 @@
 
   [hidden] { display: none !important; }
   .mode-btn:disabled { opacity: .45; cursor: default; }
-
-  .url-row {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-  }
-  .url-row .rl {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--ink-dim);
-    margin-bottom: 8px;
-  }
-  .url-item {
-    font-size: 21px;
-    font-weight: 700;
-    letter-spacing: .02em;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-    word-break: break-all;
-    line-height: 1.35;
-  }
-  .url-none { font-size: 13px; color: var(--over); line-height: 1.5; }
-  .url-ca {
-    margin-top: 12px;
-    padding-top: 11px;
-    border-top: 1px solid var(--line);
-  }
-  .url-ca .cap {
-    display: block;
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: #5B6474;
-    margin-bottom: 5px;
-  }
-  .url-ca .addr {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink-dim);
-    word-break: break-all;
-    line-height: 1.4;
-  }
 
   .link-status {
     display: flex;
@@ -875,17 +828,13 @@
   <div class="card">
     <div class="brand">
       <div class="dot"></div>
-      <h1>Operator</h1>
+      <h1 id="setupHeading">Operator</h1>
     </div>
 
     <div class="room-row" id="roomRow">
       <span class="rl">Room</span>
       <span class="room-code" id="roomCode">····</span>
       <button type="button" class="ghost" id="newRoomBtn">New code</button>
-    </div>
-    <div class="url-row" id="urlRow" hidden>
-      <span class="rl">Open this on the iPad</span>
-      <div id="urlList"></div>
     </div>
     <div class="link-status" id="opLink1"><span class="led"></span><span class="txt"></span></div>
 
@@ -1354,10 +1303,6 @@ if ("serviceWorker" in navigator) {
     clearInterval(localSyncTimer);
     localSyncTimer = setInterval(sampleServerClock, 30000);
     openLocalStream("op", null);
-    fetch("info", { cache: "no-store" })
-      .then(function (r) { return r.json(); })
-      .then(showDisplayURL)
-      .catch(function () {});
   }
 
   function joinLocal() {
@@ -1597,6 +1542,7 @@ if ("serviceWorker" in navigator) {
     role = "op";
     show("setup");
     renderSetup();
+    $("setupHeading").textContent = "Operator";
     applyTransportUI();
     if (LOCAL) hostLocal();
     else hostRoom(cfg.room || randomRoom());
@@ -1609,8 +1555,11 @@ if ("serviceWorker" in navigator) {
     setLink("", "");
     show("setup");
     renderSetup();
+    $("setupHeading").textContent = "Standalone";
+    // Nothing to connect to, so the room code and the link indicator — which
+    // would otherwise sit there as a lone grey dot — both go away.
     $("roomRow").hidden = true;
-    $("urlRow").hidden = true;
+    $("opLink1").hidden = true;
   });
 
   // On a local network there is nothing to pair — the server already knows
@@ -2162,47 +2111,12 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("beforeunload", destroyPeer);
 
   // ----- boot -----
-  function showDisplayURL(info) {
-    var list = $("urlList");
-    var addrs = (info && info.addresses) || [];
-    list.textContent = "";
-
-    if (!addrs.length) {
-      var warn = document.createElement("div");
-      warn.className = "url-none";
-      warn.textContent = "No network found. Turn on Mobile Hotspot, then reopen the app.";
-      list.appendChild(warn);
-      return;
-    }
-
-    addrs.forEach(function (a) {
-      var row = document.createElement("div");
-      row.className = "url-item";
-      row.textContent = a.app;
-      list.appendChild(row);
-    });
-
-    // The trust profile is a one-time step, so it stays quiet underneath.
-    if (info.secure) {
-      var ca = document.createElement("div");
-      ca.className = "url-ca";
-      var cap = document.createElement("span");
-      cap.className = "cap";
-      cap.textContent = "First time on a new iPad — install from";
-      ca.appendChild(cap);
-      addrs.forEach(function (a) {
-        var line = document.createElement("div");
-        line.className = "addr";
-        line.textContent = a.ca;
-        ca.appendChild(line);
-      });
-      list.appendChild(ca);
-    }
-  }
-
+  // The room code only means anything to the PeerJS transport; on a local
+  // network the server already knows both devices. Addresses for the iPad
+  // live in the tray menu rather than on this screen.
   function applyTransportUI() {
     $("roomRow").hidden = LOCAL;
-    $("urlRow").hidden = !LOCAL;
+    $("opLink1").hidden = false;
   }
 
   renderSetup();
