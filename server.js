@@ -121,9 +121,11 @@ function createStage(conf) {
         res.end("HTTPS is not running");
         return;
       }
+      // No Content-Disposition on purpose. "attachment" sends iOS 13+ Safari
+      // down the Files download path, where the certificate lands as a file
+      // instead of offering itself for installation as a profile.
       res.writeHead(200, {
         "Content-Type": "application/x-x509-ca-cert",
-        "Content-Disposition": 'attachment; filename="SPro-Countdown-CA.cer"',
         "Cache-Control": "no-store"
       });
       res.end(conf.tls.caDer);
