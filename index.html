@@ -1570,27 +1570,83 @@ if ("serviceWorker" in navigator) {
   // ============================================================
   //  Screens
   // ============================================================
+  // Every screen is one browser history entry, so the phone's back gesture
+  // walks the app instead of closing it. The in-app back buttons call
+  // history.back() too — both routes end up in the popstate handler below,
+  // so there is only one path that undoes a screen.
+  //
+  // Screen ids: menu, setup, join, opScreen, and the two fullscreen stages
+  // (display, solo). The fullscreen ones aren't .screen elements — show()
+  // simply turns all four panels off for them.
+  var currentScreen = "menu";
+
+  // Which screen sits behind each one. Going back walks this chain, so a
+  // multi-step exit still undoes every level it passes through.
+  var PARENT = {
+    menu: null,
+    setup: "menu",
+    join: "menu",
+    opScreen: "setup",
+    solo: "setup",
+    display: "join"
+  };
+
   function show(id) {
     ["menu", "setup", "join", "opScreen"].forEach(function (s) {
       $(s).classList.toggle("on", s === id);
     });
   }
 
+  // Forward navigation. The caller has already done the screen's own setup
+  // (hosting a room, arming the timer…); this records it and paints it.
+  function navigate(id) {
+    if (id === currentScreen) return;
+    currentScreen = id;
+    history.pushState({ screen: id }, "");
+    show(id);
+  }
+
+  // Undo what entering `id` set up. Runs when the user leaves it going back.
+  function teardown(id) {
+    if (id === "opScreen" || id === "solo") {
+      T.live = false;
+      T.playing = false;
+      T.flashing = false;
+      commit();
+      if (id === "solo") leaveSolo();
+    } else if (id === "display") {
+      document.body.classList.remove("display-mode");
+      stageWrap.classList.remove("full");
+      stageWrap.style.display = "none";
+      releaseWakeLock();
+      closeLink();
+    } else if (id === "setup" || id === "join") {
+      closeLink();
+      role = "";
+      linkState = "";
+    }
+  }
+
+  window.addEventListener("popstate", function (e) {
+    var target = (e.state && e.state.screen) || "menu";
+    if (target === currentScreen) return;
+    // history.go(-2) fires popstate once, so unwind every level in between.
+    for (var s = currentScreen; s && s !== target; s = PARENT[s]) teardown(s);
+    currentScreen = target;
+    if (target === "setup") renderSetup();
+    show(target);
+  });
+
+  // The ✕ buttons leave for the menu in one press, however deep we are.
   function goMenu() {
-    closeLink();
-    if (document.body.classList.contains("solo-mode")) leaveSolo();
-    role = "";
-    linkState = "";
-    document.body.classList.remove("display-mode");
-    stageWrap.classList.remove("full");
-    stageWrap.style.display = "none";
-    releaseWakeLock();
-    show("menu");
+    var n = 0;
+    for (var s = currentScreen; s && s !== "menu"; s = PARENT[s]) n++;
+    if (n) history.go(-n);
   }
 
   $("pickOp").addEventListener("click", function () {
     role = "op";
-    show("setup");
+    navigate("setup");
     renderSetup();
     $("setupHeading").textContent = "Operator";
     applyTransportUI();
@@ -1604,7 +1660,7 @@ if ("serviceWorker" in navigator) {
     role = "solo";
     closeLink();
     setLink("", "");
-    show("setup");
+    navigate("setup");
     renderSetup();
     $("setupHeading").textContent = "Standalone";
     // Nothing to connect to, so the room code and the link indicator — which
@@ -1615,7 +1671,7 @@ if ("serviceWorker" in navigator) {
 
   $("pickDisp").addEventListener("click", function () {
     role = "display";
-    show("join");
+    navigate("join");
     $("codeInput").value = cfg.join || "";
     setLink("", "");
   });
@@ -1623,7 +1679,7 @@ if ("serviceWorker" in navigator) {
   function enterDisplay() {
     document.body.classList.add("display-mode");
     stageWrap.classList.add("full");
-    show("");
+    navigate("display");
     mountStage(stageWrap, true);
     T.live = false;
     requestWakeLock();
@@ -1976,27 +2032,20 @@ if ("serviceWorker" in navigator) {
     if (role === "solo") {
       enterSolo();
     } else {
-      show("opScreen");
+      navigate("opScreen");
       mountStage(previewBox, false);
     }
     armTimer((cfg.minutes * 60 + cfg.seconds) * 1000, true);
   });
 
-  function stopTimer() {
-    T.live = false;
-    T.playing = false;
-    T.flashing = false;
-    commit();
-    show("setup");
-    renderSetup();
-  }
-
-  $("opExit").addEventListener("click", stopTimer);
+  // Leaving the console is a step back: teardown() stops the timer and, in
+  // standalone, puts the controls back where they belong.
+  $("opExit").addEventListener("click", function () { history.back(); });
 
   // ---- standalone: the controls and settings panels move onto the stage ----
   function enterSolo() {
     document.body.classList.add("solo-mode");
-    show("");
+    navigate("solo");
     stageWrap.classList.add("full");
     mountStage(stageWrap, true);
     controlsEl.classList.add("floating");
@@ -2022,10 +2071,7 @@ if ("serviceWorker" in navigator) {
     releaseWakeLock();
   }
 
-  $("soloExit").addEventListener("click", function () {
-    leaveSolo();
-    stopTimer();
-  });
+  $("soloExit").addEventListener("click", function () { history.back(); });
 
   function setDrawer(open) {
     drawer.classList.toggle("open", open);
@@ -2172,6 +2218,9 @@ if ("serviceWorker" in navigator) {
   renderSetup();
   renderStage();
   show("menu");
+  // The entry the app opens on. Backing out of this one closes the app, which
+  // is what a back gesture on a home screen should do.
+  history.replaceState({ screen: "menu" }, "");
 
   // Hold the role buttons until we know which transport this page has, so a
   // fast tap cannot start the wrong one.
