@@ -781,6 +781,33 @@
   #flashBtn.on { background: var(--over); color: #fff; }
   #flashBtn.on small { color: rgba(255,255,255,.8); }
 
+  /* On a phone the six controls wrap 4 + 2, and because Play is the widest
+     button the top row ends up visibly off-centre. Two rows of three fixes
+     the balance: time controls on top, display toggles beneath, so Play sits
+     dead centre with −1 and +1 flanking it. The order lives here rather than
+     in the markup because the single-row layout above still wants the
+     original sequence. Standalone keeps its one-line floating bar.
+
+     One row measures 470px of viewport, so the switch sits just above that:
+     better to stack slightly early than to leave a band where the bar wraps
+     4 + 2 on a device whose fonts render a touch wider. */
+  @media (max-width: 480px) {
+    #controls:not(.floating) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-radius: var(--radius);
+    }
+    /* 1fr equalises the columns, but a min-width would still push one wider. */
+    #controls:not(.floating) button { min-width: 0; }
+    #controls:not(.floating) #playBtn { min-width: 0 !important; }
+    #controls:not(.floating) #minusBtn   { order: 1; }
+    #controls:not(.floating) #playBtn    { order: 2; }
+    #controls:not(.floating) #plusBtn    { order: 3; }
+    #controls:not(.floating) #restartBtn { order: 4; }
+    #controls:not(.floating) #swapBtn    { order: 5; }
+    #controls:not(.floating) #flashBtn   { order: 6; }
+  }
+
   .op-grid {
     width: 100%;
     max-width: 620px;
@@ -1202,11 +1229,15 @@ if ("serviceWorker" in navigator) {
       else if (linkState === "lost") { cls = "down"; txt = txt || "Link lost — timer still running"; }
       else if (linkState === "error") { cls = "down"; }
     }
+    // Nothing to report yet means nothing to show: an empty status would
+    // otherwise sit there as a lone grey dot with no text beside it.
+    var mute = !cls && !txt;
     ["opLink1", "opLink2", "joinLink", "dispLink"].forEach(function (id) {
       var el = $(id);
       if (!el) return;
       el.className = "link-status" + (cls ? " " + cls : "");
       el.querySelector(".txt").textContent = txt;
+      el.hidden = mute;
     });
     var bar = $("dispBar");
     if (bar) bar.classList.toggle("alert", cls === "down" || cls === "warn");
