@@ -786,26 +786,29 @@
      the balance: time controls on top, display toggles beneath, so Play sits
      dead centre with −1 and +1 flanking it. The order lives here rather than
      in the markup because the single-row layout above still wants the
-     original sequence. Standalone keeps its one-line floating bar.
+     original sequence.
 
      One row measures 470px of viewport, so the switch sits just above that:
      better to stack slightly early than to leave a band where the bar wraps
-     4 + 2 on a device whose fonts render a touch wider. */
+     4 + 2 on a device whose fonts render a touch wider. This covers the
+     standalone floating bar too — it is pinned nowrap, so on a phone its six
+     buttons overflowed the screen edge instead of wrapping. Grid makes the
+     nowrap moot. */
   @media (max-width: 480px) {
-    #controls:not(.floating) {
+    #controls {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       border-radius: var(--radius);
     }
     /* 1fr equalises the columns, but a min-width would still push one wider. */
-    #controls:not(.floating) button { min-width: 0; }
-    #controls:not(.floating) #playBtn { min-width: 0 !important; }
-    #controls:not(.floating) #minusBtn   { order: 1; }
-    #controls:not(.floating) #playBtn    { order: 2; }
-    #controls:not(.floating) #plusBtn    { order: 3; }
-    #controls:not(.floating) #restartBtn { order: 4; }
-    #controls:not(.floating) #swapBtn    { order: 5; }
-    #controls:not(.floating) #flashBtn   { order: 6; }
+    #controls button { min-width: 0; }
+    #controls #playBtn { min-width: 0 !important; }
+    #controls #minusBtn   { order: 1; }
+    #controls #playBtn    { order: 2; }
+    #controls #plusBtn    { order: 3; }
+    #controls #restartBtn { order: 4; }
+    #controls #swapBtn    { order: 5; }
+    #controls #flashBtn   { order: 6; }
   }
 
   .op-grid {
@@ -1151,8 +1154,40 @@ if ("serviceWorker" in navigator) {
     }
   }
 
-  // 4 ticks/s is plenty for a once-per-second display and lets the CPU idle.
-  setInterval(renderStage, 250);
+  // A fixed 4 ticks/s spends three of every four wake-ups discovering there is
+  // nothing to redraw. On a timer that may run a whole service — or a whole
+  // day — sleep until the display actually has to change instead: the next
+  // wall-clock second for the header clock, or the next countdown boundary,
+  // whichever lands first. The two run on different phases, so this settles to
+  // one or two wake-ups a second and each one does real work.
+  var tickTimer = 0;
+
+  function msUntilTimeChanges() {
+    if (!T.playing) return Infinity;        // paused: only the clock moves
+    var remain = remainingMs();
+    if (remain > 0) return remain % 1000 || 1000;
+    return 1000 - (-remain % 1000);         // counting up past zero
+  }
+
+  function tick() {
+    try {
+      // Nothing on screen to keep current while the app is in the background.
+      if (!document.hidden) renderStage();
+    } finally {
+      var wait = Math.min(1000 - (Date.now() % 1000), msUntilTimeChanges());
+      // Land a hair past the boundary rather than a hair before it.
+      tickTimer = setTimeout(tick, Math.max(40, wait) + 12);
+    }
+  }
+  // Started from boot, once the clock elements below have been looked up.
+
+  // Coming back to the app should not wait out a sleep that was scheduled
+  // before it went away.
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) return;
+    clearTimeout(tickTimer);
+    tick();
+  });
 
   var opClockEl = $("opClock");
   var setupClockEl = $("setupClock"), setupClockEl2 = $("setupClock2");
@@ -2247,7 +2282,7 @@ if ("serviceWorker" in navigator) {
   }
 
   renderSetup();
-  renderStage();
+  tick();               // first paint, and the self-scheduling render loop
   show("menu");
   // The entry the app opens on. Backing out of this one closes the app, which
   // is what a back gesture on a home screen should do.
