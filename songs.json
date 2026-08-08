@@ -613,11 +613,13 @@
     ""
    ],
    "perSlide": 4,
-   "version": 3,
-   "updatedAt": 1786208780880,
-   "updatedBy": "Samuel",
+   "version": 4,
+   "updatedAt": 1786209192187,
+   "updatedBy": "Samz",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1786209192187,
+   "deletedBy": "Samz"
   }
  ],
  "setlist": [],
