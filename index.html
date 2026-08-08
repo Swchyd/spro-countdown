@@ -1204,20 +1204,6 @@
   .set-row .n { flex: 0 0 auto; min-width: 14px; font-size: 12px; font-weight: 700; color: #5B6474; }
   .set-row .nm { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .set-row.live .nm { color: var(--accent); }
-  .set-row .dur {
-    flex: 0 0 auto;
-    width: 58px;
-    background: transparent;
-    border: none;
-    border-left: 1px solid var(--line);
-    color: var(--ink-dim);
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    text-align: center;
-  }
-  .set-row .dur:focus { outline: none; background: var(--panel-2); color: var(--ink); }
   .set-row .rm {
     flex: 0 0 auto;
     width: 44px;
@@ -1487,7 +1473,7 @@
 
       <div id="setView">
         <div id="setRows"></div>
-        <div class="hint">Tap to put a song on deck. Hold and drag to reorder. A time here arms the countdown with it.</div>
+        <div class="hint">Tap to put a song on deck. Hold and drag to reorder.</div>
       </div>
 
       <div id="allView">
@@ -1548,6 +1534,9 @@
 
       <label class="field-label" for="songTitleInput">Title</label>
       <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off">
+
+      <label class="field-label" for="songAuthorInput">Author</label>
+      <input id="songAuthorInput" class="textinput" type="text" placeholder="Songwriter or artist" autocomplete="off">
 
       <div id="perSlideRow">
         <span class="psl">Lines per slide</span>
@@ -2672,6 +2661,46 @@ if ("serviceWorker" in navigator) {
     show(id);
   }
 
+  // The song library is five screens wearing one screen's clothes: the list,
+  // the editor, the bin, access, activity. They were only class toggles, so
+  // the back gesture found nothing to undo inside the library and threw you
+  // all the way out to the menu — the same complaint the screen chain above
+  // was written to answer. They are history entries now, like everything else.
+  // depth counts the entries pushed since entering the library, so leaving it
+  // in one gesture — picking a song mid-service — can pop the lot instead of
+  // undoing one tab switch and staying put.
+  var libTab = "set", libSub = "", libDepth = 0;
+
+  function applyLibState(tab, sub) {
+    libTab = tab === "all" ? "all" : "set";
+    libSub = sub || "";
+    var lib = $("library");
+    lib.classList.toggle("all-songs", libTab === "all");
+    lib.classList.remove("editing", "trash", "admin", "audit");
+    if (libSub) lib.classList.add(libSub);
+    Array.prototype.forEach.call($("libTabs").querySelectorAll(".op-tab"), function (x) {
+      x.classList.toggle("on", x.getAttribute("data-lib") === libTab);
+    });
+  }
+
+  function libGo(tab, sub) {
+    tab = tab === "all" ? "all" : "set";
+    sub = sub || "";
+    if (tab === libTab && sub === libSub) return;   // nothing to undo later
+    applyLibState(tab, sub);
+    libDepth++;
+    history.pushState({ screen: "library", tab: libTab, sub: libSub, depth: libDepth }, "");
+  }
+
+  // Repaint whatever just came back into view. Going back to the bin has to
+  // re-read it, not show what was there several minutes ago.
+  function renderLibView() {
+    if (libSub === "trash") renderTrash();
+    else if (libSub === "admin") renderAdmin();
+    else if (libSub === "audit") renderAudit(false);
+    else if (libSub !== "editing") { renderSetRows(); renderSongRows(); }
+  }
+
   // Undo what entering `id` set up. Runs when the user leaves it going back.
   function teardown(id) {
     if (id === "opScreen" || id === "solo") {
@@ -2695,7 +2724,18 @@ if ("serviceWorker" in navigator) {
 
   window.addEventListener("popstate", function (e) {
     var target = (e.state && e.state.screen) || "menu";
+
+    // Moving between views inside the library is not leaving the library.
+    if (target === "library" && currentScreen === "library") {
+      applyLibState(e.state && e.state.tab, e.state && e.state.sub);
+      libDepth = (e.state && e.state.depth) || 0;
+      renderLibView();
+      return;
+    }
     if (target === currentScreen) return;
+    // Leaving it for real: forget which view was open, so coming back later
+    // starts on the list rather than dropping straight into a half-typed song.
+    if (currentScreen === "library") applyLibState("set", "");
     // history.go(-2) fires popstate once, so unwind every level in between.
     for (var s = currentScreen; s && s !== target; s = PARENT[s]) teardown(s);
     currentScreen = target;
@@ -3689,6 +3729,7 @@ if ("serviceWorker" in navigator) {
     var payload = {
       id: song.id,
       title: song.title,
+      author: song.author || "",
       sections: song.sections,
       order: song.order,
       slides: song.slides,
@@ -3955,17 +3996,13 @@ if ("serviceWorker" in navigator) {
     // that no longer exists anywhere is how people re-save it by accident.
     if (mine && mine.id && editingId === mine.id) {
       editingId = null;
-      libraryEl.classList.remove("editing");
+      if (libSub === "editing") history.back();
     }
     syncNow(true);
   });
 
   // ----- recently deleted -----
 
-  function openSub(which) {
-    libraryEl.classList.remove("editing", "trash", "admin", "audit");
-    if (which) libraryEl.classList.add(which);
-  }
 
   function fmtWhen(ms) {
     if (!ms) return "";
@@ -3974,22 +4011,64 @@ if ("serviceWorker" in navigator) {
       " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes());
   }
 
+  // The bin is the screen people come to when they are already worried, so a
+  // failure here has to say what it means for the songs, not what the network
+  // did.
+  function trashProblem(err) {
+    if (err && err.code === "unreachable") {
+      return "Can't check the bin from here — nothing has been lost, try again when there's a signal.";
+    }
+    return (err && err.message) || "Something went wrong.";
+  }
+
   function renderTrash() {
     var rows = $("trashRows");
     rows.innerHTML = "";
     $("trashHint").textContent = "Loading…";
-    api("/trash").then(function (d) {
+
+    // Send whatever is queued before asking. Deleting hides the song from the
+    // library at once — that is what makes it feel like it worked — but the
+    // instruction does not leave for a couple of seconds, and /trash only knows
+    // what the server knows. Open the bin inside that gap and the song is in
+    // neither place, which is the one thing a recycle bin exists to prevent.
+    var ready = (canWrite() && outbox.length)
+      ? flushOutbox().catch(function () {})
+      : Promise.resolve();
+
+    ready.then(function () { return api("/trash"); }).then(function (d) {
+      var list = d.songs.slice();
+
+      // If the send did not get through — no signal, most likely — show the
+      // pending ones anyway rather than letting them fall down the same gap.
+      var seen = {};
+      list.forEach(function (s) { seen[s.id] = true; });
+      outbox.forEach(function (op) {
+        if (op.kind !== "delete" || seen[op.id]) return;
+        var local = songById(op.id);
+        if (!local) return;
+        list.push({
+          id: local.id,
+          title: local.title,
+          artist: "",
+          slides: (local.slides || []).length,
+          deletedAt: local.deletedAt || Date.now(),
+          deletedBy: myName() || "you",
+          pending: true
+        });
+      });
+      list.sort(function (a, b) { return (b.deletedAt || 0) - (a.deletedAt || 0); });
+
       $("trashHint").textContent =
         "Deleted songs stay here for " + d.retentionDays + " days. Nothing has been removed from the " +
         "library — every one of these can be put back.";
-      if (!d.songs.length) {
+      if (!list.length) {
         var empty = document.createElement("div");
         empty.className = "song-empty";
         empty.textContent = "Nothing deleted.";
         rows.appendChild(empty);
         return;
       }
-      d.songs.forEach(function (s) {
+      list.forEach(function (s) {
         var row = document.createElement("div");
         row.className = "bin-row";
         row.setAttribute("data-id", s.id);
@@ -4002,7 +4081,8 @@ if ("serviceWorker" in navigator) {
         var by = document.createElement("span");
         by.className = "by";
         by.textContent = "Deleted by " + s.deletedBy + " · " + fmtWhen(s.deletedAt) +
-          (s.artist ? " · " + s.artist : "") + " · " + s.slides + " slides";
+          (s.artist ? " · " + s.artist : "") + " · " + s.slides + " slides" +
+          (s.pending ? " · not uploaded yet" : "");
         info.appendChild(nm);
         info.appendChild(by);
 
@@ -4014,7 +4094,9 @@ if ("serviceWorker" in navigator) {
         row.appendChild(info);
         row.appendChild(restore);
 
-        if (isOwner()) {
+        // Nothing permanent may be offered for a song the server has not even
+        // been told about yet.
+        if (isOwner() && !s.pending) {
           var purge = document.createElement("button");
           purge.type = "button";
           purge.className = "purge";
@@ -4024,7 +4106,7 @@ if ("serviceWorker" in navigator) {
         rows.appendChild(row);
       });
     }).catch(function (err) {
-      $("trashHint").textContent = err.message;
+      $("trashHint").textContent = trashProblem(err);
     });
   }
 
@@ -4033,16 +4115,36 @@ if ("serviceWorker" in navigator) {
     if (!row) return;
     var id = row.getAttribute("data-id");
     if (e.target.closest(".restore")) {
+      // Still sitting in the queue? Then the server was never told, and the
+      // honest undo is to tear up the instruction rather than send a second one
+      // contradicting a first that never arrived.
+      var queued = outbox.filter(function (op) { return op.kind === "delete" && op.id === id; });
+      if (queued.length) {
+        outbox = outbox.filter(function (op) { return queued.indexOf(op) === -1; });
+        saveOutbox();
+        var local = songById(id);
+        if (local) {
+          delete local.deletedAt;
+          delete local.deletedBy;
+          local.hidden = false;
+        }
+        persistLocal();
+        renderTrash();
+        renderSongRows();
+        renderSetRows();
+        renderSync();
+        return;
+      }
       api("/songs/" + id + "/restore", { method: "POST", body: { opId: newOpId() } })
         .then(function () { renderTrash(); return syncNow(false); })
-        .catch(function (err) { $("trashHint").textContent = err.message; });
+        .catch(function (err) { $("trashHint").textContent = trashProblem(err); });
       return;
     }
     if (e.target.closest(".purge")) {
       withConfirm(function (phrase) {
         return api("/songs/" + id + "/purge", { method: "POST", body: { confirm: phrase } });
       }).then(function (r) { if (r) renderTrash(); })
-        .catch(function (err) { $("trashHint").textContent = err.message; });
+        .catch(function (err) { $("trashHint").textContent = trashProblem(err); });
     }
   });
 
@@ -4050,7 +4152,7 @@ if ("serviceWorker" in navigator) {
     withConfirm(function (phrase) {
       return api("/trash/empty", { method: "POST", body: { confirm: phrase } });
     }).then(function (r) { if (r) renderTrash(); })
-      .catch(function (err) { $("trashHint").textContent = err.message; });
+      .catch(function (err) { $("trashHint").textContent = trashProblem(err); });
   });
 
   // ----- access management -----
@@ -4214,11 +4316,13 @@ if ("serviceWorker" in navigator) {
 
   $("auditMoreBtn").addEventListener("click", function () { renderAudit(true); });
 
-  $("trashBtn").addEventListener("click", function () { openSub("trash"); renderTrash(); });
-  $("adminBtn").addEventListener("click", function () { openSub("admin"); renderAdmin(); });
-  $("auditBtn").addEventListener("click", function () { openSub("audit"); renderAudit(false); });
+  $("trashBtn").addEventListener("click", function () { libGo(libTab, "trash"); renderTrash(); });
+  $("adminBtn").addEventListener("click", function () { libGo(libTab, "admin"); renderAdmin(); });
+  $("auditBtn").addEventListener("click", function () { libGo(libTab, "audit"); renderAudit(false); });
+  // Back through history rather than closing the view directly, so the button
+  // and the phone's back gesture do the same thing and stay in step.
   Array.prototype.forEach.call(document.querySelectorAll(".sub-back"), function (b) {
-    b.addEventListener("click", function () { openSub(null); renderSongRows(); });
+    b.addEventListener("click", function () { history.back(); });
   });
 
   // ----- the parser -----
@@ -4357,6 +4461,7 @@ if ("serviceWorker" in navigator) {
   var setRows = $("setRows"), setStrip = $("setStrip"), libTabs = $("libTabs");
   var pasteBox = $("pasteBox"), parseNote = $("parseNote"), songTitleInput = $("songTitleInput");
   var saveSongBtn = $("saveSongBtn"), deleteSongBtn = $("deleteSongBtn");
+  var songAuthorInput = $("songAuthorInput");
   var editingId = null;      // null while writing a song that has no id yet
   var perSlide = 4;
   var parsed = null;
@@ -4364,13 +4469,17 @@ if ("serviceWorker" in navigator) {
 
   function openLibrary(from) {
     PARENT.library = from;
-    libraryEl.classList.remove("editing", "trash", "admin", "audit");
+    applyLibState("set", "");
     songSearch.value = "";
     renderSetRows();
     renderSongRows();
     applyRole();
     renderSync();
     navigate("library");
+    // navigate pushes a bare {screen}; the library's entry has to carry which
+    // view it is, or the first back would have nothing to restore.
+    libDepth = 0;
+    history.replaceState({ screen: "library", tab: "set", sub: "", depth: 0 }, "");
     // Opening the library is the natural moment to catch up with whatever was
     // added on another device — and to find out whether this device's role is
     // still what it thinks it is.
@@ -4378,23 +4487,6 @@ if ("serviceWorker" in navigator) {
   }
 
   // ----- setlist -----
-  function fmtDur(ms) {
-    if (!ms) return "—";
-    var s = Math.round(ms / 1000);
-    return Math.floor(s / 60) + ":" + pad2(s % 60);
-  }
-
-  // "6:30" and "6" both mean six and a half / six minutes. Anything else is
-  // read as no planned length, which simply means "do not touch the timer".
-  function parseDur(txt) {
-    var t = String(txt || "").trim();
-    if (!t) return 0;
-    var m = t.match(/^(\d+)\s*:\s*(\d{1,2})$/);
-    if (m) return (parseInt(m[1], 10) * 60 + Math.min(59, parseInt(m[2], 10))) * 1000;
-    if (/^\d+$/.test(t)) return parseInt(t, 10) * 60000;
-    return 0;
-  }
-
   function setEntries() {
     // Drop entries whose song was deleted, so a stale id cannot show a blank.
     return setlist.filter(function (e) {
@@ -4431,13 +4523,6 @@ if ("serviceWorker" in navigator) {
       pick.appendChild(n);
       pick.appendChild(nm);
 
-      var dur = document.createElement("input");
-      dur.type = "text";
-      dur.className = "dur";
-      dur.setAttribute("inputmode", "numeric");
-      dur.setAttribute("aria-label", "Planned length for " + s.title);
-      dur.value = fmtDur(e.ms);
-
       var rm = document.createElement("button");
       rm.type = "button";
       rm.className = "rm";
@@ -4445,7 +4530,6 @@ if ("serviceWorker" in navigator) {
       rm.textContent = "×";
 
       row.appendChild(pick);
-      row.appendChild(dur);
       row.appendChild(rm);
       setRows.appendChild(row);
     });
@@ -4456,14 +4540,28 @@ if ("serviceWorker" in navigator) {
     return null;
   }
 
-  // Loading from the setlist arms the countdown too — but only when a length
-  // was actually planned. Otherwise a mis-tap mid-service would wipe a running
-  // timer, and that is not a trade worth making for a convenience.
+  // Where picking a song leaves you depends on why you are here. From the
+  // console it means "put this on deck now", so the library gets out of the
+  // way — that is the whole point of the gesture mid-service. From the menu it
+  // means preparing, and being thrown out to the main menu after every tap
+  // makes building a setlist a chore, so there we stay put and just show which
+  // one is live.
+  function afterPick() {
+    // Out in one gesture, however deep the library was browsed — a single
+    // history.back() would only undo the last tab switch and leave you here.
+    if (PARENT.library === "opScreen") history.go(-(libDepth + 1));
+    else { renderSetRows(); renderSongRows(); }
+  }
+
+  // Loading a song from the setlist no longer touches the countdown. It used to
+  // arm it from the planned length in the row, but that field is gone, and a
+  // stored length silently re-arming a running timer with no visible control to
+  // explain it is worse than not doing it at all. `ms` stays in the data so an
+  // old setlist still loads and nothing has to be migrated.
   function loadFromSet(id) {
-    var s = songById(id), e = setEntryById(id);
+    var s = songById(id);
     if (!s) return;
     loadSong(s);
-    if (e && e.ms) armTimer(e.ms, false);
   }
 
   setRows.addEventListener("click", function (e) {
@@ -4480,18 +4578,8 @@ if ("serviceWorker" in navigator) {
     }
     if (e.target.closest(".pick")) {
       loadFromSet(id);
-      history.back();
+      afterPick();
     }
-  });
-
-  setRows.addEventListener("change", function (e) {
-    var row = e.target.closest ? e.target.closest(".set-row") : null;
-    if (!row || !e.target.classList.contains("dur")) return;
-    var entry = setEntryById(row.getAttribute("data-id"));
-    if (!entry) return;
-    entry.ms = parseDur(e.target.value);
-    e.target.value = fmtDur(entry.ms);
-    saveSongs(true);
   });
 
   enableReorder(setRows, ".set-row", function () {
@@ -4525,12 +4613,8 @@ if ("serviceWorker" in navigator) {
   libTabs.addEventListener("click", function (e) {
     var b = e.target.closest ? e.target.closest(".op-tab") : null;
     if (!b) return;
-    var which = b.getAttribute("data-lib");
-    libraryEl.classList.toggle("all-songs", which === "all");
-    Array.prototype.forEach.call(libTabs.querySelectorAll(".op-tab"), function (x) {
-      x.classList.toggle("on", x === b);
-    });
-    if (which === "all") renderSongRows(); else renderSetRows();
+    libGo(b.getAttribute("data-lib"), "");
+    renderLibView();
   });
 
   function renderSongRows() {
@@ -4541,6 +4625,7 @@ if ("serviceWorker" in navigator) {
       if (s.hidden) return false;
       if (!q) return true;
       if (s.title.toLowerCase().indexOf(q) >= 0) return true;
+      if (s.author && s.author.toLowerCase().indexOf(q) >= 0) return true;
       // Half the time the only thing anyone remembers is a line from it.
       return s.slides.some(function (sl) {
         return sl.join(" ").toLowerCase().indexOf(q) >= 0;
@@ -4579,7 +4664,9 @@ if ("serviceWorker" in navigator) {
       nm.textContent = s.title || "(untitled)";
       var meta = document.createElement("span");
       meta.className = "meta";
-      meta.textContent = s.slides.length + " slides";
+      // Two songs can share a title — a translation, a second arrangement —
+      // and the author is usually what tells them apart at a glance.
+      meta.textContent = (s.author ? s.author + " · " : "") + s.slides.length + " slides";
       pick.appendChild(nm);
       pick.appendChild(meta);
 
@@ -4650,7 +4737,7 @@ if ("serviceWorker" in navigator) {
       return;
     }
     loadSong(s);
-    history.back();
+    afterPick();
   });
 
   songSearch.addEventListener("input", renderSongRows);
@@ -4668,9 +4755,14 @@ if ("serviceWorker" in navigator) {
     editingId = s ? s.id : null;
     pasteBox.value = s ? songToText(s) : "";
     songTitleInput.value = s ? s.title : "";
+    songAuthorInput.value = s && s.author ? s.author : "";
     setPerSlide(s && s.perSlide ? s.perSlide : 4);
     disarmDelete();
-    libraryEl.classList.add("editing");
+    // Its own history entry, so back leaves the editor instead of the library.
+    // Save & next re-opens it while already here, which libGo treats as no
+    // change — otherwise a run of seven songs would leave seven entries to
+    // reverse out of.
+    libGo(libTab, "editing");
     refreshParse();
   }
 
@@ -4739,6 +4831,7 @@ if ("serviceWorker" in navigator) {
   function commitSong(asNew) {
     if (!parsed || !parsed.slides.length) return null;
     var title = songTitleInput.value.trim() || parsed.title || "Untitled";
+    var author = songAuthorInput.value.trim();
     var existing = asNew ? null : songById(editingId);
 
     // sections + order are the truth; slides/tags/notes are the flattened form
@@ -4746,6 +4839,7 @@ if ("serviceWorker" in navigator) {
     var isNew = !existing;
     if (existing) {
       existing.title = title;
+      existing.author = author;
       existing.sections = parsed.sections;
       existing.order = parsed.order;
       existing.slides = parsed.slides;
@@ -4756,7 +4850,7 @@ if ("serviceWorker" in navigator) {
       existing.hidden = false;
     } else {
       existing = {
-        id: newSongId(), title: title,
+        id: newSongId(), title: title, author: author,
         sections: parsed.sections, order: parsed.order,
         slides: parsed.slides, tags: parsed.tags, notes: parsed.notes,
         perSlide: perSlide,
@@ -4777,23 +4871,20 @@ if ("serviceWorker" in navigator) {
   }
 
   $("newSongBtn").addEventListener("click", function () { openEditor(null); });
-  $("editorBack").addEventListener("click", function () {
-    libraryEl.classList.remove("editing");
-    renderSongRows();
-  });
+  $("editorBack").addEventListener("click", function () { history.back(); });
   pasteBox.addEventListener("input", refreshParse);
   Array.prototype.forEach.call(document.querySelectorAll(".ps-opt"), function (b) {
     b.addEventListener("click", function () { setPerSlide(parseInt(b.getAttribute("data-ps"), 10)); });
   });
 
   saveSongBtn.addEventListener("click", function () {
-    if (commitSong(false)) { libraryEl.classList.remove("editing"); renderSongRows(); }
+    if (commitSong(false)) history.back();
   });
 
   // Save as new is how a second arrangement or a translation gets made: change
   // the title, press this, and the original is left untouched.
   $("saveAsBtn").addEventListener("click", function () {
-    if (commitSong(true)) { libraryEl.classList.remove("editing"); renderSongRows(); }
+    if (commitSong(true)) history.back();
   });
 
   // Five songs go in at one sitting, so the fast path keeps the box in front
@@ -4812,7 +4903,7 @@ if ("serviceWorker" in navigator) {
 
   deleteSongBtn.addEventListener("click", function () {
     var s = songById(editingId);
-    if (!s) { libraryEl.classList.remove("editing"); return; }
+    if (!s) { history.back(); return; }
     if (!canWrite()) return;
     if (!deleteArmed) {
       deleteArmed = true;
@@ -4832,10 +4923,8 @@ if ("serviceWorker" in navigator) {
     persistLocal();
     if (canWrite()) enqueue({ kind: "delete", id: s.id });
     disarmDelete();
-    libraryEl.classList.remove("editing");
-    renderSetRows();
-    renderSongRows();
     renderSetStrip();
+    history.back();   // the list repaints when the entry comes back
   });
 
   $("libBack").addEventListener("click", function () { history.back(); });

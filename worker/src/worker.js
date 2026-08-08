@@ -542,7 +542,7 @@ function summarizeValue(v) {
 }
 
 function diffSong(before, after) {
-  const fields = ["title", "slides", "tags", "notes", "perSlide", "order", "sections"];
+  const fields = ["title", "author", "slides", "tags", "notes", "perSlide", "order", "sections"];
   const changes = [];
   for (const f of fields) {
     const a = JSON.stringify(before ? before[f] : undefined);
@@ -741,6 +741,7 @@ async function handleCreate(request, env, actor, cfg) {
     created = {
       id,
       title: String(song.title || "Untitled").slice(0, 200),
+      author: String(song.author || "").slice(0, 200),
       sections: song.sections || [],
       order: song.order || [],
       slides: song.slides || [],
@@ -791,7 +792,7 @@ async function handleUpdate(request, env, actor, cfg, id) {
     }
 
     const before = JSON.parse(JSON.stringify(s));
-    for (const f of ["title", "sections", "order", "slides", "tags", "notes", "perSlide"]) {
+    for (const f of ["title", "author", "sections", "order", "slides", "tags", "notes", "perSlide"]) {
       if (f in patch) s[f] = patch[f];
     }
     changes = diffSong(before, s);
@@ -1147,7 +1148,7 @@ async function route(request, env) {
         .map((s) => ({
           id: s.id,
           title: s.title,
-          artist: s.artist || "",
+          author: s.author || "",
           slides: Array.isArray(s.slides) ? s.slides.length : 0,
           deletedAt: s.deletedAt,
           deletedBy: s.deletedBy || "?",
