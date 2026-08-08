@@ -1191,6 +1191,29 @@
   .set-chip.on { border-color: var(--accent); color: var(--accent); }
   .set-chip:active { background: var(--panel); }
 
+  #syncBox { border-top: 1px solid var(--line); padding-top: 12px; }
+  #syncRow { display: flex; align-items: center; gap: 8px; }
+  #syncStatus { flex: 1 1 auto; min-width: 0; font-size: 12px; color: #5B6474; }
+  #syncStatus.bad { color: var(--over); }
+  #syncStatus.busy { color: var(--accent); }
+  #syncRow button {
+    flex: 0 0 auto;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 9px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  #syncRow button:active { background: var(--panel-2); }
+  #tokenRow { display: none; flex-direction: column; gap: 10px; margin-top: 12px; }
+  #syncBox.open #tokenRow { display: flex; }
+  #tokenRow .hint b { color: var(--ink-dim); }
+  #tokenBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  #tokenBtns .ghost { padding: 11px; font-size: 12px; }
+
   #parseNote { font-size: 12px; line-height: 1.5; color: var(--ink-dim); min-height: 18px; }
   #parseNote .warn { color: var(--accent); }
 
@@ -1260,6 +1283,22 @@
         <input id="songSearch" class="textinput" type="text" placeholder="Search title or lyrics…" autocomplete="off">
         <div id="songRows"></div>
         <button type="button" id="newSongBtn" class="primary">+ NEW SONG</button>
+      </div>
+
+      <div id="syncBox">
+        <div id="syncRow">
+          <span id="syncStatus">Checking…</span>
+          <button type="button" id="syncNowBtn">Sync</button>
+          <button type="button" id="tokenToggle" aria-label="Sync settings">⚙</button>
+        </div>
+        <div id="tokenRow">
+          <p class="hint">A GitHub fine-grained token with <b>Contents: Read and write</b>, limited to this one repo. It stays on this device — don't put it on the iPad, which only ever reads.</p>
+          <input id="ghToken" class="textinput" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+          <div id="tokenBtns">
+            <button type="button" id="saveTokenBtn" class="ghost">Save token</button>
+            <button type="button" id="clearTokenBtn" class="ghost">Forget</button>
+          </div>
+        </div>
       </div>
 
       <button type="button" id="libBack" class="ghost">‹ Back</button>
@@ -2893,22 +2932,223 @@ if ("serviceWorker" in navigator) {
   // Tonight's running order: song ids and a planned length, never copies of
   // the lyrics. Fix a typo once and every future setlist already has it.
   var setlist = [];
+  var setlistAt = 0;   // the setlist merges whole, so it needs its own stamp
+  var libDirty = false;
 
   try {
     var songRaw = JSON.parse(localStorage.getItem(SONGS_KEY) || "null");
     if (songRaw && Array.isArray(songRaw.songs)) songs = songRaw.songs;
     if (songRaw && Array.isArray(songRaw.setlist)) setlist = songRaw.setlist;
+    if (songRaw) { setlistAt = songRaw.setlistAt || 0; libDirty = !!songRaw.dirty; }
   } catch (e) {}
 
-  function saveSongs() {
+  function saveSongs(touchedSetlist) {
+    if (touchedSetlist) setlistAt = Date.now();
+    libDirty = true;
     try {
-      localStorage.setItem(SONGS_KEY, JSON.stringify({ v: 1, songs: songs, setlist: setlist }));
+      localStorage.setItem(SONGS_KEY, JSON.stringify({
+        v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt, dirty: true
+      }));
+    } catch (e) {}
+    scheduleSync();
+  }
+
+  function markSynced() {
+    libDirty = false;
+    try {
+      localStorage.setItem(SONGS_KEY, JSON.stringify({
+        v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt, dirty: false
+      }));
     } catch (e) {}
   }
 
   function newSongId() {
     return "s_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
   }
+
+  // ============================================================
+  //  Sync — the repo is the database
+  //
+  //  Reading needs no account and no token: it is a plain fetch of a file in
+  //  a public repo, so any device that opens the link already has the whole
+  //  library. Writing needs a token, which lives only on the machine that
+  //  writes. Every change is a commit, so the version history doubles as the
+  //  backup — that is the part a hosted database would have cost us.
+  // ============================================================
+  var GH_OWNER = "Swchyd", GH_REPO = "spro-countdown", GH_FILE = "songs.json";
+  var TOKEN_KEY = "spro-gh-token";
+  // Read straight from raw, never through the Pages URL: Pages caches for up
+  // to ten minutes, so a song added two minutes ago would simply not be there.
+  var RAW_URL = "https://raw.githubusercontent.com/" + GH_OWNER + "/" + GH_REPO + "/main/" + GH_FILE;
+  var API_URL = "https://api.github.com/repos/" + GH_OWNER + "/" + GH_REPO + "/contents/" + GH_FILE;
+
+  var ghToken = "";
+  try { ghToken = localStorage.getItem(TOKEN_KEY) || ""; } catch (e) {}
+
+  var syncing = false, syncTimer = 0, lastSyncAt = 0, syncError = "";
+
+  function utf8ToB64(str) {
+    var bytes = new TextEncoder().encode(str), bin = "";
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
+  }
+
+  function b64ToUtf8(b64) {
+    var bin = atob(String(b64).replace(/\s/g, ""));
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+
+  function libraryPayload() {
+    return { v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt };
+  }
+
+  // Per song, the newer stamp wins; nothing is ever dropped for being absent
+  // on one side. Deletes travel as hidden:true, so they merge like any other
+  // edit instead of being undone by whichever device still remembers the song.
+  function mergeLibrary(remote) {
+    if (!remote) return false;
+    var byId = {}, changed = false;
+
+    (remote.songs || []).forEach(function (s) { if (s && s.id) byId[s.id] = s; });
+    songs.forEach(function (s) {
+      var r = byId[s.id];
+      if (!r || (s.updatedAt || 0) >= (r.updatedAt || 0)) byId[s.id] = s;
+    });
+
+    var merged = Object.keys(byId).map(function (k) { return byId[k]; });
+    if (merged.length !== songs.length) changed = true;
+    songs = merged;
+
+    if ((remote.setlistAt || 0) > setlistAt) {
+      setlist = remote.setlist || [];
+      setlistAt = remote.setlistAt || 0;
+      changed = true;
+    }
+    return changed;
+  }
+
+  function authHeaders() {
+    return {
+      "Authorization": "Bearer " + ghToken,
+      "Accept": "application/vnd.github+json",
+      "Content-Type": "application/json"
+    };
+  }
+
+  function pullLibrary() {
+    return fetch(RAW_URL + "?t=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; });
+  }
+
+  function pushLibrary(attempt) {
+    // Re-read immediately before writing and merge on top, so a change made
+    // from another device between syncs is folded in rather than flattened.
+    return fetch(API_URL + "?t=" + Date.now(), { headers: authHeaders(), cache: "no-store" })
+      .then(function (r) {
+        if (r.status === 404) return { sha: null, json: null };
+        if (r.status === 401 || r.status === 403) throw new Error("token rejected");
+        if (!r.ok) throw new Error("read failed (" + r.status + ")");
+        return r.json().then(function (d) {
+          var json = null;
+          try { json = JSON.parse(b64ToUtf8(d.content)); } catch (e) {}
+          return { sha: d.sha, json: json };
+        });
+      })
+      .then(function (cur) {
+        mergeLibrary(cur.json);
+        var body = {
+          message: "Update song library",
+          content: utf8ToB64(JSON.stringify(libraryPayload(), null, 1))
+        };
+        if (cur.sha) body.sha = cur.sha;
+        return fetch(API_URL, { method: "PUT", headers: authHeaders(), body: JSON.stringify(body) });
+      })
+      .then(function (r) {
+        if (r.ok) return true;
+        // Someone wrote in the gap between the read and the write. Merging is
+        // per song, so simply going round again is safe.
+        if (r.status === 409 && (attempt || 0) < 2) return pushLibrary((attempt || 0) + 1);
+        if (r.status === 401 || r.status === 403) throw new Error("token rejected");
+        throw new Error("write failed (" + r.status + ")");
+      });
+  }
+
+  function syncNow(push) {
+    if (syncing) return Promise.resolve();
+    syncing = true;
+    syncError = "";
+    renderSync();
+
+    var work = pullLibrary().then(function (remote) {
+      if (mergeLibrary(remote)) {
+        try {
+          localStorage.setItem(SONGS_KEY, JSON.stringify({
+            v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt, dirty: libDirty
+          }));
+        } catch (e) {}
+        renderSetRows();
+        renderSongRows();
+        renderSetStrip();
+      }
+      if (!push || !ghToken || !libDirty) return null;
+      return pushLibrary(0).then(function () { markSynced(); });
+    });
+
+    return work
+      .then(function () { lastSyncAt = Date.now(); })
+      .catch(function (err) { syncError = (err && err.message) || "sync failed"; })
+      .then(function () { syncing = false; renderSync(); });
+  }
+
+  function scheduleSync() {
+    if (!ghToken) { renderSync(); return; }
+    clearTimeout(syncTimer);
+    // Typing a song is a burst of saves; wait for it to settle before pushing.
+    syncTimer = setTimeout(function () { syncNow(true); }, 2500);
+    renderSync();
+  }
+
+  function renderSync() {
+    var el = $("syncStatus");
+    if (!el) return;
+    el.classList.remove("bad", "busy");
+    if (syncing) { el.textContent = "Syncing…"; el.classList.add("busy"); return; }
+    if (syncError) { el.textContent = syncError; el.classList.add("bad"); return; }
+    if (!ghToken) {
+      el.textContent = "Read-only — no token on this device";
+      return;
+    }
+    if (libDirty) { el.textContent = "Changes waiting to upload"; return; }
+    el.textContent = lastSyncAt ? "Synced " + nowHMS() : "Up to date";
+  }
+
+  $("tokenToggle").addEventListener("click", function () {
+    $("syncBox").classList.toggle("open");
+    if ($("syncBox").classList.contains("open")) $("ghToken").value = ghToken;
+  });
+
+  $("saveTokenBtn").addEventListener("click", function () {
+    ghToken = $("ghToken").value.trim();
+    try { ghToken ? localStorage.setItem(TOKEN_KEY, ghToken) : localStorage.removeItem(TOKEN_KEY); } catch (e) {}
+    $("ghToken").value = "";
+    $("syncBox").classList.remove("open");
+    syncError = "";
+    if (ghToken) syncNow(true); else renderSync();
+  });
+
+  $("clearTokenBtn").addEventListener("click", function () {
+    ghToken = "";
+    try { localStorage.removeItem(TOKEN_KEY); } catch (e) {}
+    $("ghToken").value = "";
+    $("syncBox").classList.remove("open");
+    renderSync();
+  });
+
+  $("syncNowBtn").addEventListener("click", function () { syncNow(true); });
+  window.addEventListener("online", function () { syncNow(true); });
 
   // ----- the parser -----
   //
@@ -2984,7 +3224,11 @@ if ("serviceWorker" in navigator) {
     songSearch.value = "";
     renderSetRows();
     renderSongRows();
+    renderSync();
     navigate("library");
+    // Opening the library is the natural moment to catch up with whatever was
+    // added on another device.
+    syncNow(true);
   }
 
   // ----- setlist -----
@@ -3082,7 +3326,7 @@ if ("serviceWorker" in navigator) {
     var id = row.getAttribute("data-id");
     if (e.target.closest(".rm")) {
       setlist = setlist.filter(function (x) { return x.id !== id; });
-      saveSongs();
+      saveSongs(true);
       renderSetRows();
       renderSongRows();
       renderSetStrip();
@@ -3101,7 +3345,7 @@ if ("serviceWorker" in navigator) {
     if (!entry) return;
     entry.ms = parseDur(e.target.value);
     e.target.value = fmtDur(entry.ms);
-    saveSongs();
+    saveSongs(true);
   });
 
   enableReorder(setRows, ".set-row", function () {
@@ -3109,7 +3353,7 @@ if ("serviceWorker" in navigator) {
       return el.getAttribute("data-id");
     });
     setlist.sort(function (a, b) { return order.indexOf(a.id) - order.indexOf(b.id); });
-    saveSongs();
+    saveSongs(true);
     renderSetRows();
     renderSetStrip();
   });
@@ -3247,7 +3491,7 @@ if ("serviceWorker" in navigator) {
         addBtn.classList.add("in");
         addBtn.textContent = "✓";
       }
-      saveSongs();
+      saveSongs(true);
       renderSetRows();
       renderSetStrip();
       return;
@@ -3515,6 +3759,12 @@ if ("serviceWorker" in navigator) {
     $("pickOp").disabled = false;
     $("pickDisp").disabled = false;
   });
+
+  // Catch up with the shared library on the way in, and push anything this
+  // device saved while it was offline. Reading needs no token, so this works
+  // on the iPad too; it just never has anything to push.
+  renderSync();
+  syncNow(true);
 })();
 </script>
 </body>
