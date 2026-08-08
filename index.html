@@ -1005,6 +1005,40 @@
   .slide-row.on .n { color: var(--accent); }
   .slide-row:active { background: var(--panel-2); }
   .slide-empty { padding: 14px; text-align: center; color: #5B6474; font-size: 13px; }
+  /* Cues are console-only. They are never in T, so they cannot reach a stage. */
+  .slide-row .cue {
+    margin-left: 8px;
+    padding: 1px 6px;
+    border-radius: 5px;
+    background: rgba(226,169,74,.14);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  #slideNote {
+    display: none;
+    padding: 9px 12px;
+    border-radius: 9px;
+    background: rgba(226,169,74,.12);
+    border: 1px solid rgba(226,169,74,.3);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+  #arrangeRow { display: flex; flex-wrap: wrap; gap: 5px; }
+  #arrangeRow:empty { display: none; }
+  .arr-chip {
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  /* a repeat looks different from a fresh section, so a mistyped tag shows */
+  .arr-chip.again { border-color: rgba(226,169,74,.45); color: var(--accent); }
 
   /* Next is the press that happens most and the one that must not be missed
      in a dark room, so it is the wide one and the only coloured one. */
@@ -1307,7 +1341,8 @@
     <div id="songEditor">
       <label class="field-label" for="pasteBox">Paste lyrics</label>
       <textarea id="pasteBox" class="textinput" rows="8" autocomplete="off"
-        placeholder="Paste the whole song here.&#10;&#10;Blank line = new slide&#10;[Chorus] or Reff: = section&#10;Chord lines are dropped automatically"></textarea>
+        placeholder="Paste the whole song here.&#10;&#10;Blank line = new slide&#10;[Chorus] or Reff: = section&#10;[Chorus] on its own line = sing it again&#10;&gt; naik nada = note for you only&#10;Chord lines are dropped automatically"></textarea>
+      <div id="arrangeRow"></div>
       <div id="parseNote"></div>
 
       <label class="field-label" for="songTitleInput">Title</label>
@@ -1464,6 +1499,7 @@
         <button type="button" id="lyricOnScreen">PUT ON SCREEN</button>
       </div>
       <div class="slide-list" id="opSlideList"></div>
+      <div id="slideNote"></div>
       <div id="lyricNav">
         <button type="button" id="prevSlideBtn">◀<small>Prev</small></button>
         <button type="button" id="nextSlideBtn">▶<small>Next</small></button>
@@ -1617,7 +1653,8 @@ if ("serviceWorker" in navigator) {
   //  What is on stage lives in T.song, so the operator and the display run
   //  exactly the same rendering code; the display just receives its copy.
   // ============================================================
-  var LY = { size: 0, fittedFor: null };
+  // notes live here, not in T, so they stay on the console side of the wire
+  var LY = { size: 0, fittedFor: null, notes: [] };
 
   // Cheap identity for "is this still the same song, unchanged?". The display
   // parses a fresh object out of every snapshot, so comparing by reference
@@ -2877,6 +2914,12 @@ if ("serviceWorker" in navigator) {
       var t = document.createElement("span");
       t.className = "t";
       t.textContent = slide[0] || "";
+      if (LY.notes[i]) {
+        var note = document.createElement("span");
+        note.className = "cue";
+        note.textContent = LY.notes[i];
+        t.appendChild(note);
+      }
       row.appendChild(n);
       row.appendChild(t);
       opSlideList.appendChild(row);
@@ -2889,6 +2932,12 @@ if ("serviceWorker" in navigator) {
     lyricOnScreen.classList.toggle("on", live);
     lyricOnScreen.textContent = live ? "ON SCREEN" : "PUT ON SCREEN";
     blankBtn.classList.toggle("on", live && !!T.blank);
+
+    // The cue for the slide being sung, next to the button that leaves it.
+    var cue = LY.notes[T.slide] || "";
+    $("slideNote").textContent = cue;
+    $("slideNote").style.display = cue ? "block" : "none";
+
     Array.prototype.forEach.call(opSlideList.children, function (row) {
       if (!row.getAttribute) return;
       var i = parseInt(row.getAttribute("data-i"), 10);
@@ -3173,8 +3222,10 @@ if ("serviceWorker" in navigator) {
     var lines = String(text || "").replace(/\r\n?/g, "\n").split("\n");
     var blocks = [], cur = null, title = "", dropped = 0;
 
-    function closeBlock() { if (cur && cur.lines.length) blocks.push(cur); cur = null; }
-    function openBlock(tag) { closeBlock(); cur = { tag: tag || "", lines: [] }; }
+    // A tag with no lines under it is kept: it means "repeat that section
+    // here", which is how the arrangement gets written without retyping.
+    function closeBlock() { if (cur && (cur.lines.length || cur.tag)) blocks.push(cur); cur = null; }
+    function openBlock(tag) { closeBlock(); cur = { tag: tag || "", lines: [], notes: [] }; }
 
     lines.forEach(function (raw) {
       var t = raw.trim(), m;
@@ -3182,6 +3233,12 @@ if ("serviceWorker" in navigator) {
       if (!t) { closeBlock(); return; }
       m = t.match(/^\[\s*(.+?)\s*\]$/) || t.match(/^([A-Za-z][A-Za-z0-9 .'\-]{0,18}):$/);
       if (m) { openBlock(m[1]); return; }
+      // "> naik nada" is for whoever is driving, never for the stage.
+      if ((m = t.match(/^>\s*(.*)$/))) {
+        if (!cur) openBlock("");
+        if (m[1].trim()) cur.notes.push(m[1].trim());
+        return;
+      }
       if (isChordLine(t)) { dropped++; return; }
       if (!cur) openBlock("");
       cur.lines.push(t);
@@ -3194,18 +3251,75 @@ if ("serviceWorker" in navigator) {
       title = blocks.shift().lines[0];
     }
 
-    var slides = [], tags = [], total = 0, longest = "";
+    // Pass one: every block that carries lines defines a section. Sections are
+    // stored once however often they are sung, so correcting a chorus corrects
+    // all of it — that is the whole point of keeping an arrangement.
+    var sections = [], byKey = {}, auto = 0, redefined = [];
     blocks.forEach(function (b) {
-      total += b.lines.length;
-      b.lines.forEach(function (l) { if (l.length > longest.length) longest = l; });
-      for (var i = 0; i < b.lines.length; i += perSlide) {
-        slides.push(b.lines.slice(i, i + perSlide));
-        tags.push(i === 0 ? b.tag : "");
+      if (!b.lines.length) return;
+      var key = b.tag ? b.tag.toLowerCase() : ("_" + (++auto));
+      if (byKey[key]) {
+        // Same tag written out twice with different words. Keep both under
+        // separate keys rather than letting one quietly overwrite the other —
+        // nothing typed should ever be thrown away — and say so.
+        if (b.tag) redefined.push(b.tag);
+        key = key + "#" + (++auto);
+      }
+      b._key = key;
+      byKey[key] = { key: key, tag: b.tag, lines: b.lines, notes: b.notes };
+      sections.push(byKey[key]);
+    });
+
+    // Pass two: the running order, in the order written. A definition can come
+    // after its first mention, so this has to be a second pass.
+    var order = [], unknown = 0;
+    blocks.forEach(function (b) {
+      var key = b._key || (b.tag ? b.tag.toLowerCase() : "");
+      if (key && byKey[key]) order.push(key);
+      else if (b.tag) unknown++;
+    });
+
+    var slides = [], tags = [], notes = [], total = 0, longest = "", noteCount = 0;
+    order.forEach(function (key) {
+      var s = byKey[key];
+      total += s.lines.length;
+      s.lines.forEach(function (l) { if (l.length > longest.length) longest = l; });
+      for (var i = 0; i < s.lines.length; i += perSlide) {
+        slides.push(s.lines.slice(i, i + perSlide));
+        tags.push(i === 0 ? s.tag : "");
+        var n = (i === 0 && s.notes.length) ? s.notes.join(" · ") : "";
+        if (n) noteCount++;
+        notes.push(n);
       }
     });
 
-    return { title: title, slides: slides, tags: tags,
-             dropped: dropped, lines: total, longest: longest };
+    return { title: title, sections: sections, order: order,
+             slides: slides, tags: tags, notes: notes,
+             dropped: dropped, lines: total, longest: longest,
+             redefined: redefined, unknown: unknown, noteCount: noteCount };
+  }
+
+  // The compact form again: each section written out the first time it is
+  // sung, then just its tag wherever it comes back.
+  function songToText(s) {
+    if (s.sections && s.order && s.sections.length) {
+      var byKey = {}, seen = {};
+      s.sections.forEach(function (sec) { byKey[sec.key] = sec; });
+      return s.order.map(function (key) {
+        var sec = byKey[key];
+        if (!sec) return "";
+        var head = sec.tag ? "[" + sec.tag + "]" : "";
+        if (seen[key]) return head;
+        seen[key] = true;
+        var body = (sec.notes || []).map(function (n) { return "> " + n; })
+          .concat(sec.lines).join("\n");
+        return head ? head + "\n" + body : body;
+      }).filter(Boolean).join("\n\n");
+    }
+    // Songs saved before arrangements existed only have the flattened slides.
+    return (s.slides || []).map(function (sl, i) {
+      return (s.tags && s.tags[i] ? "[" + s.tags[i] + "]\n" : "") + sl.join("\n");
+    }).join("\n\n");
   }
 
   // ----- the library screen -----
@@ -3458,6 +3572,9 @@ if ("serviceWorker" in navigator) {
   }
 
   function loadSong(s) {
+    // Notes are deliberately kept out of T: anything in T is broadcast, and a
+    // cue meant for the operator must never turn up in front of the singer.
+    LY.notes = s.notes || [];
     // Only what the stage needs travels; lastUsed and hidden stay at home.
     T.song = { id: s.id, title: s.title, slides: s.slides, tags: s.tags, updatedAt: s.updatedAt || 0 };
     T.slide = 0;
@@ -3513,9 +3630,7 @@ if ("serviceWorker" in navigator) {
 
   function openEditor(s) {
     editingId = s ? s.id : null;
-    pasteBox.value = s ? s.slides.map(function (sl, i) {
-      return (s.tags && s.tags[i] ? "[" + s.tags[i] + "]\n" : "") + sl.join("\n");
-    }).join("\n\n") : "";
+    pasteBox.value = s ? songToText(s) : "";
     songTitleInput.value = s ? s.title : "";
     setPerSlide(s && s.perSlide ? s.perSlide : 4);
     disarmDelete();
@@ -3534,7 +3649,23 @@ if ("serviceWorker" in navigator) {
       bits.push(parsed.slides.length + " slide" + (parsed.slides.length === 1 ? "" : "s"));
       bits.push(parsed.lines + " lines");
       if (parsed.dropped) bits.push(parsed.dropped + " chord line" + (parsed.dropped === 1 ? "" : "s") + " dropped");
+      if (parsed.noteCount) bits.push(parsed.noteCount + " note" + (parsed.noteCount === 1 ? "" : "s"));
       parseNote.textContent = bits.join(" · ");
+
+      if (parsed.redefined.length) {
+        var dup = document.createElement("div");
+        dup.className = "warn";
+        dup.textContent = "“" + parsed.redefined[0] + "” is written out twice with different " +
+          "words — both kept, as separate sections. To repeat one, leave the tag on its own line.";
+        parseNote.appendChild(dup);
+      }
+      if (parsed.unknown) {
+        var unk = document.createElement("div");
+        unk.className = "warn";
+        unk.textContent = parsed.unknown + " tag" + (parsed.unknown === 1 ? "" : "s") +
+          " point at a section that is never written out — skipped.";
+        parseNote.appendChild(unk);
+      }
 
       // One runaway line shrinks the entire song, because the type is fitted
       // to the worst line. Better to know now than to squint on Sunday.
@@ -3546,7 +3677,27 @@ if ("serviceWorker" in navigator) {
         parseNote.appendChild(warn);
       }
     }
+    renderArrangement();
     saveSongBtn.classList.toggle("dirty", !!parsed.slides.length);
+  }
+
+  // The running order as it will actually be sung, so a repeat that was meant
+  // and a repeat that was mistyped look different before the song is saved.
+  function renderArrangement() {
+    var row = $("arrangeRow");
+    row.innerHTML = "";
+    if (!parsed || parsed.order.length < 2) return;
+    var byKey = {};
+    parsed.sections.forEach(function (s) { byKey[s.key] = s; });
+    var seen = {};
+    parsed.order.forEach(function (key) {
+      var sec = byKey[key];
+      var chip = document.createElement("span");
+      chip.className = "arr-chip" + (seen[key] ? " again" : "");
+      chip.textContent = sec && sec.tag ? sec.tag : "•";
+      seen[key] = true;
+      row.appendChild(chip);
+    });
   }
 
   function commitSong(asNew) {
@@ -3554,17 +3705,24 @@ if ("serviceWorker" in navigator) {
     var title = songTitleInput.value.trim() || parsed.title || "Untitled";
     var existing = asNew ? null : songById(editingId);
 
+    // sections + order are the truth; slides/tags/notes are the flattened form
+    // kept alongside so the stage, the wire and older songs need no changes.
     if (existing) {
       existing.title = title;
+      existing.sections = parsed.sections;
+      existing.order = parsed.order;
       existing.slides = parsed.slides;
       existing.tags = parsed.tags;
+      existing.notes = parsed.notes;
       existing.perSlide = perSlide;
       existing.updatedAt = Date.now();
       existing.hidden = false;
     } else {
       existing = {
         id: newSongId(), title: title,
-        slides: parsed.slides, tags: parsed.tags, perSlide: perSlide,
+        sections: parsed.sections, order: parsed.order,
+        slides: parsed.slides, tags: parsed.tags, notes: parsed.notes,
+        perSlide: perSlide,
         updatedAt: Date.now(), lastUsed: 0, hidden: false
       };
       songs.push(existing);
