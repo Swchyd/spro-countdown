@@ -1,0 +1,31 @@
+name = "spro-library"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+
+# Served from spro-library.<subdomain>.workers.dev. Preview URLs are off: they
+# would put the same API on a second hostname per version, and there is nothing
+# here that wants testing on a URL other than the one the app actually calls.
+workers_dev = true
+preview_urls = false
+
+# Which repo holds the library. The Worker is the only thing that writes to it.
+[vars]
+GH_OWNER = "Swchyd"
+GH_REPO = "spro-countdown"
+GH_FILE = "songs.json"
+GH_BRANCH = "main"
+# Extra origins allowed to call this Worker, comma-separated. GitHub Pages and
+# private/LAN addresses are already allowed in code — this is for anything else.
+ALLOWED_ORIGINS = ""
+
+# Access codes, sessions, collaborator records, the audit log and rate-limit
+# counters. Create it once with:
+#   npx wrangler kv namespace create SPRO
+# then paste the id below.
+[[kv_namespaces]]
+binding = "SPRO"
+id = "2b0c3d2e724e46958bf1125a8f7bd0b8"
+
+# Secrets are NOT set here — they would end up in git. Set them with:
+#   npx wrangler secret put GITHUB_TOKEN
+#   npx wrangler secret put OWNER_KEY

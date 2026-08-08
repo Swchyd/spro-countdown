@@ -3,3 +3,5 @@ package-lock.json
 dist/
 *.lnk
 .certs/
+worker/node_modules/
+worker/.wrangler/

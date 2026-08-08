@@ -1248,6 +1248,150 @@
   #tokenBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   #tokenBtns .ghost { padding: 11px; font-size: 12px; }
 
+  /* ---------- access, roles and the recycle bin ---------- */
+
+  /* The badge is the one piece of chrome that is always visible: what you are
+     allowed to do here is not obvious from the buttons alone, because most of
+     the difference is in what is missing. */
+  .role-badge {
+    flex: 0 0 auto;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: #5B6474;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .role-badge.owner { border-color: var(--accent); color: var(--accent); }
+  .role-badge.collaborator { border-color: var(--ok); color: var(--ok); }
+
+  #signedOut, #signedIn { display: none; flex-direction: column; gap: 10px; }
+  #library:not(.signed-in) #signedOut { display: flex; }
+  #library.signed-in #signedIn { display: flex; }
+  #ownerRow { display: none; flex-direction: column; gap: 10px; }
+  #tokenRow.owner-open #ownerRow { display: flex; }
+  #acctBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  #acctBtns .ghost { padding: 11px; font-size: 12px; }
+
+  /* Hiding these is a courtesy, not the control — the same request from a
+     collaborator is refused by the Worker whether or not the button was here. */
+  #library:not(.is-owner) .owner-only { display: none; }
+  #library:not(.can-write) #newSongBtn,
+  #library:not(.can-write) #edRow,
+  #library:not(.can-write) #saveNextBtn,
+  #library:not(.can-write) .song-row .ed,
+  #library:not(.can-write) .song-row .add,
+  #library:not(.can-write) .set-row .rm { display: none; }
+  #library:not(.can-write) #pasteBox,
+  #library:not(.can-write) #songTitleInput { opacity: .6; pointer-events: none; }
+
+  .ghost.danger { border-color: rgba(226, 92, 74, .5); color: var(--over); }
+
+  #trashView, #adminView, #auditView { display: none; flex-direction: column; gap: 14px; }
+  #library.trash #libList, #library.admin #libList, #library.audit #libList { display: none; }
+  #library.trash #trashView { display: flex; }
+  #library.admin #adminView { display: flex; }
+  #library.audit #auditView { display: flex; }
+  .sub-head { margin: 0; font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #5B6474; }
+
+  #trashRows, #collabRows, #auditRows {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    max-height: 52vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .bin-row, .collab-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+  .bin-row:last-child, .collab-row:last-child { border-bottom: none; }
+  .bin-row .info, .collab-row .info {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .bin-row .nm, .collab-row .nm {
+    font-size: 15px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bin-row .by, .collab-row .by { font-size: 11px; font-weight: 600; color: #5B6474; }
+  .bin-row button, .collab-row button {
+    flex: 0 0 auto;
+    width: 62px;
+    background: transparent;
+    border-left: 1px solid var(--line);
+    color: #5B6474;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .bin-row button:active, .collab-row button:active { background: var(--panel-2); color: var(--ink); }
+  .bin-row .purge, .collab-row .revoke { color: rgba(226, 92, 74, .8); }
+  .collab-row.revoked .nm { color: #5B6474; text-decoration: line-through; }
+
+  .audit-row { padding: 11px 14px; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.5; }
+  .audit-row:last-child { border-bottom: none; }
+  .audit-row .when { display: block; font-size: 11px; font-weight: 600; color: #5B6474; }
+  .audit-row .chg { display: block; font-size: 11px; color: #5B6474; margin-top: 2px; }
+
+  #codeReveal:empty { display: none; }
+  #codeReveal {
+    padding: 14px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--panel);
+    color: var(--accent);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  #codeBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  #codeBtns .ghost { padding: 11px; font-size: 12px; }
+  #codeBox { display: flex; flex-direction: column; gap: 10px; }
+
+  #conflictBox { display: none; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  #syncBox.conflicted #conflictBox { display: flex; }
+  #conflictText { font-size: 12px; line-height: 1.5; color: var(--over); }
+  #conflictBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  #conflictBtns .ghost { padding: 10px; font-size: 12px; }
+
+  #confirmWrap {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(11, 13, 18, .82);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #confirmWrap.on { display: flex; }
+  #confirmCard {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    border: 1px solid var(--over);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  #confirmTitle { font-size: 15px; font-weight: 800; color: var(--over); }
+  #confirmBody { font-size: 13px; line-height: 1.55; color: var(--ink-dim); }
+  #confirmBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  #confirmBtns .ghost { padding: 11px; font-size: 12px; }
+
   #parseNote { font-size: 12px; line-height: 1.5; color: var(--ink-dim); min-height: 18px; }
   #parseNote .warn { color: var(--accent); }
 
@@ -1320,17 +1464,41 @@
       </div>
 
       <div id="syncBox">
+        <div id="conflictBox">
+          <div id="conflictText"></div>
+          <div id="conflictBtns">
+            <button type="button" id="keepMineBtn" class="ghost">Keep mine</button>
+            <button type="button" id="takeTheirsBtn" class="ghost">Take theirs</button>
+          </div>
+        </div>
         <div id="syncRow">
           <span id="syncStatus">Checking…</span>
+          <span id="acctRole" class="role-badge">read-only</span>
           <button type="button" id="syncNowBtn">Sync</button>
-          <button type="button" id="tokenToggle" aria-label="Sync settings">⚙</button>
+          <button type="button" id="tokenToggle" aria-label="Account and sync settings">⚙</button>
         </div>
         <div id="tokenRow">
-          <p class="hint">A GitHub fine-grained token with <b>Contents: Read and write</b>, limited to this one repo. It stays on this device — don't put it on the iPad, which only ever reads.</p>
-          <input id="ghToken" class="textinput" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
-          <div id="tokenBtns">
-            <button type="button" id="saveTokenBtn" class="ghost">Save token</button>
-            <button type="button" id="clearTokenBtn" class="ghost">Forget</button>
+          <div id="signedOut">
+            <p class="hint">Anyone can read the library. To add or change songs, join with the access code the owner gave you.</p>
+            <input id="joinName" class="textinput" type="text" placeholder="Your name" autocomplete="off" maxlength="40">
+            <input id="joinCode" class="textinput" type="text" placeholder="XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false" autocapitalize="characters">
+            <div id="tokenBtns">
+              <button type="button" id="joinBtn" class="ghost">Join</button>
+              <button type="button" id="ownerToggle" class="ghost">I'm the owner</button>
+            </div>
+            <div id="ownerRow">
+              <p class="hint">The owner key is set on the server, not stored here. It is not the same thing as the access code.</p>
+              <input id="ownerKey" class="textinput" type="password" placeholder="Owner key" autocomplete="off" spellcheck="false">
+              <button type="button" id="ownerGoBtn" class="ghost">Sign in as owner</button>
+            </div>
+          </div>
+          <div id="signedIn">
+            <div id="acctBtns">
+              <button type="button" id="trashBtn" class="ghost">Recently deleted</button>
+              <button type="button" id="adminBtn" class="ghost owner-only">Manage access</button>
+              <button type="button" id="auditBtn" class="ghost owner-only">Activity log</button>
+              <button type="button" id="signOutBtn" class="ghost">Sign out</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1362,6 +1530,55 @@
         <button type="button" id="deleteSongBtn" class="ghost">Delete</button>
       </div>
       <button type="button" id="editorBack" class="ghost">‹ Songs</button>
+    </div>
+
+    <!-- Recently deleted. Nothing here has left the library — a delete sets a
+         date, and this is the list of songs carrying one. -->
+    <div id="trashView">
+      <h2 class="sub-head">Recently deleted</h2>
+      <p class="hint" id="trashHint"></p>
+      <div id="trashRows"></div>
+      <button type="button" id="emptyTrashBtn" class="ghost owner-only danger">Empty trash</button>
+      <button type="button" class="ghost sub-back">‹ Songs</button>
+    </div>
+
+    <div id="adminView">
+      <h2 class="sub-head">Access</h2>
+      <div id="codeBox">
+        <div id="codeState" class="hint"></div>
+        <div id="codeReveal"></div>
+        <div id="codeBtns">
+          <button type="button" id="rotateCodeBtn" class="ghost">Regenerate code</button>
+          <button type="button" id="revokeCodeBtn" class="ghost danger">Revoke</button>
+        </div>
+        <p class="hint">Regenerating invalidates the old code <b>and signs out everyone who joined with it</b> — they rejoin with the new one. The code is never shown again after this screen, so pass it on now.</p>
+      </div>
+      <h2 class="sub-head">Collaborators</h2>
+      <div id="collabRows"></div>
+      <button type="button" class="ghost sub-back">‹ Songs</button>
+    </div>
+
+    <div id="auditView">
+      <h2 class="sub-head">Activity</h2>
+      <div id="auditRows"></div>
+      <button type="button" id="auditMoreBtn" class="ghost">Load more</button>
+      <button type="button" class="ghost sub-back">‹ Songs</button>
+    </div>
+  </div>
+</div>
+
+<!-- Typed confirmation for anything destructive. The phrase is not chosen
+     here — the server sends back the exact words it will accept, computed from
+     the number of records it actually found. Retyping it is the last step of a
+     check that already passed identity, role and blast radius. -->
+<div id="confirmWrap">
+  <div id="confirmCard">
+    <div id="confirmTitle"></div>
+    <div id="confirmBody"></div>
+    <input id="confirmInput" class="textinput" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters">
+    <div id="confirmBtns">
+      <button type="button" id="confirmCancel" class="ghost">Cancel</button>
+      <button type="button" id="confirmGo" class="ghost danger">Confirm</button>
     </div>
   </div>
 </div>
@@ -2988,34 +3205,48 @@ if ("serviceWorker" in navigator) {
   // Tonight's running order: song ids and a planned length, never copies of
   // the lyrics. Fix a typo once and every future setlist already has it.
   var setlist = [];
-  var setlistAt = 0;   // the setlist merges whole, so it needs its own stamp
-  var libDirty = false;
+  var setlistAt = 0;   // the setlist moves whole, so it needs its own stamp
+
+  // v1 said only `hidden`. v2 says when and by whom, which is what the trash
+  // needs — but `hidden` is still written alongside, because an iPad that has
+  // not picked up this build yet is still reading this file and still has to
+  // know not to show the song.
+  function migrateSong(s) {
+    if (!s || typeof s !== "object") return s;
+    if (typeof s.version !== "number") s.version = 1;
+    if (s.hidden && !s.deletedAt) {
+      s.deletedAt = s.updatedAt || Date.now();
+      s.deletedBy = s.deletedBy || "(before activity logging)";
+    }
+    if (s.deletedAt) s.hidden = true;
+    return s;
+  }
 
   try {
     var songRaw = JSON.parse(localStorage.getItem(SONGS_KEY) || "null");
-    if (songRaw && Array.isArray(songRaw.songs)) songs = songRaw.songs;
+    if (songRaw && Array.isArray(songRaw.songs)) songs = songRaw.songs.map(migrateSong);
     if (songRaw && Array.isArray(songRaw.setlist)) setlist = songRaw.setlist;
-    if (songRaw) { setlistAt = songRaw.setlistAt || 0; libDirty = !!songRaw.dirty; }
+    if (songRaw) setlistAt = songRaw.setlistAt || 0;
   } catch (e) {}
 
-  function saveSongs(touchedSetlist) {
-    if (touchedSetlist) setlistAt = Date.now();
-    libDirty = true;
+  function persistLocal() {
     try {
       localStorage.setItem(SONGS_KEY, JSON.stringify({
-        v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt, dirty: true
+        v: 2, songs: songs, setlist: setlist, setlistAt: setlistAt
       }));
     } catch (e) {}
-    scheduleSync();
   }
 
-  function markSynced() {
-    libDirty = false;
-    try {
-      localStorage.setItem(SONGS_KEY, JSON.stringify({
-        v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt, dirty: false
-      }));
-    } catch (e) {}
+  // Local persistence only. What goes to the server is queued explicitly by
+  // whichever action changed something, because "save happened" and "the
+  // server should be told" stopped being the same event once the server
+  // started having an opinion about it.
+  function saveSongs(touchedSetlist) {
+    if (touchedSetlist) {
+      setlistAt = Date.now();
+      queueSetlist();
+    }
+    persistLocal();
   }
 
   function newSongId() {
@@ -3023,127 +3254,358 @@ if ("serviceWorker" in navigator) {
   }
 
   // ============================================================
-  //  Sync — the repo is the database
+  //  Sync — the repo is still the database, but it is no longer ours to write
   //
-  //  Reading needs no account and no token: it is a plain fetch of a file in
-  //  a public repo, so any device that opens the link already has the whole
-  //  library. Writing needs a token, which lives only on the machine that
-  //  writes. Every change is a commit, so the version history doubles as the
-  //  backup — that is the part a hosted database would have cost us.
+  //  Reading needs no account and no credential: it is a plain fetch of a file
+  //  in a public repo, so any device that opens the link already has the whole
+  //  library, offline cache and all. That has not changed and must not.
+  //
+  //  Writing has. The GitHub token used to sit in this file's localStorage,
+  //  which meant every device that could write could write *anything* — GitHub
+  //  cannot tell "edit one song" from "replace the file with []", because both
+  //  are the same PUT. So the token moved to a Worker that no browser can read,
+  //  and this end now sends operations instead of files. The Worker decides
+  //  whether an operation is allowed and only then makes the commit.
+  //
+  //  Every change is still a commit, so the version history is still the
+  //  backup — and with force-pushes blocked on main, it is a backup that not
+  //  even a stolen credential can rewrite.
   // ============================================================
   var GH_OWNER = "Swchyd", GH_REPO = "spro-countdown", GH_FILE = "songs.json";
-  var TOKEN_KEY = "spro-gh-token";
   // Read straight from raw, never through the Pages URL: Pages caches for up
   // to ten minutes, so a song added two minutes ago would simply not be there.
   var RAW_URL = "https://raw.githubusercontent.com/" + GH_OWNER + "/" + GH_REPO + "/main/" + GH_FILE;
-  var API_URL = "https://api.github.com/repos/" + GH_OWNER + "/" + GH_REPO + "/contents/" + GH_FILE;
 
-  var ghToken = "";
-  try { ghToken = localStorage.getItem(TOKEN_KEY) || ""; } catch (e) {}
+  // Where the gatekeeper lives. The override exists so `wrangler dev` can be
+  // pointed at without editing this file.
+  var API_BASE = "https://spro-library.samuelcahyadi-w.workers.dev";
+  try { API_BASE = localStorage.getItem("spro-api-base") || API_BASE; } catch (e) {}
+  API_BASE = API_BASE.replace(/\/+$/, "");
 
-  var syncing = false, syncTimer = 0, lastSyncAt = 0, syncError = "";
+  var SESSION_KEY = "spro-session-v1";
+  var OUTBOX_KEY = "spro-outbox-v1";
 
-  function utf8ToB64(str) {
-    var bytes = new TextEncoder().encode(str), bin = "";
-    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
-    return btoa(bin);
+  // The session token, not a repo credential: it grants exactly what the role
+  // behind it grants, and the owner can end it from another device.
+  var session = null;
+  try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); } catch (e) {}
+
+  // Edits made with no signal. The stage has patchy wifi and a song written on
+  // the way in must not be lost waiting for a bar, so writes queue here and
+  // drain when there is a network and a session to spend.
+  var outbox = [];
+  try { outbox = JSON.parse(localStorage.getItem(OUTBOX_KEY) || "[]") || []; } catch (e) {}
+
+  var syncing = false, syncTimer = 0, setlistTimer = 0, lastSyncAt = 0;
+  var syncError = "", rejection = "", conflict = null, policy = null;
+
+  // Writes the server has acknowledged but a snapshot may not show yet. A
+  // "Synced" that is immediately followed by the song vanishing is the worst
+  // possible lie to tell someone who has just typed out a song, so an
+  // acknowledged write outranks any snapshot that disagrees with it until the
+  // snapshot catches up. Entries clear themselves once it does.
+  var confirmedWrites = {}, confirmedDeletes = {};
+
+  function saveSession() {
+    try {
+      if (session) localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+      else localStorage.removeItem(SESSION_KEY);
+    } catch (e) {}
   }
 
-  function b64ToUtf8(b64) {
-    var bin = atob(String(b64).replace(/\s/g, ""));
-    var bytes = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    return new TextDecoder().decode(bytes);
+  function saveOutbox() {
+    try { localStorage.setItem(OUTBOX_KEY, JSON.stringify(outbox)); } catch (e) {}
   }
 
-  function libraryPayload() {
-    return { v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt };
+  function myRole() { return (session && session.me && session.me.role) || "guest"; }
+  function myName() { return (session && session.me && session.me.name) || ""; }
+  function canWrite() { return myRole() === "owner" || myRole() === "collaborator"; }
+  function isOwner() { return myRole() === "owner"; }
+
+  function newOpId() {
+    return "o_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   }
 
-  // Per song, the newer stamp wins; nothing is ever dropped for being absent
-  // on one side. Deletes travel as hidden:true, so they merge like any other
-  // edit instead of being undone by whichever device still remembers the song.
-  function mergeLibrary(remote) {
-    if (!remote) return false;
-    var byId = {}, changed = false;
-
-    (remote.songs || []).forEach(function (s) { if (s && s.id) byId[s.id] = s; });
-    songs.forEach(function (s) {
-      var r = byId[s.id];
-      if (!r || (s.updatedAt || 0) >= (r.updatedAt || 0)) byId[s.id] = s;
+  // One shape for every call, so the failure path is written once. The server
+  // answers with a code as well as a sentence; the code is what the UI branches
+  // on, the sentence is what the person reads.
+  function api(path, opts) {
+    opts = opts || {};
+    var headers = { "Content-Type": "application/json" };
+    if (session && session.token) headers.Authorization = "Bearer " + session.token;
+    return fetch(API_BASE + path, {
+      method: opts.method || "GET",
+      headers: headers,
+      body: opts.body ? JSON.stringify(opts.body) : undefined,
+      cache: "no-store"
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (d) {
+        if (r.ok) return d;
+        var err = new Error(d.message || ("request failed (" + r.status + ")"));
+        err.status = r.status;
+        err.code = d.error || "error";
+        err.data = d;
+        // A session the server no longer honours is worse than none: keeping it
+        // makes every later call fail the same opaque way. Drop it and say so.
+        if (r.status === 401 || d.error === "revoked" || d.error === "code_rotated") {
+          session = null;
+          saveSession();
+          applyRole();
+        }
+        throw err;
+      });
     });
-
-    var merged = Object.keys(byId).map(function (k) { return byId[k]; });
-    if (merged.length !== songs.length) changed = true;
-    songs = merged;
-
-    if ((remote.setlistAt || 0) > setlistAt) {
-      setlist = remote.setlist || [];
-      setlistAt = remote.setlistAt || 0;
-      changed = true;
-    }
-    return changed;
   }
 
-  function authHeaders() {
-    return {
-      "Authorization": "Bearer " + ghToken,
-      "Accept": "application/vnd.github+json",
-      "Content-Type": "application/json"
-    };
-  }
-
-  // Three outcomes, and they are not the same thing: a library came back, the
-  // file has never been published, or we could not reach it at all. Only the
-  // middle one is a reason to go and create it.
+  // Ask the gatekeeper first. raw.githubusercontent is a CDN: a commit made a
+  // second ago can be invisible there for minutes, and since a pull replaces
+  // local state wholesale, a stale answer takes back the song that was just
+  // saved. The Worker reads through the GitHub API, which sees its own writes.
+  //
+  // raw stays as the fallback, and it is not a lesser one — it is what lets a
+  // display that has never signed in, or a laptop with no route to Cloudflare,
+  // still load the whole library. The stage does not depend on the gatekeeper.
   function pullLibrary() {
-    return fetch(RAW_URL + "?t=" + Date.now(), { cache: "no-store" })
+    return fetch(API_BASE + "/library?t=" + Date.now(), { cache: "no-store" })
       .then(function (r) {
-        if (r.status === 404) return { missing: true };
-        return r.ok ? r.json() : null;
+        if (!r.ok) throw new Error("gatekeeper unavailable");
+        return r.json();
       })
-      .catch(function () { return null; });
-  }
-
-  function pushLibrary(attempt) {
-    // Re-read immediately before writing and merge on top, so a change made
-    // from another device between syncs is folded in rather than flattened.
-    return fetch(API_URL + "?t=" + Date.now(), { headers: authHeaders(), cache: "no-store" })
-      .then(function (r) {
-        // The repo is public, so this read would succeed even unauthenticated.
-        // A 401 here therefore says something specific: the token string
-        // itself was not accepted, before permissions ever came into it.
-        if (r.status === 401) throw new Error("401 · token not recognised — expired, or the paste was cut short");
-        if (r.status === 404) return { sha: null, json: null };   // no file yet
-        if (!r.ok) throw new Error("read failed (" + r.status + ")");
-        return r.json().then(function (d) {
-          var json = null;
-          try { json = JSON.parse(b64ToUtf8(d.content)); } catch (e) {}
-          return { sha: d.sha, json: json };
-        });
-      })
-      .then(function (cur) {
-        mergeLibrary(cur.json);
-        var body = {
-          message: "Update song library",
-          content: utf8ToB64(JSON.stringify(libraryPayload(), null, 1))
-        };
-        if (cur.sha) body.sha = cur.sha;
-        return fetch(API_URL, { method: "PUT", headers: authHeaders(), body: JSON.stringify(body) });
-      })
-      .then(function (r) {
-        if (r.ok) return true;
-        // Someone wrote in the gap between the read and the write. Merging is
-        // per song, so simply going round again is safe.
-        if (r.status === 409 && (attempt || 0) < 2) return pushLibrary((attempt || 0) + 1);
-        // Each of these has a different fix, so each says which one.
-        if (r.status === 401) throw new Error("401 · token not recognised — expired, or the paste was cut short");
-        if (r.status === 403) throw new Error("403 · token has no write access — set Contents to Read and write");
-        if (r.status === 404) throw new Error("404 · repo not on the token's list — add " + GH_REPO + " under Only select repositories");
-        if (r.status === 422) throw new Error("422 · GitHub refused the file");
-        throw new Error("write failed (" + r.status + ")");
+      .catch(function () {
+        return fetch(RAW_URL + "?t=" + Date.now(), { cache: "no-store" })
+          .then(function (r) {
+            if (r.status === 404) return { missing: true };
+            return r.ok ? r.json() : null;
+          })
+          .catch(function () { return null; });
       });
   }
+
+  // The server is the only writer now, so what comes back is the truth and
+  // there is nothing to merge — the per-song last-write-wins reconciliation
+  // this replaced only existed because two devices used to write the same file
+  // directly. Taking the server's copy wholesale is both simpler and correct.
+  //
+  // Two things survive a pull: anything still sitting in the outbox, which by
+  // definition the server has not seen yet, and lastUsed, which is this
+  // device's own note about what it played and was never shared.
+  function adoptLibrary(remote) {
+    var pending = {};
+    outbox.forEach(function (op) {
+      if (op.id) pending[op.id] = true;
+      if (op.song && op.song.id) pending[op.song.id] = true;
+    });
+
+    var mine = {};
+    songs.forEach(function (s) { if (s.lastUsed) mine[s.id] = s.lastUsed; });
+
+    var next = (remote.songs || []).filter(function (s) { return s && s.id; });
+    next.forEach(function (s) { if (typeof s.version !== "number") s.version = 1; });
+
+    if (Object.keys(pending).length) {
+      var byId = {};
+      next.forEach(function (s, i) { byId[s.id] = i; });
+      songs.forEach(function (s) {
+        if (!pending[s.id]) return;
+        if (byId[s.id] === undefined) next.push(s);
+        else next[byId[s.id]] = s;
+      });
+    }
+
+    // A write the server said yes to is true, whatever this snapshot shows. If
+    // the snapshot is behind, hold ours; once it agrees, stop holding.
+    Object.keys(confirmedWrites).forEach(function (id) {
+      var ours = confirmedWrites[id], at = -1;
+      for (var i = 0; i < next.length; i++) if (next[i].id === id) { at = i; break; }
+      if (at === -1) next.push(ours);
+      else if ((next[at].version || 0) < (ours.version || 0)) next[at] = ours;
+      else delete confirmedWrites[id];
+    });
+
+    Object.keys(confirmedDeletes).forEach(function (id) {
+      var stillThere = false;
+      next = next.filter(function (s) {
+        if (s.id !== id || s.deletedAt) return true;
+        stillThere = true;
+        return false;
+      });
+      if (!stillThere) delete confirmedDeletes[id];
+    });
+
+    next.forEach(function (s) { if (mine[s.id] && !s.lastUsed) s.lastUsed = mine[s.id]; });
+    songs = next;
+
+    // Same reasoning for the setlist, except it moves whole rather than per
+    // song, so one queued edit holds back the whole field.
+    var setlistQueued = outbox.some(function (op) { return op.kind === "setlist"; });
+    if (!setlistQueued) {
+      setlist = (remote.setlist || []).filter(function (e) { return e && e.id; });
+      setlistAt = remote.setlistAt || 0;
+    }
+    persistLocal();
+  }
+
+  // ----- the outbox -----
+
+  function enqueue(op) {
+    op.opId = op.opId || newOpId();
+    op.at = Date.now();
+    outbox.push(op);
+    saveOutbox();
+    scheduleSync();
+  }
+
+  function sendOp(op) {
+    if (op.kind === "create") {
+      return api("/songs", { method: "POST", body: { opId: op.opId, song: op.song } });
+    }
+    if (op.kind === "update") {
+      return api("/songs/" + op.id, {
+        method: "PATCH",
+        body: { opId: op.opId, song: op.song, baseVersion: op.baseVersion }
+      });
+    }
+    if (op.kind === "delete") {
+      return api("/songs/" + op.id, { method: "DELETE", body: { opId: op.opId } });
+    }
+    if (op.kind === "setlist") {
+      return api("/setlist", { method: "PUT", body: { opId: op.opId, setlist: op.setlist } });
+    }
+    return Promise.reject(new Error("unknown operation"));
+  }
+
+  // Strictly in order and one at a time: a create followed by an edit of the
+  // same song is not safe to reorder, and the server's idempotency key only
+  // protects against the same operation arriving twice, not against two
+  // arriving backwards.
+  function flushOutbox() {
+    if (!outbox.length || !canWrite() || conflict) return Promise.resolve();
+    var op = outbox[0];
+    return sendOp(op).then(function (res) {
+      // Take the version the server just assigned rather than waiting for the
+      // next pull to tell us: the next edit quotes it, and quoting a stale one
+      // would read as a conflict that never happened.
+      if (res && res.song && res.song.id) {
+        var local = songById(res.song.id);
+        if (local) {
+          local.version = res.song.version;
+          local.updatedAt = res.song.updatedAt;
+          local.updatedBy = res.song.updatedBy;
+        }
+        confirmedWrites[res.song.id] = local || res.song;
+        persistLocal();
+      }
+      if (op.kind === "delete" && op.id) confirmedDeletes[op.id] = true;
+      outbox.shift();
+      saveOutbox();
+      return flushOutbox();
+    }, function (err) {
+      if (err.code === "conflict") {
+        // Stop the queue and ask. Picking a winner here without saying so is
+        // precisely the silent overwrite this exists to prevent.
+        conflict = { op: op, theirs: err.data && err.data.theirs };
+        throw err;
+      }
+      if (err.status >= 400 && err.status < 500 && err.status !== 429) {
+        // A refusal, not a hiccup — wrong role, too many songs at once, song
+        // already gone. Retrying forever would just wedge the queue, so drop
+        // it and let the pull put local state back to what really happened.
+        outbox.shift();
+        saveOutbox();
+        rejection = err.message;
+      }
+      throw err;
+    });
+  }
+
+  // One pending write per song, replaced rather than appended. Two edits made
+  // before either has gone out would otherwise become two operations, the
+  // second quoting a version the first had already moved past — a conflict
+  // reported to the one person who could not possibly be in conflict with
+  // themselves.
+  function queueSongWrite(song, isNew) {
+    if (!canWrite()) return;
+    var payload = {
+      id: song.id,
+      title: song.title,
+      sections: song.sections,
+      order: song.order,
+      slides: song.slides,
+      tags: song.tags,
+      notes: song.notes,
+      perSlide: song.perSlide
+    };
+    for (var i = 0; i < outbox.length; i++) {
+      var op = outbox[i];
+      var sameSong = (op.id && op.id === song.id) || (op.song && op.song.id === song.id);
+      if ((op.kind === "create" || op.kind === "update") && sameSong) {
+        op.song = payload;
+        saveOutbox();
+        scheduleSync();
+        return;
+      }
+    }
+    if (isNew) enqueue({ kind: "create", song: payload });
+    else enqueue({ kind: "update", id: song.id, song: payload, baseVersion: song.version || 1 });
+  }
+
+  // The setlist is sent whole, so only the newest queued copy means anything.
+  function queueSetlist() {
+    if (!canWrite()) return;
+    clearTimeout(setlistTimer);
+    setlistTimer = setTimeout(function () {
+      outbox = outbox.filter(function (op) { return op.kind !== "setlist"; });
+      enqueue({
+        kind: "setlist",
+        setlist: setlist.map(function (e) { return { id: e.id, ms: e.ms || 0 }; })
+      });
+    }, 1200);
+  }
+
+  // ----- destructive actions -----
+  //
+  // The phrase is never chosen here. The server answers 428 with the exact
+  // words it will accept, built from the number of records it actually found —
+  // so a client that lies about the count cannot produce a phrase that matches,
+  // and the confirmation is bound to the real blast radius rather than to
+  // whatever the dialog happened to say.
+  function withConfirm(run) {
+    return run(null).catch(function (err) {
+      if (err.code !== "confirm_required") throw err;
+      return askPhrase(err.data.phrase, err.message).then(function (typed) {
+        if (typed === null) return null;
+        return run(typed);
+      });
+    });
+  }
+
+  var confirmResolve = null;
+
+  function askPhrase(phrase, message) {
+    $("confirmTitle").textContent = "Confirm";
+    $("confirmBody").textContent = message;
+    $("confirmInput").value = "";
+    $("confirmInput").placeholder = phrase;
+    $("confirmWrap").classList.add("on");
+    setTimeout(function () { $("confirmInput").focus(); }, 50);
+    return new Promise(function (resolve) {
+      confirmResolve = function (val) {
+        $("confirmWrap").classList.remove("on");
+        confirmResolve = null;
+        resolve(val);
+      };
+    });
+  }
+
+  $("confirmCancel").addEventListener("click", function () {
+    if (confirmResolve) confirmResolve(null);
+  });
+  $("confirmGo").addEventListener("click", function () {
+    if (confirmResolve) confirmResolve($("confirmInput").value.trim());
+  });
+  $("confirmWrap").addEventListener("click", function (e) {
+    if (e.target === $("confirmWrap") && confirmResolve) confirmResolve(null);
+  });
 
   function syncNow(push) {
     if (syncing) return Promise.resolve();
@@ -3151,36 +3613,32 @@ if ("serviceWorker" in navigator) {
     syncError = "";
     renderSync();
 
-    var work = pullLibrary().then(function (remote) {
-      var missing = !!(remote && remote.missing);
-      if (!missing && mergeLibrary(remote)) {
-        try {
-          localStorage.setItem(SONGS_KEY, JSON.stringify({
-            v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt, dirty: libDirty
-          }));
-        } catch (e) {}
+    // Send before reading. The pull replaces local state wholesale, so pulling
+    // first would overwrite the very edits still waiting to go out.
+    var work = (push && canWrite() ? flushOutbox() : Promise.resolve())
+      .then(function () { return pullLibrary(); })
+      .then(function (remote) {
+        if (remote && !remote.missing) adoptLibrary(remote);
+        lastSyncAt = Date.now();
+      });
+
+    return work
+      .catch(function (err) {
+        if (err && err.code === "conflict") syncError = "";
+        else syncError = (err && err.message) || "sync failed";
+      })
+      .then(function () {
+        syncing = false;
+        renderSync();
         renderSetRows();
         renderSongRows();
         renderSetStrip();
-      }
-      // Publish on the first run as well. With nothing saved yet there is
-      // nothing "dirty" to send, so the file would never appear and the only
-      // way to find out whether the token works would be to add a song and
-      // hope. Creating the file is the confirmation.
-      if (!push || !ghToken || (!libDirty && !missing)) return null;
-      return pushLibrary(0).then(function () { markSynced(); });
-    });
-
-    return work
-      .then(function () { lastSyncAt = Date.now(); })
-      .catch(function (err) { syncError = (err && err.message) || "sync failed"; })
-      .then(function () { syncing = false; renderSync(); });
+      });
   }
 
   function scheduleSync() {
-    if (!ghToken) { renderSync(); return; }
     clearTimeout(syncTimer);
-    // Typing a song is a burst of saves; wait for it to settle before pushing.
+    // Typing a song is a burst of saves; wait for it to settle before sending.
     syncTimer = setTimeout(function () { syncNow(true); }, 2500);
     renderSync();
   }
@@ -3189,56 +3647,412 @@ if ("serviceWorker" in navigator) {
     var el = $("syncStatus");
     if (!el) return;
     el.classList.remove("bad", "busy");
-    if (syncing) { el.textContent = "Syncing…"; el.classList.add("busy"); return; }
-    if (syncError) { el.textContent = syncError; el.classList.add("bad"); return; }
-    if (!ghToken) {
-      el.textContent = "Read-only — no token on this device";
+    $("syncBox").classList.toggle("conflicted", !!conflict);
+
+    if (conflict) {
+      var t = (conflict.theirs && conflict.theirs.title) || "That song";
+      var who = (conflict.theirs && conflict.theirs.updatedBy) || "someone else";
+      $("conflictText").textContent =
+        "“" + t + "” was changed by " + who + " while you were editing it. " +
+        "Keep yours and overwrite theirs, or drop yours and take theirs?";
+      el.textContent = "Edit conflict — nothing has been overwritten";
+      el.classList.add("bad");
       return;
     }
-    if (libDirty) { el.textContent = "Changes waiting to upload"; return; }
+    if (syncing) { el.textContent = "Syncing…"; el.classList.add("busy"); return; }
+    if (rejection) { el.textContent = rejection; el.classList.add("bad"); return; }
+    if (syncError) { el.textContent = syncError; el.classList.add("bad"); return; }
+    if (!session) { el.textContent = "Read-only — not signed in"; return; }
+    if (!canWrite()) { el.textContent = "Viewer — read only"; return; }
+    if (outbox.length) {
+      el.textContent = outbox.length + " change" + (outbox.length === 1 ? "" : "s") + " waiting to upload";
+      return;
+    }
     el.textContent = lastSyncAt ? "Synced " + nowHMS() : "Up to date";
   }
 
+  // What the current role may do, written onto the screen so the CSS can put
+  // the controls away. This is presentation only — the Worker refuses the same
+  // request whether or not the button that would have sent it was on screen.
+  function applyRole() {
+    // Looked up rather than closed over: this runs during start-up, before the
+    // library screen's own variables have been assigned.
+    var lib = $("library"), badge = $("acctRole");
+    if (!lib) return;
+    lib.classList.toggle("signed-in", !!session);
+    lib.classList.toggle("can-write", canWrite());
+    lib.classList.toggle("is-owner", isOwner());
+    if (badge) {
+      badge.className = "role-badge " + (session ? myRole() : "");
+      badge.textContent = session ? myRole() : "read-only";
+      badge.title = session ? myName() + " · " + myRole() : "Not signed in";
+    }
+    renderSync();
+  }
+
+  // Roles can change under us — an owner can demote or revoke someone between
+  // one service and the next — so the stored session is confirmed against the
+  // server rather than trusted.
+  function refreshMe() {
+    if (!session) { applyRole(); return Promise.resolve(); }
+    return api("/auth/me").then(function (d) {
+      session.me = d.me;
+      policy = d.policy || null;
+      saveSession();
+      applyRole();
+    }).catch(function () { applyRole(); });
+  }
+
+  // ----- signing in and out -----
+
   $("tokenToggle").addEventListener("click", function () {
     $("syncBox").classList.toggle("open");
-    if ($("syncBox").classList.contains("open")) $("ghToken").value = ghToken;
   });
 
-  $("saveTokenBtn").addEventListener("click", function () {
-    var entered = $("ghToken").value.trim();
+  $("ownerToggle").addEventListener("click", function () {
+    $("tokenRow").classList.toggle("owner-open");
+  });
 
-    // Catch the two things that go wrong before the network does: a token
-    // pasted from the wrong place, and one that arrived cut short. Saying so
-    // here beats waiting for a round trip to come back with a 401.
-    if (entered && !/^(github_pat_|ghp_)/.test(entered)) {
-      syncError = "that does not look like a GitHub token — it should start with github_pat_";
-      renderSync();
-      return;
-    }
-    if (entered && entered.length < 40) {
-      syncError = "token looks cut short (" + entered.length + " characters) — copy the whole thing";
-      renderSync();
-      return;
-    }
-
-    ghToken = entered;
-    try { ghToken ? localStorage.setItem(TOKEN_KEY, ghToken) : localStorage.removeItem(TOKEN_KEY); } catch (e) {}
-    $("ghToken").value = "";
+  function afterSignIn(d) {
+    session = { token: d.token, me: d.me };
+    saveSession();
+    $("joinCode").value = "";
+    $("ownerKey").value = "";
+    $("tokenRow").classList.remove("owner-open");
     $("syncBox").classList.remove("open");
     syncError = "";
-    if (ghToken) syncNow(true); else renderSync();
+    rejection = "";
+    applyRole();
+    return refreshMe().then(function () { return syncNow(true); });
+  }
+
+  function signInFailed(err) {
+    syncError = (err && err.message) || "could not sign in";
+    renderSync();
+  }
+
+  $("joinBtn").addEventListener("click", function () {
+    var code = $("joinCode").value.trim();
+    var name = $("joinName").value.trim();
+    if (!code) { syncError = "Enter the access code."; renderSync(); return; }
+    if (!name) { syncError = "Put your name in, so the activity log can say who did what."; renderSync(); return; }
+    syncError = "";
+    renderSync();
+    api("/auth/join", { method: "POST", body: { code: code, name: name } })
+      .then(afterSignIn)
+      .catch(signInFailed);
   });
 
-  $("clearTokenBtn").addEventListener("click", function () {
-    ghToken = "";
-    try { localStorage.removeItem(TOKEN_KEY); } catch (e) {}
-    $("ghToken").value = "";
+  $("ownerGoBtn").addEventListener("click", function () {
+    var key = $("ownerKey").value;
+    var name = $("joinName").value.trim() || "Owner";
+    if (!key) { syncError = "Enter the owner key."; renderSync(); return; }
+    api("/auth/owner", { method: "POST", body: { key: key, name: name } })
+      .then(afterSignIn)
+      .catch(signInFailed);
+  });
+
+  $("signOutBtn").addEventListener("click", function () {
+    // Ask the server to forget the session too, so signing out on a borrowed
+    // iPad actually ends it rather than just clearing this device's copy.
+    api("/auth/leave", { method: "POST" }).catch(function () {});
+    session = null;
+    saveSession();
+    applyRole();
     $("syncBox").classList.remove("open");
-    renderSync();
   });
 
   $("syncNowBtn").addEventListener("click", function () { syncNow(true); });
   window.addEventListener("online", function () { syncNow(true); });
+
+  // ----- conflicts -----
+
+  $("keepMineBtn").addEventListener("click", function () {
+    if (!conflict) return;
+    var op = conflict.op, theirs = conflict.theirs;
+    // Re-aim at the version that is actually there now. This is a deliberate
+    // overwrite of a change we have shown to the person making it, which is a
+    // different thing from the silent one the version check exists to stop.
+    if (op && theirs) op.baseVersion = theirs.version;
+    conflict = null;
+    syncNow(true);
+  });
+
+  $("takeTheirsBtn").addEventListener("click", function () {
+    if (!conflict) return;
+    var mine = conflict.op;
+    outbox = outbox.filter(function (op) { return op !== mine; });
+    saveOutbox();
+    conflict = null;
+    // Their copy is about to land on top; leaving the editor open on a draft
+    // that no longer exists anywhere is how people re-save it by accident.
+    if (mine && mine.id && editingId === mine.id) {
+      editingId = null;
+      libraryEl.classList.remove("editing");
+    }
+    syncNow(true);
+  });
+
+  // ----- recently deleted -----
+
+  function openSub(which) {
+    libraryEl.classList.remove("editing", "trash", "admin", "audit");
+    if (which) libraryEl.classList.add(which);
+  }
+
+  function fmtWhen(ms) {
+    if (!ms) return "";
+    var d = new Date(ms);
+    return d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }) +
+      " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+  }
+
+  function renderTrash() {
+    var rows = $("trashRows");
+    rows.innerHTML = "";
+    $("trashHint").textContent = "Loading…";
+    api("/trash").then(function (d) {
+      $("trashHint").textContent =
+        "Deleted songs stay here for " + d.retentionDays + " days. Nothing has been removed from the " +
+        "library — every one of these can be put back.";
+      if (!d.songs.length) {
+        var empty = document.createElement("div");
+        empty.className = "song-empty";
+        empty.textContent = "Nothing deleted.";
+        rows.appendChild(empty);
+        return;
+      }
+      d.songs.forEach(function (s) {
+        var row = document.createElement("div");
+        row.className = "bin-row";
+        row.setAttribute("data-id", s.id);
+
+        var info = document.createElement("div");
+        info.className = "info";
+        var nm = document.createElement("span");
+        nm.className = "nm";
+        nm.textContent = s.title || "(untitled)";
+        var by = document.createElement("span");
+        by.className = "by";
+        by.textContent = "Deleted by " + s.deletedBy + " · " + fmtWhen(s.deletedAt) +
+          (s.artist ? " · " + s.artist : "") + " · " + s.slides + " slides";
+        info.appendChild(nm);
+        info.appendChild(by);
+
+        var restore = document.createElement("button");
+        restore.type = "button";
+        restore.className = "restore";
+        restore.textContent = "Restore";
+
+        row.appendChild(info);
+        row.appendChild(restore);
+
+        if (isOwner()) {
+          var purge = document.createElement("button");
+          purge.type = "button";
+          purge.className = "purge";
+          purge.textContent = "Delete";
+          row.appendChild(purge);
+        }
+        rows.appendChild(row);
+      });
+    }).catch(function (err) {
+      $("trashHint").textContent = err.message;
+    });
+  }
+
+  $("trashRows").addEventListener("click", function (e) {
+    var row = e.target.closest ? e.target.closest(".bin-row") : null;
+    if (!row) return;
+    var id = row.getAttribute("data-id");
+    if (e.target.closest(".restore")) {
+      api("/songs/" + id + "/restore", { method: "POST", body: { opId: newOpId() } })
+        .then(function () { renderTrash(); return syncNow(false); })
+        .catch(function (err) { $("trashHint").textContent = err.message; });
+      return;
+    }
+    if (e.target.closest(".purge")) {
+      withConfirm(function (phrase) {
+        return api("/songs/" + id + "/purge", { method: "POST", body: { confirm: phrase } });
+      }).then(function (r) { if (r) renderTrash(); })
+        .catch(function (err) { $("trashHint").textContent = err.message; });
+    }
+  });
+
+  $("emptyTrashBtn").addEventListener("click", function () {
+    withConfirm(function (phrase) {
+      return api("/trash/empty", { method: "POST", body: { confirm: phrase } });
+    }).then(function (r) { if (r) renderTrash(); })
+      .catch(function (err) { $("trashHint").textContent = err.message; });
+  });
+
+  // ----- access management -----
+
+  function renderAdmin() {
+    $("codeReveal").textContent = "";
+    $("codeState").textContent = "Loading…";
+    api("/admin/code").then(function (d) {
+      $("codeState").textContent = d.active
+        ? "An access code is active (version " + d.codeVersion + ", made " + fmtWhen(d.createdAt) + ")." +
+          (d.expiresAt ? " Expires " + fmtWhen(d.expiresAt) + "." : "") +
+          " The code itself is not stored anywhere in a form that can be read back — only regenerated."
+        : "No access code is active. Nobody new can join until you make one.";
+    }).catch(function (err) { $("codeState").textContent = err.message; });
+    renderCollaborators();
+  }
+
+  function renderCollaborators() {
+    var rows = $("collabRows");
+    rows.innerHTML = "";
+    api("/admin/collaborators").then(function (d) {
+      if (!d.collaborators.length) {
+        var empty = document.createElement("div");
+        empty.className = "song-empty";
+        empty.textContent = "Nobody has joined yet.";
+        rows.appendChild(empty);
+        return;
+      }
+      d.collaborators.forEach(function (c) {
+        var row = document.createElement("div");
+        row.className = "collab-row" + (c.revoked ? " revoked" : "");
+        row.setAttribute("data-id", c.id);
+
+        var info = document.createElement("div");
+        info.className = "info";
+        var nm = document.createElement("span");
+        nm.className = "nm";
+        nm.textContent = c.name;
+        var by = document.createElement("span");
+        by.className = "by";
+        by.textContent = c.role + " · joined " + fmtWhen(c.joinedAt) +
+          " · " + (c.revoked ? "revoked" : "active");
+        info.appendChild(nm);
+        info.appendChild(by);
+        row.appendChild(info);
+
+        if (c.role !== "owner") {
+          var demote = document.createElement("button");
+          demote.type = "button";
+          demote.className = "demote";
+          demote.textContent = c.role === "viewer" ? "Allow edits" : "View only";
+          row.appendChild(demote);
+
+          var rev = document.createElement("button");
+          rev.type = "button";
+          rev.className = "revoke";
+          rev.textContent = c.revoked ? "Restore" : "Revoke";
+          row.appendChild(rev);
+        }
+        rows.appendChild(row);
+      });
+    }).catch(function (err) {
+      rows.innerHTML = "";
+      var e = document.createElement("div");
+      e.className = "song-empty";
+      e.textContent = err.message;
+      rows.appendChild(e);
+    });
+  }
+
+  $("collabRows").addEventListener("click", function (e) {
+    var row = e.target.closest ? e.target.closest(".collab-row") : null;
+    if (!row) return;
+    var id = row.getAttribute("data-id");
+    var body = null;
+    if (e.target.closest(".revoke")) {
+      body = { revoked: row.classList.contains("revoked") ? false : true };
+    } else if (e.target.closest(".demote")) {
+      body = { role: /view only/i.test(e.target.textContent) ? "viewer" : "collaborator" };
+    }
+    if (!body) return;
+    api("/admin/collaborators/" + id, { method: "PATCH", body: body })
+      .then(renderCollaborators)
+      .catch(function (err) { alert(err.message); });
+  });
+
+  $("rotateCodeBtn").addEventListener("click", function () {
+    api("/admin/code", { method: "POST", body: {} }).then(function (d) {
+      // Shown once and never again — there is nowhere it could be read back
+      // from, which is the whole reason only a digest is kept.
+      $("codeReveal").textContent = d.code;
+      renderAdmin();
+      $("codeReveal").textContent = d.code;
+    }).catch(function (err) { $("codeState").textContent = err.message; });
+  });
+
+  $("revokeCodeBtn").addEventListener("click", function () {
+    api("/admin/code", { method: "DELETE" })
+      .then(function () { renderAdmin(); })
+      .catch(function (err) { $("codeState").textContent = err.message; });
+  });
+
+  // ----- activity log -----
+
+  var auditCursor = null;
+
+  function renderAudit(more) {
+    var rows = $("auditRows");
+    if (!more) { rows.innerHTML = ""; auditCursor = null; }
+    api("/audit?limit=60" + (auditCursor ? "&cursor=" + encodeURIComponent(auditCursor) : ""))
+      .then(function (d) {
+        auditCursor = d.cursor;
+        $("auditMoreBtn").style.display = d.cursor ? "" : "none";
+        if (!d.entries.length && !more) {
+          var empty = document.createElement("div");
+          empty.className = "song-empty";
+          empty.textContent = "Nothing logged yet.";
+          rows.appendChild(empty);
+          return;
+        }
+        d.entries.forEach(function (en) {
+          var row = document.createElement("div");
+          row.className = "audit-row";
+
+          var line = document.createElement("span");
+          line.textContent = describeAudit(en);
+          var when = document.createElement("span");
+          when.className = "when";
+          when.textContent = fmtWhen(en.at) + " · " + en.role;
+          row.appendChild(line);
+          row.appendChild(when);
+
+          (en.changes || []).forEach(function (c) {
+            var chg = document.createElement("span");
+            chg.className = "chg";
+            chg.textContent = c.field + ": " + (c.from || "—") + " → " + (c.to || "—");
+            row.appendChild(chg);
+          });
+          rows.appendChild(row);
+        });
+      })
+      .catch(function (err) {
+        rows.innerHTML = "";
+        var e = document.createElement("div");
+        e.className = "song-empty";
+        e.textContent = err.message;
+        rows.appendChild(e);
+      });
+  }
+
+  function describeAudit(en) {
+    var t = en.title ? "“" + en.title + "”" : "";
+    if (en.action === "song.create") return en.user + " added " + t;
+    if (en.action === "song.update") return en.user + " edited " + t;
+    if (en.action === "song.delete") return en.user + " deleted " + t;
+    if (en.action === "song.restore") return en.user + " restored " + t;
+    if (en.action === "song.purge") return en.user + " permanently deleted " + t;
+    if (en.action === "trash.empty") return en.user + " emptied " + t + " from the trash";
+    return en.user + " · " + en.action + (en.note ? " · " + en.note : "");
+  }
+
+  $("auditMoreBtn").addEventListener("click", function () { renderAudit(true); });
+
+  $("trashBtn").addEventListener("click", function () { openSub("trash"); renderTrash(); });
+  $("adminBtn").addEventListener("click", function () { openSub("admin"); renderAdmin(); });
+  $("auditBtn").addEventListener("click", function () { openSub("audit"); renderAudit(false); });
+  Array.prototype.forEach.call(document.querySelectorAll(".sub-back"), function (b) {
+    b.addEventListener("click", function () { openSub(null); renderSongRows(); });
+  });
 
   // ----- the parser -----
   //
@@ -3383,15 +4197,17 @@ if ("serviceWorker" in navigator) {
 
   function openLibrary(from) {
     PARENT.library = from;
-    libraryEl.classList.remove("editing");
+    libraryEl.classList.remove("editing", "trash", "admin", "audit");
     songSearch.value = "";
     renderSetRows();
     renderSongRows();
+    applyRole();
     renderSync();
     navigate("library");
     // Opening the library is the natural moment to catch up with whatever was
-    // added on another device.
-    syncNow(true);
+    // added on another device — and to find out whether this device's role is
+    // still what it thinks it is.
+    refreshMe().then(function () { return syncNow(true); });
   }
 
   // ----- setlist -----
@@ -3574,7 +4390,11 @@ if ("serviceWorker" in navigator) {
     if (!list.length) {
       var empty = document.createElement("div");
       empty.className = "song-empty";
-      empty.textContent = songs.length ? "Nothing matches that." : "No songs yet — paste one in.";
+      empty.textContent = songs.length
+        ? "Nothing matches that."
+        : canWrite()
+          ? "No songs yet — paste one in."
+          : "No songs yet. Join with the access code to add some.";
       songRows.appendChild(empty);
       return;
     }
@@ -3756,6 +4576,7 @@ if ("serviceWorker" in navigator) {
 
     // sections + order are the truth; slides/tags/notes are the flattened form
     // kept alongside so the stage, the wire and older songs need no changes.
+    var isNew = !existing;
     if (existing) {
       existing.title = title;
       existing.sections = parsed.sections;
@@ -3772,12 +4593,16 @@ if ("serviceWorker" in navigator) {
         sections: parsed.sections, order: parsed.order,
         slides: parsed.slides, tags: parsed.tags, notes: parsed.notes,
         perSlide: perSlide,
+        version: 1,
         updatedAt: Date.now(), lastUsed: 0, hidden: false
       };
       songs.push(existing);
     }
     editingId = existing.id;
-    saveSongs();
+    persistLocal();
+    // The local copy changed either way — that is what makes the app usable
+    // with no signal. Whether it also becomes a commit is the server's call.
+    queueSongWrite(existing, isNew);
 
     // If this song is the one on stage, the correction has to reach it.
     if (T.song && T.song.id === existing.id) loadSong(existing);
@@ -3821,6 +4646,7 @@ if ("serviceWorker" in navigator) {
   deleteSongBtn.addEventListener("click", function () {
     var s = songById(editingId);
     if (!s) { libraryEl.classList.remove("editing"); return; }
+    if (!canWrite()) return;
     if (!deleteArmed) {
       deleteArmed = true;
       deleteSongBtn.classList.add("armed");
@@ -3828,13 +4654,21 @@ if ("serviceWorker" in navigator) {
       setTimeout(function () { if (deleteArmed) disarmDelete(); }, 4000);
       return;
     }
-    // Hidden, never spliced out: every mistake here is recoverable.
+    // Dated, never spliced out. This is the whole delete path there is: there
+    // is no other button, and the server has no route that removes a record
+    // that has not sat in the trash first.
+    s.deletedAt = Date.now();
+    s.deletedBy = myName() || "you";
     s.hidden = true;
     s.updatedAt = Date.now();
-    saveSongs();
+    setlist = setlist.filter(function (x) { return x.id !== s.id; });
+    persistLocal();
+    if (canWrite()) enqueue({ kind: "delete", id: s.id });
     disarmDelete();
     libraryEl.classList.remove("editing");
+    renderSetRows();
     renderSongRows();
+    renderSetStrip();
   });
 
   $("libBack").addEventListener("click", function () { history.back(); });
