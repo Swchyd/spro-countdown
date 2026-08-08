@@ -912,6 +912,121 @@
     color: #1A1408;
   }
   #titleApply.dirty:active { filter: brightness(.92); }
+
+  /* ---------- console: lyrics ---------- */
+  #opTabs {
+    width: 100%;
+    max-width: 620px;
+    flex: 0 0 auto;
+    display: flex;
+    gap: 8px;
+  }
+  .op-tab {
+    flex: 1 1 0;
+    padding: 11px;
+    border-radius: 10px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: #5B6474;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .op-tab.on { background: var(--panel-2); border-color: var(--accent); color: var(--ink); }
+  .op-tab:active { background: var(--panel-2); }
+
+  #opLyricPanel { width: 100%; max-width: 620px; flex: 0 0 auto; display: none; }
+  #opBody.tab-lyrics .op-grid { display: none; }
+  #opBody.tab-lyrics #opLyricPanel { display: flex; }
+
+  #lyricHead { display: flex; align-items: center; gap: 10px; }
+  #lyricHead b {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* Same idea as #titleApply: looking at a song is not the same as sending it,
+     so putting it on the stage stays a deliberate press. */
+  #lyricOnScreen {
+    flex: 0 0 auto;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: #5B6474;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  #lyricOnScreen.on { background: var(--accent); border-color: var(--accent); color: #1A1408; }
+  #lyricOnScreen:active { filter: brightness(.92); }
+
+  .slide-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    width: 100%;
+    padding: 11px 12px;
+    text-align: left;
+    background: transparent;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 14px;
+  }
+  .slide-row:last-child { border-bottom: none; }
+  .slide-row .n { min-width: 15px; font-size: 11px; font-weight: 700; color: #5B6474; }
+  .slide-row .t { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .slide-row.on { background: var(--panel-2); color: var(--ink); }
+  .slide-row.on .n { color: var(--accent); }
+  .slide-row:active { background: var(--panel-2); }
+  .slide-empty { padding: 14px; text-align: center; color: #5B6474; font-size: 13px; }
+
+  /* Next is the press that happens most and the one that must not be missed
+     in a dark room, so it is the wide one and the only coloured one. */
+  #lyricNav { display: grid; grid-template-columns: 1fr 1.7fr 1fr; gap: 8px; }
+  #lyricNav button {
+    height: 58px;
+    border-radius: 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  #lyricNav button small {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  #lyricNav button:active { filter: brightness(.92); background: var(--panel); }
+  /* Scoped through #lyricNav so it outweighs the `#lyricNav button` rule above
+     — an id alone loses to id+type and the accent would never show. */
+  #lyricNav #nextSlideBtn { background: var(--accent); border-color: var(--accent); color: #1A1408; }
+  #lyricNav #nextSlideBtn small { color: rgba(26,20,8,.6); }
+  #blankBtn.on { background: var(--over); border-color: var(--over); color: #fff; }
+  #blankBtn.on small { color: rgba(255,255,255,.7); }
 </style>
 </head>
 <body>
@@ -1025,6 +1140,11 @@
       <button type="button" id="flashBtn">⚡<small>Flash</small></button>
     </div>
 
+    <div id="opTabs">
+      <button type="button" class="op-tab on" data-tab="timer">Timer</button>
+      <button type="button" class="op-tab" data-tab="lyrics">Lyrics</button>
+    </div>
+
     <div class="op-grid">
       <div class="op-panel">
         <label class="field-label" for="opLabelInput">Title</label>
@@ -1050,6 +1170,19 @@
           <button type="button" data-nstep="sec" data-d="1" aria-label="More seconds">+</button>
         </div>
         <button type="button" id="applyTimeBtn" class="primary">APPLY &amp; RESTART</button>
+      </div>
+    </div>
+
+    <div id="opLyricPanel" class="op-panel">
+      <div id="lyricHead">
+        <b id="opSongTitle">—</b>
+        <button type="button" id="lyricOnScreen">PUT ON SCREEN</button>
+      </div>
+      <div class="slide-list" id="opSlideList"></div>
+      <div id="lyricNav">
+        <button type="button" id="prevSlideBtn">◀<small>Prev</small></button>
+        <button type="button" id="nextSlideBtn">▶<small>Next</small></button>
+        <button type="button" id="blankBtn">◼<small>Blank</small></button>
       </div>
     </div>
   </div>
@@ -2220,6 +2353,7 @@ if ("serviceWorker" in navigator) {
     flashBtn.classList.toggle("on", !!T.flashing);
     soloOverlay.classList.toggle("paused", !T.playing);
     refreshTitleApply();
+    refreshLyricUI();
     broadcast();
   }
 
@@ -2306,8 +2440,12 @@ if ("serviceWorker" in navigator) {
     labelZone.classList.remove("editing");
     stageWrap.classList.remove("full");
     stageWrap.style.display = "none";
-    opBody.appendChild(controlsEl);   // restores previewBox / controls / grid
+    // Re-append everything below the preview, not just the two that moved:
+    // appending only those would leave them sitting after the lyrics panel.
+    opBody.appendChild(controlsEl);
+    opBody.appendChild(opTabsEl);
     opBody.appendChild(opGrid);
+    opBody.appendChild($("opLyricPanel"));
     releaseWakeLock();
   }
 
@@ -2377,21 +2515,112 @@ if ("serviceWorker" in navigator) {
       T.mode = "timer";
     } else {
       T.mode = "lyrics";
-      T.slide = 0;
       T.blank = false;
+      // The slide is left where it is on purpose. The operator lines a song up
+      // on the console before sending it, and snapping back to the first slide
+      // would throw that away at the moment it is needed.
     }
     relayoutLyrics();
     commit();
   }
 
+  // Moving the slide is separate from showing it: the console can walk a song
+  // while the stage is still on the countdown, and only what is on screen when
+  // lyrics are live actually reaches the display.
   function stepSlide(dir) {
-    if (T.mode !== "lyrics" || !LY.song) return;
+    if (!LY.song) return;
     // The clamp allows one past the last slide — that lands on a clear stage
     // rather than wrapping round or jumping to whatever comes next.
     T.slide = Math.max(0, Math.min(T.slide + dir, LY.song.slides.length));
     T.blank = false;
     commit();
   }
+
+  // ----- console: the lyrics tab -----
+  var opTab = "timer";
+  var opBodyEl = $("opBody"), opTabsEl = $("opTabs");
+  var opSlideList = $("opSlideList"), opSongTitle = $("opSongTitle");
+  var lyricOnScreen = $("lyricOnScreen"), blankBtn = $("blankBtn");
+  var builtSong = null;
+
+  function setOpTab(name) {
+    opTab = name;
+    opBodyEl.classList.toggle("tab-lyrics", name === "lyrics");
+    Array.prototype.forEach.call(opTabsEl.querySelectorAll(".op-tab"), function (b) {
+      b.classList.toggle("on", b.getAttribute("data-tab") === name);
+    });
+    if (name === "lyrics") buildSlideList();
+    refreshLyricUI();
+  }
+
+  function buildSlideList() {
+    var song = LY.song;
+    if (song === builtSong) return;
+    builtSong = song;
+    opSlideList.innerHTML = "";
+    opSongTitle.textContent = song ? song.title : "—";
+
+    if (!song || !song.slides.length) {
+      var empty = document.createElement("div");
+      empty.className = "slide-empty";
+      empty.textContent = "No song loaded";
+      opSlideList.appendChild(empty);
+      return;
+    }
+
+    song.slides.forEach(function (slide, i) {
+      var row = document.createElement("button");
+      row.type = "button";
+      row.className = "slide-row";
+      row.setAttribute("data-i", i);
+      var n = document.createElement("span");
+      n.className = "n";
+      n.textContent = i + 1;
+      var t = document.createElement("span");
+      t.className = "t";
+      t.textContent = slide[0] || "";
+      row.appendChild(n);
+      row.appendChild(t);
+      opSlideList.appendChild(row);
+    });
+  }
+
+  function refreshLyricUI() {
+    if (opTab !== "lyrics") return;
+    var live = T.mode === "lyrics";
+    lyricOnScreen.classList.toggle("on", live);
+    lyricOnScreen.textContent = live ? "ON SCREEN" : "PUT ON SCREEN";
+    blankBtn.classList.toggle("on", live && !!T.blank);
+    Array.prototype.forEach.call(opSlideList.children, function (row) {
+      if (!row.getAttribute) return;
+      var i = parseInt(row.getAttribute("data-i"), 10);
+      row.classList.toggle("on", i === T.slide);
+    });
+  }
+
+  opTabsEl.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest(".op-tab") : null;
+    if (b) setOpTab(b.getAttribute("data-tab"));
+  });
+
+  // Rehearsal means jumping around, so every slide is reachable in one press
+  // instead of clicking Next until it comes round.
+  opSlideList.addEventListener("click", function (e) {
+    var row = e.target.closest ? e.target.closest(".slide-row") : null;
+    if (!row) return;
+    T.slide = parseInt(row.getAttribute("data-i"), 10) || 0;
+    T.blank = false;
+    commit();
+  });
+
+  // The arrows follow the panel, not the stage: the operator is working a song
+  // whenever the lyrics tab is open, whether or not it has been sent yet.
+  function onSongs() { return opTab === "lyrics" || T.mode === "lyrics"; }
+
+  $("prevSlideBtn").addEventListener("click", function () { stepSlide(-1); });
+  $("nextSlideBtn").addEventListener("click", function () { stepSlide(1); });
+  blankBtn.addEventListener("click", function () { T.blank = !T.blank; commit(); });
+  lyricOnScreen.addEventListener("click", toggleLyrics);
   flashBtn.addEventListener("click", function () { T.flashing = !T.flashing; commit(); });
 
   // The title is staged, not streamed: the operator can prepare the next one
@@ -2485,9 +2714,9 @@ if ("serviceWorker" in navigator) {
     // PageUp/PageDown as well as the arrows, because that is what a USB
     // presenter remote sends — it makes the clicker work with no extra code.
     else if (e.key === "ArrowRight" || e.key === "PageDown") {
-      if (T.mode === "lyrics") { e.preventDefault(); stepSlide(1); }
+      if (onSongs()) { e.preventDefault(); stepSlide(1); }
     } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
-      if (T.mode === "lyrics") { e.preventDefault(); stepSlide(-1); }
+      if (onSongs()) { e.preventDefault(); stepSlide(-1); }
     }
   });
 
