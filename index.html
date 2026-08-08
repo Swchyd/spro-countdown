@@ -437,17 +437,17 @@
     #timeText.over { animation: none; }
   }
 
-  /* swapped: title fills the middle, countdown small on top */
-  #stage.swapped #timeZone {
+  /* message mode: title fills the middle, countdown small on top */
+  #stage.mode-message #timeZone {
     order: -1;
     flex: 0 0 25%;
     padding-top: calc(var(--sh) * .02);
   }
-  #stage.swapped #timeText {
+  #stage.mode-message #timeText {
     font-size: min(calc(var(--sw) * .10), calc(var(--sh) * .15));
   }
-  #stage.swapped #labelZone { flex: 1 1 75%; padding: 0 calc(var(--sw) * .04); }
-  #stage.swapped #labelText {
+  #stage.mode-message #labelZone { flex: 1 1 75%; padding: 0 calc(var(--sw) * .04); }
+  #stage.mode-message #labelText {
     /* ~20 uppercase characters per line */
     font-size: min(calc(var(--sw) * .058), calc(var(--sh) * .10));
     letter-spacing: .08em;
@@ -626,7 +626,7 @@
   }
   #labelZone.editing #labelText { display: none; }
   #labelZone.editing #labelEdit { display: block; }
-  #stage.swapped #labelEdit {
+  #stage.mode-message #labelEdit {
     font-size: min(calc(var(--sw) * .058), calc(var(--sh) * .10));
     letter-spacing: .08em;
   }
@@ -1081,7 +1081,10 @@ if ("serviceWorker" in navigator) {
     remainMs: 600000,   // authoritative while paused
     endAt: 0,           // authoritative while playing (epoch ms)
     label: "",
-    swapped: false,
+    // What the stage is showing. "timer" is the countdown large and centred;
+    // "message" hands the middle to the title; "lyrics" is the song view.
+    // One value rather than a set of booleans, so the states cannot disagree.
+    mode: "timer",
     flashing: false
   };
 
@@ -1096,7 +1099,7 @@ if ("serviceWorker" in navigator) {
     return {
       live: T.live, playing: T.playing, totalMs: T.totalMs,
       remainMs: T.remainMs, endAt: T.endAt, label: T.label,
-      swapped: T.swapped, flashing: T.flashing
+      mode: T.mode, flashing: T.flashing
     };
   }
 
@@ -1121,7 +1124,8 @@ if ("serviceWorker" in navigator) {
   }
 
   function renderStage() {
-    stage.classList.toggle("swapped", !!T.swapped);
+    stage.classList.toggle("mode-message", T.mode === "message");
+    stage.classList.toggle("mode-lyrics", T.mode === "lyrics");
     stage.classList.toggle("flashing", !!T.flashing);
     stage.classList.toggle("standby", !T.live);
 
@@ -2088,7 +2092,7 @@ if ("serviceWorker" in navigator) {
     persist();
 
     T.label = cfg.label;
-    T.swapped = false;
+    T.mode = "timer";
     T.flashing = false;
     T.live = true;
     opLabelInput.value = cfg.label;
@@ -2182,7 +2186,14 @@ if ("serviceWorker" in navigator) {
   $("minusBtn").addEventListener("click", function () { adjust(-60000); });
   $("plusBtn").addEventListener("click", function () { adjust(60000); });
   playBtn.addEventListener("click", function () { setPlaying(!T.playing); });
-  $("swapBtn").addEventListener("click", function () { T.swapped = !T.swapped; commit(); });
+  // ⇅ flips between the countdown and the title. Lyrics is a third mode with
+  // its own way in, so this toggle deliberately only knows about these two.
+  function toggleMessage() {
+    T.mode = (T.mode === "message") ? "timer" : "message";
+    commit();
+  }
+
+  $("swapBtn").addEventListener("click", toggleMessage);
   flashBtn.addEventListener("click", function () { T.flashing = !T.flashing; commit(); });
 
   // The title is staged, not streamed: the operator can prepare the next one
@@ -2268,7 +2279,7 @@ if ("serviceWorker" in navigator) {
     else if (e.key === "ArrowDown") { e.preventDefault(); adjust(-60000); }
     else if (e.key === "r" || e.key === "R") armTimer(T.totalMs, false);
     else if (e.key === "f" || e.key === "F") { T.flashing = !T.flashing; commit(); }
-    else if (e.key === "s" || e.key === "S") { T.swapped = !T.swapped; commit(); }
+    else if (e.key === "s" || e.key === "S") toggleMessage();
   });
 
   window.addEventListener("beforeunload", destroyPeer);
