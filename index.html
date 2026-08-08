@@ -479,9 +479,9 @@
   #stage.mode-lyrics #timeText {
     font-size: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
   }
-  /* Sentence case on purpose. The title is a sign and reads better shouting;
-     lyrics are read as words, and uppercase flattens every word into the same
-     rectangle so the eye has to spell them out. */
+  /* Casing is decided in JS (see LYRIC_CASE) so that the measured string and
+     the rendered string are the same one. Nothing here may change the case or
+     the tracking, or the fit stops matching what is on screen. */
   #lyricNow, #lyricNext {
     font-weight: 700;
     letter-spacing: 0;
@@ -1656,6 +1656,13 @@ if ("serviceWorker" in navigator) {
   // notes live here, not in T, so they stay on the console side of the wire
   var LY = { size: 0, fittedFor: null, notes: [] };
 
+  // How lyrics are cased on stage. Applied in JS rather than with CSS
+  // text-transform on purpose: the fit below measures the very string that
+  // gets rendered, and capitals are wider — measure the original and render
+  // the capitals and the last line of every slide runs off the screen.
+  var LYRIC_CASE = "upper";              // "upper" | "sentence"
+  function stageCase(s) { return LYRIC_CASE === "upper" ? String(s).toUpperCase() : s; }
+
   // Cheap identity for "is this still the same song, unchanged?". The display
   // parses a fresh object out of every snapshot, so comparing by reference
   // would re-measure the whole song once a second for no reason.
@@ -1698,7 +1705,7 @@ if ("serviceWorker" in navigator) {
       var s = song.slides[i];
       if (s.length > mostLines) mostLines = s.length;
       for (var j = 0; j < s.length; j++) {
-        var w = fitCtx.measureText(s[j]).width;
+        var w = fitCtx.measureText(stageCase(s[j])).width;
         if (w > widest) widest = w;
       }
     }
@@ -1740,8 +1747,8 @@ if ("serviceWorker" in navigator) {
 
     lyricZone.classList.toggle("blank", !!T.blank);
     var cur = slides[idx], nxt = slides[idx + 1];
-    lyricNow.textContent = cur ? cur.join("\n") : "";
-    lyricNext.textContent = nxt ? nxt.slice(0, NEXT_LINES).join("\n") : "";
+    lyricNow.textContent = cur ? stageCase(cur.join("\n")) : "";
+    lyricNext.textContent = nxt ? stageCase(nxt.slice(0, NEXT_LINES).join("\n")) : "";
   }
 
   function renderStage() {
@@ -3241,6 +3248,11 @@ if ("serviceWorker" in navigator) {
   // straight off a chord site lands usable.
   var CHORD_RE = /^[A-G](#|b)?(m|maj|min|dim|aug|sus|add)?[0-9]*(\/[A-G](#|b)?)?$/;
 
+  // A whole line that is nothing but one of these words is a section header,
+  // not something anybody sings. Kept deliberately short: a word like "solo"
+  // is left out because it turns up in real lyrics.
+  var BARE_TAG = /^(intro|verse|chorus|pre[-\s]?chorus|post[-\s]?chorus|bridge|outro|ending|refrain|reff|interlude|coda|bait|korus|pre[-\s]?reff|tag)\s*\.?\s*\d*$/i;
+
   function isChordLine(line) {
     var toks = line.split(/\s+/);
     if (!toks.length || !toks[0]) return false;
@@ -3266,6 +3278,9 @@ if ("serviceWorker" in navigator) {
       if ((m = t.match(/^title\s*:\s*(.+)$/i))) { title = m[1].trim(); return; }
       if (!t) { closeBlock(); return; }
       m = t.match(/^\[\s*(.+?)\s*\]$/) || t.match(/^([A-Za-z][A-Za-z0-9 .'\-]{0,18}):$/);
+      // Plenty of lyric pages write the header bare — "Chorus" on its own line,
+      // no brackets, no colon — and it would otherwise be sung as a lyric.
+      if (!m && BARE_TAG.test(t)) m = [t, t];
       if (m) { openBlock(m[1]); return; }
       // "> naik nada" is for whoever is driving, never for the stage.
       if ((m = t.match(/^>\s*(.*)$/))) {
