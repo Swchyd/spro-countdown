@@ -3086,9 +3086,15 @@ if ("serviceWorker" in navigator) {
     };
   }
 
+  // Three outcomes, and they are not the same thing: a library came back, the
+  // file has never been published, or we could not reach it at all. Only the
+  // middle one is a reason to go and create it.
   function pullLibrary() {
     return fetch(RAW_URL + "?t=" + Date.now(), { cache: "no-store" })
-      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (r) {
+        if (r.status === 404) return { missing: true };
+        return r.ok ? r.json() : null;
+      })
       .catch(function () { return null; });
   }
 
@@ -3132,7 +3138,8 @@ if ("serviceWorker" in navigator) {
     renderSync();
 
     var work = pullLibrary().then(function (remote) {
-      if (mergeLibrary(remote)) {
+      var missing = !!(remote && remote.missing);
+      if (!missing && mergeLibrary(remote)) {
         try {
           localStorage.setItem(SONGS_KEY, JSON.stringify({
             v: 1, songs: songs, setlist: setlist, setlistAt: setlistAt, dirty: libDirty
@@ -3142,7 +3149,11 @@ if ("serviceWorker" in navigator) {
         renderSongRows();
         renderSetStrip();
       }
-      if (!push || !ghToken || !libDirty) return null;
+      // Publish on the first run as well. With nothing saved yet there is
+      // nothing "dirty" to send, so the file would never appear and the only
+      // way to find out whether the token works would be to add a song and
+      // hope. Creating the file is the confirmation.
+      if (!push || !ghToken || (!libDirty && !missing)) return null;
       return pushLibrary(0).then(function () { markSynced(); });
     });
 
