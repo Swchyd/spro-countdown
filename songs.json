@@ -239,11 +239,13 @@
     ""
    ],
    "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1786204317837,
+   "version": 2,
+   "updatedAt": 1786204802854,
    "updatedBy": "Owner",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1786204802854,
+   "deletedBy": "Owner"
   },
   {
    "id": "s_mskjxstroudi",
