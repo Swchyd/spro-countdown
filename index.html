@@ -4617,6 +4617,24 @@ if ("serviceWorker" in navigator) {
     renderLibView();
   });
 
+  // What a title sorts as, which is not always what it reads as.
+  //
+  // A leading tag names a version, not the song: "[IND] Kumenang" belongs
+  // under K beside every other arrangement of Kumenang, not in a clump of
+  // brackets at one end of the list where the tag rather than the name decides
+  // where it sits. So a bracketed prefix comes off, then any punctuation left
+  // in front of the first real character.
+  function titleKey(title) {
+    var t = String(title || "");
+    // The keep-set covers accented Latin as well as A–Z: a plain [^A-Za-z0-9]
+    // treats "É" as punctuation and eats the first letter of the title.
+    var key = t
+      .replace(/^\s*[[(][^\])]*[\])]\s*/, "")
+      .replace(/^[^A-Za-z0-9À-ɏḀ-ỿ]+/, "")
+      .trim();
+    return key || t;   // a title that is nothing but punctuation still sorts
+  }
+
   function renderSongRows() {
     var q = songSearch.value.trim().toLowerCase();
     songRows.innerHTML = "";
@@ -4632,11 +4650,20 @@ if ("serviceWorker" in navigator) {
       });
     });
 
-    // Whatever was sung recently floats up on its own, which beats a
-    // favourites list nobody remembers to maintain.
+    // Straight A–Z, so a song is where its name says it is and a new one lands
+    // in its place without anyone arranging it.
+    //
+    // This replaced most-recently-sung-first, which sounded helpful and was
+    // not: the order changed itself between services, so the song you reached
+    // for last week had moved, and there was no way to look ahead to where
+    // anything would be. An unchanging order is worth more than a clever one
+    // when you are finding a song in front of a congregation. lastUsed is still
+    // recorded — it just no longer decides position.
     list.sort(function (a, b) {
-      if ((b.lastUsed || 0) !== (a.lastUsed || 0)) return (b.lastUsed || 0) - (a.lastUsed || 0);
-      return a.title.localeCompare(b.title);
+      return titleKey(a.title).localeCompare(titleKey(b.title), undefined, {
+        numeric: true,      // "Mazmur 2" before "Mazmur 10", not after
+        sensitivity: "base" // case and accents do not split the alphabet
+      });
     });
 
     if (!list.length) {
