@@ -453,8 +453,59 @@
     letter-spacing: .08em;
   }
 
+  /* ---------- lyrics mode ---------- */
+  /* The song owns the stage; the countdown steps aside to the top-left corner,
+     mirroring the wall clock on the right. It stays legible because it is
+     still the reason this app exists — it just stops competing for the eye. */
+  #lyricZone {
+    display: none;
+    flex: 1 1 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--sh) * .13) calc(var(--sw) * .035) calc(var(--sh) * .04);
+    min-height: 0;
+    text-align: center;
+  }
+  #stage.mode-lyrics #lyricZone { display: flex; }
+  #stage.mode-lyrics #labelZone { display: none; }
+  #stage.mode-lyrics #timeZone {
+    position: absolute;
+    top: calc(var(--sh) * .02);
+    left: calc(var(--sw) * .025);
+    flex: none;
+    z-index: 3;
+  }
+  #stage.mode-lyrics #timeText {
+    font-size: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
+  }
+  /* Sentence case on purpose. The title is a sign and reads better shouting;
+     lyrics are read as words, and uppercase flattens every word into the same
+     rectangle so the eye has to spell them out. */
+  #lyricNow, #lyricNext {
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.18;
+    /* No wrapping: each lyric line is one line on stage, which is what makes
+       the measured fit below exact rather than approximate. */
+    white-space: pre;
+  }
+  #lyricNow {
+    font-size: var(--lyric-size, 4vh);
+    color: var(--ink);
+  }
+  #lyricNext {
+    font-size: calc(var(--lyric-size, 4vh) * .6);
+    color: var(--ink);
+    opacity: .34;
+    margin-top: calc(var(--lyric-size, 4vh) * .45);
+  }
+  #lyricZone.blank #lyricNow, #lyricZone.blank #lyricNext { visibility: hidden; }
+
   /* standby (display connected, operator has not started yet) */
-  #stage.standby #labelZone, #stage.standby #timeZone { visibility: hidden; }
+  #stage.standby #labelZone, #stage.standby #timeZone,
+  #stage.standby #lyricZone { visibility: hidden; }
   #standby {
     position: absolute;
     inset: 0;
@@ -652,6 +703,12 @@
   }
   #dispBar:hover, #dispBar.alert { opacity: 1; }
   body.display-mode #dispBar { display: flex; }
+  /* In lyrics mode the top-left corner belongs to the countdown, so the link
+     badge — which is only chrome — moves down out of its way. */
+  body.on-lyrics #dispBar {
+    top: auto;
+    bottom: max(10px, env(safe-area-inset-bottom));
+  }
   #dispExit {
     color: var(--ink-dim);
     font-size: 13px;
@@ -1006,6 +1063,10 @@
       <textarea id="labelEdit" rows="1" autocomplete="off" aria-label="Edit title"></textarea>
     </div>
     <div id="timeZone"><div id="timeText">10:00</div></div>
+    <div id="lyricZone">
+      <div id="lyricNow"></div>
+      <div id="lyricNext"></div>
+    </div>
     <div id="clock">00:00:00</div>
     <div id="standby">
       <div class="big">Standing by</div>
@@ -1085,6 +1146,8 @@ if ("serviceWorker" in navigator) {
     // "message" hands the middle to the title; "lyrics" is the song view.
     // One value rather than a set of booleans, so the states cannot disagree.
     mode: "timer",
+    slide: 0,           // which slide of the current song is on stage
+    blank: false,       // lyrics hidden, countdown left alone
     flashing: false
   };
 
@@ -1099,7 +1162,7 @@ if ("serviceWorker" in navigator) {
     return {
       live: T.live, playing: T.playing, totalMs: T.totalMs,
       remainMs: T.remainMs, endAt: T.endAt, label: T.label,
-      mode: T.mode, flashing: T.flashing
+      mode: T.mode, slide: T.slide, blank: T.blank, flashing: T.flashing
     };
   }
 
@@ -1123,11 +1186,114 @@ if ("serviceWorker" in navigator) {
     return pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds());
   }
 
+  // ============================================================
+  //  Lyrics — the stage side
+  //
+  //  The library and the editor do not exist yet, so one public-domain hymn
+  //  is baked in. It is here to judge the layout against real line lengths,
+  //  and it goes away once songs come from storage.
+  // ============================================================
+  var DEMO_SONG = {
+    title: "Amazing Grace",
+    slides: [
+      ["Amazing grace, how sweet the sound",
+       "that saved a wretch like me",
+       "I once was lost, but now am found",
+       "was blind, but now I see"],
+      ["'Twas grace that taught my heart to fear",
+       "and grace my fears relieved",
+       "how precious did that grace appear",
+       "the hour I first believed"],
+      ["Through many dangers, toils and snares",
+       "I have already come",
+       "'tis grace hath brought me safe thus far",
+       "and grace will lead me home"]
+    ]
+  };
+
+  var LY = { song: DEMO_SONG, size: 0 };
+
+  var lyricZone = $("lyricZone"), lyricNow = $("lyricNow"), lyricNext = $("lyricNext");
+  var shownSlide = null;
+
+  var LINE_H = 1.18;      // matches the CSS line-height
+  var NEXT_SCALE = .6;    // the dim preview, as a fraction of the live size
+  var NEXT_GAP = .45;
+  var NEXT_LINES = 2;     // how much of the next slide to show
+
+  var fitCtx = document.createElement("canvas").getContext("2d");
+
+  // One size for the whole song, not one per slide.
+  //
+  // Fitting each slide on its own looks tidier in isolation but reads badly:
+  // a short slide becomes huge, the next one shrinks, and the type jumps every
+  // time the operator advances — so the singer re-focuses on every change. The
+  // worst line in the song sets the size and the rest lives with it.
+  //
+  // measureText scales linearly, so measuring once at 100px gives the exact
+  // size in a single pass. No trial renders, no reflow loop, and it lands the
+  // same way on an iPad, a laptop preview box or a projector.
+  function fitSong(song) {
+    var r = stage.getBoundingClientRect();
+    if (!r.width || !r.height || !song || !song.slides.length) return 0;
+
+    var availW = r.width * .93;
+    var availH = r.height * .82;   // the corner countdown owns the top strip
+
+    fitCtx.font = "700 100px " + (getComputedStyle(stage).fontFamily || "sans-serif");
+
+    var widest = 0, mostLines = 1;
+    for (var i = 0; i < song.slides.length; i++) {
+      var s = song.slides[i];
+      if (s.length > mostLines) mostLines = s.length;
+      for (var j = 0; j < s.length; j++) {
+        var w = fitCtx.measureText(s[j]).width;
+        if (w > widest) widest = w;
+      }
+    }
+
+    var byWidth = widest ? availW / (widest / 100) : Infinity;
+    var units = mostLines * LINE_H + NEXT_GAP + NEXT_LINES * LINE_H * NEXT_SCALE;
+    var byHeight = availH / units;
+
+    // The cap stops a two-word chorus from filling the screen edge to edge.
+    return Math.max(8, Math.min(byWidth, byHeight, r.height * .2));
+  }
+
+  function relayoutLyrics() {
+    LY.size = 0;
+    shownSlide = null;
+  }
+
+  function renderLyrics() {
+    if (T.mode !== "lyrics" || !LY.song) { shownSlide = null; return; }
+
+    if (!LY.size) {
+      LY.size = fitSong(LY.song);
+      if (LY.size) stage.style.setProperty("--lyric-size", LY.size + "px");
+    }
+
+    var slides = LY.song.slides;
+    // Running one past the last slide is deliberate: the lyrics clear and the
+    // countdown stays, so the end of a song never jumps somewhere by itself.
+    var idx = Math.max(0, Math.min(T.slide, slides.length));
+    var key = idx + (T.blank ? "|b" : "");
+    if (key === shownSlide) return;
+    shownSlide = key;
+
+    lyricZone.classList.toggle("blank", !!T.blank);
+    var cur = slides[idx], nxt = slides[idx + 1];
+    lyricNow.textContent = cur ? cur.join("\n") : "";
+    lyricNext.textContent = nxt ? nxt.slice(0, NEXT_LINES).join("\n") : "";
+  }
+
   function renderStage() {
     stage.classList.toggle("mode-message", T.mode === "message");
     stage.classList.toggle("mode-lyrics", T.mode === "lyrics");
     stage.classList.toggle("flashing", !!T.flashing);
     stage.classList.toggle("standby", !T.live);
+    document.body.classList.toggle("on-lyrics", T.mode === "lyrics");
+    renderLyrics();
 
     if (T.label !== shownLabel) {
       shownLabel = T.label;
@@ -1203,6 +1369,9 @@ if ("serviceWorker" in navigator) {
     if (!r.width || !r.height) return;
     stage.style.setProperty("--sw", r.width + "px");
     stage.style.setProperty("--sh", r.height + "px");
+    // The song was fitted to the old box, so it has to be measured again.
+    relayoutLyrics();
+    renderLyrics();
   }
 
   if (window.ResizeObserver) {
@@ -1217,6 +1386,7 @@ if ("serviceWorker" in navigator) {
     parent.appendChild(stage);
     stageWrap.style.display = full ? "" : "none";
     shownTime = ""; shownClock = ""; shownLabel = null;
+    relayoutLyrics();
     measureStage();
     renderStage();
     // The box may still be settling right after a screen swap.
@@ -2194,6 +2364,34 @@ if ("serviceWorker" in navigator) {
   }
 
   $("swapBtn").addEventListener("click", toggleMessage);
+
+  // Lyrics keeps its hands off the timer: entering and leaving the mode never
+  // starts, stops or re-arms the countdown. Rehearsal means flipping between
+  // the two dozens of times, and none of that may disturb what is set for the
+  // service. The console UI for this arrives next; for now it is keys only.
+  function toggleLyrics() {
+    // Standalone is one device with no one driving it, so a song it cannot
+    // advance would just be a stuck screen. It keeps the timer it always had.
+    if (role === "solo") return;
+    if (T.mode === "lyrics") {
+      T.mode = "timer";
+    } else {
+      T.mode = "lyrics";
+      T.slide = 0;
+      T.blank = false;
+    }
+    relayoutLyrics();
+    commit();
+  }
+
+  function stepSlide(dir) {
+    if (T.mode !== "lyrics" || !LY.song) return;
+    // The clamp allows one past the last slide — that lands on a clear stage
+    // rather than wrapping round or jumping to whatever comes next.
+    T.slide = Math.max(0, Math.min(T.slide + dir, LY.song.slides.length));
+    T.blank = false;
+    commit();
+  }
   flashBtn.addEventListener("click", function () { T.flashing = !T.flashing; commit(); });
 
   // The title is staged, not streamed: the operator can prepare the next one
@@ -2280,6 +2478,17 @@ if ("serviceWorker" in navigator) {
     else if (e.key === "r" || e.key === "R") armTimer(T.totalMs, false);
     else if (e.key === "f" || e.key === "F") { T.flashing = !T.flashing; commit(); }
     else if (e.key === "s" || e.key === "S") toggleMessage();
+    else if (e.key === "l" || e.key === "L") toggleLyrics();
+    else if (e.key === "b" || e.key === "B") {
+      if (T.mode === "lyrics") { T.blank = !T.blank; commit(); }
+    }
+    // PageUp/PageDown as well as the arrows, because that is what a USB
+    // presenter remote sends — it makes the clicker work with no extra code.
+    else if (e.key === "ArrowRight" || e.key === "PageDown") {
+      if (T.mode === "lyrics") { e.preventDefault(); stepSlide(1); }
+    } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+      if (T.mode === "lyrics") { e.preventDefault(); stepSlide(-1); }
+    }
   });
 
   window.addEventListener("beforeunload", destroyPeer);
