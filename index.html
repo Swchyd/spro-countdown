@@ -1098,6 +1098,99 @@
   .song-row.live .pick { color: var(--accent); }
   .song-empty { padding: 20px 14px; text-align: center; color: #5B6474; font-size: 13px; }
 
+  #libTabs { display: flex; gap: 8px; }
+  #setView, #allView { display: flex; flex-direction: column; gap: 14px; }
+  #library.all-songs #setView { display: none; }
+  #library:not(.all-songs) #allView { display: none; }
+  .hint { font-size: 12px; line-height: 1.5; color: #5B6474; }
+
+  #setRows {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .set-row {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+    touch-action: none;
+  }
+  .set-row:last-child { border-bottom: none; }
+  .set-row.dragging { opacity: .6; background: var(--panel-2); }
+  .set-row .pick {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 14px;
+    text-align: left;
+    background: transparent;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .set-row .pick:active { background: var(--panel-2); }
+  .set-row .n { flex: 0 0 auto; min-width: 14px; font-size: 12px; font-weight: 700; color: #5B6474; }
+  .set-row .nm { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .set-row.live .nm { color: var(--accent); }
+  .set-row .dur {
+    flex: 0 0 auto;
+    width: 58px;
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+  .set-row .dur:focus { outline: none; background: var(--panel-2); color: var(--ink); }
+  .set-row .rm {
+    flex: 0 0 auto;
+    width: 44px;
+    background: transparent;
+    border-left: 1px solid var(--line);
+    color: #5B6474;
+    font-size: 17px;
+  }
+  .set-row .rm:active { background: var(--panel-2); color: var(--over); }
+  .song-row .add {
+    flex: 0 0 auto;
+    width: 46px;
+    background: transparent;
+    color: #5B6474;
+    font-size: 19px;
+    border-left: 1px solid var(--line);
+  }
+  .song-row .add:active { background: var(--panel-2); color: var(--accent); }
+  .song-row .add.in { color: var(--accent); }
+
+  /* the setlist, where the operator actually stands: one tap per song */
+  #setStrip { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #setStrip:empty { display: none; }
+  .set-chip {
+    flex: 0 0 auto;
+    max-width: 150px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .set-chip.on { border-color: var(--accent); color: var(--accent); }
+  .set-chip:active { background: var(--panel); }
+
   #parseNote { font-size: 12px; line-height: 1.5; color: var(--ink-dim); min-height: 18px; }
   #parseNote .warn { color: var(--accent); }
 
@@ -1153,9 +1246,22 @@
     </div>
 
     <div id="libList">
-      <input id="songSearch" class="textinput" type="text" placeholder="Search title or lyrics…" autocomplete="off">
-      <div id="songRows"></div>
-      <button type="button" id="newSongBtn" class="primary">+ NEW SONG</button>
+      <div id="libTabs">
+        <button type="button" class="op-tab on" data-lib="set">Setlist</button>
+        <button type="button" class="op-tab" data-lib="all">All songs</button>
+      </div>
+
+      <div id="setView">
+        <div id="setRows"></div>
+        <div class="hint">Tap to put a song on deck. Hold and drag to reorder. A time here arms the countdown with it.</div>
+      </div>
+
+      <div id="allView">
+        <input id="songSearch" class="textinput" type="text" placeholder="Search title or lyrics…" autocomplete="off">
+        <div id="songRows"></div>
+        <button type="button" id="newSongBtn" class="primary">+ NEW SONG</button>
+      </div>
+
       <button type="button" id="libBack" class="ghost">‹ Back</button>
     </div>
 
@@ -1313,6 +1419,7 @@
     </div>
 
     <div id="opLyricPanel" class="op-panel">
+      <div id="setStrip"></div>
       <div id="lyricHead">
         <button type="button" id="opSongTitle">—</button>
         <button type="button" id="lyricOnScreen">PUT ON SCREEN</button>
@@ -2295,9 +2402,12 @@ if ("serviceWorker" in navigator) {
     persist();
   }
 
-  // touch: long-press (0.4 s) a bank row, then drag up/down to reorder
+  // touch: long-press (0.4 s) a row, then drag up/down to reorder
   // mouse: press and drag right away
-  function enableReorder(container, onDone) {
+  //
+  // `sel` names the draggable rows and `onDone` reads the settled order back
+  // out of the DOM, so the title bank and the setlist share this outright.
+  function enableReorder(container, sel, onDone) {
     var pressTimer = 0, dragRow = null, pendingRow = null, active = false;
     var startY = 0, isMouse = false;
 
@@ -2321,7 +2431,7 @@ if ("serviceWorker" in navigator) {
         }
       }
       var rows = Array.prototype.filter.call(container.children, function (el) {
-        return el !== dragRow && el.classList.contains("bank-item");
+        return el !== dragRow && el.matches && el.matches(sel);
       });
       var placed = false;
       for (var i = 0; i < rows.length; i++) {
@@ -2345,13 +2455,7 @@ if ("serviceWorker" in navigator) {
       dragRow.classList.remove("dragging");
       dragRow = null;
       pendingRow = null;
-      // save the new order as it now stands in the DOM
-      cfg.bank = Array.prototype.map.call(
-        container.querySelectorAll(".bank-item"),
-        function (el) { return el.dataset.title; }
-      );
-      persist();
-      if (onDone) onDone();
+      if (onDone) onDone();          // reads the new order out of the DOM
       // swallow the click that follows the drop so it doesn't pick a title
       container.addEventListener("click", function (e) {
         e.stopPropagation(); e.preventDefault();
@@ -2359,7 +2463,7 @@ if ("serviceWorker" in navigator) {
     }
 
     container.addEventListener("pointerdown", function (e) {
-      var row = e.target.closest ? e.target.closest(".bank-item") : null;
+      var row = e.target.closest ? e.target.closest(sel) : null;
       if (!row) return;
       startY = e.clientY;
       isMouse = e.pointerType === "mouse";
@@ -2428,7 +2532,14 @@ if ("serviceWorker" in navigator) {
       if (open) render();
     }
 
-    enableReorder(list, render);
+    enableReorder(list, ".bank-item", function () {
+      cfg.bank = Array.prototype.map.call(
+        list.querySelectorAll(".bank-item"),
+        function (el) { return el.dataset.title; }
+      );
+      persist();
+      render();
+    });
 
     toggleBtn.addEventListener("click", function (e) {
       e.stopPropagation();
@@ -2694,7 +2805,7 @@ if ("serviceWorker" in navigator) {
     Array.prototype.forEach.call(opTabsEl.querySelectorAll(".op-tab"), function (b) {
       b.classList.toggle("on", b.getAttribute("data-tab") === name);
     });
-    if (name === "lyrics") buildSlideList();
+    if (name === "lyrics") { buildSlideList(); renderSetStrip(); }
     refreshLyricUI();
   }
 
@@ -2779,14 +2890,20 @@ if ("serviceWorker" in navigator) {
   // ============================================================
   var SONGS_KEY = "spro-songs-v1";
   var songs = [];
+  // Tonight's running order: song ids and a planned length, never copies of
+  // the lyrics. Fix a typo once and every future setlist already has it.
+  var setlist = [];
 
   try {
     var songRaw = JSON.parse(localStorage.getItem(SONGS_KEY) || "null");
     if (songRaw && Array.isArray(songRaw.songs)) songs = songRaw.songs;
+    if (songRaw && Array.isArray(songRaw.setlist)) setlist = songRaw.setlist;
   } catch (e) {}
 
   function saveSongs() {
-    try { localStorage.setItem(SONGS_KEY, JSON.stringify({ v: 1, songs: songs })); } catch (e) {}
+    try {
+      localStorage.setItem(SONGS_KEY, JSON.stringify({ v: 1, songs: songs, setlist: setlist }));
+    } catch (e) {}
   }
 
   function newSongId() {
@@ -2853,6 +2970,7 @@ if ("serviceWorker" in navigator) {
 
   // ----- the library screen -----
   var libraryEl = $("library"), songRows = $("songRows"), songSearch = $("songSearch");
+  var setRows = $("setRows"), setStrip = $("setStrip"), libTabs = $("libTabs");
   var pasteBox = $("pasteBox"), parseNote = $("parseNote"), songTitleInput = $("songTitleInput");
   var saveSongBtn = $("saveSongBtn"), deleteSongBtn = $("deleteSongBtn");
   var editingId = null;      // null while writing a song that has no id yet
@@ -2864,9 +2982,166 @@ if ("serviceWorker" in navigator) {
     PARENT.library = from;
     libraryEl.classList.remove("editing");
     songSearch.value = "";
+    renderSetRows();
     renderSongRows();
     navigate("library");
   }
+
+  // ----- setlist -----
+  function fmtDur(ms) {
+    if (!ms) return "—";
+    var s = Math.round(ms / 1000);
+    return Math.floor(s / 60) + ":" + pad2(s % 60);
+  }
+
+  // "6:30" and "6" both mean six and a half / six minutes. Anything else is
+  // read as no planned length, which simply means "do not touch the timer".
+  function parseDur(txt) {
+    var t = String(txt || "").trim();
+    if (!t) return 0;
+    var m = t.match(/^(\d+)\s*:\s*(\d{1,2})$/);
+    if (m) return (parseInt(m[1], 10) * 60 + Math.min(59, parseInt(m[2], 10))) * 1000;
+    if (/^\d+$/.test(t)) return parseInt(t, 10) * 60000;
+    return 0;
+  }
+
+  function setEntries() {
+    // Drop entries whose song was deleted, so a stale id cannot show a blank.
+    return setlist.filter(function (e) {
+      var s = songById(e.id);
+      return s && !s.hidden;
+    });
+  }
+
+  function renderSetRows() {
+    setRows.innerHTML = "";
+    var live = setEntries();
+    if (!live.length) {
+      var empty = document.createElement("div");
+      empty.className = "song-empty";
+      empty.textContent = "Setlist is empty — add songs from All songs.";
+      setRows.appendChild(empty);
+      return;
+    }
+    live.forEach(function (e, i) {
+      var s = songById(e.id);
+      var row = document.createElement("div");
+      row.className = "set-row" + (T.song && T.song.id === e.id ? " live" : "");
+      row.setAttribute("data-id", e.id);
+
+      var pick = document.createElement("button");
+      pick.type = "button";
+      pick.className = "pick";
+      var n = document.createElement("span");
+      n.className = "n";
+      n.textContent = i + 1;
+      var nm = document.createElement("span");
+      nm.className = "nm";
+      nm.textContent = s.title || "(untitled)";
+      pick.appendChild(n);
+      pick.appendChild(nm);
+
+      var dur = document.createElement("input");
+      dur.type = "text";
+      dur.className = "dur";
+      dur.setAttribute("inputmode", "numeric");
+      dur.setAttribute("aria-label", "Planned length for " + s.title);
+      dur.value = fmtDur(e.ms);
+
+      var rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "rm";
+      rm.setAttribute("aria-label", "Remove " + s.title + " from setlist");
+      rm.textContent = "×";
+
+      row.appendChild(pick);
+      row.appendChild(dur);
+      row.appendChild(rm);
+      setRows.appendChild(row);
+    });
+  }
+
+  function setEntryById(id) {
+    for (var i = 0; i < setlist.length; i++) if (setlist[i].id === id) return setlist[i];
+    return null;
+  }
+
+  // Loading from the setlist arms the countdown too — but only when a length
+  // was actually planned. Otherwise a mis-tap mid-service would wipe a running
+  // timer, and that is not a trade worth making for a convenience.
+  function loadFromSet(id) {
+    var s = songById(id), e = setEntryById(id);
+    if (!s) return;
+    loadSong(s);
+    if (e && e.ms) armTimer(e.ms, false);
+  }
+
+  setRows.addEventListener("click", function (e) {
+    var row = e.target.closest ? e.target.closest(".set-row") : null;
+    if (!row) return;
+    var id = row.getAttribute("data-id");
+    if (e.target.closest(".rm")) {
+      setlist = setlist.filter(function (x) { return x.id !== id; });
+      saveSongs();
+      renderSetRows();
+      renderSongRows();
+      renderSetStrip();
+      return;
+    }
+    if (e.target.closest(".pick")) {
+      loadFromSet(id);
+      history.back();
+    }
+  });
+
+  setRows.addEventListener("change", function (e) {
+    var row = e.target.closest ? e.target.closest(".set-row") : null;
+    if (!row || !e.target.classList.contains("dur")) return;
+    var entry = setEntryById(row.getAttribute("data-id"));
+    if (!entry) return;
+    entry.ms = parseDur(e.target.value);
+    e.target.value = fmtDur(entry.ms);
+    saveSongs();
+  });
+
+  enableReorder(setRows, ".set-row", function () {
+    var order = Array.prototype.map.call(setRows.querySelectorAll(".set-row"), function (el) {
+      return el.getAttribute("data-id");
+    });
+    setlist.sort(function (a, b) { return order.indexOf(a.id) - order.indexOf(b.id); });
+    saveSongs();
+    renderSetRows();
+    renderSetStrip();
+  });
+
+  function renderSetStrip() {
+    setStrip.innerHTML = "";
+    setEntries().forEach(function (e, i) {
+      var s = songById(e.id);
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "set-chip" + (T.song && T.song.id === e.id ? " on" : "");
+      chip.setAttribute("data-id", e.id);
+      chip.textContent = (i + 1) + "  " + (s.title || "(untitled)");
+      setStrip.appendChild(chip);
+    });
+  }
+
+  setStrip.addEventListener("click", function (e) {
+    var chip = e.target.closest ? e.target.closest(".set-chip") : null;
+    if (chip) loadFromSet(chip.getAttribute("data-id"));
+  });
+
+  libTabs.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest(".op-tab") : null;
+    if (!b) return;
+    var which = b.getAttribute("data-lib");
+    libraryEl.classList.toggle("all-songs", which === "all");
+    Array.prototype.forEach.call(libTabs.querySelectorAll(".op-tab"), function (x) {
+      x.classList.toggle("on", x === b);
+    });
+    if (which === "all") renderSongRows(); else renderSetRows();
+  });
 
   function renderSongRows() {
     var q = songSearch.value.trim().toLowerCase();
@@ -2914,6 +3189,12 @@ if ("serviceWorker" in navigator) {
       pick.appendChild(nm);
       pick.appendChild(meta);
 
+      var add = document.createElement("button");
+      add.type = "button";
+      add.className = "add" + (setEntryById(s.id) ? " in" : "");
+      add.setAttribute("aria-label", "Add " + (s.title || "song") + " to setlist");
+      add.textContent = setEntryById(s.id) ? "✓" : "+";
+
       var ed = document.createElement("button");
       ed.type = "button";
       ed.className = "ed";
@@ -2921,6 +3202,7 @@ if ("serviceWorker" in navigator) {
       ed.textContent = "✎";
 
       row.appendChild(pick);
+      row.appendChild(add);
       row.appendChild(ed);
       songRows.appendChild(row);
     });
@@ -2941,6 +3223,7 @@ if ("serviceWorker" in navigator) {
     relayoutLyrics();
     builtSong = null;
     buildSlideList();
+    renderSetStrip();
     commit();
   }
 
@@ -2950,6 +3233,25 @@ if ("serviceWorker" in navigator) {
     var s = songById(row.getAttribute("data-id"));
     if (!s) return;
     if (e.target.closest(".ed")) { openEditor(s); return; }
+    var addBtn = e.target.closest(".add");
+    if (addBtn) {
+      // Update this one button rather than rebuilding the list: re-rendering
+      // throws away the scroll position, which with a couple of hundred songs
+      // means every add jumps you back to the top.
+      if (setEntryById(s.id)) {
+        setlist = setlist.filter(function (x) { return x.id !== s.id; });
+        addBtn.classList.remove("in");
+        addBtn.textContent = "+";
+      } else {
+        setlist.push({ id: s.id, ms: 0 });
+        addBtn.classList.add("in");
+        addBtn.textContent = "✓";
+      }
+      saveSongs();
+      renderSetRows();
+      renderSetStrip();
+      return;
+    }
     loadSong(s);
     history.back();
   });
