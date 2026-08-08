@@ -3507,11 +3507,11 @@ if ("serviceWorker" in navigator) {
       // not to someone setting up before a service. Say what it means for them
       // instead: nothing is lost, it goes up when the network comes back.
       if (err && typeof err.status === "number") throw err;
-      var offline = new Error(
-        navigator.onLine
-          ? "Can't reach the song server — changes are saved here and will upload when it's back"
-          : "Offline — changes are saved on this device and will upload when you're back online"
-      );
+      // Not shown to anyone — see renderSync. The queue length already says
+      // everything a person needs ("2 changes waiting to upload"), and saying
+      // it twice, once in the language of servers, only makes a normal patch of
+      // bad wifi look like a fault. This text exists for the console.
+      var offline = new Error("gatekeeper unreachable");
       offline.status = 0;
       offline.code = "unreachable";
       throw offline;
@@ -3785,7 +3785,10 @@ if ("serviceWorker" in navigator) {
 
     return work
       .catch(function (err) {
-        if (err && err.code === "conflict") syncError = "";
+        // Neither of these is a fault worth a red line. A conflict has its own
+        // banner, and being unable to reach the gatekeeper is just weather —
+        // the work is on the device and the queue count says so.
+        if (err && (err.code === "conflict" || err.code === "unreachable")) syncError = "";
         else syncError = (err && err.message) || "sync failed";
       })
       .then(function () {
@@ -3822,13 +3825,16 @@ if ("serviceWorker" in navigator) {
     }
     if (syncing) { el.textContent = "Syncing…"; el.classList.add("busy"); return; }
     if (rejection) { el.textContent = rejection; el.classList.add("bad"); return; }
-    if (syncError) { el.textContent = syncError; el.classList.add("bad"); return; }
-    if (!session) { el.textContent = "Read-only — not signed in"; return; }
-    if (!canWrite()) { el.textContent = "Viewer — read only"; return; }
+    // Ahead of syncError on purpose. If something is queued, that is the fact
+    // worth stating, and it states itself calmly; whatever the network is doing
+    // about it is our problem, not the operator's.
     if (outbox.length) {
       el.textContent = outbox.length + " change" + (outbox.length === 1 ? "" : "s") + " waiting to upload";
       return;
     }
+    if (syncError) { el.textContent = syncError; el.classList.add("bad"); return; }
+    if (!session) { el.textContent = "Read-only — not signed in"; return; }
+    if (!canWrite()) { el.textContent = "Viewer — read only"; return; }
     el.textContent = lastSyncAt ? "Synced " + nowHMS() : "Up to date";
   }
 
