@@ -687,9 +687,13 @@ async function handleOwnerSignIn(request, env) {
   await rateLimitCheck(env, bucket);
   if (!env.OWNER_KEY) throw new HttpError(500, "not_configured", "No owner key is configured on the server.");
 
-  const supplied = String(body.key || "");
+  // Trimmed on both sides. A key that arrives with a trailing space from a
+  // paste is not a different key, and an invisible difference is a miserable
+  // thing to debug from a message that can only ever say "not valid".
+  const supplied = String(body.key || "").trim();
+  const stored = String(env.OWNER_KEY || "").trim();
   // Hash both sides so the comparison is over fixed-length strings.
-  const ok = constantTimeEqual(await sha256Hex(supplied), await sha256Hex(env.OWNER_KEY));
+  const ok = constantTimeEqual(await sha256Hex(supplied), await sha256Hex(stored));
   if (!ok) {
     await rateLimitFail(env, bucket);
     throw new HttpError(403, "bad_key", "That owner key is not valid.");

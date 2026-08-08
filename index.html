@@ -3744,7 +3744,7 @@ if ("serviceWorker" in navigator) {
   });
 
   $("ownerGoBtn").addEventListener("click", function () {
-    var key = $("ownerKey").value;
+    var key = $("ownerKey").value.trim();
     var name = $("joinName").value.trim() || "Owner";
     if (!key) { syncError = "Enter the owner key."; renderSync(); return; }
     api("/auth/owner", { method: "POST", body: { key: key, name: name } })
