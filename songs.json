@@ -366,6 +366,128 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mskjz65wztv5",
+   "title": "KUMENANG",
+   "sections": [
+    {
+     "key": "intro",
+     "tag": "Intro",
+     "lines": [
+      "Nanana nanana... nanana nanana",
+      "Nanana nanana... uooo yee."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Bangkitlah dan perkataan berkat",
+      "Atas hidup yang dib'rikanNya",
+      "Dengan pasti dengan iman",
+      "Nyatakan kekuatanNya",
+      "KedasyatanNya di hidupku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "tag",
+     "tag": "Tag",
+     "lines": [
+      "KedasyatanNya di hidupku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Imanku berkata Tuhanku hebat",
+      "Yesusku berkata",
+      "Ku kuat melangkah bersama Dia."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kumemuji, ku bersorak",
+      "Ku mengangkat tinggi panjiNya",
+      "Panji kemenanganNya",
+      "Ku bernyanyi, ku bersorak",
+      "Ku mengangkat tinggi panjiNya",
+      "Panji kemenanganNya, kumenang."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "intro",
+    "verse",
+    "tag",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Nanana nanana... nanana nanana",
+     "Nanana nanana... uooo yee."
+    ],
+    [
+     "Bangkitlah dan perkataan berkat",
+     "Atas hidup yang dib'rikanNya",
+     "Dengan pasti dengan iman",
+     "Nyatakan kekuatanNya"
+    ],
+    [
+     "KedasyatanNya di hidupku."
+    ],
+    [
+     "KedasyatanNya di hidupku."
+    ],
+    [
+     "Imanku berkata Tuhanku hebat",
+     "Yesusku berkata",
+     "Ku kuat melangkah bersama Dia."
+    ],
+    [
+     "Kumemuji, ku bersorak",
+     "Ku mengangkat tinggi panjiNya",
+     "Panji kemenanganNya",
+     "Ku bernyanyi, ku bersorak"
+    ],
+    [
+     "Ku mengangkat tinggi panjiNya",
+     "Panji kemenanganNya, kumenang."
+    ]
+   ],
+   "tags": [
+    "Intro",
+    "Verse",
+    "",
+    "Tag",
+    "Pre-Chorus",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1786204397140,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlist": [],
