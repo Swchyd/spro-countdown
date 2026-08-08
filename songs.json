@@ -361,11 +361,13 @@
     ""
    ],
    "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1786204332073,
+   "version": 2,
+   "updatedAt": 1786204796181,
    "updatedBy": "Owner",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1786204796181,
+   "deletedBy": "Owner"
   },
   {
    "id": "s_mskjz65wztv5",
