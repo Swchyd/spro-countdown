@@ -468,7 +468,40 @@
     text-align: center;
   }
   #stage.mode-lyrics #lyricZone { display: flex; }
-  #stage.mode-lyrics #labelZone { display: none; }
+  /* The title stays up during a song rather than vanishing. It used to be
+     hidden here, on the reasoning that lyrics are the message — but the person
+     holding the iPad still needs to know what they are looking at, and the 13%
+     of height the lyrics already give up at the top is exactly the strip it
+     fits in, between the countdown on the left and the clock on the right.
+     Small, dimmed and one line: a header, not a second message competing with
+     the words being sung. */
+  #stage.mode-lyrics #labelZone {
+    position: absolute;
+    top: calc(var(--sh) * .02);
+    /* The gutters come from the corner type size rather than a guessed
+       percentage. Both the countdown and the clock are min(5% of width, 6.5%
+       of height), so on a portrait screen they grow against the width and any
+       fixed percentage that looks right in landscape is too small. 5.2em
+       clears eight tabular digits with room to breathe. */
+    --corner: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
+    left: calc(var(--sw) * .03 + var(--corner) * 5.2);
+    right: calc(var(--sw) * .03 + var(--corner) * 5.2);
+    flex: none;
+    padding: 0;
+    z-index: 3;
+  }
+  #stage.mode-lyrics #labelText {
+    font-size: min(calc(var(--sw) * .036), calc(var(--sh) * .048));
+    letter-spacing: .1em;
+    color: var(--ink-dim);
+    line-height: 1.1;
+    /* One line here, whatever the title does elsewhere: a two-line title would
+       push straight down into the first lyric. */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
   #stage.mode-lyrics #timeZone {
     position: absolute;
     top: calc(var(--sh) * .02);
@@ -3354,6 +3387,21 @@ if ("serviceWorker" in navigator) {
         }
         throw err;
       });
+    }).catch(function (err) {
+      // A shaped answer from the server passes straight through. Anything else
+      // never reached it — no wifi, the venue's network, Cloudflare having a
+      // moment — and "Failed to fetch" is the browser talking to a developer,
+      // not to someone setting up before a service. Say what it means for them
+      // instead: nothing is lost, it goes up when the network comes back.
+      if (err && typeof err.status === "number") throw err;
+      var offline = new Error(
+        navigator.onLine
+          ? "Can't reach the song server — changes are saved here and will upload when it's back"
+          : "Offline — changes are saved on this device and will upload when you're back online"
+      );
+      offline.status = 0;
+      offline.code = "unreachable";
+      throw offline;
     });
   }
 
