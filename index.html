@@ -941,15 +941,25 @@
   #opBody.tab-lyrics #opLyricPanel { display: flex; }
 
   #lyricHead { display: flex; align-items: center; gap: 10px; }
-  #lyricHead b {
+  /* The song name is the way into the library — changing song is the same
+     gesture as reading which one is loaded. */
+  #opSongTitle {
     flex: 1 1 auto;
     min-width: 0;
+    padding: 6px 8px;
+    margin-left: -8px;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ink);
     font-size: 15px;
     font-weight: 700;
+    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  #opSongTitle::after { content: " ▾"; color: #5B6474; font-weight: 600; }
+  #opSongTitle:active { background: var(--panel-2); }
   /* Same idea as #titleApply: looking at a song is not the same as sending it,
      so putting it on the stage stays a deliberate press. */
   #lyricOnScreen {
@@ -989,7 +999,7 @@
     font-size: 14px;
   }
   .slide-row:last-child { border-bottom: none; }
-  .slide-row .n { min-width: 15px; font-size: 11px; font-weight: 700; color: #5B6474; }
+  .slide-row .n { min-width: 15px; max-width: 78px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 700; color: #5B6474; }
   .slide-row .t { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .slide-row.on { background: var(--panel-2); color: var(--ink); }
   .slide-row.on .n { color: var(--accent); }
@@ -1025,6 +1035,92 @@
      — an id alone loses to id+type and the accent would never show. */
   #lyricNav #nextSlideBtn { background: var(--accent); border-color: var(--accent); color: #1A1408; }
   #lyricNav #nextSlideBtn small { color: rgba(26,20,8,.6); }
+
+  /* ---------- song library ---------- */
+  /* .textinput shouts, which is right for a stage title and wrong here: the
+     stage renders lyrics in sentence case, so the editor has to show exactly
+     the capitalisation that will appear. */
+  #library .textinput {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 12px 14px;
+  }
+  #songTitleInput { font-weight: 700; font-size: 17px; }
+  #pasteBox { line-height: 1.5; }
+
+  #library { overflow-y: auto; -webkit-overflow-scrolling: touch; justify-content: center; padding: 24px 16px 48px; }
+  #library .card { margin: 0; }
+  #libList, #songEditor { display: flex; flex-direction: column; gap: 14px; }
+  #songEditor { display: none; }
+  #library.editing #libList { display: none; }
+  #library.editing #songEditor { display: flex; }
+
+  #songRows {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    max-height: 46vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Tapping the name puts the song on deck; the pencil opens it for changes.
+     Two jobs, two targets — a single row cannot mean both. */
+  .song-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+  .song-row:last-child { border-bottom: none; }
+  .song-row .pick {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 14px;
+    text-align: left;
+    background: transparent;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .song-row .meta { flex: 0 0 auto; font-size: 11px; font-weight: 600; color: #5B6474; }
+  .song-row .nm { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .song-row .pick:active { background: var(--panel-2); }
+  .song-row .ed {
+    flex: 0 0 auto;
+    width: 50px;
+    background: transparent;
+    color: #5B6474;
+    font-size: 15px;
+    border-left: 1px solid var(--line);
+  }
+  .song-row .ed:active { background: var(--panel-2); color: var(--ink); }
+  .song-row.live .pick { color: var(--accent); }
+  .song-empty { padding: 20px 14px; text-align: center; color: #5B6474; font-size: 13px; }
+
+  #parseNote { font-size: 12px; line-height: 1.5; color: var(--ink-dim); min-height: 18px; }
+  #parseNote .warn { color: var(--accent); }
+
+  #perSlideRow { display: flex; align-items: center; gap: 8px; }
+  #perSlideRow .psl {
+    flex: 1 1 auto;
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+  .ps-opt {
+    width: 46px; height: 40px;
+    border-radius: 10px;
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink-dim); font-size: 15px; font-weight: 700;
+  }
+  .ps-opt.on { background: var(--panel-2); border-color: var(--accent); color: var(--ink); }
+
+  #edRow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  #edRow .ghost { padding: 12px 6px; font-size: 12px; }
+  #saveSongBtn.dirty { border-color: var(--accent); color: var(--accent); }
+  /* Two presses to delete, so a mis-tap an hour before a service cannot
+     take a song with it. */
+  #deleteSongBtn.armed { border-color: var(--over); color: var(--over); }
   #blankBtn.on { background: var(--over); border-color: var(--over); color: #fff; }
   #blankBtn.on small { color: rgba(255,255,255,.7); }
 </style>
@@ -1042,8 +1138,51 @@
     <button type="button" class="mode-btn" id="pickOp">Operator</button>
     <button type="button" class="mode-btn" id="pickDisp">Display</button>
     <button type="button" class="mode-btn" id="pickSolo">Standalone</button>
+    <button type="button" class="ghost" id="pickSongs">Song library</button>
 
     <div id="setupClock">00:00:00</div>
+  </div>
+</div>
+
+<!-- ============ song library ============ -->
+<div id="library" class="screen">
+  <div class="card">
+    <div class="brand">
+      <div class="dot"></div>
+      <h1 id="libHeading">Songs</h1>
+    </div>
+
+    <div id="libList">
+      <input id="songSearch" class="textinput" type="text" placeholder="Search title or lyrics…" autocomplete="off">
+      <div id="songRows"></div>
+      <button type="button" id="newSongBtn" class="primary">+ NEW SONG</button>
+      <button type="button" id="libBack" class="ghost">‹ Back</button>
+    </div>
+
+    <div id="songEditor">
+      <label class="field-label" for="pasteBox">Paste lyrics</label>
+      <textarea id="pasteBox" class="textinput" rows="8" autocomplete="off"
+        placeholder="Paste the whole song here.&#10;&#10;Blank line = new slide&#10;[Chorus] or Reff: = section&#10;Chord lines are dropped automatically"></textarea>
+      <div id="parseNote"></div>
+
+      <label class="field-label" for="songTitleInput">Title</label>
+      <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off">
+
+      <div id="perSlideRow">
+        <span class="psl">Lines per slide</span>
+        <button type="button" class="ps-opt" data-ps="2">2</button>
+        <button type="button" class="ps-opt on" data-ps="4">4</button>
+        <button type="button" class="ps-opt" data-ps="6">6</button>
+      </div>
+
+      <button type="button" id="saveNextBtn" class="primary">SAVE &amp; NEXT SONG</button>
+      <div id="edRow">
+        <button type="button" id="saveSongBtn" class="ghost">Save</button>
+        <button type="button" id="saveAsBtn" class="ghost">Save as new</button>
+        <button type="button" id="deleteSongBtn" class="ghost">Delete</button>
+      </div>
+      <button type="button" id="editorBack" class="ghost">‹ Songs</button>
+    </div>
   </div>
 </div>
 
@@ -1175,7 +1314,7 @@
 
     <div id="opLyricPanel" class="op-panel">
       <div id="lyricHead">
-        <b id="opSongTitle">—</b>
+        <button type="button" id="opSongTitle">—</button>
         <button type="button" id="lyricOnScreen">PUT ON SCREEN</button>
       </div>
       <div class="slide-list" id="opSlideList"></div>
@@ -1279,6 +1418,12 @@ if ("serviceWorker" in navigator) {
     // "message" hands the middle to the title; "lyrics" is the song view.
     // One value rather than a set of booleans, so the states cannot disagree.
     mode: "timer",
+    // The song rides along in the snapshot rather than travelling as its own
+    // message. It costs a kilobyte or two per update, which buys two things:
+    // a display always holds the whole song so a dropped packet can never
+    // leave it stranded on a slide it cannot name, and the local SSE relay in
+    // server.js needs no new endpoint to carry it.
+    song: null,
     slide: 0,           // which slide of the current song is on stage
     blank: false,       // lyrics hidden, countdown left alone
     flashing: false
@@ -1295,7 +1440,8 @@ if ("serviceWorker" in navigator) {
     return {
       live: T.live, playing: T.playing, totalMs: T.totalMs,
       remainMs: T.remainMs, endAt: T.endAt, label: T.label,
-      mode: T.mode, slide: T.slide, blank: T.blank, flashing: T.flashing
+      mode: T.mode, song: T.song, slide: T.slide, blank: T.blank,
+      flashing: T.flashing
     };
   }
 
@@ -1322,29 +1468,18 @@ if ("serviceWorker" in navigator) {
   // ============================================================
   //  Lyrics — the stage side
   //
-  //  The library and the editor do not exist yet, so one public-domain hymn
-  //  is baked in. It is here to judge the layout against real line lengths,
-  //  and it goes away once songs come from storage.
+  //  What is on stage lives in T.song, so the operator and the display run
+  //  exactly the same rendering code; the display just receives its copy.
   // ============================================================
-  var DEMO_SONG = {
-    title: "Amazing Grace",
-    slides: [
-      ["Amazing grace, how sweet the sound",
-       "that saved a wretch like me",
-       "I once was lost, but now am found",
-       "was blind, but now I see"],
-      ["'Twas grace that taught my heart to fear",
-       "and grace my fears relieved",
-       "how precious did that grace appear",
-       "the hour I first believed"],
-      ["Through many dangers, toils and snares",
-       "I have already come",
-       "'tis grace hath brought me safe thus far",
-       "and grace will lead me home"]
-    ]
-  };
+  var LY = { size: 0, fittedFor: null };
 
-  var LY = { song: DEMO_SONG, size: 0 };
+  // Cheap identity for "is this still the same song, unchanged?". The display
+  // parses a fresh object out of every snapshot, so comparing by reference
+  // would re-measure the whole song once a second for no reason.
+  function songKey(s) {
+    if (!s) return "";
+    return (s.id || s.title || "?") + "|" + (s.updatedAt || 0);
+  }
 
   var lyricZone = $("lyricZone"), lyricNow = $("lyricNow"), lyricNext = $("lyricNext");
   var shownSlide = null;
@@ -1395,24 +1530,30 @@ if ("serviceWorker" in navigator) {
 
   function relayoutLyrics() {
     LY.size = 0;
+    LY.fittedFor = null;
     shownSlide = null;
   }
 
   function renderLyrics() {
-    if (T.mode !== "lyrics" || !LY.song) { shownSlide = null; return; }
+    if (T.mode !== "lyrics" || !T.song) { shownSlide = null; return; }
 
-    if (!LY.size) {
-      LY.size = fitSong(LY.song);
+    // Re-measure when the box changed or a different song arrived — but not
+    // on every snapshot carrying the same song.
+    var key = songKey(T.song);
+    if (!LY.size || LY.fittedFor !== key) {
+      LY.size = fitSong(T.song);
+      LY.fittedFor = key;
       if (LY.size) stage.style.setProperty("--lyric-size", LY.size + "px");
+      shownSlide = null;
     }
 
-    var slides = LY.song.slides;
+    var slides = T.song.slides;
     // Running one past the last slide is deliberate: the lyrics clear and the
     // countdown stays, so the end of a song never jumps somewhere by itself.
     var idx = Math.max(0, Math.min(T.slide, slides.length));
-    var key = idx + (T.blank ? "|b" : "");
-    if (key === shownSlide) return;
-    shownSlide = key;
+    var mark = idx + (T.blank ? "|b" : "");
+    if (mark === shownSlide) return;
+    shownSlide = mark;
 
     lyricZone.classList.toggle("blank", !!T.blank);
     var cur = slides[idx], nxt = slides[idx + 1];
@@ -1961,11 +2102,15 @@ if ("serviceWorker" in navigator) {
     join: "menu",
     opScreen: "setup",
     solo: "setup",
-    display: "join"
+    display: "join",
+    // Reassigned when the library is opened, because it is reachable both
+    // from the menu while preparing and from the console mid-service, and
+    // back has to return to whichever one it was.
+    library: "menu"
   };
 
   function show(id) {
-    ["menu", "setup", "join", "opScreen"].forEach(function (s) {
+    ["menu", "setup", "join", "opScreen", "library"].forEach(function (s) {
       $(s).classList.toggle("on", s === id);
     });
   }
@@ -2528,10 +2673,10 @@ if ("serviceWorker" in navigator) {
   // while the stage is still on the countdown, and only what is on screen when
   // lyrics are live actually reaches the display.
   function stepSlide(dir) {
-    if (!LY.song) return;
+    if (!T.song) return;
     // The clamp allows one past the last slide — that lands on a clear stage
     // rather than wrapping round or jumping to whatever comes next.
-    T.slide = Math.max(0, Math.min(T.slide + dir, LY.song.slides.length));
+    T.slide = Math.max(0, Math.min(T.slide + dir, T.song.slides.length));
     T.blank = false;
     commit();
   }
@@ -2554,9 +2699,9 @@ if ("serviceWorker" in navigator) {
   }
 
   function buildSlideList() {
-    var song = LY.song;
-    if (song === builtSong) return;
-    builtSong = song;
+    var song = T.song;
+    if (songKey(song) === builtSong) return;
+    builtSong = songKey(song);
     opSlideList.innerHTML = "";
     opSongTitle.textContent = song ? song.title : "—";
 
@@ -2575,7 +2720,10 @@ if ("serviceWorker" in navigator) {
       row.setAttribute("data-i", i);
       var n = document.createElement("span");
       n.className = "n";
-      n.textContent = i + 1;
+      // The section label where the parser found one, otherwise the number —
+      // "Chorus" tells the operator where they are, "7" does not.
+      var tag = song.tags && song.tags[i];
+      n.textContent = tag ? tag : (i + 1);
       var t = document.createElement("span");
       t.className = "t";
       t.textContent = slide[0] || "";
@@ -2621,6 +2769,324 @@ if ("serviceWorker" in navigator) {
   $("nextSlideBtn").addEventListener("click", function () { stepSlide(1); });
   blankBtn.addEventListener("click", function () { T.blank = !T.blank; commit(); });
   lyricOnScreen.addEventListener("click", toggleLyrics);
+
+  // ============================================================
+  //  Song library
+  //
+  //  Its own storage key, not a field on the timer config: this is the one
+  //  part of the app meant to outlive everything else, and a corrupt timer
+  //  setting must never be able to take two years of songs with it.
+  // ============================================================
+  var SONGS_KEY = "spro-songs-v1";
+  var songs = [];
+
+  try {
+    var songRaw = JSON.parse(localStorage.getItem(SONGS_KEY) || "null");
+    if (songRaw && Array.isArray(songRaw.songs)) songs = songRaw.songs;
+  } catch (e) {}
+
+  function saveSongs() {
+    try { localStorage.setItem(SONGS_KEY, JSON.stringify({ v: 1, songs: songs })); } catch (e) {}
+  }
+
+  function newSongId() {
+    return "s_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  // ----- the parser -----
+  //
+  // Typing lyrics by hand is the thing that stops a library from ever being
+  // filled, so pasting is the front door: blank line ends a slide, [Chorus]
+  // or Reff: starts a section, and chord lines are thrown away so a paste
+  // straight off a chord site lands usable.
+  var CHORD_RE = /^[A-G](#|b)?(m|maj|min|dim|aug|sus|add)?[0-9]*(\/[A-G](#|b)?)?$/;
+
+  function isChordLine(line) {
+    var toks = line.split(/\s+/);
+    if (!toks.length || !toks[0]) return false;
+    for (var i = 0; i < toks.length; i++) {
+      if (!CHORD_RE.test(toks[i])) return false;
+    }
+    // "A" and "Am" on their own are words in some songs; only call it a chord
+    // line when there are several, or when the token could not be a word.
+    return toks.length > 1 || /[0-9#\/]|maj|dim|sus|aug|add/.test(toks[0]);
+  }
+
+  function parseSong(text, perSlide) {
+    var lines = String(text || "").replace(/\r\n?/g, "\n").split("\n");
+    var blocks = [], cur = null, title = "", dropped = 0;
+
+    function closeBlock() { if (cur && cur.lines.length) blocks.push(cur); cur = null; }
+    function openBlock(tag) { closeBlock(); cur = { tag: tag || "", lines: [] }; }
+
+    lines.forEach(function (raw) {
+      var t = raw.trim(), m;
+      if ((m = t.match(/^title\s*:\s*(.+)$/i))) { title = m[1].trim(); return; }
+      if (!t) { closeBlock(); return; }
+      m = t.match(/^\[\s*(.+?)\s*\]$/) || t.match(/^([A-Za-z][A-Za-z0-9 .'\-]{0,18}):$/);
+      if (m) { openBlock(m[1]); return; }
+      if (isChordLine(t)) { dropped++; return; }
+      if (!cur) openBlock("");
+      cur.lines.push(t);
+    });
+    closeBlock();
+
+    // Most lyric pages open with the song's name on a line of its own.
+    if (!title && blocks.length > 1 && !blocks[0].tag &&
+        blocks[0].lines.length === 1 && blocks[0].lines[0].length <= 40) {
+      title = blocks.shift().lines[0];
+    }
+
+    var slides = [], tags = [], total = 0, longest = "";
+    blocks.forEach(function (b) {
+      total += b.lines.length;
+      b.lines.forEach(function (l) { if (l.length > longest.length) longest = l; });
+      for (var i = 0; i < b.lines.length; i += perSlide) {
+        slides.push(b.lines.slice(i, i + perSlide));
+        tags.push(i === 0 ? b.tag : "");
+      }
+    });
+
+    return { title: title, slides: slides, tags: tags,
+             dropped: dropped, lines: total, longest: longest };
+  }
+
+  // ----- the library screen -----
+  var libraryEl = $("library"), songRows = $("songRows"), songSearch = $("songSearch");
+  var pasteBox = $("pasteBox"), parseNote = $("parseNote"), songTitleInput = $("songTitleInput");
+  var saveSongBtn = $("saveSongBtn"), deleteSongBtn = $("deleteSongBtn");
+  var editingId = null;      // null while writing a song that has no id yet
+  var perSlide = 4;
+  var parsed = null;
+  var deleteArmed = false;
+
+  function openLibrary(from) {
+    PARENT.library = from;
+    libraryEl.classList.remove("editing");
+    songSearch.value = "";
+    renderSongRows();
+    navigate("library");
+  }
+
+  function renderSongRows() {
+    var q = songSearch.value.trim().toLowerCase();
+    songRows.innerHTML = "";
+
+    var list = songs.filter(function (s) {
+      if (s.hidden) return false;
+      if (!q) return true;
+      if (s.title.toLowerCase().indexOf(q) >= 0) return true;
+      // Half the time the only thing anyone remembers is a line from it.
+      return s.slides.some(function (sl) {
+        return sl.join(" ").toLowerCase().indexOf(q) >= 0;
+      });
+    });
+
+    // Whatever was sung recently floats up on its own, which beats a
+    // favourites list nobody remembers to maintain.
+    list.sort(function (a, b) {
+      if ((b.lastUsed || 0) !== (a.lastUsed || 0)) return (b.lastUsed || 0) - (a.lastUsed || 0);
+      return a.title.localeCompare(b.title);
+    });
+
+    if (!list.length) {
+      var empty = document.createElement("div");
+      empty.className = "song-empty";
+      empty.textContent = songs.length ? "Nothing matches that." : "No songs yet — paste one in.";
+      songRows.appendChild(empty);
+      return;
+    }
+
+    list.forEach(function (s) {
+      var row = document.createElement("div");
+      row.className = "song-row" + (T.song && T.song.id === s.id ? " live" : "");
+      row.setAttribute("data-id", s.id);
+
+      var pick = document.createElement("button");
+      pick.type = "button";
+      pick.className = "pick";
+      var nm = document.createElement("span");
+      nm.className = "nm";
+      nm.textContent = s.title || "(untitled)";
+      var meta = document.createElement("span");
+      meta.className = "meta";
+      meta.textContent = s.slides.length + " slides";
+      pick.appendChild(nm);
+      pick.appendChild(meta);
+
+      var ed = document.createElement("button");
+      ed.type = "button";
+      ed.className = "ed";
+      ed.setAttribute("aria-label", "Edit " + (s.title || "song"));
+      ed.textContent = "✎";
+
+      row.appendChild(pick);
+      row.appendChild(ed);
+      songRows.appendChild(row);
+    });
+  }
+
+  function songById(id) {
+    for (var i = 0; i < songs.length; i++) if (songs[i].id === id) return songs[i];
+    return null;
+  }
+
+  function loadSong(s) {
+    // Only what the stage needs travels; lastUsed and hidden stay at home.
+    T.song = { id: s.id, title: s.title, slides: s.slides, tags: s.tags, updatedAt: s.updatedAt || 0 };
+    T.slide = 0;
+    T.blank = false;
+    s.lastUsed = Date.now();
+    saveSongs();
+    relayoutLyrics();
+    builtSong = null;
+    buildSlideList();
+    commit();
+  }
+
+  songRows.addEventListener("click", function (e) {
+    var row = e.target.closest ? e.target.closest(".song-row") : null;
+    if (!row) return;
+    var s = songById(row.getAttribute("data-id"));
+    if (!s) return;
+    if (e.target.closest(".ed")) { openEditor(s); return; }
+    loadSong(s);
+    history.back();
+  });
+
+  songSearch.addEventListener("input", renderSongRows);
+
+  // ----- the editor -----
+  function setPerSlide(n) {
+    perSlide = n;
+    Array.prototype.forEach.call(document.querySelectorAll(".ps-opt"), function (b) {
+      b.classList.toggle("on", parseInt(b.getAttribute("data-ps"), 10) === n);
+    });
+    refreshParse();
+  }
+
+  function openEditor(s) {
+    editingId = s ? s.id : null;
+    pasteBox.value = s ? s.slides.map(function (sl, i) {
+      return (s.tags && s.tags[i] ? "[" + s.tags[i] + "]\n" : "") + sl.join("\n");
+    }).join("\n\n") : "";
+    songTitleInput.value = s ? s.title : "";
+    setPerSlide(s && s.perSlide ? s.perSlide : 4);
+    disarmDelete();
+    libraryEl.classList.add("editing");
+    refreshParse();
+  }
+
+  function refreshParse() {
+    parsed = parseSong(pasteBox.value, perSlide);
+    if (parsed.title && !songTitleInput.value.trim()) songTitleInput.value = parsed.title;
+
+    var bits = [];
+    if (!parsed.slides.length) {
+      parseNote.textContent = "Nothing to save yet.";
+    } else {
+      bits.push(parsed.slides.length + " slide" + (parsed.slides.length === 1 ? "" : "s"));
+      bits.push(parsed.lines + " lines");
+      if (parsed.dropped) bits.push(parsed.dropped + " chord line" + (parsed.dropped === 1 ? "" : "s") + " dropped");
+      parseNote.textContent = bits.join(" · ");
+
+      // One runaway line shrinks the entire song, because the type is fitted
+      // to the worst line. Better to know now than to squint on Sunday.
+      if (parsed.longest.length > 42) {
+        var warn = document.createElement("div");
+        warn.className = "warn";
+        warn.textContent = "Long line shrinks the whole song — split it? “" +
+          parsed.longest.slice(0, 46) + (parsed.longest.length > 46 ? "…" : "") + "”";
+        parseNote.appendChild(warn);
+      }
+    }
+    saveSongBtn.classList.toggle("dirty", !!parsed.slides.length);
+  }
+
+  function commitSong(asNew) {
+    if (!parsed || !parsed.slides.length) return null;
+    var title = songTitleInput.value.trim() || parsed.title || "Untitled";
+    var existing = asNew ? null : songById(editingId);
+
+    if (existing) {
+      existing.title = title;
+      existing.slides = parsed.slides;
+      existing.tags = parsed.tags;
+      existing.perSlide = perSlide;
+      existing.updatedAt = Date.now();
+      existing.hidden = false;
+    } else {
+      existing = {
+        id: newSongId(), title: title,
+        slides: parsed.slides, tags: parsed.tags, perSlide: perSlide,
+        updatedAt: Date.now(), lastUsed: 0, hidden: false
+      };
+      songs.push(existing);
+    }
+    editingId = existing.id;
+    saveSongs();
+
+    // If this song is the one on stage, the correction has to reach it.
+    if (T.song && T.song.id === existing.id) loadSong(existing);
+    return existing;
+  }
+
+  $("newSongBtn").addEventListener("click", function () { openEditor(null); });
+  $("editorBack").addEventListener("click", function () {
+    libraryEl.classList.remove("editing");
+    renderSongRows();
+  });
+  pasteBox.addEventListener("input", refreshParse);
+  Array.prototype.forEach.call(document.querySelectorAll(".ps-opt"), function (b) {
+    b.addEventListener("click", function () { setPerSlide(parseInt(b.getAttribute("data-ps"), 10)); });
+  });
+
+  saveSongBtn.addEventListener("click", function () {
+    if (commitSong(false)) { libraryEl.classList.remove("editing"); renderSongRows(); }
+  });
+
+  // Save as new is how a second arrangement or a translation gets made: change
+  // the title, press this, and the original is left untouched.
+  $("saveAsBtn").addEventListener("click", function () {
+    if (commitSong(true)) { libraryEl.classList.remove("editing"); renderSongRows(); }
+  });
+
+  // Five songs go in at one sitting, so the fast path keeps the box in front
+  // of you instead of making you walk back through the list each time.
+  $("saveNextBtn").addEventListener("click", function () {
+    if (!commitSong(false)) return;
+    openEditor(null);
+    pasteBox.focus();
+  });
+
+  function disarmDelete() {
+    deleteArmed = false;
+    deleteSongBtn.classList.remove("armed");
+    deleteSongBtn.textContent = "Delete";
+  }
+
+  deleteSongBtn.addEventListener("click", function () {
+    var s = songById(editingId);
+    if (!s) { libraryEl.classList.remove("editing"); return; }
+    if (!deleteArmed) {
+      deleteArmed = true;
+      deleteSongBtn.classList.add("armed");
+      deleteSongBtn.textContent = "Sure?";
+      setTimeout(function () { if (deleteArmed) disarmDelete(); }, 4000);
+      return;
+    }
+    // Hidden, never spliced out: every mistake here is recoverable.
+    s.hidden = true;
+    s.updatedAt = Date.now();
+    saveSongs();
+    disarmDelete();
+    libraryEl.classList.remove("editing");
+    renderSongRows();
+  });
+
+  $("libBack").addEventListener("click", function () { history.back(); });
+  $("pickSongs").addEventListener("click", function () { openLibrary("menu"); });
+  opSongTitle.addEventListener("click", function () { openLibrary("opScreen"); });
   flashBtn.addEventListener("click", function () { T.flashing = !T.flashing; commit(); });
 
   // The title is staged, not streamed: the operator can prepare the next one
