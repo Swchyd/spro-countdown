@@ -1227,7 +1227,7 @@
 
   #syncBox { border-top: 1px solid var(--line); padding-top: 12px; }
   #syncRow { display: flex; align-items: center; gap: 8px; }
-  #syncStatus { flex: 1 1 auto; min-width: 0; font-size: 12px; color: #5B6474; }
+  #syncStatus { flex: 1 1 auto; min-width: 0; font-size: 12px; line-height: 1.45; color: #5B6474; }
   #syncStatus.bad { color: var(--over); }
   #syncStatus.busy { color: var(--accent); }
   #syncRow button {
@@ -3103,8 +3103,11 @@ if ("serviceWorker" in navigator) {
     // from another device between syncs is folded in rather than flattened.
     return fetch(API_URL + "?t=" + Date.now(), { headers: authHeaders(), cache: "no-store" })
       .then(function (r) {
-        if (r.status === 404) return { sha: null, json: null };
-        if (r.status === 401 || r.status === 403) throw new Error("token rejected");
+        // The repo is public, so this read would succeed even unauthenticated.
+        // A 401 here therefore says something specific: the token string
+        // itself was not accepted, before permissions ever came into it.
+        if (r.status === 401) throw new Error("401 · token not recognised — expired, or the paste was cut short");
+        if (r.status === 404) return { sha: null, json: null };   // no file yet
         if (!r.ok) throw new Error("read failed (" + r.status + ")");
         return r.json().then(function (d) {
           var json = null;
@@ -3126,7 +3129,11 @@ if ("serviceWorker" in navigator) {
         // Someone wrote in the gap between the read and the write. Merging is
         // per song, so simply going round again is safe.
         if (r.status === 409 && (attempt || 0) < 2) return pushLibrary((attempt || 0) + 1);
-        if (r.status === 401 || r.status === 403) throw new Error("token rejected");
+        // Each of these has a different fix, so each says which one.
+        if (r.status === 401) throw new Error("401 · token not recognised — expired, or the paste was cut short");
+        if (r.status === 403) throw new Error("403 · token has no write access — set Contents to Read and write");
+        if (r.status === 404) throw new Error("404 · repo not on the token's list — add " + GH_REPO + " under Only select repositories");
+        if (r.status === 422) throw new Error("422 · GitHub refused the file");
         throw new Error("write failed (" + r.status + ")");
       });
   }
@@ -3191,7 +3198,23 @@ if ("serviceWorker" in navigator) {
   });
 
   $("saveTokenBtn").addEventListener("click", function () {
-    ghToken = $("ghToken").value.trim();
+    var entered = $("ghToken").value.trim();
+
+    // Catch the two things that go wrong before the network does: a token
+    // pasted from the wrong place, and one that arrived cut short. Saying so
+    // here beats waiting for a round trip to come back with a 401.
+    if (entered && !/^(github_pat_|ghp_)/.test(entered)) {
+      syncError = "that does not look like a GitHub token — it should start with github_pat_";
+      renderSync();
+      return;
+    }
+    if (entered && entered.length < 40) {
+      syncError = "token looks cut short (" + entered.length + " characters) — copy the whole thing";
+      renderSync();
+      return;
+    }
+
+    ghToken = entered;
     try { ghToken ? localStorage.setItem(TOKEN_KEY, ghToken) : localStorage.removeItem(TOKEN_KEY); } catch (e) {}
     $("ghToken").value = "";
     $("syncBox").classList.remove("open");
