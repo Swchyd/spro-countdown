@@ -2128,6 +2128,28 @@ if ("serviceWorker" in navigator) {
   var retryTimer = 0;
   var roomCode = "";     // the code this session owns or joined
   var idRetries = 0;     // consecutive "that id is taken" refusals
+
+  // The public PeerJS broker does not hand a room id back when its socket
+  // closes. Measured, not guessed: after a clean peer.destroy() the same id was
+  // still refused twelve seconds and seven attempts later. So "leave Operator,
+  // come back on the same code" could never work by waiting — the thing being
+  // waited for does not happen, certainly not inside the minutes before a
+  // service, and the only escape was to invent a new code and retype it on the
+  // iPad.
+  //
+  // So a code no longer names one id. It names a short list of them. The
+  // operator takes the first that is free; the display tries them in the same
+  // order and talks to whoever answers. A zombie holding slot 0 costs the
+  // operator nothing — it simply hosts on slot 1 — and the code on the screen
+  // never changes.
+  var SLOTS = ["", "-b", "-c", "-d", "-e", "-f"];
+  var hostSlot = 0;      // operator: the slot being held or attempted
+  var dialSlot = 0;      // display: the slot being dialled
+  var idBlocked = false; // this peer was refused its id; reconnecting is futile
+
+  function slotId(code, i) {
+    return PEER_PREFIX + code + SLOTS[i % SLOTS.length];
+  }
   var watchdog = 0;
   var dialing = 0;       // when the current connect attempt started
 
@@ -2186,6 +2208,9 @@ if ("serviceWorker" in navigator) {
     watchdog = 0;
     roomCode = "";
     idRetries = 0;
+    hostSlot = 0;
+    dialSlot = 0;
+    idBlocked = false;
     dialing = 0;
     destroyPeer();
     clearInterval(pingTimer);
@@ -2223,6 +2248,19 @@ if ("serviceWorker" in navigator) {
 
   // The browser tells us the moment the network is back; do not wait a tick.
   window.addEventListener("online", function () { setTimeout(superviseLink, 300); });
+
+  // The broker only frees a room code when its socket closes. Close the tab, or
+  // swipe the app away on the iPad, and nothing ever closes it — so the code
+  // stays taken until the server's own timeout, and the next session cannot
+  // have it back. That is the whole "I have to make a new code every time".
+  //
+  // pagehide rather than beforeunload: iOS Safari does not fire beforeunload,
+  // and the iPad is the device where this hurts most. If the page comes back
+  // out of the bfcache instead of dying, the watchdog notices the dead peer and
+  // rebuilds the link on the same code within three seconds.
+  window.addEventListener("pagehide", function () {
+    if (peer && !peer.destroyed) { try { peer.destroy(); } catch (e) {} }
+  });
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "visible") setTimeout(superviseLink, 300);
   });
@@ -2337,7 +2375,32 @@ if ("serviceWorker" in navigator) {
   }
 
   function hostRoom(code) {
+    // Already holding this exact code on a peer that is still alive? Keep it.
+    //
+    // Tearing it down and immediately asking the broker for the same id again
+    // is a race against our own socket closing, and the broker wins: it still
+    // has us registered, refuses the id as taken, and we spend the next minute
+    // "reclaiming" a code we never actually let go of — while the display sits
+    // there unable to connect. Re-entering Operator with the same code is the
+    // normal case, not an edge case, so it must not cost anything.
+    if (peer && !peer.destroyed && peer.id === slotId(code, hostSlot)) {
+      roomCode = code;
+      cfg.room = code;
+      persist();
+      $("roomCode").textContent = code;
+      $("opRoomCode").textContent = code;
+      if (peer.disconnected) {
+        setLink("connecting", "Reconnecting…");
+        try { peer.reconnect(); } catch (e) {}
+      } else {
+        setLink("ready");
+      }
+      startWatchdog();
+      return;
+    }
+
     destroyPeer();
+    idBlocked = false;
     if (!havePeerJS()) {
       setLink("error", "Connection module failed to load — reload the page.");
       return;
@@ -2350,9 +2413,9 @@ if ("serviceWorker" in navigator) {
     setLink("connecting", "Connecting…");
     startWatchdog();
 
-    peer = new Peer(PEER_PREFIX + code, { debug: 0 });
+    peer = new Peer(slotId(code, hostSlot), { debug: 0 });
 
-    peer.on("open", function () { idRetries = 0; setLink("ready"); });
+    peer.on("open", function () { idRetries = 0; idBlocked = false; setLink("ready"); });
 
     peer.on("connection", function (conn) {
       conn.on("open", function () {
@@ -2383,15 +2446,20 @@ if ("serviceWorker" in navigator) {
         // Our own previous session still holds this id on the broker. It is
         // released a little after the socket dies, so keep asking rather than
         // making the operator invent a new code.
+        // Taken — almost always by our own previous session, which the broker
+        // will not release. Step to the next slot instead of asking again for
+        // something that is not coming back. The code on screen does not
+        // change, so nobody has to retype anything.
+        idBlocked = true;
         idRetries++;
         clearTimeout(retryTimer);
-        if (idRetries > 20) {
-          setLink("error", "Code " + code + " will not free up — use New code.");
+        if (idRetries > SLOTS.length) {
+          setLink("error", "Every line for code " + code + " is busy — use New code.");
           return;
         }
-        setLink("connecting", "Reclaiming code " + code + "…");
-        retryTimer = setTimeout(function () { hostRoom(code); },
-                                Math.min(6000, 1000 + idRetries * 500));
+        hostSlot = (hostSlot + 1) % SLOTS.length;
+        setLink("connecting", "Code " + code + " — finding a free line…");
+        retryTimer = setTimeout(function () { hostRoom(code); }, 250);
       } else if (err.type === "network" || err.type === "socket-error" ||
                  err.type === "socket-closed" || err.type === "server-error") {
         // The watchdog rebuilds this; just say what is happening.
@@ -2402,6 +2470,12 @@ if ("serviceWorker" in navigator) {
     });
 
     peer.on("disconnected", function () {
+      // A refused id is followed immediately by disconnect. Reconnecting then
+      // re-asks for the id we were just told we cannot have, and — worse — the
+      // message here overwrites the one explaining what is actually happening,
+      // which is why this used to look like an endless connect/reconnect flap
+      // with no explanation. The slot walk above owns this case.
+      if (idBlocked) return;
       setLink("connecting", "Reconnecting…");
       if (peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} }
     });
@@ -2454,10 +2528,15 @@ if ("serviceWorker" in navigator) {
     peer.on("error", function (err) {
       if (!err) return;
       if (err.type === "peer-unavailable") {
-        // The operator is not up yet, or is itself reconnecting. Keep waiting;
-        // the watchdog dials again on its own schedule.
-        setLink("connecting", "Waiting for the operator in room " + code + "…");
+        // Nobody on that slot. That is not the same as nobody in the room —
+        // the operator may have had to take a different line — so walk to the
+        // next one straight away rather than waiting on the watchdog. Six
+        // slots at ~400ms sweeps the whole room in well under three seconds.
         dialing = 0;
+        dialSlot = (dialSlot + 1) % SLOTS.length;
+        setLink("connecting", "Looking for the operator in room " + code + "…");
+        clearTimeout(retryTimer);
+        retryTimer = setTimeout(function () { openConn(code); }, 400);
       } else if (err.type === "network" || err.type === "socket-error" ||
                  err.type === "socket-closed" || err.type === "server-error") {
         setLink(T.live ? "lost" : "connecting", "Network lost — reconnecting…");
@@ -2478,11 +2557,30 @@ if ("serviceWorker" in navigator) {
     if (dialing && Date.now() - dialing < 6000) return;
     dialing = Date.now();
 
-    var conn = peer.connect(PEER_PREFIX + code, { reliable: true });
+    var conn = peer.connect(slotId(code, dialSlot), { reliable: true });
     if (!conn) { dialing = 0; return; }
     dispConn = conn;
 
+    var everOpened = false;
+
+    // Dialling an id nobody is holding does not fail. Measured on the public
+    // broker: no peer-unavailable, no error, no close — the call simply hangs
+    // for ever. So the sweep cannot be driven by failures, because there are
+    // none. It gets its own clock: if a slot has not answered in two and a
+    // half seconds, treat it as empty and move to the next one.
+    var dialTimer = setTimeout(function () {
+      if (everOpened || dispConn !== conn) return;
+      try { conn.close(); } catch (e) {}
+      dispConn = null;
+      dialing = 0;
+      dialSlot = (dialSlot + 1) % SLOTS.length;
+      setLink("connecting", "Looking for the operator in room " + code + "…");
+      openConn(code);
+    }, 2500);
+
     conn.on("open", function () {
+      everOpened = true;
+      clearTimeout(dialTimer);
       dialing = 0;
       setLink("linked");
       syncSamples = [];
@@ -2510,12 +2608,22 @@ if ("serviceWorker" in navigator) {
     var lost = function () {
       // A stale link closing must not tear down the one that replaced it.
       if (dispConn !== conn) return;
+      clearTimeout(dialTimer);
       clearInterval(pingTimer);
       dispConn = null;
       dialing = 0;
       setLink("lost");
       clearTimeout(retryTimer);
-      retryTimer = setTimeout(function () { openConn(code); }, 1500);
+      // A dial that never opened means that slot is empty — move along. One
+      // that opened and then dropped is worth retrying where it was, but if
+      // the operator restarted it will have landed on a different line, so
+      // after this the sweep picks it up anyway.
+      if (!everOpened) {
+        dialSlot = (dialSlot + 1) % SLOTS.length;
+        retryTimer = setTimeout(function () { openConn(code); }, 500);
+      } else {
+        retryTimer = setTimeout(function () { openConn(code); }, 1500);
+      }
     };
     conn.on("close", lost);
     conn.on("error", lost);
@@ -2608,6 +2716,10 @@ if ("serviceWorker" in navigator) {
     renderSetup();
     $("setupHeading").textContent = "Operator";
     applyTransportUI();
+    // Always start the walk at the simplest line, so a code drifts back to
+    // slot 0 once the zombie holding it finally times out on the broker.
+    idRetries = 0;
+    hostSlot = 0;
     var code = cfg.room || randomRoom();
     if (LOCAL) hostLocal(code);
     else hostRoom(code);
@@ -2713,6 +2825,7 @@ if ("serviceWorker" in navigator) {
 
   $("newRoomBtn").addEventListener("click", function () {
     idRetries = 0;
+    hostSlot = 0;
     var code = randomRoom();
     if (LOCAL) hostLocal(code);
     else hostRoom(code);
