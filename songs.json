@@ -736,6 +736,87 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mslxsnr63lg0",
+   "title": "[IND] Terhubung",
+   "author": "Yeshua Abraham",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "KasihMu layakkan s’luruh hidupku",
+      "Mampukanku melakukan",
+      "Yang Kau inginkan",
+      "Tak bisa kuterlepas",
+      "Kau menggenggam tanganku",
+      "Ingin lebih mengenal pribadiMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kuterhubung dengan-Mu",
+      "S’lalu melekat di hatiMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "FirmanMu itulah dasar hidupku",
+      "Yang berdaulat atas(ku)."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus",
+    "_1"
+   ],
+   "slides": [
+    [
+     "KasihMu layakkan s’luruh hidupku",
+     "Mampukanku melakukan",
+     "Yang Kau inginkan"
+    ],
+    [
+     "Tak bisa kuterlepas",
+     "Kau menggenggam tanganku",
+     "Ingin lebih mengenal pribadiMu."
+    ],
+    [
+     "Kuterhubung dengan-Mu",
+     "S’lalu melekat di hatiMu"
+    ],
+    [
+     "FirmanMu itulah dasar hidupku",
+     "Yang berdaulat atas(ku)."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1786288073295,
+   "updatedBy": "Samuel",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlist": [],
