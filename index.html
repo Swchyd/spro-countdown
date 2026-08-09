@@ -383,19 +383,42 @@
        where the clock is only a reference. */
     --corner: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
     --count: min(calc(var(--sw) * .082), calc(var(--sh) * .105));
+    /* Where that row starts. On a display device this becomes the notch inset
+       instead, and everything measured from it follows without being told. */
+    --clock-top: calc(var(--sh) * .02);
     /* Top offset plus one line box of countdown. Lyrics start below this. */
-    --top-strip: calc(var(--sh) * .02 + var(--count) * 1.15);
+    --top-strip: calc(var(--clock-top) + var(--count) * 1.15);
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
   }
   #labelZone {
-    flex: 0 0 25%;
+    /* A quarter of the screen is what the title normally wants, not a ceiling
+       it must be forced into: a wrapped title that outgrows a fixed band has
+       to overflow it somewhere, and both directions land on something — the
+       clock above, the countdown below. Growing the band instead moves the
+       countdown down, and the countdown has whitespace to give: its type is a
+       fixed fraction of the screen, so it sits well inside its zone. */
+    flex: 0 0 auto;
+    min-height: 25%;
     display: flex;
-    align-items: center;
+    /* Top, not centre. A title long enough to wrap makes a block taller than
+       the band, and a centred block that overflows overflows in both
+       directions — the second line pushed the first one back up under the
+       clock, undoing the padding below. Anchored at the top it can only grow
+       downward, into the countdown's whitespace, which has room to spare. */
+    align-items: flex-start;
     justify-content: center;
-    padding: calc(var(--sh) * .02) calc(var(--sw) * .04) 0;
+    /* The band starts below the wall clock rather than beside it. The clock
+       floats over the top-right corner of this same band, so a title merely
+       centred in the full width runs underneath it — measured at 111px of
+       overlap on the iPad in landscape with a thirteen-character title, and
+       the longer the title the worse it got. Reserving a gutter instead would
+       have forced ordinary titles onto two lines; starting lower costs one
+       line of height and holds for a title of any length. */
+    padding: calc(var(--clock-top) + var(--corner) * 1.35 + var(--sh) * .01)
+             calc(var(--sw) * .04) 0;
     min-height: 0;
   }
   #labelText {
@@ -409,9 +432,22 @@
     white-space: pre-line;
     line-height: 1.15;
   }
+  /* Timer mode only — message mode is where long text belongs, and lyrics mode
+     keeps the title to one line already.
+     The band grows with the title, but not without end: past three lines the
+     countdown starts leaving the bottom of the screen, and a countdown that is
+     not on screen is worse than a title that is cut short. Measured on the iPad
+     in landscape: three lines clear the countdown by 35px, four push it 17px
+     off the edge. */
+  #stage:not(.mode-message):not(.mode-lyrics) #labelText {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
   #clock {
     position: absolute;
-    top: calc(var(--sh) * .02);
+    top: var(--clock-top);
     right: calc(var(--sw) * .025);
     z-index: 3;
     font-size: var(--corner);
@@ -421,7 +457,9 @@
     color: var(--bright);
   }
   #timeZone {
-    flex: 1 1 75%;
+    /* Takes whatever the title band leaves, rather than a fixed 75% that would
+       have to overlap it once the title grew. */
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -451,12 +489,19 @@
   #stage.mode-message #timeZone {
     order: -1;
     flex: 0 0 25%;
-    padding-top: calc(var(--sh) * .02);
+    padding-top: var(--clock-top);
   }
   #stage.mode-message #timeText {
     font-size: min(calc(var(--sw) * .10), calc(var(--sh) * .15));
   }
-  #stage.mode-message #labelZone { flex: 1 1 75%; padding: 0 calc(var(--sw) * .04); }
+  /* Here the title is the message and owns the middle of the screen, so it
+     goes back to being centred in it — the clock is up beside the countdown,
+     nowhere near. */
+  #stage.mode-message #labelZone {
+    flex: 1 1 75%;
+    align-items: center;
+    padding: 0 calc(var(--sw) * .04);
+  }
   #stage.mode-message #labelText {
     /* ~20 uppercase characters per line */
     font-size: min(calc(var(--sw) * .058), calc(var(--sh) * .10));
@@ -493,7 +538,7 @@
      the words being sung. */
   #stage.mode-lyrics #labelZone {
     position: absolute;
-    top: calc(var(--sh) * .02);
+    top: var(--clock-top);
     /* The gutters come from the corner type sizes rather than a guessed
        percentage: those sizes grow against the width on a portrait screen, so
        any fixed percentage that looks right in landscape is too small.
@@ -522,7 +567,7 @@
   }
   #stage.mode-lyrics #timeZone {
     position: absolute;
-    top: calc(var(--sh) * .02);
+    top: var(--clock-top);
     left: calc(var(--sw) * .025);
     flex: none;
     z-index: 3;
@@ -601,8 +646,11 @@
     height: 100%;
     z-index: 50;
   }
-  #stageWrap.full #labelZone { padding-top: max(calc(var(--sh) * .02), env(safe-area-inset-top)); }
-  #stageWrap.full #clock { top: max(calc(var(--sh) * .02), env(safe-area-inset-top)); }
+  /* On the display device the corner row clears the notch. Moving the one
+     variable moves the clock, the title band under it and the lyric strip
+     together — they used to be three separate copies of this expression, and
+     only two of them knew about the safe area. */
+  #stageWrap.full #stage { --clock-top: max(calc(var(--sh) * .02), env(safe-area-inset-top)); }
 
   /* ---------- standalone chrome (iPad drives itself) ---------- */
   #soloOverlay {
