@@ -1501,20 +1501,44 @@
   .ps-opt.on { background: var(--panel-2); border-color: var(--accent); color: var(--ink); }
 
   #pasteHelp {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 3px 10px;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
     font-size: 12px;
     line-height: 1.45;
     color: var(--ink-dim);
   }
-  #pasteHelp dt {
-    font-weight: 700;
-    color: var(--ink);
-    white-space: nowrap;
+  /* Grid rather than a flex row: the rule wraps to two lines on a phone and
+     the ⓘ has to stay where it was, not be pushed onto a line of its own. */
+  .ph-head { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 10px; }
+  .ph-txt b { color: var(--ink); font-weight: 700; }
+  .ph-i {
+    width: 20px; height: 20px;
+    flex: none;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-family: inherit; font-size: 12px; font-weight: 700; font-style: italic;
+    line-height: 1;
   }
-  #pasteHelp dd { margin: 0; }
+  .ph-i.on { border-color: var(--accent); color: var(--accent); }
+  .ph-eg { margin-top: 5px; }
+  .ph-eg pre {
+    margin: 0;
+    padding: 10px 12px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11.5px; line-height: 1.55;
+    color: var(--ink);
+    /* The song keeps its shape: lines scroll sideways inside the box rather
+       than wrapping, which would show a break the parser will not make. */
+    white-space: pre;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ph-eg p { margin: 6px 0 0; }
 
   #langRow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .lang-opt {
@@ -1648,13 +1672,74 @@
         placeholder="Fill in the song here"></textarea>
       <!-- The rules used to live inside the box as placeholder text, where they
            vanished the moment anyone started typing — exactly when they are
-           still needed. Out here they stay put. -->
-      <dl id="pasteHelp">
-        <dt>Blank line</dt><dd>starts a new slide</dd>
-        <dt>[Song part]</dt><dd>names a section — [Verse], [Chorus], [Bridge]</dd>
-        <dt>[Song part] alone</dt><dd>on its own line, sings that section again</dd>
-        <dt>&gt; text</dt><dd>a note only you see</dd>
-      </dl>
+           still needed. Out here they stay put.
+
+           Each one is a line long, because a rule nobody reads is not a rule.
+           What they leave out — that a part longer than the slide setting is
+           split further — is behind the ⓘ, where it costs nothing to whoever
+           already knows.
+
+           Repeating a part by writing its tag again on an empty line is not
+           listed. It still works, and parseSong() still keeps one copy of the
+           words; it was cut from the list because three rules get read and
+           four do not. Anyone who needs it is being shown the arrangement
+           chips under the box either way.
+
+           Asterisks mark the words to replace. The examples spell the same
+           thing out without them, so nothing has to be guessed at twice. -->
+      <div id="pasteHelp">
+        <div class="ph-rule">
+          <div class="ph-head">
+            <span class="ph-txt"><b>Blank line</b> — starts a new part</span>
+            <button type="button" class="ph-i" aria-expanded="false" aria-label="Show an example">i</button>
+          </div>
+          <div class="ph-eg" hidden>
+<pre>Title: Tiada Yang Lain
+
+[Verse 1]
+lyric line one
+lyric line two
+
+[Chorus]
+lyric line one</pre>
+            <p>The blank line ends Verse 1 and begins the Chorus. A part longer
+               than the lines-per-slide setting is split across slides from
+               there.</p>
+          </div>
+        </div>
+
+        <div class="ph-rule">
+          <div class="ph-head">
+            <span class="ph-txt"><b>[*Song part*]</b> — names a part</span>
+            <button type="button" class="ph-i" aria-expanded="false" aria-label="Show an example">i</button>
+          </div>
+          <div class="ph-eg" hidden>
+<pre>[Verse 1]
+lyric line one
+
+[Pre-Chorus]
+lyric line one
+
+[Chorus]
+lyric line one</pre>
+            <p>Any name you like. The name shows on your console so you can see
+               where you are in the song.</p>
+          </div>
+        </div>
+
+        <div class="ph-rule">
+          <div class="ph-head">
+            <span class="ph-txt"><b>&gt; *note*</b> — only you see it</span>
+            <button type="button" class="ph-i" aria-expanded="false" aria-label="Show an example">i</button>
+          </div>
+          <div class="ph-eg" hidden>
+<pre>[Bridge]
+&gt; key change
+lyric line one</pre>
+            <p>Shown on your console, never on the display.</p>
+          </div>
+        </div>
+      </div>
       <p class="hint">Chord lines are removed automatically.</p>
       <div id="arrangeRow"></div>
       <div id="parseNote"></div>
@@ -4975,6 +5060,26 @@ if ("serviceWorker" in navigator) {
     b.addEventListener("click", function () {
       var l = b.getAttribute("data-lang");
       setLang(songLang === l ? "" : l);
+    });
+  });
+
+  // ----- the paste-box examples -----
+  //
+  // One at a time. Four examples open at once push the title and the save
+  // button off the bottom of a phone, and the question being answered is
+  // always about one rule.
+  Array.prototype.forEach.call(document.querySelectorAll("#pasteHelp .ph-i"), function (btn) {
+    btn.addEventListener("click", function () {
+      var eg = btn.parentNode.parentNode.querySelector(".ph-eg");
+      var open = eg.hidden;
+      Array.prototype.forEach.call(document.querySelectorAll("#pasteHelp .ph-eg"), function (o) { o.hidden = true; });
+      Array.prototype.forEach.call(document.querySelectorAll("#pasteHelp .ph-i"), function (b) {
+        b.classList.remove("on");
+        b.setAttribute("aria-expanded", "false");
+      });
+      eg.hidden = !open;
+      btn.classList.toggle("on", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
     });
   });
 
