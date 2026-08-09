@@ -375,6 +375,16 @@
   #stage {
     --sw: 100vw;
     --sh: 100vh;
+    /* The corner row: countdown on the left, title between, clock on the
+       right. Every size in that row — and the strip of stage the lyrics must
+       stay clear of — is derived from these two, so growing one of them
+       cannot leave the others sized for the old one. The countdown is
+       deliberately the larger: it is the thing being read from across a room,
+       where the clock is only a reference. */
+    --corner: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
+    --count: min(calc(var(--sw) * .082), calc(var(--sh) * .105));
+    /* Top offset plus one line box of countdown. Lyrics start below this. */
+    --top-strip: calc(var(--sh) * .02 + var(--count) * 1.15);
     position: absolute;
     inset: 0;
     display: flex;
@@ -404,7 +414,7 @@
     top: calc(var(--sh) * .02);
     right: calc(var(--sw) * .025);
     z-index: 3;
-    font-size: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
+    font-size: var(--corner);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
     letter-spacing: .04em;
@@ -463,7 +473,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: calc(var(--sh) * .13) calc(var(--sw) * .035) calc(var(--sh) * .04);
+    /* The top padding is the corner row plus a gap, not a guessed percentage,
+       so the first lyric line clears the countdown however large it is. This
+       padding is also what fitSong() measures against — it reads the box
+       rather than carrying its own copy of these numbers. */
+    padding: calc(var(--top-strip) + var(--sh) * .03)
+             calc(var(--sw) * .035)
+             calc(var(--sh) * .04);
     min-height: 0;
     text-align: center;
   }
@@ -478,14 +494,16 @@
   #stage.mode-lyrics #labelZone {
     position: absolute;
     top: calc(var(--sh) * .02);
-    /* The gutters come from the corner type size rather than a guessed
-       percentage. Both the countdown and the clock are min(5% of width, 6.5%
-       of height), so on a portrait screen they grow against the width and any
-       fixed percentage that looks right in landscape is too small. 5.2em
-       clears eight tabular digits with room to breathe. */
-    --corner: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
-    left: calc(var(--sw) * .03 + var(--corner) * 5.2);
-    right: calc(var(--sw) * .03 + var(--corner) * 5.2);
+    /* The gutters come from the corner type sizes rather than a guessed
+       percentage: those sizes grow against the width on a portrait screen, so
+       any fixed percentage that looks right in landscape is too small.
+       5.2em of clock clears its eight tabular digits; 3.4em of countdown
+       clears five, which is every reading from 99:59 down to −9:59. Both
+       sides take the larger of the two so the title stays centred on the
+       screen — centring it between two unequal gutters would leave it visibly
+       off the axis the lyrics below are centred on. */
+    left: calc(var(--sw) * .03 + max(var(--count) * 3.4, var(--corner) * 5.2));
+    right: calc(var(--sw) * .03 + max(var(--count) * 3.4, var(--corner) * 5.2));
     flex: none;
     padding: 0;
     z-index: 3;
@@ -510,7 +528,8 @@
     z-index: 3;
   }
   #stage.mode-lyrics #timeText {
-    font-size: min(calc(var(--sw) * .05), calc(var(--sh) * .065));
+    font-size: var(--count);
+    line-height: 1;
   }
   /* Casing is decided in JS (see LYRIC_CASE) so that the measured string and
      the rendered string are the same one. Nothing here may change the case or
@@ -1934,8 +1953,15 @@ if ("serviceWorker" in navigator) {
     var r = stage.getBoundingClientRect();
     if (!r.width || !r.height || !song || !song.slides.length) return 0;
 
-    var availW = r.width * .93;
-    var availH = r.height * .82;   // the corner countdown owns the top strip
+    // The space to fit into is the lyric box itself, read back from the
+    // layout. It used to be r.width * .93 and r.height * .82 — the same
+    // numbers the CSS padding was written from, kept in step by hand. They
+    // stopped being in step the moment the corner countdown grew, and the
+    // symptom would have been the last line of a slide sliding under it.
+    var cs = getComputedStyle(lyricZone);
+    var availW = r.width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var availH = r.height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    if (!(availW > 0) || !(availH > 0)) return 0;
 
     fitCtx.font = "700 100px " + (getComputedStyle(stage).fontFamily || "sans-serif");
 
