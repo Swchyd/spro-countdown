@@ -1101,6 +1101,8 @@
   .slide-row:last-child { border-bottom: none; }
   .slide-row .n { min-width: 15px; max-width: 78px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 700; color: #5B6474; }
   .slide-row .t { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* The slides that carry a part on rather than start it. */
+  .slide-row .n.cont { opacity: .5; font-weight: 600; }
   .slide-row.on { background: var(--panel-2); color: var(--ink); }
   .slide-row.on .n { color: var(--accent); }
   .slide-row:active { background: var(--panel-2); }
@@ -3555,6 +3557,18 @@ if ("serviceWorker" in navigator) {
       return;
     }
 
+    // A part is named on its first slide only. The rest of it used to fall
+    // back to the slide number, so a four-slide verse read "Verse, 2, 3, 4" —
+    // and the moment the operator needed to know where they were, the label
+    // had turned into a number. The name carries down until another part
+    // starts, dimmed on the slides that continue one so it is still obvious
+    // where a part begins.
+    //
+    // A block that was never named at all carries the previous name too. The
+    // stored tags cannot tell that apart from a continuation, and treating it
+    // as part of what came before is the reading that matches how it was
+    // written: nothing separated them.
+    var carried = "";
     song.slides.forEach(function (slide, i) {
       var row = document.createElement("button");
       row.type = "button";
@@ -3562,9 +3576,9 @@ if ("serviceWorker" in navigator) {
       row.setAttribute("data-i", i);
       var n = document.createElement("span");
       n.className = "n";
-      // The section label where the parser found one, otherwise the number —
-      // "Chorus" tells the operator where they are, "7" does not.
       var tag = song.tags && song.tags[i];
+      if (tag) carried = tag;
+      else if (carried) { tag = carried; n.classList.add("cont"); }
       n.textContent = tag ? tag : (i + 1);
       var t = document.createElement("span");
       t.className = "t";
@@ -4628,6 +4642,32 @@ if ("serviceWorker" in navigator) {
     if (!title && blocks.length > 1 && !blocks[0].tag &&
         blocks[0].lines.length === 1 && blocks[0].lines[0].length <= 40) {
       title = blocks.shift().lines[0];
+    }
+
+    // A header with a blank line under it — "[Verse 1]", empty line, then the
+    // words — is how plenty of people write a song out, and it used to throw
+    // the name away: the tag became a block with no lines, which defines no
+    // section, and the words became a block with no tag. The song then had no
+    // part names at all, the arrangement showed dots, and every slide in the
+    // console fell back to its number.
+    //
+    // Only a tag that is written out nowhere adopts the block beneath it. A
+    // tag that does have words somewhere is a repeat wherever it appears bare
+    // — that is the whole arrangement syntax — and has to stay one. Checking
+    // every block rather than the ones before it matters, because a section
+    // may be written out after its first mention.
+    var written = {};
+    blocks.forEach(function (b) { if (b.tag && b.lines.length) written[b.tag.toLowerCase()] = true; });
+    for (var bi = 0; bi < blocks.length - 1; bi++) {
+      var head = blocks[bi], body = blocks[bi + 1];
+      if (!head.tag || head.lines.length) continue;
+      if (written[head.tag.toLowerCase()]) continue;
+      if (body.tag || !body.lines.length) continue;
+      body.tag = head.tag;
+      body.notes = head.notes.concat(body.notes);   // "> key change" under the header
+      written[head.tag.toLowerCase()] = true;       // a later bare one is a repeat
+      blocks.splice(bi, 1);
+      bi--;
     }
 
     // Pass one: every block that carries lines defines a section. Sections are
