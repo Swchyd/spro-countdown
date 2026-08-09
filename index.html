@@ -1372,6 +1372,9 @@
   #library:not(.can-write) .song-row .add,
   #library:not(.can-write) .set-row .rm { display: none; }
   #library:not(.can-write) #pasteBox,
+  #library:not(.can-write) #langRow,
+  #library:not(.can-write) #authorRow,
+  #library:not(.can-write) #perSlideRow,
   #library:not(.can-write) #songTitleInput { opacity: .6; pointer-events: none; }
 
   .ghost.danger { border-color: rgba(226, 92, 74, .5); color: var(--over); }
@@ -1481,19 +1484,66 @@
   #parseNote { font-size: 12px; line-height: 1.5; color: var(--ink-dim); min-height: 18px; }
   #parseNote .warn { color: var(--accent); }
 
-  #perSlideRow { display: flex; align-items: center; gap: 8px; }
+  /* Five options no longer fit beside the label on a 360px phone, so the label
+     takes its own line and the buttons share the width evenly. */
+  #perSlideRow { display: flex; flex-direction: column; gap: 8px; }
   #perSlideRow .psl {
-    flex: 1 1 auto;
     font-size: 11px; font-weight: 600; letter-spacing: .12em;
     text-transform: uppercase; color: var(--ink-dim);
   }
+  #perSlideOpts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
   .ps-opt {
-    width: 46px; height: 40px;
+    height: 40px;
     border-radius: 10px;
     background: var(--panel); border: 1px solid var(--line);
     color: var(--ink-dim); font-size: 15px; font-weight: 700;
   }
   .ps-opt.on { background: var(--panel-2); border-color: var(--accent); color: var(--ink); }
+
+  #pasteHelp {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3px 10px;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--ink-dim);
+  }
+  #pasteHelp dt {
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  #pasteHelp dd { margin: 0; }
+
+  #langRow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .lang-opt {
+    height: 40px;
+    border-radius: 10px;
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  }
+  .lang-opt.on { background: var(--panel-2); border-color: var(--accent); color: var(--ink); }
+
+  /* The field stays a text field — a new writer must still be typeable — and
+     the picker beside it only fills it in. */
+  #authorRow { display: flex; gap: 8px; }
+  #authorRow .textinput { flex: 1 1 auto; min-width: 0; }
+  #authorPick {
+    flex: 0 0 auto;
+    width: 46px;
+    border-radius: var(--radius);
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-family: inherit; font-size: 13px;
+    text-align: center;
+    /* The chevron is drawn as the closed value, matching the ▾ the title bank
+       already uses; leaving the native one on shows two arrows side by side. */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  #authorPick:disabled { opacity: .4; }
 
   #edRow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   #edRow .ghost { padding: 12px 6px; font-size: 12px; }
@@ -1595,21 +1645,47 @@
     <div id="songEditor">
       <label class="field-label" for="pasteBox">Paste lyrics</label>
       <textarea id="pasteBox" class="textinput" rows="8" autocomplete="off"
-        placeholder="Paste the whole song here.&#10;&#10;Blank line = new slide&#10;[Chorus] or Reff: = section&#10;[Chorus] on its own line = sing it again&#10;&gt; naik nada = note for you only&#10;Chord lines are dropped automatically"></textarea>
+        placeholder="Fill in the song here"></textarea>
+      <!-- The rules used to live inside the box as placeholder text, where they
+           vanished the moment anyone started typing — exactly when they are
+           still needed. Out here they stay put. -->
+      <dl id="pasteHelp">
+        <dt>Blank line</dt><dd>starts a new slide</dd>
+        <dt>[Song part]</dt><dd>names a section — [Verse], [Chorus], [Bridge]</dd>
+        <dt>[Song part] alone</dt><dd>on its own line, sings that section again</dd>
+        <dt>&gt; text</dt><dd>a note only you see</dd>
+      </dl>
+      <p class="hint">Chord lines are removed automatically.</p>
       <div id="arrangeRow"></div>
       <div id="parseNote"></div>
 
       <label class="field-label" for="songTitleInput">Title</label>
+      <!-- The language is part of the title on the shelf — "[IND] Kumenang" —
+           but typing brackets by hand is how "[Ind]" and "(IND)" get in. -->
+      <div id="langRow">
+        <button type="button" class="lang-opt" data-lang="ENG">ENG</button>
+        <button type="button" class="lang-opt" data-lang="IND">IND</button>
+        <button type="button" class="lang-opt" data-lang="CHN">CHN</button>
+      </div>
       <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off">
 
       <label class="field-label" for="songAuthorInput">Author</label>
-      <input id="songAuthorInput" class="textinput" type="text" placeholder="Songwriter or artist" autocomplete="off">
+      <!-- The same writer arrives many times over, and retyping the name is how
+           one library ends up with two of them. -->
+      <div id="authorRow">
+        <input id="songAuthorInput" class="textinput" type="text" placeholder="Songwriter or artist" autocomplete="off">
+        <select id="authorPick" aria-label="Pick an author already in the library"></select>
+      </div>
 
       <div id="perSlideRow">
         <span class="psl">Lines per slide</span>
-        <button type="button" class="ps-opt" data-ps="2">2</button>
-        <button type="button" class="ps-opt on" data-ps="4">4</button>
-        <button type="button" class="ps-opt" data-ps="6">6</button>
+        <div id="perSlideOpts">
+          <button type="button" class="ps-opt" data-ps="2">2</button>
+          <button type="button" class="ps-opt" data-ps="3">3</button>
+          <button type="button" class="ps-opt on" data-ps="4">4</button>
+          <button type="button" class="ps-opt" data-ps="5">5</button>
+          <button type="button" class="ps-opt" data-ps="6">6</button>
+        </div>
       </div>
 
       <button type="button" id="saveNextBtn" class="primary">SAVE &amp; NEXT SONG</button>
@@ -4863,11 +4939,93 @@ if ("serviceWorker" in navigator) {
     refreshParse();
   }
 
+  // ----- the language tag -----
+  //
+  // Stored as part of the title, because that is what it has always been and
+  // what titleKey() already knows to look past when sorting. The editor is the
+  // only place it is a separate thing: three buttons cannot produce "[Ind]",
+  // "(IND)" or a missing space, which typing them by hand eventually does.
+  var LANGS = ["ENG", "IND", "CHN"];
+  var songLang = "";
+
+  function splitTitle(t) {
+    var m = /^\s*\[\s*([A-Za-z]{2,4})\s*\]\s*([\s\S]*)$/.exec(String(t || ""));
+    if (m && LANGS.indexOf(m[1].toUpperCase()) >= 0) {
+      return { lang: m[1].toUpperCase(), title: m[2].trim() };
+    }
+    return { lang: "", title: String(t || "").trim() };
+  }
+
+  function joinTitle(lang, title) {
+    title = String(title || "").trim();
+    if (!title) return "";
+    return lang ? "[" + lang + "] " + title : title;
+  }
+
+  function setLang(l) {
+    songLang = LANGS.indexOf(l) >= 0 ? l : "";
+    Array.prototype.forEach.call(document.querySelectorAll(".lang-opt"), function (b) {
+      b.classList.toggle("on", b.getAttribute("data-lang") === songLang);
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".lang-opt"), function (b) {
+    // Pressing the one already chosen clears it, so a song can be saved with
+    // no tag at all rather than being stuck with whichever was pressed first.
+    b.addEventListener("click", function () {
+      var l = b.getAttribute("data-lang");
+      setLang(songLang === l ? "" : l);
+    });
+  });
+
+  // ----- the author picker -----
+  var authorPick = $("authorPick");
+
+  function knownAuthors() {
+    var seen = {}, out = [];
+    songs.forEach(function (s) {
+      var a = (s.author || "").trim();
+      if (!a || s.deletedAt) return;
+      var k = a.toLowerCase();
+      if (seen[k]) return;
+      seen[k] = true;
+      out.push(a);
+    });
+    return out.sort(function (a, b) { return a.localeCompare(b); });
+  }
+
+  function fillAuthorPick() {
+    var list = knownAuthors();
+    authorPick.innerHTML = "";
+    var head = document.createElement("option");
+    head.value = "";
+    head.textContent = "▾";
+    authorPick.appendChild(head);
+    list.forEach(function (a) {
+      var o = document.createElement("option");
+      o.value = a;
+      o.textContent = a;
+      authorPick.appendChild(o);
+    });
+    // Nothing to pick from yet on a fresh library; a picker that opens onto an
+    // empty list reads as broken.
+    authorPick.disabled = !list.length;
+  }
+
+  authorPick.addEventListener("change", function () {
+    if (!authorPick.value) return;
+    songAuthorInput.value = authorPick.value;
+    authorPick.value = "";   // back to "▾"; the field below is the answer
+  });
+
   function openEditor(s) {
     editingId = s ? s.id : null;
     pasteBox.value = s ? songToText(s) : "";
-    songTitleInput.value = s ? s.title : "";
+    var t = splitTitle(s ? s.title : "");
+    setLang(t.lang);
+    songTitleInput.value = t.title;
     songAuthorInput.value = s && s.author ? s.author : "";
+    fillAuthorPick();
     setPerSlide(s && s.perSlide ? s.perSlide : 4);
     disarmDelete();
     // Its own history entry, so back leaves the editor instead of the library.
@@ -4880,7 +5038,14 @@ if ("serviceWorker" in navigator) {
 
   function refreshParse() {
     parsed = parseSong(pasteBox.value, perSlide);
-    if (parsed.title && !songTitleInput.value.trim()) songTitleInput.value = parsed.title;
+    // A "Title:" line in the pasted text may carry its own tag. Split it the
+    // same way, or the tag would be typed into the title field as literal
+    // brackets and then get a second one bolted on at save.
+    if (parsed.title && !songTitleInput.value.trim()) {
+      var pt = splitTitle(parsed.title);
+      songTitleInput.value = pt.title;
+      if (pt.lang && !songLang) setLang(pt.lang);
+    }
 
     var bits = [];
     if (!parsed.slides.length) {
@@ -4942,7 +5107,10 @@ if ("serviceWorker" in navigator) {
 
   function commitSong(asNew) {
     if (!parsed || !parsed.slides.length) return null;
-    var title = songTitleInput.value.trim() || parsed.title || "Untitled";
+    // The tag is put back on here, not carried in the field, so it cannot be
+    // doubled up or lost by editing around it.
+    var bare = songTitleInput.value.trim() || splitTitle(parsed.title).title || "Untitled";
+    var title = joinTitle(songLang, bare);
     var author = songAuthorInput.value.trim();
     var existing = asNew ? null : songById(editingId);
 
