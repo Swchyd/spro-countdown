@@ -819,7 +819,20 @@
    "hidden": false
   }
  ],
- "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlist": [
+  {
+   "id": "s_mskncam8q8sb",
+   "ms": 0
+  },
+  {
+   "id": "s_mskjwqfpagxo",
+   "ms": 0
+  },
+  {
+   "id": "s_mslxsnr63lg0",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786289980983,
+ "setlistBy": "Owner"
 }
