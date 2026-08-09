@@ -1502,7 +1502,7 @@
             <input id="joinName" class="textinput" type="text" placeholder="Your name" autocomplete="off" maxlength="40">
             <input id="joinCode" class="textinput" type="text" placeholder="XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false" autocapitalize="characters">
             <div id="tokenBtns">
-              <button type="button" id="joinBtn" class="ghost">Join</button>
+              <button type="button" id="libJoinBtn" class="ghost">Join</button>
               <button type="button" id="ownerToggle" class="ghost">I'm the owner</button>
             </div>
             <div id="ownerRow">
@@ -3949,7 +3949,7 @@ if ("serviceWorker" in navigator) {
     renderSync();
   }
 
-  $("joinBtn").addEventListener("click", function () {
+  $("libJoinBtn").addEventListener("click", function () {
     var code = $("joinCode").value.trim();
     var name = $("joinName").value.trim();
     if (!code) { syncError = "Enter the access code."; renderSync(); return; }
