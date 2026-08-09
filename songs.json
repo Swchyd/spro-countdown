@@ -9,8 +9,7 @@
      "key": "intro",
      "tag": "intro",
      "lines": [
-      "Nanana nanana... nanana nanana",
-      "Nanana nanana... uooo yee."
+      "Nanana nanana nanana nanana uooo"
      ],
      "notes": []
     },
@@ -20,16 +19,15 @@
      "lines": [
       "Bangkitlah dan perkataan berkat",
       "Atas hidup yang dib'rikanNya",
-      "Dengan pasti dengan iman",
-      "Nyatakan kekuatanNya",
-      "KedasyatanNya di hidupku."
+      "Dengan pasti dengan iman"
      ],
      "notes": []
     },
     {
-     "key": "tag",
-     "tag": "Tag",
+     "key": "_1",
+     "tag": "",
      "lines": [
+      "Nyatakan kekuatanNya",
       "KedasyatanNya di hidupku."
      ],
      "notes": []
@@ -61,25 +59,21 @@
    "order": [
     "intro",
     "verse",
-    "tag",
+    "_1",
     "pre-chorus",
     "chorus"
    ],
    "slides": [
     [
-     "Nanana nanana... nanana nanana",
-     "Nanana nanana... uooo yee."
+     "Nanana nanana nanana nanana uooo"
     ],
     [
      "Bangkitlah dan perkataan berkat",
      "Atas hidup yang dib'rikanNya",
-     "Dengan pasti dengan iman",
-     "Nyatakan kekuatanNya"
+     "Dengan pasti dengan iman"
     ],
     [
-     "KedasyatanNya di hidupku."
-    ],
-    [
+     "Nyatakan kekuatanNya",
      "KedasyatanNya di hidupku."
     ],
     [
@@ -102,7 +96,6 @@
     "intro",
     "Verse",
     "",
-    "Tag",
     "Pre-Chorus",
     "Chorus",
     ""
@@ -113,13 +106,12 @@
     "",
     "",
     "",
-    "",
     ""
    ],
    "perSlide": 4,
-   "version": 2,
-   "updatedAt": 1786210708721,
-   "updatedBy": "Owner",
+   "version": 3,
+   "updatedAt": 1786290407272,
+   "updatedBy": "Samuel",
    "lastUsed": 0,
    "hidden": false,
    "author": "Ivan Handojo"
