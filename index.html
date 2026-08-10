@@ -2016,7 +2016,13 @@ lyric line one</pre>
 <script src="peerjs.min.js"></script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js").catch(function () {});
+  // updateViaCache: "none" — sw.js is served with the same ten-minute
+  // Cache-Control as everything else on GitHub Pages, and the browser honours
+  // it when checking whether the worker itself has changed. So the file that
+  // decides how fresh the app is was the last file to hear about an update.
+  // Fetch it from the network every time; it is a few hundred bytes.
+  navigator.serviceWorker.register("sw.js", { updateViaCache: "none" })
+    .catch(function () {});
 }
 
 (function () {
