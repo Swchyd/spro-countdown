@@ -3749,6 +3749,7 @@ if ("serviceWorker" in navigator) {
 
   var syncing = false, syncTimer = 0, setlistTimer = 0, lastSyncAt = 0;
   var syncError = "", rejection = "", conflict = null, policy = null;
+  var authError = "";
 
   // Writes the server has acknowledged but a snapshot may not show yet. A
   // "Synced" that is immediately followed by the song vanishing is the worst
@@ -4131,6 +4132,11 @@ if ("serviceWorker" in navigator) {
     }
     if (syncing) { el.textContent = "Syncing…"; el.classList.add("busy"); return; }
     if (rejection) { el.textContent = rejection; el.classList.add("bad"); return; }
+    // Above the queue count deliberately: see signInFailed. Someone who cannot
+    // get in has to be told why, and a pending upload is not a reason to keep
+    // that from them — least of all when the pending upload is the very thing
+    // signing in would clear.
+    if (authError) { el.textContent = authError; el.classList.add("bad"); return; }
     // Ahead of syncError on purpose. If something is queued, that is the fact
     // worth stating, and it states itself calmly; whatever the network is doing
     // about it is our problem, not the operator's.
@@ -4196,12 +4202,20 @@ if ("serviceWorker" in navigator) {
     $("syncBox").classList.remove("open");
     syncError = "";
     rejection = "";
+    authError = "";
     applyRole();
     return refreshMe().then(function () { return syncNow(true); });
   }
 
+  // Kept apart from syncError, and shown ahead of the queue count, because the
+  // two are not the same kind of news. A sync that cannot get out is weather:
+  // it clears up by itself and the queue count already says so. A refused sign
+  // in is a dead end until the person does something about it, and a button
+  // that answers by changing nothing on screen reads as a broken button — you
+  // press it again, and again, and eventually give up on the app rather than
+  // on the key you mistyped.
   function signInFailed(err) {
-    syncError = (err && err.message) || "could not sign in";
+    authError = (err && err.message) || "could not sign in";
     renderSync();
   }
 
@@ -4266,9 +4280,9 @@ if ("serviceWorker" in navigator) {
   $("libJoinBtn").addEventListener("click", function () {
     var code = $("joinCode").value.trim();
     var name = $("joinName").value.trim();
-    if (!code) { syncError = "Enter the access code."; renderSync(); return; }
-    if (!name) { syncError = "Put your name in, so the activity log can say who did what."; renderSync(); return; }
-    syncError = "";
+    if (!code) { authError = "Enter the access code."; renderSync(); return; }
+    if (!name) { authError = "Put your name in, so the activity log can say who did what."; renderSync(); return; }
+    authError = "";
     renderSync();
     api("/auth/join", { method: "POST", body: { code: code, name: name } })
       .then(afterSignIn)
@@ -4278,7 +4292,9 @@ if ("serviceWorker" in navigator) {
   $("ownerGoBtn").addEventListener("click", function () {
     var key = $("ownerKey").value.trim();
     var name = $("joinName").value.trim() || "Owner";
-    if (!key) { syncError = "Enter the owner key."; renderSync(); return; }
+    if (!key) { authError = "Enter the owner key."; renderSync(); return; }
+    authError = "";
+    renderSync();
     api("/auth/owner", { method: "POST", body: { key: key, name: name } })
       .then(afterSignIn)
       .catch(signInFailed);
@@ -4290,6 +4306,7 @@ if ("serviceWorker" in navigator) {
     api("/auth/leave", { method: "POST" }).catch(function () {});
     session = null;
     saveSession();
+    authError = "";
     applyRole();
     $("syncBox").classList.remove("open");
   });
