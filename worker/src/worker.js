@@ -214,7 +214,12 @@ function corsHeaders(request, env) {
   const origin = request.headers.get("Origin");
   const h = {
     "Vary": "Origin",
-    "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
+    // PUT belongs here as much as the rest: /setlist takes it and nothing else.
+    // Leaving it out cost nothing on the read side and everything on the write
+    // side — the preflight answered 204, so the client saw no server error at
+    // all, just a fetch that never left the browser, and a queued setlist that
+    // retried forever without once reaching here.
+    "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "86400"
   };
