@@ -4190,6 +4190,7 @@ if ("serviceWorker" in navigator) {
     session = { token: d.token, me: d.me };
     saveSession();
     $("joinCode").value = "";
+    joinCodeRaw = "";
     $("ownerKey").value = "";
     $("tokenRow").classList.remove("owner-open");
     $("syncBox").classList.remove("open");
@@ -4203,6 +4204,64 @@ if ("serviceWorker" in navigator) {
     syncError = (err && err.message) || "could not sign in";
     renderSync();
   }
+
+  // ----- the access code types itself -----
+  //
+  // The code is issued as XXXX-XXXX-XXXX and that is how it gets read out: in
+  // three pieces, across a room, usually while someone is holding an iPad in
+  // one hand. Making them reach for the hyphen twice is two chances to lose
+  // their place. The field lays the separators in as they go.
+  //
+  // The server strips them anyway (normalizeCode), so this is purely about the
+  // hand doing the typing — nothing downstream can tell the difference.
+  var joinCodeEl = $("joinCode");
+  var joinCodeRaw = "";
+
+  function codeChars(s) {
+    return String(s).toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 12);
+  }
+
+  // The trailing hyphen is deliberate: it appears the moment the fourth
+  // character lands, so the next thing typed is the next group rather than the
+  // separator. That is the whole point of doing this.
+  function groupCode(raw) {
+    var out = raw.replace(/(.{4})(?=.)/g, "$1-");
+    if (raw.length === 4 || raw.length === 8) out += "-";
+    return out;
+  }
+
+  joinCodeEl.addEventListener("input", function (e) {
+    var caret = joinCodeEl.selectionStart;
+    var raw = codeChars(joinCodeEl.value);
+    var kept = codeChars(joinCodeEl.value.slice(0, caret)).length;
+
+    // Backspace onto a separator deletes a character the field is about to put
+    // straight back, which reads as a dead key — you press it and nothing
+    // moves. If the character count did not change, take the one in front of
+    // the separator instead, which is what was meant.
+    if (e.inputType === "deleteContentBackward" && raw === joinCodeRaw && kept > 0) {
+      raw = raw.slice(0, kept - 1) + raw.slice(kept);
+      kept -= 1;
+    }
+
+    joinCodeRaw = raw;
+    joinCodeEl.value = groupCode(raw);
+
+    // Restore the caret by counting typed characters, not string offsets — the
+    // separators shift every offset behind them each time one is inserted, and
+    // an editor whose caret jumps to the end on every keystroke is unusable for
+    // fixing a character in the middle.
+    var at;
+    if (kept >= raw.length) {
+      at = joinCodeEl.value.length;
+    } else {
+      var seen = 0;
+      for (at = 0; at < joinCodeEl.value.length && seen < kept; at++) {
+        if (joinCodeEl.value.charAt(at) !== "-") seen++;
+      }
+    }
+    joinCodeEl.setSelectionRange(at, at);
+  });
 
   $("libJoinBtn").addEventListener("click", function () {
     var code = $("joinCode").value.trim();
