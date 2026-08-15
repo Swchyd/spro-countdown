@@ -918,7 +918,7 @@
   {
    "id": "s_msualwhmyi3v",
    "title": "[IND] Pilihanku",
-   "author": "",
+   "author": "Redo Daeng Badjie, Lewi Matheus Dethan",
    "sections": [
     {
      "key": "verse 1",
@@ -1034,11 +1034,15 @@
     ""
    ],
    "perSlide": 3,
-   "version": 3,
-   "updatedAt": 1786797327729,
-   "updatedBy": "Lid",
+   "version": 4,
+   "updatedAt": 1786809447088,
+   "updatedBy": "Samuel",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": false,
+   "authors": [
+    "Redo Daeng Badjie",
+    "Lewi Matheus Dethan"
+   ]
   },
   {
    "id": "s_msuanguitbxn",
