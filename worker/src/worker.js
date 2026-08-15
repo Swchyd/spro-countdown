@@ -560,7 +560,45 @@ function summarizeValue(v) {
   return s.length > 160 ? s.slice(0, 157) + "…" : s;
 }
 
+// Who wrote it, as a list.
+//
+// `authors` is the field the library stores; `author` is the same names joined
+// up, written alongside so a device still on a build that only knows the flat
+// string keeps showing them. The two are never allowed to disagree, which is
+// why nothing sets one without going through here.
+//
+// Splitting a flat string on commas is what turns an old song into a new one
+// without a migration pass: commas are the one separator that was unambiguously
+// meant as one in that field, where "&" and "/" turn up inside single names.
+const MAX_AUTHORS = 12;
+
+function normalizeAuthors(v) {
+  const raw = Array.isArray(v) ? v : String(v == null ? "" : v).split(",");
+  const seen = new Set();
+  const out = [];
+  for (const a of raw) {
+    const name = String(a == null ? "" : a).trim().slice(0, 120);
+    if (!name) continue;
+    const k = name.toLowerCase();
+    if (seen.has(k) || out.length >= MAX_AUTHORS) continue;
+    seen.add(k);
+    out.push(name);
+  }
+  return out;
+}
+
+// Reads whichever the client sent — a build that knows `authors` sends both, an
+// older one sends only `author` — and writes both back.
+function applyAuthors(target, src) {
+  const authors = normalizeAuthors("authors" in src ? src.authors : src.author);
+  target.authors = authors;
+  target.author = authors.join(", ");
+}
+
 function diffSong(before, after) {
+  // `author` rather than `authors`: the two always move together, and the
+  // joined string reads as the names in the log, where summarizeValue would
+  // reduce the array to "3 items".
   const fields = ["title", "author", "slides", "tags", "notes", "perSlide", "order", "sections"];
   const changes = [];
   for (const f of fields) {
@@ -760,7 +798,8 @@ async function handleCreate(request, env, actor, cfg) {
     created = {
       id,
       title: String(song.title || "Untitled").slice(0, 200),
-      author: String(song.author || "").slice(0, 200),
+      authors: [],
+      author: "",
       sections: song.sections || [],
       order: song.order || [],
       slides: song.slides || [],
@@ -773,6 +812,7 @@ async function handleCreate(request, env, actor, cfg) {
       lastUsed: 0,
       hidden: false
     };
+    applyAuthors(created, song);
     lib.songs.push(created);
     return { message: `${actor.name} added "${created.title}"` };
   });
@@ -811,9 +851,12 @@ async function handleUpdate(request, env, actor, cfg, id) {
     }
 
     const before = JSON.parse(JSON.stringify(s));
-    for (const f of ["title", "author", "sections", "order", "slides", "tags", "notes", "perSlide"]) {
+    for (const f of ["title", "sections", "order", "slides", "tags", "notes", "perSlide"]) {
       if (f in patch) s[f] = patch[f];
     }
+    // Kept out of the loop above so the pair can never be written apart: an
+    // older client sends only `author`, and `authors` has to follow it.
+    if ("authors" in patch || "author" in patch) applyAuthors(s, patch);
     changes = diffSong(before, s);
     if (!changes.length) {
       updated = s;
@@ -1245,7 +1288,10 @@ async function route(request, env) {
         .map((s) => ({
           id: s.id,
           title: s.title,
-          author: s.author || "",
+          // A song written before `authors` existed still has to name whoever
+          // wrote it in the trash list, so this reads whichever it has.
+          authors: normalizeAuthors("authors" in s ? s.authors : s.author),
+          author: normalizeAuthors("authors" in s ? s.authors : s.author).join(", "),
           slides: Array.isArray(s.slides) ? s.slides.length : 0,
           deletedAt: s.deletedAt,
           deletedBy: s.deletedBy || "?",

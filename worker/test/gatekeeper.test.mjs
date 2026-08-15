@@ -588,6 +588,71 @@ async function testLegacyMigration() {
   check("hidden is preserved alongside deletedAt", lib.songs.find((s) => s.id === "s_old2").hidden === true);
 }
 
+async function testAuthorList() {
+  section("More than one name on a song");
+  const { env, gh, code } = await setup();
+  const john = (await call(env, "/auth/join", { method: "POST", body: { code, name: "John" } })).body.token;
+
+  let r = await call(env, "/songs", {
+    method: "POST",
+    body: { song: { ...song("s_many", "Many hands"), authors: ["Sari Simorangkir", "Yosia Karundeng"] } },
+    token: john
+  });
+  check("a song can be created with several authors",
+    r.status === 200 && r.body.song.authors.length === 2, "status " + r.status);
+  check("the flat field is written alongside for older builds",
+    r.body.song.author === "Sari Simorangkir, Yosia Karundeng", r.body.song.author);
+
+  // The whole point of keeping both: an iPad that has not picked this build up
+  // still reads `author`, and must not see an empty one.
+  check("the stored song carries both", (() => {
+    const s = gh.library().songs.find((x) => x.id === "s_many");
+    return Array.isArray(s.authors) && s.authors.length === 2 && s.author === s.authors.join(", ");
+  })());
+
+  r = await call(env, "/songs/s_many", {
+    method: "PATCH",
+    body: { song: { authors: ["A", "B", "C", "B", "  ", "a"] }, baseVersion: 1 },
+    token: john
+  });
+  check("duplicates and blanks are dropped, first spelling kept",
+    JSON.stringify(r.body.song.authors) === JSON.stringify(["A", "B", "C"]),
+    JSON.stringify(r.body.song.authors));
+
+  // A client that has not been updated sends only the string. The list has to
+  // follow it, or the two would disagree and the newer build would show stale
+  // names.
+  r = await call(env, "/songs/s_many", {
+    method: "PATCH",
+    body: { song: { author: "Solo Writer, Second Writer" }, baseVersion: 2 },
+    token: john
+  });
+  check("an old client sending only the flat field still sets the list",
+    JSON.stringify(r.body.song.authors) === JSON.stringify(["Solo Writer", "Second Writer"]),
+    JSON.stringify(r.body.song.authors));
+
+  r = await call(env, "/songs/s_many", {
+    method: "PATCH",
+    body: { song: { authors: Array.from({ length: 30 }, (_, i) => "W" + i) }, baseVersion: 3 },
+    token: john
+  });
+  check("the list is capped", r.body.song.authors.length === 12, "got " + r.body.song.authors.length);
+
+  // Nobody has to be re-typed for a song written before the list existed.
+  const legacy = {
+    v: 2,
+    songs: [{ id: "s_leg", title: "Old", author: "First Name, Second Name", slides: [["a"]], version: 1, deletedAt: 1, deletedBy: "x" }],
+    setlist: [], setlistAt: 0
+  };
+  const two = await setup(legacy);
+  const jack = (await call(two.env, "/auth/join", { method: "POST", body: { code: two.code, name: "Jack" } })).body.token;
+  r = await call(two.env, "/trash", { token: jack });
+  const trashed = r.body.songs.find((s) => s.id === "s_leg");
+  check("a song written before the list splits into one on the way out",
+    JSON.stringify(trashed.authors) === JSON.stringify(["First Name", "Second Name"]),
+    JSON.stringify(trashed && trashed.authors));
+}
+
 // ---------------------------------------------------------------------------
 
 // Node has no PBKDF2 iteration limit, so nothing above catches a value Workers
@@ -649,6 +714,7 @@ const suites = [
   testBruteForce,
   testRotationAndRevocation,
   testOwnerAndCollaboratorCrud,
+  testAuthorList,
   testConcurrency,
   testBulkProtection,
   testPrivilegeSeparation,

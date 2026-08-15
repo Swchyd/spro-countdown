@@ -1435,6 +1435,7 @@
   #library:not(.can-write) #pasteBox,
   #library:not(.can-write) #langRow,
   #library:not(.can-write) #authorRow,
+  #library:not(.can-write) #authorChips,
   #library:not(.can-write) #perSlideRow,
   #library:not(.can-write) #songTitleInput { opacity: .6; pointer-events: none; }
 
@@ -1629,6 +1630,47 @@
     appearance: none;
   }
   #authorPick:disabled { opacity: .4; }
+  #authorAdd {
+    flex: 0 0 auto;
+    width: 46px;
+    border-radius: var(--radius);
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 19px;
+  }
+  #authorAdd:active { background: var(--panel-2); color: var(--accent); }
+
+  /* One name per chip, so it is obvious where each ends. A single field of
+     comma-separated names looks the same on screen whether the comma was meant
+     as a separator or is part of a name, and there is no way to take one of
+     them out without editing around the others. */
+  #authorChips { display: flex; flex-wrap: wrap; gap: 6px; }
+  #authorChips:empty { display: none; }
+  .author-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    padding: 6px 6px 6px 12px;
+    border-radius: 999px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .author-chip .nm { min-width: 0; overflow-wrap: anywhere; }
+  .author-chip .rm {
+    flex: 0 0 auto;
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    background: transparent;
+    color: #5B6474;
+    font-size: 15px;
+    line-height: 1;
+  }
+  .author-chip .rm:active { background: var(--panel); color: var(--over); }
+  #authorHint { margin-top: -4px; }
 
   #edRow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   #edRow .ghost { padding: 12px 6px; font-size: 12px; }
@@ -1815,13 +1857,17 @@ lyric line one</pre>
       </div>
       <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off">
 
-      <label class="field-label" for="songAuthorInput">Author</label>
-      <!-- The same writer arrives many times over, and retyping the name is how
-           one library ends up with two of them. -->
+      <label class="field-label" for="songAuthorInput">Authors</label>
+      <!-- Plural, because most songs are. The same writer also arrives many
+           times over, and retyping the name is how one library ends up with two
+           of them — hence the picker beside the field. -->
+      <div id="authorChips"></div>
       <div id="authorRow">
         <input id="songAuthorInput" class="textinput" type="text" placeholder="Songwriter or artist" autocomplete="off">
         <select id="authorPick" aria-label="Pick an author already in the library"></select>
+        <button type="button" id="authorAdd" aria-label="Add this author">+</button>
       </div>
+      <div class="hint" id="authorHint">Enter after each name. A song can have as many as it has.</div>
 
       <div id="perSlideRow">
         <span class="psl">Lines per slide</span>
@@ -3996,6 +4042,39 @@ if ("serviceWorker" in navigator) {
   var setlist = [];
   var setlistAt = 0;   // the setlist moves whole, so it needs its own stamp
 
+  // Who wrote it, as a list.
+  //
+  // `author` was one string, and most songs have more than one name on them —
+  // two writers, a translator, five for something out of a worship collective.
+  // `authors` is the list and the truth; `author` is still written alongside as
+  // the names joined up, for the same reason `hidden` is still written next to
+  // `deletedAt` below: an iPad that has not picked up this build yet is reading
+  // the same file, and it must not lose the names it used to show.
+  //
+  // The split is on commas only. It is the one separator that was unambiguously
+  // meant as one in the old field, where "&" and "/" turn up inside names that
+  // belong to a single act.
+  var MAX_AUTHORS = 12;
+
+  function toAuthors(v) {
+    var raw = Array.isArray(v) ? v : String(v == null ? "" : v).split(",");
+    var seen = {}, out = [];
+    raw.forEach(function (a) {
+      var name = String(a == null ? "" : a).trim().slice(0, 120);
+      if (!name) return;
+      var k = name.toLowerCase();
+      if (seen[k] || out.length >= MAX_AUTHORS) return;
+      seen[k] = true;
+      out.push(name);
+    });
+    return out;
+  }
+
+  function authorsOf(s) {
+    if (!s) return [];
+    return toAuthors(Array.isArray(s.authors) ? s.authors : s.author);
+  }
+
   // v1 said only `hidden`. v2 says when and by whom, which is what the trash
   // needs — but `hidden` is still written alongside, because an iPad that has
   // not picked up this build yet is still reading this file and still has to
@@ -4008,6 +4087,8 @@ if ("serviceWorker" in navigator) {
       s.deletedBy = s.deletedBy || "(before activity logging)";
     }
     if (s.deletedAt) s.hidden = true;
+    s.authors = authorsOf(s);
+    s.author = s.authors.join(", ");
     return s;
   }
 
@@ -4210,7 +4291,10 @@ if ("serviceWorker" in navigator) {
     songs.forEach(function (s) { if (s.lastUsed) mine[s.id] = s.lastUsed; });
 
     var next = (remote.songs || []).filter(function (s) { return s && s.id; });
-    next.forEach(function (s) { if (typeof s.version !== "number") s.version = 1; });
+    // Through the same migration as anything read off this device: a song
+    // written by a build that only knew `author` arrives with no `authors`, and
+    // everything downstream reads the list.
+    next.forEach(migrateSong);
 
     if (Object.keys(pending).length) {
       var byId = {};
@@ -4338,7 +4422,10 @@ if ("serviceWorker" in navigator) {
     var payload = {
       id: song.id,
       title: song.title,
-      author: song.author || "",
+      // Both go up: `authors` is what the library stores, `author` is what a
+      // device still on the old build reads.
+      authors: authorsOf(song),
+      author: authorsOf(song).join(", "),
       sections: song.sections,
       order: song.order,
       slides: song.slides,
@@ -4752,7 +4839,7 @@ if ("serviceWorker" in navigator) {
         list.push({
           id: local.id,
           title: local.title,
-          artist: "",
+          authors: authorsOf(local),
           slides: (local.slides || []).length,
           deletedAt: local.deletedAt || Date.now(),
           deletedBy: myName() || "you",
@@ -4783,8 +4870,12 @@ if ("serviceWorker" in navigator) {
         nm.textContent = s.title || "(untitled)";
         var by = document.createElement("span");
         by.className = "by";
+        // This read `s.artist`, which nothing has ever sent — so the one place
+        // where two songs of the same name have to be told apart was the one
+        // place that never named who wrote either of them.
+        var who = authorsOf(s).join(", ");
         by.textContent = "Deleted by " + s.deletedBy + " · " + fmtWhen(s.deletedAt) +
-          (s.artist ? " · " + s.artist : "") + " · " + s.slides + " slides" +
+          (who ? " · " + who : "") + " · " + s.slides + " slides" +
           (s.pending ? " · not uploaded yet" : "");
         info.appendChild(nm);
         info.appendChild(by);
@@ -5376,7 +5467,9 @@ if ("serviceWorker" in navigator) {
       if (s.hidden) return false;
       if (!q) return true;
       if (s.title.toLowerCase().indexOf(q) >= 0) return true;
-      if (s.author && s.author.toLowerCase().indexOf(q) >= 0) return true;
+      // Any one of them. Looking for a song by the second name on it is not a
+      // stranger thing to do than looking for it by the first.
+      if (authorsOf(s).some(function (a) { return a.toLowerCase().indexOf(q) >= 0; })) return true;
       // Half the time the only thing anyone remembers is a line from it.
       return s.slides.some(function (sl) {
         return sl.join(" ").toLowerCase().indexOf(q) >= 0;
@@ -5425,8 +5518,9 @@ if ("serviceWorker" in navigator) {
       var meta = document.createElement("span");
       meta.className = "meta";
       // Two songs can share a title — a translation, a second arrangement —
-      // and the author is usually what tells them apart at a glance.
-      meta.textContent = (s.author ? s.author + " · " : "") + s.slides.length + " slides";
+      // and who wrote it is usually what tells them apart at a glance.
+      var who = authorsOf(s).join(", ");
+      meta.textContent = (who ? who + " · " : "") + s.slides.length + " slides";
       pick.appendChild(nm);
       pick.appendChild(meta);
 
@@ -5570,24 +5664,35 @@ if ("serviceWorker" in navigator) {
     });
   });
 
-  // ----- the author picker -----
-  var authorPick = $("authorPick");
+  // ----- the author list -----
+  var authorPick = $("authorPick"), authorChips = $("authorChips");
+  // The names on the song being edited. Held here rather than read back off the
+  // chips, so the order the writer put them in is the order that gets saved.
+  var editAuthors = [];
 
   function knownAuthors() {
     var seen = {}, out = [];
     songs.forEach(function (s) {
-      var a = (s.author || "").trim();
-      if (!a || s.deletedAt) return;
-      var k = a.toLowerCase();
-      if (seen[k]) return;
-      seen[k] = true;
-      out.push(a);
+      if (s.deletedAt) return;
+      // Every name on every song, not just the first: a writer who has only
+      // ever been the second name on something is still someone you will want
+      // to pick rather than retype.
+      authorsOf(s).forEach(function (a) {
+        var k = a.toLowerCase();
+        if (seen[k]) return;
+        seen[k] = true;
+        out.push(a);
+      });
     });
     return out.sort(function (a, b) { return a.localeCompare(b); });
   }
 
   function fillAuthorPick() {
-    var list = knownAuthors();
+    // Names already on this song are not offered again — picking one twice can
+    // only be a mistake, and the list is shorter for leaving them out.
+    var on = {};
+    editAuthors.forEach(function (a) { on[a.toLowerCase()] = true; });
+    var list = knownAuthors().filter(function (a) { return !on[a.toLowerCase()]; });
     authorPick.innerHTML = "";
     var head = document.createElement("option");
     head.value = "";
@@ -5604,10 +5709,80 @@ if ("serviceWorker" in navigator) {
     authorPick.disabled = !list.length;
   }
 
+  function renderAuthorChips() {
+    authorChips.innerHTML = "";
+    editAuthors.forEach(function (a, i) {
+      var chip = document.createElement("span");
+      chip.className = "author-chip";
+      var nm = document.createElement("span");
+      nm.className = "nm";
+      nm.textContent = a;
+      var rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "rm";
+      rm.setAttribute("data-i", i);
+      rm.setAttribute("aria-label", "Remove " + a);
+      rm.textContent = "×";
+      chip.appendChild(nm);
+      chip.appendChild(rm);
+      authorChips.appendChild(chip);
+    });
+    $("authorHint").textContent = editAuthors.length >= MAX_AUTHORS
+      ? "That is as many names as one song can carry."
+      : "Enter after each name. A song can have as many as it has.";
+    fillAuthorPick();
+  }
+
+  // Takes one name or several — pasting "A, B, C" in one go is how a credit
+  // line usually arrives, and splitting it here is kinder than making someone
+  // do it by hand.
+  function addAuthors(text) {
+    var have = {};
+    editAuthors.forEach(function (a) { have[a.toLowerCase()] = true; });
+    toAuthors(text).forEach(function (a) {
+      if (have[a.toLowerCase()] || editAuthors.length >= MAX_AUTHORS) return;
+      have[a.toLowerCase()] = true;
+      editAuthors.push(a);
+    });
+    renderAuthorChips();
+  }
+
+  function takeTypedAuthor() {
+    if (songAuthorInput.value.trim()) {
+      addAuthors(songAuthorInput.value);
+      songAuthorInput.value = "";
+    }
+  }
+
   authorPick.addEventListener("change", function () {
     if (!authorPick.value) return;
-    songAuthorInput.value = authorPick.value;
-    authorPick.value = "";   // back to "▾"; the field below is the answer
+    addAuthors(authorPick.value);
+    authorPick.value = "";   // back to "▾"
+  });
+
+  $("authorAdd").addEventListener("click", takeTypedAuthor);
+
+  songAuthorInput.addEventListener("keydown", function (e) {
+    // Comma too, because typing one is what someone does when they mean "and
+    // the next name is".
+    if (e.key !== "Enter" && e.key !== ",") return;
+    e.preventDefault();
+    takeTypedAuthor();
+  });
+
+  // Backspace on an empty field takes the last chip back, which is what every
+  // other field of this shape does.
+  songAuthorInput.addEventListener("keydown", function (e) {
+    if (e.key !== "Backspace" || songAuthorInput.value || !editAuthors.length) return;
+    editAuthors.pop();
+    renderAuthorChips();
+  });
+
+  authorChips.addEventListener("click", function (e) {
+    var rm = e.target.closest ? e.target.closest(".rm") : null;
+    if (!rm) return;
+    editAuthors.splice(parseInt(rm.getAttribute("data-i"), 10), 1);
+    renderAuthorChips();
   });
 
   function openEditor(s) {
@@ -5616,8 +5791,9 @@ if ("serviceWorker" in navigator) {
     var t = splitTitle(s ? s.title : "");
     setLang(t.lang);
     songTitleInput.value = t.title;
-    songAuthorInput.value = s && s.author ? s.author : "";
-    fillAuthorPick();
+    songAuthorInput.value = "";
+    editAuthors = authorsOf(s);
+    renderAuthorChips();
     setPerSlide(s && s.perSlide ? s.perSlide : 4);
     disarmDelete();
     // Its own history entry, so back leaves the editor instead of the library.
@@ -5703,7 +5879,12 @@ if ("serviceWorker" in navigator) {
     // doubled up or lost by editing around it.
     var bare = songTitleInput.value.trim() || splitTitle(parsed.title).title || "Untitled";
     var title = joinTitle(songLang, bare);
-    var author = songAuthorInput.value.trim();
+    // A name typed but not yet entered counts. Losing it because the writer
+    // pressed Save instead of Enter would be the app quietly throwing away
+    // something they had already told it.
+    takeTypedAuthor();
+    var authors = editAuthors.slice();
+    var author = authors.join(", ");
     var existing = asNew ? null : songById(editingId);
 
     // sections + order are the truth; slides/tags/notes are the flattened form
@@ -5711,6 +5892,7 @@ if ("serviceWorker" in navigator) {
     var isNew = !existing;
     if (existing) {
       existing.title = title;
+      existing.authors = authors;
       existing.author = author;
       existing.sections = parsed.sections;
       existing.order = parsed.order;
@@ -5722,7 +5904,7 @@ if ("serviceWorker" in navigator) {
       existing.hidden = false;
     } else {
       existing = {
-        id: newSongId(), title: title, author: author,
+        id: newSongId(), title: title, authors: authors, author: author,
         sections: parsed.sections, order: parsed.order,
         slides: parsed.slides, tags: parsed.tags, notes: parsed.notes,
         perSlide: perSlide,
