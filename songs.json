@@ -878,6 +878,115 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msualwhmyi3v",
+   "title": "[IND] Pilihanku",
+   "author": "",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Kau Tuhan yang mulia turun ke dunia",
+      "′Tuk tebus segala dosa",
+      "Kauberi kes'lamatan beri kesempatan",
+      "Kasih-Mu mengubahkan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-chorus",
+     "lines": [
+      "Jika kuakui semua dosaku",
+      "Maka Kau adalah setia dan adil",
+      "Kau ′kan mengampuni dan sucikan",
+      "Dari segala yang jahat"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Tak mau ku hidup bagi dunia ini lagi",
+      "Tak ingin kompromi",
+      "Tak ingin lakukan hal yang dapat",
+      "Dukakan hati-Mu",
+      "Tak mau ku hidup di luar tutur kata firman-Mu",
+      "Yang telah bebaskanku",
+      "Yesus, kebenaran-Mu adalah",
+      "Adalah pilihanku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kau Tuhan yang mulia turun ke dunia",
+     "′Tuk tebus segala dosa"
+    ],
+    [
+     "Kauberi kes'lamatan beri kesempatan",
+     "Kasih-Mu mengubahkan"
+    ],
+    [
+     "Jika kuakui semua dosaku",
+     "Maka Kau adalah setia dan adil"
+    ],
+    [
+     "Kau ′kan mengampuni dan sucikan",
+     "Dari segala yang jahat"
+    ],
+    [
+     "Tak mau ku hidup bagi dunia ini lagi",
+     "Tak ingin kompromi"
+    ],
+    [
+     "Tak ingin lakukan hal yang dapat",
+     "Dukakan hati-Mu"
+    ],
+    [
+     "Tak mau ku hidup di luar tutur kata firman-Mu",
+     "Yang telah bebaskanku"
+    ],
+    [
+     "Yesus, kebenaran-Mu adalah",
+     "Adalah pilihanku"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Pre-chorus",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786793324388,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlist": [],
