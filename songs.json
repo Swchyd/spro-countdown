@@ -923,7 +923,8 @@
       "Tak mau ku hidup di luar",
       "tutur kata firman-Mu",
       "Yang telah bebaskanku",
-      "Yesus, kebenaran-Mu adalah",
+      "Yesus, kebenaran-Mu",
+      "adalah",
       "Adalah pilihanku"
      ],
      "notes": []
@@ -971,7 +972,8 @@
      "Yang telah bebaskanku"
     ],
     [
-     "Yesus, kebenaran-Mu adalah",
+     "Yesus, kebenaran-Mu",
+     "adalah",
      "Adalah pilihanku"
     ]
    ],
@@ -996,8 +998,8 @@
     ""
    ],
    "perSlide": 3,
-   "version": 2,
-   "updatedAt": 1786797047413,
+   "version": 3,
+   "updatedAt": 1786797327729,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
