@@ -1316,6 +1316,131 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msuasxz2kqp7",
+   "title": "[IND] Doa Kami",
+   "author": "",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Syukur untuk setiap rencana-Mu",
+      "Dan rancangan-Mu yang mulia",
+      "Dalam satu tubuh kami bersatu",
+      "Menjadi duta kerajaan-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Kuucapkan berkat",
+      "Atas Indonesia",
+      "Biar kemuliaan Tuhan",
+      "Akan nyata"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bagi bangsa ini kami berdiri",
+      "Dan membawa doa kami kepada-Mu",
+      "Sesuatu yang besar pasti terjadi",
+      "Dan mengubahkan negeri kami",
+      "Hanya nama-Mu Tuhan ditinggikan",
+      "Atas seluruh bumi"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Kami rindu melihat Indonesia",
+      "Pulih dari semua problema",
+      "Hidup dalam jalan kebenaran-Mu",
+      "Pancarkan terang Kemulian-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "pre-chorus",
+    "chorus",
+    "verse 2"
+   ],
+   "slides": [
+    [
+     "Syukur untuk setiap rencana-Mu",
+     "Dan rancangan-Mu yang mulia"
+    ],
+    [
+     "Dalam satu tubuh kami bersatu",
+     "Menjadi duta kerajaan-Mu"
+    ],
+    [
+     "Kuucapkan berkat",
+     "Atas Indonesia"
+    ],
+    [
+     "Biar kemuliaan Tuhan",
+     "Akan nyata"
+    ],
+    [
+     "Bagi bangsa ini kami berdiri",
+     "Dan membawa doa kami kepada-Mu"
+    ],
+    [
+     "Sesuatu yang besar pasti terjadi",
+     "Dan mengubahkan negeri kami"
+    ],
+    [
+     "Hanya nama-Mu Tuhan ditinggikan",
+     "Atas seluruh bumi"
+    ],
+    [
+     "Kami rindu melihat Indonesia",
+     "Pulih dari semua problema"
+    ],
+    [
+     "Hidup dalam jalan kebenaran-Mu",
+     "Pancarkan terang Kemulian-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Pre-Chorus",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Verse 2",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786793651421,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlist": [],
