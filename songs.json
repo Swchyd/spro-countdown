@@ -819,10 +819,14 @@
      "key": "verse",
      "tag": "Verse",
      "lines": [
-      "Betapa heran betapa mulia",
-      "Kasih Yesus Kristus yang dicurahkan",
-      "Marilah mari mengenal kasih itu",
-      "Yang melampaui segala pengetahuan"
+      "Betapa heran",
+      "betapa mulia",
+      "Kasih Yesus Kristus",
+      "yang dicurahkan",
+      "Marilah mari",
+      "mengenal kasih itu",
+      "Yang melampaui",
+      "segala pengetahuan"
      ],
      "notes": []
     },
@@ -831,50 +835,82 @@
      "tag": "Chorus",
      "lines": [
       "Sio.. Sio.. Sio manise",
-      "Ale samua disayang Tuhan Yesus",
+      "Ale samua",
+      "disayang Tuhan Yesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
       "Sio.. Sio.. Sio manise",
-      "Ale samua dicinta Tuhan Yesus"
+      "Ale samua",
+      "dicinta Tuhan Yesus"
      ],
      "notes": []
     }
    ],
    "order": [
     "verse",
-    "chorus"
+    "chorus",
+    "_1"
    ],
    "slides": [
     [
-     "Betapa heran betapa mulia",
-     "Kasih Yesus Kristus yang dicurahkan"
+     "Betapa heran",
+     "betapa mulia"
     ],
     [
-     "Marilah mari mengenal kasih itu",
-     "Yang melampaui segala pengetahuan"
+     "Kasih Yesus Kristus",
+     "yang dicurahkan"
+    ],
+    [
+     "Marilah mari",
+     "mengenal kasih itu"
+    ],
+    [
+     "Yang melampaui",
+     "segala pengetahuan"
     ],
     [
      "Sio.. Sio.. Sio manise",
-     "Ale samua disayang Tuhan Yesus"
+     "Ale samua"
+    ],
+    [
+     "disayang Tuhan Yesus"
     ],
     [
      "Sio.. Sio.. Sio manise",
-     "Ale samua dicinta Tuhan Yesus"
+     "Ale samua"
+    ],
+    [
+     "dicinta Tuhan Yesus"
     ]
    ],
    "tags": [
     "Verse",
     "",
+    "",
+    "",
     "Chorus",
+    "",
+    "",
     ""
    ],
    "notes": [
     "",
     "",
     "",
+    "",
+    "",
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1786793229089,
+   "version": 2,
+   "updatedAt": 1786797479747,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
