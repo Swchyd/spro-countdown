@@ -1193,6 +1193,129 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msuarobbucm0",
+   "title": "[IND] Ubahkan Dunia",
+   "author": "",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Sungguh tak sabar kami berdiri bagi-Mu, Tuhan",
+      "Tak mau lagi dalam keg'lapan dunia"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Menerjang maju ke titik terang di depan itu",
+      "Bersama Tuhan, kami lakukan sesuatu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Tak memilih 'tuk menyerah",
+      "Hingga ubahkan dunia",
+      "Dengan kuasa surga"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bersama-Mu, kami ubahkan dunia",
+      "Penuhi bumi dengan kasih-Mu, Tuhan",
+      "Bersama-Mu, kami ubahkan dunia",
+      "Melalui kami, dunia lihat bahwa kuasa-Mu nyata"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Wo, oh, oh, oh, oh",
+      "Wo, oh, oh, oh, oh",
+      "Wo, oh, oh, oh, oh",
+      "Wo, oh, oh, oh, oh"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "pre-chorus",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Sungguh tak sabar kami berdiri bagi-Mu, Tuhan",
+     "Tak mau lagi dalam keg'lapan dunia"
+    ],
+    [
+     "Menerjang maju ke titik terang di depan itu",
+     "Bersama Tuhan, kami lakukan sesuatu"
+    ],
+    [
+     "Tak memilih 'tuk menyerah",
+     "Hingga ubahkan dunia"
+    ],
+    [
+     "Dengan kuasa surga"
+    ],
+    [
+     "Bersama-Mu, kami ubahkan dunia",
+     "Penuhi bumi dengan kasih-Mu, Tuhan"
+    ],
+    [
+     "Bersama-Mu, kami ubahkan dunia",
+     "Melalui kami, dunia lihat bahwa kuasa-Mu nyata"
+    ],
+    [
+     "Wo, oh, oh, oh, oh",
+     "Wo, oh, oh, oh, oh"
+    ],
+    [
+     "Wo, oh, oh, oh, oh",
+     "Wo, oh, oh, oh, oh"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Verse 2",
+    "Pre-Chorus",
+    "",
+    "Chorus",
+    "",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786793592447,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlist": [],
