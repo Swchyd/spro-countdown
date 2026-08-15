@@ -987,6 +987,99 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msuanguitbxn",
+   "title": "[IND] Jadikan Aku Rumah Doa-MU",
+   "author": "",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Kubawa hidupku s’karang",
+      "Ke tempat kudus-Mu Tuhan",
+      "Di mezbah-Mu kuserahkan",
+      "Seluruh hidupku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Penuhi hatiku s’karang",
+      "Dengan urapan yang baru",
+      "Agar aku lebih lagi",
+      "Mendengar suara-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Jadikan aku Tuhan",
+      "Rumah doa-Mu",
+      "Agar semua suku bangsa",
+      "Datang menyembah-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kubawa hidupku s’karang",
+     "Ke tempat kudus-Mu Tuhan"
+    ],
+    [
+     "Di mezbah-Mu kuserahkan",
+     "Seluruh hidupku"
+    ],
+    [
+     "Penuhi hatiku s’karang",
+     "Dengan urapan yang baru"
+    ],
+    [
+     "Agar aku lebih lagi",
+     "Mendengar suara-Mu"
+    ],
+    [
+     "Jadikan aku Tuhan",
+     "Rumah doa-Mu"
+    ],
+    [
+     "Agar semua suku bangsa",
+     "Datang menyembah-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786793396168,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlist": [],
