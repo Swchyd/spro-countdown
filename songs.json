@@ -1598,32 +1598,48 @@
    "hidden": false
   }
  ],
- "setlist": [
+ "setlists": [
   {
-   "id": "s_msuajvmp6nok",
-   "ms": 0
+   "id": "sl_msum1irlmwvi",
+   "name": "Setlist",
+   "entries": [
+    {
+     "id": "s_msuajvmp6nok",
+     "ms": 0
+    },
+    {
+     "id": "s_msualwhmyi3v",
+     "ms": 0
+    },
+    {
+     "id": "s_msuanguitbxn",
+     "ms": 0
+    },
+    {
+     "id": "s_msuap6vm4p91",
+     "ms": 0
+    },
+    {
+     "id": "s_msuarobbucm0",
+     "ms": 0
+    },
+    {
+     "id": "s_msuasxz2kqp7",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786797935568,
+   "updatedBy": "Lid"
   },
   {
-   "id": "s_msualwhmyi3v",
-   "ms": 0
-  },
-  {
-   "id": "s_msuanguitbxn",
-   "ms": 0
-  },
-  {
-   "id": "s_msuap6vm4p91",
-   "ms": 0
-  },
-  {
-   "id": "s_msuarobbucm0",
-   "ms": 0
-  },
-  {
-   "id": "s_msuasxz2kqp7",
-   "ms": 0
+   "id": "sl_msum1f7iv7ya",
+   "name": "Setlist 16/8",
+   "entries": [],
+   "updatedAt": 1786812523329,
+   "updatedBy": "Samuel"
   }
  ],
- "setlistAt": 1786797935568,
- "setlistBy": "Lid"
+ "setlist": [],
+ "setlistAt": 1786812523329,
+ "setlistBy": "Samuel"
 }
