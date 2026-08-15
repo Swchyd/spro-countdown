@@ -1634,12 +1634,46 @@
   {
    "id": "sl_msum24j021fm",
    "name": "Test",
-   "entries": [],
-   "updatedAt": 1786812564034,
+   "entries": [
+    {
+     "id": "s_msuap6vm4p91",
+     "ms": 0
+    },
+    {
+     "id": "s_msuasxz2kqp7",
+     "ms": 0
+    },
+    {
+     "id": "s_mskjwqfpagxo",
+     "ms": 0
+    },
+    {
+     "id": "s_msuajvmp6nok",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786812575992,
    "updatedBy": "Samuel"
   }
  ],
- "setlist": [],
- "setlistAt": 1786812564034,
+ "setlist": [
+  {
+   "id": "s_msuap6vm4p91",
+   "ms": 0
+  },
+  {
+   "id": "s_msuasxz2kqp7",
+   "ms": 0
+  },
+  {
+   "id": "s_mskjwqfpagxo",
+   "ms": 0
+  },
+  {
+   "id": "s_msuajvmp6nok",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786812575992,
  "setlistBy": "Samuel"
 }
