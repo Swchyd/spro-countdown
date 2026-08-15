@@ -1271,8 +1271,8 @@
   },
   {
    "id": "s_msuarobbucm0",
-   "title": "[IND] Ubahkan Dunia",
-   "author": "",
+   "title": "[IND] UBAHKAN DUNIA",
+   "author": "Robby Kurniawan Utomo, Philip Mantofa",
    "sections": [
     {
      "key": "verse 1",
@@ -1418,11 +1418,15 @@
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1786797619772,
-   "updatedBy": "Lid",
+   "version": 3,
+   "updatedAt": 1786809516402,
+   "updatedBy": "Samuel",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": false,
+   "authors": [
+    "Robby Kurniawan Utomo",
+    "Philip Mantofa"
+   ]
   },
   {
    "id": "s_msuasxz2kqp7",
