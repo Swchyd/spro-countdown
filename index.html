@@ -1289,6 +1289,94 @@
   #library:not(.all-songs) #allView { display: none; }
   .hint { font-size: 12px; line-height: 1.5; color: #5B6474; }
 
+  /* Which running order this device is on. Deliberately the first thing in the
+     tab and named in full: the bug this replaced was people not realising the
+     list in front of them belonged to somebody else. */
+  #setPickBox { position: relative; }
+  #setPickRow { display: flex; gap: 8px; }
+  #setPickBtn {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: var(--radius);
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 14px; font-weight: 700;
+    text-align: left;
+  }
+  #setPickBtn .nm { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #setPickBtn .cv { flex: 0 0 auto; color: #5B6474; }
+  #setPickBtn.none { color: var(--accent); border-color: var(--accent); }
+  #setNewBtn {
+    flex: 0 0 auto;
+    width: 46px;
+    border-radius: var(--radius);
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 19px;
+  }
+  #setNewBtn:active { background: var(--panel-2); color: var(--accent); }
+
+  #setMenu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0; right: 0;
+    z-index: 6;
+    max-height: 300px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel-2);
+    box-shadow: 0 14px 34px rgba(0,0,0,.5);
+  }
+  #setMenu[hidden] { display: none; }
+  .set-opt { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+  .set-opt:last-child { border-bottom: none; }
+  .set-opt .go {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 11px 14px;
+    text-align: left;
+    background: transparent;
+    color: var(--ink);
+    font-size: 14px; font-weight: 600;
+  }
+  .set-opt .go .sub { font-size: 11px; font-weight: 600; color: #5B6474; }
+  .set-opt.on .go { color: var(--accent); }
+  .set-opt .go:active { background: var(--panel); }
+  .set-opt .ren, .set-opt .del {
+    flex: 0 0 auto;
+    width: 42px;
+    background: transparent;
+    border-left: 1px solid var(--line);
+    color: #5B6474;
+    font-size: 14px;
+  }
+  .set-opt .del:active { color: var(--over); }
+  .set-opt .ren:active { color: var(--ink); }
+  .set-opt .renbox { flex: 1 1 auto; min-width: 0; display: flex; gap: 6px; padding: 8px 10px; }
+  .set-opt .renbox input {
+    flex: 1 1 auto; min-width: 0;
+    height: 34px; padding: 0 10px;
+    border-radius: 8px;
+    background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink); font-family: inherit; font-size: 14px;
+  }
+  .set-opt .renbox button {
+    flex: 0 0 auto; height: 34px; padding: 0 12px;
+    border-radius: 8px;
+    background: var(--accent); border: 1px solid var(--accent);
+    color: #1A1408; font-size: 12px; font-weight: 700;
+  }
   #setRows {
     display: flex;
     flex-direction: column;
@@ -1426,6 +1514,12 @@
   /* Hiding these is a courtesy, not the control — the same request from a
      collaborator is refused by the Worker whether or not the button was here. */
   #library:not(.is-owner) .owner-only { display: none; }
+  /* A viewer may look at a setlist and even choose which one they are looking
+     at — that is theirs, it never leaves the device — but not make, rename or
+     remove one. */
+  #library:not(.can-write) #setNewBtn,
+  #library:not(.can-write) .set-opt .ren,
+  #library:not(.can-write) .set-opt .del,
   #library:not(.can-write) #newSongBtn,
   #library:not(.can-write) #edRow,
   #library:not(.can-write) #saveNextBtn,
@@ -1814,8 +1908,20 @@
       </div>
 
       <div id="setView">
+        <!-- Which running order this device is building. The choice is this
+             device's own and is never uploaded, so two people preparing two
+             services at once no longer land on each other's. -->
+        <div id="setPickBox">
+          <div id="setPickRow">
+            <button type="button" id="setPickBtn" aria-expanded="false" aria-controls="setMenu">
+              <span class="nm">Setlist</span><span class="cv">▾</span>
+            </button>
+            <button type="button" id="setNewBtn" aria-label="Start a new setlist">+</button>
+          </div>
+          <div id="setMenu" hidden></div>
+        </div>
         <div id="setRows"></div>
-        <div class="hint">Tap to put a song on deck. Hold and drag to reorder.</div>
+        <div class="hint" id="setHint">Tap to put a song on deck. Hold and drag to reorder.</div>
       </div>
 
       <div id="allView">
@@ -4153,11 +4259,67 @@ if ("serviceWorker" in navigator) {
   //  setting must never be able to take two years of songs with it.
   // ============================================================
   var SONGS_KEY = "spro-songs-v1";
+  var PICKED_SET_KEY = "spro-setlist-pick-v1";
   var songs = [];
-  // Tonight's running order: song ids and a planned length, never copies of
-  // the lyrics. Fix a typo once and every future setlist already has it.
-  var setlist = [];
-  var setlistAt = 0;   // the setlist moves whole, so it needs its own stamp
+
+  // Running orders: song ids and a planned length, never copies of the lyrics.
+  // Fix a typo once and every future setlist already has it.
+  //
+  // There used to be exactly one of these, shared by everyone holding the
+  // access code. That is right for the songs — a library is worth having
+  // because it is the same library — and wrong for the setlist, which is not
+  // something the church owns but something one service has. Two people
+  // preparing at once wrote over each other, and whoever opened the console
+  // next found somebody else's running order already loaded, which is the last
+  // thing you want to discover with a congregation in front of you.
+  //
+  // So there are several, each named, and a device works on one of them. Which
+  // one is the device's own business: it is kept here and never uploaded, so
+  // choosing a setlist on this iPad cannot move anybody else's.
+  var setlists = [];
+  var pickedSetId = "";
+  try { pickedSetId = localStorage.getItem(PICKED_SET_KEY) || ""; } catch (e) {}
+
+  function newSetlistId() {
+    return "sl_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  function setlistById(id) {
+    for (var i = 0; i < setlists.length; i++) if (setlists[i].id === id) return setlists[i];
+    return null;
+  }
+
+  // The one this device is working on, or null when it has not chosen.
+  //
+  // Falling back to "the first one" when nothing is chosen would put a person
+  // who has just joined straight onto somebody else's running order, which is
+  // the whole complaint. It only happens when there is exactly one setlist in
+  // the library, where there is no other list it could mean — which is every
+  // church that only ever has one, and the reason they see no change at all.
+  function curSet() {
+    var s = setlistById(pickedSetId);
+    if (s) return s;
+    if (setlists.length === 1) { pickSetlist(setlists[0].id); return setlists[0]; }
+    return null;
+  }
+
+  function setItems() {
+    var s = curSet();
+    return s ? s.entries : [];
+  }
+
+  function putItems(next) {
+    var s = curSet();
+    if (s) s.entries = next;
+  }
+
+  function pickSetlist(id) {
+    pickedSetId = id || "";
+    try {
+      if (pickedSetId) localStorage.setItem(PICKED_SET_KEY, pickedSetId);
+      else localStorage.removeItem(PICKED_SET_KEY);
+    } catch (e) {}
+  }
 
   // Who wrote it, as a list.
   //
@@ -4209,17 +4371,49 @@ if ("serviceWorker" in navigator) {
     return s;
   }
 
+  // A stored copy from before there were several setlists holds one unnamed
+  // list. It becomes the first named one rather than being thrown away — it is
+  // very likely to be this coming Sunday's.
+  function migrateSetlists(raw) {
+    if (raw && Array.isArray(raw.setlists)) {
+      return raw.setlists.filter(function (s) { return s && s.id; }).map(function (s) {
+        return {
+          id: s.id,
+          name: String(s.name || "Setlist").trim().slice(0, 80) || "Setlist",
+          entries: Array.isArray(s.entries) ? s.entries.filter(function (e) { return e && e.id; }) : [],
+          updatedAt: s.updatedAt || 0,
+          updatedBy: s.updatedBy || ""
+        };
+      });
+    }
+    var legacy = (raw && Array.isArray(raw.setlist) ? raw.setlist : []).filter(function (e) { return e && e.id; });
+    if (!legacy.length) return [];
+    return [{
+      id: newSetlistId(),
+      name: "Setlist",
+      entries: legacy,
+      updatedAt: (raw && raw.setlistAt) || Date.now(),
+      updatedBy: ""
+    }];
+  }
+
   try {
     var songRaw = JSON.parse(localStorage.getItem(SONGS_KEY) || "null");
     if (songRaw && Array.isArray(songRaw.songs)) songs = songRaw.songs.map(migrateSong);
-    if (songRaw && Array.isArray(songRaw.setlist)) setlist = songRaw.setlist;
-    if (songRaw) setlistAt = songRaw.setlistAt || 0;
+    setlists = migrateSetlists(songRaw);
   } catch (e) {}
 
   function persistLocal() {
     try {
+      var cur = setlistById(pickedSetId);
       localStorage.setItem(SONGS_KEY, JSON.stringify({
-        v: 2, songs: songs, setlist: setlist, setlistAt: setlistAt
+        v: 3,
+        songs: songs,
+        setlists: setlists,
+        // The flat pair is still written for a build that has not learned about
+        // the others yet — same reason the server still writes it.
+        setlist: cur ? cur.entries : [],
+        setlistAt: cur ? cur.updatedAt || 0 : 0
       }));
     } catch (e) {}
   }
@@ -4230,8 +4424,12 @@ if ("serviceWorker" in navigator) {
   // started having an opinion about it.
   function saveSongs(touchedSetlist) {
     if (touchedSetlist) {
-      setlistAt = Date.now();
-      queueSetlist();
+      var cur = curSet();
+      if (cur) {
+        cur.updatedAt = Date.now();
+        cur.updatedBy = myName() || cur.updatedBy || "";
+        queueSetlist(cur.id);
+      }
     }
     persistLocal();
   }
@@ -4446,13 +4644,47 @@ if ("serviceWorker" in navigator) {
     next.forEach(function (s) { if (mine[s.id] && !s.lastUsed) s.lastUsed = mine[s.id]; });
     songs = next;
 
-    // Same reasoning for the setlist, except it moves whole rather than per
-    // song, so one queued edit holds back the whole field.
-    var setlistQueued = outbox.some(function (op) { return op.kind === "setlist"; });
-    if (!setlistQueued) {
-      setlist = (remote.setlist || []).filter(function (e) { return e && e.id; });
-      setlistAt = remote.setlistAt || 0;
+    // Setlists move whole, one at a time, so a queued edit holds back that one
+    // and nothing else — which is the point of addressing them separately.
+    // Before, a single pending change held back the only field there was.
+    //
+    // A server that does not send `setlists` at all has not been updated yet.
+    // Its single flat setlist cannot be matched to any of ours by id, so
+    // adopting it would mean inventing an id on every pull and throwing away
+    // whatever this device had made. During that window the local ones simply
+    // stand — except on a device that has none, where the flat one is all there
+    // is and becomes the first.
+    if (!Array.isArray(remote.setlists)) {
+      if (!setlists.length) setlists = migrateSetlists(remote);
+      persistLocal();
+      return;
     }
+
+    var heldBack = {}, dropping = {};
+    outbox.forEach(function (op) {
+      if (op.kind === "setlist" && op.setlistId) heldBack[op.setlistId] = true;
+      if (op.kind === "setlist-delete" && op.setlistId) dropping[op.setlistId] = true;
+    });
+
+    var remoteSets = migrateSetlists(remote);
+    var known = {};
+    remoteSets.forEach(function (s) { known[s.id] = true; });
+
+    var nextSets = remoteSets.filter(function (s) { return !heldBack[s.id] && !dropping[s.id]; });
+    setlists.forEach(function (s) {
+      if (dropping[s.id]) return;
+      // Ours wins while it is still on its way up. Otherwise a setlist the
+      // server has never heard of is either one this device cannot upload —
+      // nobody signed in here, so the server's silence says nothing — or one
+      // deleted on another device, which is the server speaking and is obeyed.
+      var mine = heldBack[s.id] || (!known[s.id] && !canWrite());
+      if (!mine) return;
+      var at = -1;
+      for (var i = 0; i < remoteSets.length; i++) if (remoteSets[i].id === s.id) { at = i; break; }
+      if (at === -1) nextSets.push(s);
+      else nextSets.splice(Math.min(at, nextSets.length), 0, s);
+    });
+    setlists = nextSets;
     persistLocal();
   }
 
@@ -4480,7 +4712,13 @@ if ("serviceWorker" in navigator) {
       return api("/songs/" + op.id, { method: "DELETE", body: { opId: op.opId } });
     }
     if (op.kind === "setlist") {
-      return api("/setlist", { method: "PUT", body: { opId: op.opId, setlist: op.setlist } });
+      return api("/setlists/" + op.setlistId, {
+        method: "PUT",
+        body: { opId: op.opId, name: op.name, entries: op.setlist }
+      });
+    }
+    if (op.kind === "setlist-delete") {
+      return api("/setlists/" + op.setlistId, { method: "DELETE", body: { opId: op.opId } });
     }
     return Promise.reject(new Error("unknown operation"));
   }
@@ -4564,17 +4802,39 @@ if ("serviceWorker" in navigator) {
     else enqueue({ kind: "update", id: song.id, song: payload, baseVersion: song.version || 1 });
   }
 
-  // The setlist is sent whole, so only the newest queued copy means anything.
-  function queueSetlist() {
-    if (!canWrite()) return;
-    clearTimeout(setlistTimer);
-    setlistTimer = setTimeout(function () {
-      outbox = outbox.filter(function (op) { return op.kind !== "setlist"; });
+  // A setlist is sent whole, so only the newest queued copy of *that one* means
+  // anything. Keyed by id rather than replacing every queued setlist: dropping
+  // the others would lose a rename made on a different list a moment earlier.
+  var setlistTimers = {};
+  function queueSetlist(id) {
+    if (!canWrite() || !id) return;
+    clearTimeout(setlistTimers[id]);
+    setlistTimers[id] = setTimeout(function () {
+      delete setlistTimers[id];
+      var s = setlistById(id);
+      if (!s) return;
+      outbox = outbox.filter(function (op) {
+        return !(op.kind === "setlist" && op.setlistId === id);
+      });
       enqueue({
         kind: "setlist",
-        setlist: setlist.map(function (e) { return { id: e.id, ms: e.ms || 0 }; })
+        setlistId: id,
+        name: s.name,
+        setlist: s.entries.map(function (e) { return { id: e.id, ms: e.ms || 0 }; })
       });
     }, 1200);
+  }
+
+  function queueSetlistDelete(id) {
+    if (!canWrite() || !id) return;
+    clearTimeout(setlistTimers[id]);
+    delete setlistTimers[id];
+    // Anything still queued for a list that is going away is moot.
+    outbox = outbox.filter(function (op) {
+      return !(op.kind === "setlist" && op.setlistId === id);
+    });
+    saveOutbox();
+    enqueue({ kind: "setlist-delete", setlistId: id });
   }
 
   // ----- destructive actions -----
@@ -5430,14 +5690,222 @@ if ("serviceWorker" in navigator) {
   // ----- setlist -----
   function setEntries() {
     // Drop entries whose song was deleted, so a stale id cannot show a blank.
-    return setlist.filter(function (e) {
+    return setItems().filter(function (e) {
       var s = songById(e.id);
       return s && !s.hidden;
     });
   }
 
+  // ----- choosing which running order this device is on -----
+  var setPickBtn = $("setPickBtn"), setMenu = $("setMenu");
+  var renamingSet = "";
+
+  function closeSetMenu() {
+    setMenu.hidden = true;
+    setMenu.innerHTML = "";
+    renamingSet = "";
+    setPickBtn.setAttribute("aria-expanded", "false");
+  }
+
+  function whenSet(s) {
+    if (!s.updatedAt) return "not saved yet";
+    var n = s.entries.length;
+    return n + " song" + (n === 1 ? "" : "s") + " · " + fmtWhen(s.updatedAt) +
+      (s.updatedBy ? " · " + s.updatedBy : "");
+  }
+
+  function renderSetPick() {
+    var cur = curSet();
+    setPickBtn.querySelector(".nm").textContent = cur ? cur.name : "Choose a setlist";
+    setPickBtn.classList.toggle("none", !cur);
+    // With nothing chosen there is no list to show and no reordering to explain.
+    $("setHint").textContent = cur
+      ? "Tap to put a song on deck. Hold and drag to reorder."
+      : "Pick which running order this device is building, or start a new one. The choice stays on this device.";
+  }
+
+  function renderSetMenu() {
+    setMenu.innerHTML = "";
+    var cur = curSet();
+
+    if (!setlists.length) {
+      var none = document.createElement("div");
+      none.className = "song-empty";
+      none.textContent = "No setlists yet — press + to start one.";
+      setMenu.appendChild(none);
+    }
+
+    setlists.forEach(function (s) {
+      var row = document.createElement("div");
+      row.className = "set-opt" + (cur && cur.id === s.id ? " on" : "");
+      row.setAttribute("data-id", s.id);
+
+      if (renamingSet === s.id) {
+        var box = document.createElement("div");
+        box.className = "renbox";
+        var inp = document.createElement("input");
+        inp.type = "text";
+        inp.value = s.name;
+        inp.maxLength = 80;
+        inp.setAttribute("data-rename", s.id);
+        var ok = document.createElement("button");
+        ok.type = "button";
+        ok.className = "okren";
+        ok.textContent = "OK";
+        box.appendChild(inp);
+        box.appendChild(ok);
+        row.appendChild(box);
+        setMenu.appendChild(row);
+        setTimeout(function () { inp.focus(); inp.select(); }, 30);
+        return;
+      }
+
+      var go = document.createElement("button");
+      go.type = "button";
+      go.className = "go";
+      var nm = document.createElement("span");
+      nm.textContent = s.name;
+      var sub = document.createElement("span");
+      sub.className = "sub";
+      sub.textContent = whenSet(s);
+      go.appendChild(nm);
+      go.appendChild(sub);
+      row.appendChild(go);
+
+      var ren = document.createElement("button");
+      ren.type = "button";
+      ren.className = "ren";
+      ren.setAttribute("aria-label", "Rename " + s.name);
+      ren.textContent = "✎";
+      row.appendChild(ren);
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.setAttribute("aria-label", "Delete " + s.name);
+      del.textContent = "×";
+      row.appendChild(del);
+
+      setMenu.appendChild(row);
+    });
+
+    setMenu.hidden = false;
+    setPickBtn.setAttribute("aria-expanded", "true");
+  }
+
+  function newSetlist() {
+    // Named for today, because that is what it almost always is, and a name
+    // that says something beats "Setlist 4" when there are six of them.
+    var d = new Date();
+    var base = "Setlist " + d.getDate() + "/" + (d.getMonth() + 1);
+    var name = base, n = 2;
+    while (setlists.some(function (s) { return s.name === name; })) name = base + " (" + (n++) + ")";
+
+    var s = { id: newSetlistId(), name: name, entries: [], updatedAt: Date.now(), updatedBy: myName() || "" };
+    setlists.push(s);
+    pickSetlist(s.id);
+    queueSetlist(s.id);
+    persistLocal();
+    renamingSet = s.id;
+    renderSetPick();
+    renderSetRows();
+    renderSongRows();
+    renderSetStrip();
+    renderSetMenu();
+  }
+
+  // Pressing + on a song with nothing chosen. Opening the picker is the answer
+  // to "where would that have gone?" rather than a message about it.
+  function needSetlistFirst() {
+    applyTab("set");
+    renderSetPick();
+    renderSetMenu();
+    setPickBtn.scrollIntoView({ block: "center" });
+  }
+
+  setPickBtn.addEventListener("click", function () {
+    if (!setMenu.hidden) { closeSetMenu(); return; }
+    renderSetMenu();
+  });
+
+  $("setNewBtn").addEventListener("click", newSetlist);
+
+  setMenu.addEventListener("click", function (e) {
+    var row = e.target.closest ? e.target.closest(".set-opt") : null;
+    if (!row) return;
+    var id = row.getAttribute("data-id");
+    var s = setlistById(id);
+    if (!s) return;
+
+    if (e.target.closest(".okren")) {
+      var inp = row.querySelector("input[data-rename]");
+      var name = (inp.value || "").trim().slice(0, 80) || s.name;
+      if (name !== s.name) {
+        s.name = name;
+        s.updatedAt = Date.now();
+        s.updatedBy = myName() || s.updatedBy || "";
+        queueSetlist(s.id);
+        persistLocal();
+      }
+      // Out of the menu, not back into it: naming a setlist is the last step of
+      // making one, and what you want next is the empty list to start filling.
+      closeSetMenu();
+      renderSetPick();
+      return;
+    }
+    if (e.target.closest(".ren")) { renamingSet = id; renderSetMenu(); return; }
+    if (e.target.closest(".del")) { removeSetlist(s); return; }
+    if (e.target.closest(".go")) {
+      pickSetlist(id);
+      closeSetMenu();
+      renderSetPick();
+      renderSetRows();
+      renderSongRows();   // the ✓ marks belong to this list, not the last one
+      renderSetStrip();
+    }
+  });
+
+  setMenu.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" || !e.target.matches("input[data-rename]")) return;
+    e.preventDefault();
+    var ok = e.target.parentNode.querySelector(".okren");
+    if (ok) ok.click();
+  });
+
+  function removeSetlist(s) {
+    // A running order is a few taps to rebuild and its songs are untouched, so
+    // this asks rather than arming — but it does ask, because deleting the one
+    // somebody else is about to use on Sunday is not recoverable from here.
+    if (s.entries.length && !window.confirm("Delete the setlist “" + s.name + "”? The songs stay in the library.")) return;
+    setlists = setlists.filter(function (x) { return x.id !== s.id; });
+    queueSetlistDelete(s.id);
+    if (pickedSetId === s.id) pickSetlist("");
+    persistLocal();
+    renderSetPick();
+    renderSetRows();
+    renderSongRows();
+    renderSetStrip();
+    renderSetMenu();
+  }
+
+  document.addEventListener("pointerdown", function (e) {
+    if (setMenu.hidden) return;
+    if (e.target.closest && e.target.closest("#setPickBox")) return;
+    closeSetMenu();
+  });
+
   function renderSetRows() {
+    renderSetPick();
     setRows.innerHTML = "";
+    if (!curSet()) {
+      var pick = document.createElement("div");
+      pick.className = "song-empty";
+      pick.textContent = setlists.length
+        ? "Choose which setlist this device is on, above."
+        : "No setlist yet — press + above to start one.";
+      setRows.appendChild(pick);
+      return;
+    }
     var live = setEntries();
     if (!live.length) {
       var empty = document.createElement("div");
@@ -5477,7 +5945,8 @@ if ("serviceWorker" in navigator) {
   }
 
   function setEntryById(id) {
-    for (var i = 0; i < setlist.length; i++) if (setlist[i].id === id) return setlist[i];
+    var items = setItems();
+    for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i];
     return null;
   }
 
@@ -5510,7 +5979,7 @@ if ("serviceWorker" in navigator) {
     if (!row) return;
     var id = row.getAttribute("data-id");
     if (e.target.closest(".rm")) {
-      setlist = setlist.filter(function (x) { return x.id !== id; });
+      putItems(setItems().filter(function (x) { return x.id !== id; }));
       saveSongs(true);
       renderSetRows();
       renderSongRows();
@@ -5527,7 +5996,7 @@ if ("serviceWorker" in navigator) {
     var order = Array.prototype.map.call(setRows.querySelectorAll(".set-row"), function (el) {
       return el.getAttribute("data-id");
     });
-    setlist.sort(function (a, b) { return order.indexOf(a.id) - order.indexOf(b.id); });
+    setItems().sort(function (a, b) { return order.indexOf(a.id) - order.indexOf(b.id); });
     saveSongs(true);
     renderSetRows();
     renderSetStrip();
@@ -5693,12 +6162,16 @@ if ("serviceWorker" in navigator) {
       // Update this one button rather than rebuilding the list: re-rendering
       // throws away the scroll position, which with a couple of hundred songs
       // means every add jumps you back to the top.
+      // Nothing to add it to until this device has said which running order it
+      // is building. Sending them to the picker is the honest answer — dropping
+      // the song into somebody else's is what this all exists to stop.
+      if (!curSet()) { needSetlistFirst(); return; }
       if (setEntryById(s.id)) {
-        setlist = setlist.filter(function (x) { return x.id !== s.id; });
+        putItems(setItems().filter(function (x) { return x.id !== s.id; }));
         addBtn.classList.remove("in");
         addBtn.textContent = "+";
       } else {
-        setlist.push({ id: s.id, ms: 0 });
+        setItems().push({ id: s.id, ms: 0 });
         addBtn.classList.add("in");
         addBtn.textContent = "✓";
       }
@@ -6299,7 +6772,11 @@ if ("serviceWorker" in navigator) {
     s.deletedBy = myName() || "you";
     s.hidden = true;
     s.updatedAt = Date.now();
-    setlist = setlist.filter(function (x) { return x.id !== s.id; });
+    // Out of every running order, not just this device's: a deleted song must
+    // not sit in somebody else's list as a row that shows nothing.
+    setlists.forEach(function (sl) {
+      sl.entries = sl.entries.filter(function (x) { return x.id !== s.id; });
+    });
     persistLocal();
     if (canWrite()) enqueue({ kind: "delete", id: s.id });
     disarmDelete();

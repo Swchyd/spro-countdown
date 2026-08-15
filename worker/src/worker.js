@@ -458,13 +458,83 @@ function normalizeLibrary(raw) {
       delete s.deletedBy;
     }
   }
-  return {
+  const out = {
     v: 2,
     songs,
+    setlists: normalizeSetlists(lib),
     setlist: Array.isArray(lib.setlist) ? lib.setlist : [],
     setlistAt: lib.setlistAt || 0,
     setlistBy: lib.setlistBy || ""
   };
+  mirrorSetlist(out);
+  return out;
+}
+
+// Tonight's running order, of which there is more than one.
+//
+// There used to be exactly one, shared by everybody holding the access code.
+// That is right for the songs — a library is worth having because it is the
+// same library — and wrong for the setlist, which is not a thing the church
+// owns but a thing one service has. Two people preparing at once wrote over
+// each other, and whoever opened the console next found somebody else's
+// running order waiting for them.
+//
+// So the library holds a list of them, each named, and a device chooses which
+// one it is working on. The choice lives on the device and is never uploaded:
+// it is the one piece of this that is nobody else's business.
+const MAX_SETLISTS = 60;
+
+function newSetlistId() {
+  return "sl_" + now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+function cleanEntries(v) {
+  return (Array.isArray(v) ? v : [])
+    .filter((e) => e && typeof e.id === "string")
+    .map((e) => ({ id: e.id, ms: Number(e.ms) || 0 }));
+}
+
+function normalizeSetlists(lib) {
+  let list = Array.isArray(lib.setlists) ? lib.setlists : null;
+
+  // A library written before this existed has one unnamed setlist. It becomes
+  // the first named one rather than being dropped — it is very likely to be
+  // this coming Sunday's.
+  if (!list) {
+    const legacy = cleanEntries(lib.setlist);
+    list = legacy.length
+      ? [{
+          id: newSetlistId(),
+          name: "Setlist",
+          entries: legacy,
+          updatedAt: lib.setlistAt || now(),
+          updatedBy: lib.setlistBy || ""
+        }]
+      : [];
+  }
+
+  return list
+    .filter((s) => s && typeof s.id === "string")
+    .slice(0, MAX_SETLISTS)
+    .map((s) => ({
+      id: s.id,
+      name: String(s.name || "Setlist").trim().slice(0, 80) || "Setlist",
+      entries: cleanEntries(s.entries),
+      updatedAt: s.updatedAt || 0,
+      updatedBy: s.updatedBy || ""
+    }));
+}
+
+// The flat `setlist` field is still written, holding whichever was touched most
+// recently — same reason `author` is still written beside `authors`: a device
+// that has not picked up this build reads it, and must find something sensible
+// there rather than nothing.
+function mirrorSetlist(lib) {
+  let newest = null;
+  for (const s of lib.setlists) if (!newest || (s.updatedAt || 0) > (newest.updatedAt || 0)) newest = s;
+  lib.setlist = newest ? newest.entries : [];
+  lib.setlistAt = newest ? newest.updatedAt || 0 : 0;
+  lib.setlistBy = newest ? newest.updatedBy || "" : "";
 }
 
 async function readLibrary(env) {
@@ -911,12 +981,16 @@ async function handleDelete(request, env, actor, cfg, explicitId) {
       s.updatedAt = now();
       s.updatedBy = actor.name;
     }
-    // The setlist points at songs; a deleted song must not linger in tonight's
-    // running order as a blank row.
+    // Setlists point at songs; a deleted song must not linger in anybody's
+    // running order as a blank row — so every one of them is pruned, not just
+    // whichever happens to be the most recent.
     const gone = new Set(targets.map((s) => s.id));
-    const before = lib.setlist.length;
-    lib.setlist = lib.setlist.filter((e) => !gone.has(e.id));
-    if (lib.setlist.length !== before) lib.setlistAt = now();
+    for (const sl of lib.setlists) {
+      const before = sl.entries.length;
+      sl.entries = sl.entries.filter((e) => !gone.has(e.id));
+      if (sl.entries.length !== before) sl.updatedAt = now();
+    }
+    mirrorSetlist(lib);
 
     affected = targets.map((s) => ({ id: s.id, title: s.title }));
     return {
@@ -1030,6 +1104,66 @@ async function handleEmptyTrash(request, env, actor, cfg) {
   return { purged: affected.length, songs: affected, olderThanDays };
 }
 
+// One setlist at a time, addressed by its own id.
+//
+// Deliberately not "here is the whole list of setlists": that shape would make
+// two people preparing two different services overwrite each other on the way
+// past, which is the exact failure this whole change exists to remove. A write
+// touches the one it names and nothing else.
+async function handleSetlistPut(request, env, actor, cfg, id) {
+  requireRole(actor, "setlist.set");
+  const body = await request.json().catch(() => ({}));
+  const entries = Array.isArray(body.entries) ? body.entries : [];
+  if (entries.length > 300) throw new HttpError(400, "bad_request", "That setlist is implausibly long.");
+  const name = String(body.name || "Setlist").trim().slice(0, 80) || "Setlist";
+
+  let saved = null;
+  await mutate(env, actor, (lib) => {
+    const clean = entries
+      .filter((e) => e && typeof e.id === "string" && findSong(lib, e.id))
+      .map((e) => ({ id: e.id, ms: Number(e.ms) || 0 }));
+
+    let s = lib.setlists.find((x) => x.id === id);
+    const isNew = !s;
+    if (isNew) {
+      if (lib.setlists.length >= MAX_SETLISTS) {
+        throw new HttpError(400, "too_many", `That is already ${MAX_SETLISTS} setlists. Delete one first.`);
+      }
+      s = { id, name, entries: [], updatedAt: 0, updatedBy: "" };
+      lib.setlists.push(s);
+    }
+    if (!isNew && s.name === name && JSON.stringify(clean) === JSON.stringify(s.entries)) {
+      saved = s;
+      return { noop: true };
+    }
+    s.name = name;
+    s.entries = clean;
+    s.updatedAt = now();
+    s.updatedBy = actor.name;
+    mirrorSetlist(lib);
+    saved = s;
+    return { message: `${actor.name} updated the setlist “${name}”` };
+  });
+  return { setlist: saved };
+}
+
+async function handleSetlistDelete(request, env, actor, cfg, id) {
+  requireRole(actor, "setlist.set");
+  let gone = null;
+  await mutate(env, actor, (lib) => {
+    const at = lib.setlists.findIndex((x) => x.id === id);
+    if (at === -1) return { noop: true };
+    gone = lib.setlists[at];
+    lib.setlists.splice(at, 1);
+    mirrorSetlist(lib);
+    return { message: `${actor.name} deleted the setlist “${gone.name}”` };
+  });
+  return { ok: true, deleted: gone ? gone.id : null };
+}
+
+// The old shape, still answered. A device on a build that knows only one
+// setlist writes here, and it lands on whichever was touched most recently —
+// which is the one that build is showing, since that is what it was given.
 async function handleSetlist(request, env, actor, cfg) {
   requireRole(actor, "setlist.set");
   const body = await request.json().catch(() => ({}));
@@ -1040,10 +1174,18 @@ async function handleSetlist(request, env, actor, cfg) {
     const clean = entries
       .filter((e) => e && typeof e.id === "string" && findSong(lib, e.id))
       .map((e) => ({ id: e.id, ms: Number(e.ms) || 0 }));
-    if (JSON.stringify(clean) === JSON.stringify(lib.setlist)) return { noop: true };
-    lib.setlist = clean;
-    lib.setlistAt = now();
-    lib.setlistBy = actor.name;
+
+    let target = null;
+    for (const s of lib.setlists) if (!target || (s.updatedAt || 0) > (target.updatedAt || 0)) target = s;
+    if (!target) {
+      target = { id: newSetlistId(), name: "Setlist", entries: [], updatedAt: 0, updatedBy: "" };
+      lib.setlists.push(target);
+    }
+    if (JSON.stringify(clean) === JSON.stringify(target.entries)) return { noop: true };
+    target.entries = clean;
+    target.updatedAt = now();
+    target.updatedBy = actor.name;
+    mirrorSetlist(lib);
     return { message: `${actor.name} updated the setlist` };
   });
   return { ok: true };
@@ -1252,6 +1394,9 @@ async function route(request, env) {
     return {
       v: lib.v,
       songs: lib.songs.filter((s) => !s.deletedAt),
+      setlists: lib.setlists,
+      // Still sent, for a device that has not picked up the build that knows
+      // there is more than one.
       setlist: lib.setlist,
       setlistAt: lib.setlistAt
     };
@@ -1310,6 +1455,10 @@ async function route(request, env) {
   if (p === "/trash/empty" && method === "POST") return await handleEmptyTrash(request, env, actor, cfg);
 
   let m;
+  if ((m = p.match(/^\/setlists\/(sl_[A-Za-z0-9_]{2,40})$/))) {
+    if (method === "PUT") return await handleSetlistPut(request, env, actor, cfg, m[1]);
+    if (method === "DELETE") return await handleSetlistDelete(request, env, actor, cfg, m[1]);
+  }
   if ((m = p.match(/^\/songs\/([A-Za-z0-9_]+)$/))) {
     if (method === "PATCH") return await handleUpdate(request, env, actor, cfg, m[1]);
     if (method === "DELETE") return await handleDelete(request, env, actor, cfg, m[1]);

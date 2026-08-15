@@ -653,6 +653,90 @@ async function testAuthorList() {
     JSON.stringify(trashed && trashed.authors));
 }
 
+async function testSeparateSetlists() {
+  section("One setlist each");
+  const { env, gh, code } = await setup();
+  const john = (await call(env, "/auth/join", { method: "POST", body: { code, name: "John" } })).body.token;
+  const mary = (await call(env, "/auth/join", { method: "POST", body: { code, name: "Mary" }, ip: "9.9.9.1" } )).body.token;
+
+  await call(env, "/songs", { method: "POST", body: { song: song("s_one", "A") }, token: john });
+  await call(env, "/songs", { method: "POST", body: { song: song("s_two", "B") }, token: john });
+  await call(env, "/songs", { method: "POST", body: { song: song("s_three", "C") }, token: john });
+  // Enough others that removing one later is not a third of the library, which
+  // the blast-radius guard would stop and ask about.
+  for (let i = 0; i < 12; i++) {
+    await call(env, "/songs", { method: "POST", body: { song: song("s_fill" + i, "Filler " + i) }, token: john });
+  }
+
+  // Two people, two services, at the same time.
+  let r = await call(env, "/setlists/sl_john1", {
+    method: "PUT", body: { name: "Ibadah Raya 1", entries: [{ id: "s_one" }, { id: "s_two" }] }, token: john
+  });
+  check("a setlist can be written by its own id", r.status === 200 && r.body.setlist.entries.length === 2, "status " + r.status);
+
+  r = await call(env, "/setlists/sl_mary1", {
+    method: "PUT", body: { name: "Youth", entries: [{ id: "s_three" }] }, token: mary
+  });
+  check("a second one is written beside it", r.status === 200 && r.body.setlist.entries.length === 1, "status " + r.status);
+
+  // The whole point: neither write touched the other.
+  r = await call(env, "/library");
+  const byId = Object.fromEntries(r.body.setlists.map((s) => [s.id, s]));
+  check("both survive", !!byId.sl_john1 && !!byId.sl_mary1, JSON.stringify(r.body.setlists.map((s) => s.id)));
+  check("one person's edit does not disturb the other's",
+    byId.sl_john1.entries.length === 2 && byId.sl_mary1.entries.length === 1);
+  check("each records who touched it",
+    byId.sl_john1.updatedBy === "John" && byId.sl_mary1.updatedBy === "Mary");
+
+  // A device still on the old build reads the flat field and must find the
+  // most recently touched one there, not nothing.
+  check("the flat field still holds the newest", r.body.setlist.length === 1, JSON.stringify(r.body.setlist));
+
+  // And a write from that old build lands on the same one rather than
+  // inventing a second.
+  const before = gh.library().setlists.length;
+  r = await call(env, "/setlist", { method: "PUT", body: { setlist: [{ id: "s_one" }] }, token: mary });
+  check("an old client's write lands on an existing setlist",
+    r.status === 200 && gh.library().setlists.length === before, "now " + gh.library().setlists.length);
+  check("and it lands on the newest one", gh.library().setlists.find((s) => s.id === "sl_mary1").entries.length === 1);
+
+  // Deleting a song has to clear it out of every running order, not just the
+  // one that happens to be newest.
+  r = await call(env, "/songs/s_one", { method: "DELETE", token: john });
+  check("the song really was deleted", r.status === 200, "status " + r.status + " " + (r.body.error || ""));
+  const lib = gh.library();
+  const stillThere = lib.setlists.filter((s) => s.entries.some((e) => e.id === "s_one"));
+  check("a deleted song leaves every setlist", stillThere.length === 0,
+    JSON.stringify(stillThere.map((s) => s.id)));
+
+  r = await call(env, "/setlists/sl_mary1", { method: "DELETE", token: mary });
+  check("a setlist can be deleted", r.status === 200 && !gh.library().setlists.some((s) => s.id === "sl_mary1"));
+  check("deleting one leaves the others", gh.library().setlists.some((s) => s.id === "sl_john1"));
+
+  r = await call(env, "/setlists/not-an-id", { method: "PUT", body: { entries: [] }, token: john });
+  check("a malformed setlist id is refused", r.status === 404, "status " + r.status);
+}
+
+async function testSetlistMigration() {
+  section("The one setlist that already existed");
+  const legacy = {
+    v: 2,
+    songs: [{ id: "s_old", title: "Old", slides: [["a"]], version: 1 }],
+    setlist: [{ id: "s_old", ms: 0 }],
+    setlistAt: 4242,
+    setlistBy: "Someone"
+  };
+  const { env, code } = await setup(legacy);
+  const john = (await call(env, "/auth/join", { method: "POST", body: { code, name: "John" } })).body.token;
+
+  const r = await call(env, "/library");
+  check("it becomes the first named setlist rather than being dropped",
+    r.body.setlists.length === 1 && r.body.setlists[0].entries.length === 1,
+    JSON.stringify(r.body.setlists));
+  check("and keeps who last touched it", r.body.setlists[0].updatedBy === "Someone");
+  check("the flat field still reads the same", r.body.setlist.length === 1);
+}
+
 // ---------------------------------------------------------------------------
 
 // Node has no PBKDF2 iteration limit, so nothing above catches a value Workers
@@ -715,6 +799,8 @@ const suites = [
   testRotationAndRevocation,
   testOwnerAndCollaboratorCrud,
   testAuthorList,
+  testSeparateSetlists,
+  testSetlistMigration,
   testConcurrency,
   testBulkProtection,
   testPrivilegeSeparation,
