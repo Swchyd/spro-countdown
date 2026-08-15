@@ -356,6 +356,20 @@ async function authenticate(request, env) {
 
   const cfg = await getConfig(env);
 
+  // Struck dead when the code was regenerated or revoked (see endCodeSessions).
+  // Unconditional, and ahead of the version comparison below: once an owner has
+  // put someone out, no later change of configuration may let them back in on
+  // the same token.
+  if (sess.codeEnded) {
+    throw new HttpError(403, "code_rotated",
+      sess.codeEndedReason === "access code revoked"
+        ? "The access code was revoked. Ask the owner for a new one."
+        : "The access code was changed. Ask the owner for the new one.");
+  }
+
+  // The same conclusion reached by comparison, which is what catches a session
+  // issued before this build — and any that slipped past a sweep.
+  //
   // Owner sessions ride on the owner key, not the access code, so rotating the
   // code must never lock the owner out of their own library.
   if (sess.role !== "owner" && cfg.rotateEndsSessions && sess.codeVersion !== cfg.codeVersion) {
@@ -994,6 +1008,66 @@ async function handleSetlist(request, env, actor, cfg) {
 
 // --- owner-only administration --------------------------------------------
 
+// Turning everyone but the owner out of the building.
+//
+// authenticate() already refuses a session whose codeVersion has fallen behind,
+// so the old code stopped opening doors the moment it was replaced. That is not
+// the same as being out, and the difference showed in two places the owner
+// actually looks. The collaborator list still read "active" for every one of
+// them, because nothing had touched those records — so the person who had just
+// regenerated the code to get someone out had no way to see that it worked. And
+// the session tokens were still sitting in KV until their own expiry, so the
+// only thing standing between a stale token and a live session was a config
+// flag that a future request could flip back.
+//
+// Both are settled here instead: every non-owner session is struck dead where
+// it lies, and the records say when access ended and why. Owners are left alone
+// deliberately — an owner session rides on the owner key, not the code, and
+// regenerating a code must never lock the owner out of their own library.
+//
+// The session rows are marked rather than deleted, and it is worth being clear
+// why, because deleting them looks tidier. A token with no row behind it is
+// "Session expired. Sign in again." — which is what the app would then tell
+// someone whose access had just been deliberately ended, in the middle of a
+// service, and it is not true. A row that says how it died can say so. The mark
+// is checked before anything else, so a marked session is exactly as dead as a
+// missing one; it just knows its own cause of death. They lapse on their own
+// once the explanation has stopped being worth anything.
+const ENDED_SESSION_TTL = 30 * 24 * 60 * 60;
+
+async function endCodeSessions(env, cfg, reason) {
+  const ended = [];
+  let cursor;
+  do {
+    const page = await env.SPRO.list({ prefix: "sess:", cursor, limit: 200 });
+    for (const k of page.keys) {
+      const rec = await env.SPRO.get(k.name, "json");
+      if (!rec || rec.role === "owner" || rec.codeEnded) continue;
+      rec.codeEnded = true;
+      rec.codeEndedAt = now();
+      rec.codeEndedReason = reason;
+      await env.SPRO.put(k.name, JSON.stringify(rec), { expirationTtl: ENDED_SESSION_TTL });
+      ended.push(rec.id);
+    }
+    cursor = page.list_complete ? null : page.cursor;
+  } while (cursor);
+
+  // The mirror the owner reads. Marked rather than deleted: who had access, and
+  // until when, is exactly the kind of thing worth still being able to answer
+  // next month.
+  const ttl = cfg.policy.sessionDays * 24 * 60 * 60;
+  for (const id of ended) {
+    const key = "collab:" + id;
+    const rec = await env.SPRO.get(key, "json");
+    if (!rec || rec.role === "owner" || rec.revoked) continue;
+    rec.revoked = true;
+    rec.revokedAt = now();
+    rec.revokedReason = reason;
+    await env.SPRO.put(key, JSON.stringify(rec), { expirationTtl: ttl });
+  }
+  return ended.length;
+}
+
 async function handleCodeRotate(request, env, actor, cfg) {
   requireRole(actor, "admin");
   const body = await request.json().catch(() => ({}));
@@ -1013,21 +1087,39 @@ async function handleCodeRotate(request, env, actor, cfg) {
   if (ROLES.includes(body.defaultRole)) next.defaultRole = body.defaultRole;
   await putConfig(env, next);
 
+  const ended = next.rotateEndsSessions
+    ? await endCodeSessions(env, next, "access code regenerated")
+    : 0;
+
   await audit(env, actor, "code.rotate", {
     note: `access code regenerated (v${next.codeVersion})` +
-      (next.rotateEndsSessions ? " — existing collaborators must rejoin" : " — existing collaborators kept access")
+      (next.rotateEndsSessions
+        ? ` — ${ended} collaborator session${ended === 1 ? "" : "s"} ended, everyone must rejoin`
+        : " — existing collaborators kept access")
   });
 
   // The only time the plaintext code is ever returned, and only to an owner
   // session. It is not stored anywhere in this form.
-  return { code, codeVersion: next.codeVersion, expiresAt: next.codeExpiresAt, rotateEndsSessions: next.rotateEndsSessions };
+  return {
+    code,
+    codeVersion: next.codeVersion,
+    expiresAt: next.codeExpiresAt,
+    rotateEndsSessions: next.rotateEndsSessions,
+    endedSessions: ended
+  };
 }
 
 async function handleCodeRevoke(request, env, actor, cfg) {
   requireRole(actor, "admin");
-  await putConfig(env, { ...cfg, codeRevoked: true, codeVersion: cfg.codeVersion + 1 });
-  await audit(env, actor, "code.revoke", { note: "access code revoked — nobody new can join" });
-  return { ok: true };
+  const next = { ...cfg, codeRevoked: true, codeVersion: cfg.codeVersion + 1 };
+  await putConfig(env, next);
+  // Revoking is the stronger action of the two — nobody new *and* nobody
+  // already in — so it ends sessions whatever rotateEndsSessions says.
+  const ended = await endCodeSessions(env, next, "access code revoked");
+  await audit(env, actor, "code.revoke", {
+    note: `access code revoked — nobody new can join, ${ended} session${ended === 1 ? "" : "s"} ended`
+  });
+  return { ok: true, endedSessions: ended };
 }
 
 async function handleCollaborators(env, actor) {

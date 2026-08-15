@@ -422,7 +422,13 @@
     min-height: 0;
   }
   #labelText {
-    font-size: min(calc(var(--sw) * .085), calc(var(--sh) * .11));
+    /* Each mode sets --title-size for its own place on the stage; --title-scale
+       is the one knob JS turns, and it only ever comes down — see
+       measureTitleBand(), which shrinks a title that would otherwise have to be
+       cut off. Keeping the two apart means the shrink does not have to know
+       which mode it is in, and a mode does not have to know it can be shrunk. */
+    --title-size: min(calc(var(--sw) * .085), calc(var(--sh) * .11));
+    font-size: calc(var(--title-size) * var(--title-scale, 1));
     font-weight: 800;
     letter-spacing: .14em;
     text-transform: uppercase;
@@ -444,6 +450,15 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+  /* Held off for the instant measureTitleBand() spends reading how tall the
+     title wants to be. Clamped, the box reports the height it was cut to rather
+     than the height it needs, and the height it needs is the whole question.
+     Nothing is painted between the two, so none of this is ever on screen. */
+  #labelText.measuring {
+    -webkit-line-clamp: 999 !important;
+    overflow: visible !important;
   }
   #clock {
     position: absolute;
@@ -504,7 +519,7 @@
   }
   #stage.mode-message #labelText {
     /* ~20 uppercase characters per line */
-    font-size: min(calc(var(--sw) * .058), calc(var(--sh) * .10));
+    --title-size: min(calc(var(--sw) * .058), calc(var(--sh) * .10));
     letter-spacing: .08em;
   }
 
@@ -522,7 +537,7 @@
        so the first lyric line clears the countdown however large it is. This
        padding is also what fitSong() measures against — it reads the box
        rather than carrying its own copy of these numbers. */
-    padding: calc(var(--top-strip) + var(--sh) * .03)
+    padding: calc(var(--top-strip) + var(--sh) * .03 + var(--title-extra, 0px))
              calc(var(--sw) * .035)
              calc(var(--sh) * .04);
     min-height: 0;
@@ -554,15 +569,25 @@
     z-index: 3;
   }
   #stage.mode-lyrics #labelText {
-    font-size: min(calc(var(--sw) * .036), calc(var(--sh) * .048));
+    --title-size: min(calc(var(--sw) * .036), calc(var(--sh) * .048));
     letter-spacing: .1em;
     color: var(--ink-dim);
     line-height: 1.1;
-    /* One line here, whatever the title does elsewhere: a two-line title would
-       push straight down into the first lyric. */
-    white-space: nowrap;
+    /* This used to be one line with an ellipsis, on the reasoning that a second
+       line would push down into the first lyric. It does — but a title cut to
+       "BANGSA-BANGS…" is not a title, and half a word on a stage screen is
+       worth less than the line it saved. So it wraps, to two lines, and
+       whatever height that costs above one line is measured in JS into
+       --title-extra, which the lyric box below adds to its own top padding.
+       fitSong() reads that padding back, so the lyrics move down and resize to
+       match rather than being written over. */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    text-wrap: balance;
     max-width: 100%;
   }
   #stage.mode-lyrics #timeZone {
@@ -584,8 +609,11 @@
     letter-spacing: 0;
     text-transform: none;
     line-height: 1.18;
-    /* No wrapping: each lyric line is one line on stage, which is what makes
-       the measured fit below exact rather than approximate. */
+    /* The browser never wraps these. Where a line is too long for the width,
+       fitSong() decides the break itself and puts a newline in the text, so the
+       rows on screen are the exact rows it counted when it chose the size —
+       letting CSS break them instead would mean fitting to one layout and
+       displaying another. */
     white-space: pre;
   }
   #lyricNow {
@@ -1206,21 +1234,42 @@
      Two jobs, two targets — a single row cannot mean both. */
   .song-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
   .song-row:last-child { border-bottom: none; }
+  /* Title above, author and slide count below — not side by side.
+     They used to share one line, the title flexible and the author fixed at its
+     natural width. On a laptop that reads well; on a phone the author is the
+     one that cannot shrink, so it took the room first and left the title with
+     whatever was over — which on the narrowest names was nothing at all. Rows
+     read "KU…", "Bangsa-bangs…", or just "…", with the author beside them in
+     full: the app had truncated the only part anyone searches by, to protect
+     the part that is only there to tell two versions apart. Stacked, the title
+     gets the whole width and the author costs it nothing. */
   .song-row .pick {
     flex: 1 1 auto;
     min-width: 0;
     display: flex;
-    align-items: baseline;
-    gap: 10px;
-    padding: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    padding: 12px 14px;
     text-align: left;
     background: transparent;
     color: var(--ink);
     font-size: 15px;
     font-weight: 600;
   }
-  .song-row .meta { flex: 0 0 auto; font-size: 11px; font-weight: 600; color: #5B6474; }
-  .song-row .nm { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .song-row .meta { max-width: 100%; font-size: 11px; font-weight: 600; color: #5B6474; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Two lines, then clip. A title long enough to need a third is long enough
+     that its first two already say which song it is, and rows have to stay a
+     predictable height to scan a couple of hundred of them. */
+  .song-row .nm {
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
+  }
   .song-row .pick:active { background: var(--panel-2); }
   .song-row .ed {
     flex: 0 0 auto;
@@ -1271,7 +1320,17 @@
   }
   .set-row .pick:active { background: var(--panel-2); }
   .set-row .n { flex: 0 0 auto; min-width: 14px; font-size: 12px; font-weight: 700; color: #5B6474; }
-  .set-row .nm { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Same reasoning as .song-row .nm: wrap rather than cut. */
+  .set-row .nm {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
+  }
   .set-row.live .nm { color: var(--accent); }
   .set-row .rm {
     flex: 0 0 auto;
@@ -2093,13 +2152,25 @@ if ("serviceWorker" in navigator) {
     return T.playing ? T.endAt - now() : T.remainMs;
   }
 
-  function snapshot() {
-    return {
+  // `lite` leaves the song out. Every field here is a handful of bytes; the
+  // song is the whole of it, and it only changes when the operator loads a
+  // different one — where advancing a slide changes one integer. Sending it
+  // again on every press meant re-serialising the song and pushing it through
+  // the data channel dozens of times a service for nothing.
+  //
+  // songKey rides along regardless, so a display can tell at a glance whether
+  // the song it is holding is the one being described and ask for the real
+  // thing if it is not. That is what makes leaving it out safe: nothing has to
+  // assume the copy arrived.
+  function snapshot(lite) {
+    var d = {
       live: T.live, playing: T.playing, totalMs: T.totalMs,
       remainMs: T.remainMs, endAt: T.endAt, label: T.label,
-      mode: T.mode, song: T.song, slide: T.slide, blank: T.blank,
-      flashing: T.flashing
+      mode: T.mode, slide: T.slide, blank: T.blank,
+      flashing: T.flashing, songKey: songKey(T.song)
     };
+    if (!lite) d.song = T.song;
+    return d;
   }
 
   // ============================================================
@@ -2129,7 +2200,7 @@ if ("serviceWorker" in navigator) {
   //  exactly the same rendering code; the display just receives its copy.
   // ============================================================
   // notes live here, not in T, so they stay on the console side of the wire
-  var LY = { size: 0, fittedFor: null, notes: [] };
+  var LY = { size: 0, wrapW: 0, fittedFor: null, m: null, mFor: "", notes: [] };
 
   // How lyrics are cased on stage. Applied in JS rather than with CSS
   // text-transform on purpose: the fit below measures the very string that
@@ -2156,19 +2227,80 @@ if ("serviceWorker" in navigator) {
 
   var fitCtx = document.createElement("canvas").getContext("2d");
 
+  function stageFont(px) {
+    return "700 " + px + "px " + (getComputedStyle(stage).fontFamily || "sans-serif");
+  }
+
+  // Every width in here is measured once, at 100px, and scaled by arithmetic
+  // afterwards: measureText is linear in font size, so a width at 100px is a
+  // width per pixel of type times a hundred. Trying a size then costs no canvas
+  // work at all, which is what makes the search below affordable — and what
+  // keeps a resize from re-measuring a whole song for every frame the iPad
+  // spends settling.
+  function measureSong(song) {
+    fitCtx.font = stageFont(100);
+    var space = fitCtx.measureText(" ").width;
+    var widestWord = 0;
+    var slides = song.slides.map(function (slide) {
+      return slide.map(function (line) {
+        var text = stageCase(line);
+        var words = text.split(/\s+/).filter(Boolean).map(function (t) {
+          var w = fitCtx.measureText(t).width;
+          if (w > widestWord) widestWord = w;
+          return { t: t, w: w };
+        });
+        return { text: text, w: fitCtx.measureText(text).width, words: words };
+      });
+    });
+    return { slides: slides, space: space, widestWord: widestWord };
+  }
+
+  // Greedy wrap, in the same 100px units everything else is measured in.
+  // `rows` builds the strings for the screen; `countRows` only needs the number
+  // and skips the string building, because the search below asks for it
+  // thousands of times and never looks at the text.
+  function wrapRows(line, maxW, space) {
+    if (line.w <= maxW || line.words.length < 2) return [line.text];
+    var out = [], cur = line.words[0].t, curW = line.words[0].w;
+    for (var i = 1; i < line.words.length; i++) {
+      var next = curW + space + line.words[i].w;
+      if (next <= maxW) { cur += " " + line.words[i].t; curW = next; }
+      else { out.push(cur); cur = line.words[i].t; curW = line.words[i].w; }
+    }
+    out.push(cur);
+    return out;
+  }
+
+  function countRows(line, maxW, space) {
+    if (line.w <= maxW || line.words.length < 2) return 1;
+    var n = 1, curW = line.words[0].w;
+    for (var i = 1; i < line.words.length; i++) {
+      var next = curW + space + line.words[i].w;
+      if (next <= maxW) curW = next;
+      else { n++; curW = line.words[i].w; }
+    }
+    return n;
+  }
+
   // One size for the whole song, not one per slide.
   //
   // Fitting each slide on its own looks tidier in isolation but reads badly:
   // a short slide becomes huge, the next one shrinks, and the type jumps every
   // time the operator advances — so the singer re-focuses on every change. The
-  // worst line in the song sets the size and the rest lives with it.
+  // worst slide in the song sets the size and the rest lives with it.
   //
-  // measureText scales linearly, so measuring once at 100px gives the exact
-  // size in a single pass. No trial renders, no reflow loop, and it lands the
-  // same way on an iPad, a laptop preview box or a projector.
+  // What the worst slide costs used to be settled by its longest line alone:
+  // the type had to be small enough for that line to cross the screen in one
+  // go. With two lines per slide that left most of the height empty and the
+  // words small enough to be hard to read from the back — the screen was
+  // two thirds air. Now a line too long for the width is allowed to run onto a
+  // second row, and the size is the largest one at which every slide's rows
+  // still fit the height. Spare height buys type instead of going unused, and
+  // fewer lines per slide automatically means larger type, because fewer lines
+  // is fewer rows to find room for.
   function fitSong(song) {
     var r = stage.getBoundingClientRect();
-    if (!r.width || !r.height || !song || !song.slides.length) return 0;
+    if (!r.width || !r.height || !song || !song.slides.length) return null;
 
     // The space to fit into is the lyric box itself, read back from the
     // layout. It used to be r.width * .93 and r.height * .82 — the same
@@ -2178,32 +2310,84 @@ if ("serviceWorker" in navigator) {
     var cs = getComputedStyle(lyricZone);
     var availW = r.width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     var availH = r.height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-    if (!(availW > 0) || !(availH > 0)) return 0;
+    if (!(availW > 0) || !(availH > 0)) return null;
+    // Half a percent held back, because the canvas and the layout engine do not
+    // agree to the last decimal: measured across the library, the widest row
+    // came out four thousandths of a pixel over the box. Nothing was clipped,
+    // but a fit that lands exactly on the edge is one rounding difference on
+    // some other device away from being clipped, and the whole point of this is
+    // that the words are always fully on the screen.
+    availW *= .995;
 
-    fitCtx.font = "700 100px " + (getComputedStyle(stage).fontFamily || "sans-serif");
+    var key = songKey(song);
+    if (LY.mFor !== key || !LY.m) {
+      LY.m = measureSong(song);
+      LY.mFor = key;
+    }
+    var m = LY.m;
 
-    var widest = 0, mostLines = 1;
-    for (var i = 0; i < song.slides.length; i++) {
-      var s = song.slides[i];
-      if (s.length > mostLines) mostLines = s.length;
-      for (var j = 0; j < s.length; j++) {
-        var w = fitCtx.measureText(stageCase(s[j])).width;
-        if (w > widest) widest = w;
+    // Wrapping cannot break a word, so no amount of spare height justifies a
+    // size at which the longest one overruns the box. This is the floor under
+    // "the words have to be readable": nothing ever runs off the side.
+    var hiWord = m.widestWord ? availW / (m.widestWord / 100) : Infinity;
+    // The ceiling stops a two-word chorus from filling the screen edge to edge.
+    var lo = 8, hi = Math.min(hiWord, r.height * .26);
+    if (!(hi > lo)) return { size: Math.max(8, hi), wrapW: availW * 100 / Math.max(8, hi) };
+
+    // Rows only ever grow with the size, and so does the height of a row, so
+    // "does it fit" flips exactly once: a plain binary search lands on the
+    // largest size that does.
+    function heightAt(px) {
+      var maxW = availW * 100 / px;    // the box, in 100px units
+      var most = 1;
+      for (var i = 0; i < m.slides.length; i++) {
+        var sl = m.slides[i], rows = 0;
+        for (var j = 0; j < sl.length; j++) rows += countRows(sl[j], maxW, m.space);
+        if (rows > most) most = rows;
       }
+      // The dim preview is clipped to NEXT_LINES rows however long the next
+      // slide runs, so what it costs is the same at every size.
+      return (most * LINE_H + NEXT_GAP + NEXT_LINES * LINE_H * NEXT_SCALE) * px;
     }
 
-    var byWidth = widest ? availW / (widest / 100) : Infinity;
-    var units = mostLines * LINE_H + NEXT_GAP + NEXT_LINES * LINE_H * NEXT_SCALE;
-    var byHeight = availH / units;
-
-    // The cap stops a two-word chorus from filling the screen edge to edge.
-    return Math.max(8, Math.min(byWidth, byHeight, r.height * .2));
+    if (heightAt(hi) > availH) {
+      for (var k = 0; k < 22; k++) {
+        var mid = (lo + hi) / 2;
+        if (heightAt(mid) <= availH) lo = mid; else hi = mid;
+      }
+    } else {
+      lo = hi;
+    }
+    var size = Math.max(8, lo);
+    // Handed on rather than recomputed at render time: the words on screen have
+    // to break in exactly the places the fit assumed they would.
+    return { size: size, wrapW: availW * 100 / size };
   }
 
   function relayoutLyrics() {
     LY.size = 0;
+    LY.wrapW = 0;
     LY.fittedFor = null;
     shownSlide = null;
+  }
+
+  // The text for one slide, broken where the fit said it breaks. A stage that
+  // has not been sized yet cannot be measured against, so that case falls back
+  // to the raw lines: words that might overrun beat no words at all.
+  function slideText(slide, idx, limit) {
+    var sl = (LY.m && LY.mFor === LY.fittedFor) ? LY.m.slides[idx] : null;
+    if (!sl || !LY.wrapW) {
+      return stageCase((limit ? slide.slice(0, limit) : slide).join("\n"));
+    }
+    var rows = [];
+    for (var i = 0; i < sl.length; i++) {
+      var part = wrapRows(sl[i], LY.wrapW, LY.m.space);
+      for (var j = 0; j < part.length; j++) {
+        rows.push(part[j]);
+        if (limit && rows.length >= limit) return rows.join("\n");
+      }
+    }
+    return rows.join("\n");
   }
 
   function renderLyrics() {
@@ -2213,7 +2397,9 @@ if ("serviceWorker" in navigator) {
     // on every snapshot carrying the same song.
     var key = songKey(T.song);
     if (!LY.size || LY.fittedFor !== key) {
-      LY.size = fitSong(T.song);
+      var fit = fitSong(T.song);
+      LY.size = fit ? fit.size : 0;
+      LY.wrapW = fit ? fit.wrapW : 0;
       LY.fittedFor = key;
       if (LY.size) stage.style.setProperty("--lyric-size", LY.size + "px");
       shownSlide = null;
@@ -2228,9 +2414,84 @@ if ("serviceWorker" in navigator) {
     shownSlide = mark;
 
     lyricZone.classList.toggle("blank", !!T.blank);
-    var cur = slides[idx], nxt = slides[idx + 1];
-    lyricNow.textContent = cur ? stageCase(cur.join("\n")) : "";
-    lyricNext.textContent = nxt ? stageCase(nxt.slice(0, NEXT_LINES).join("\n")) : "";
+    lyricNow.textContent = slides[idx] ? slideText(slides[idx], idx, 0) : "";
+    lyricNext.textContent = slides[idx + 1] ? slideText(slides[idx + 1], idx + 1, NEXT_LINES) : "";
+  }
+
+  // How many lines a title may take before it is made smaller instead. Each is
+  // the room that mode actually has: three is where the countdown starts
+  // leaving the bottom of the iPad in timer mode, two is what fits above the
+  // lyrics, and a message owns the middle of the screen so it can have five.
+  var TITLE_MAX_LINES = { timer: 3, message: 5, lyrics: 2 };
+
+  // The stage title, made to fit rather than cut off.
+  //
+  // It used to end in an ellipsis on a long title — one line and "…" in lyrics
+  // mode, three lines and "…" in timer mode. Both were the same trade: keep the
+  // countdown where it belongs by throwing away the end of the title. But a
+  // title nobody can read is not doing the job it is on screen for, and the way
+  // out is to make the type smaller, which costs nothing that matters at the
+  // size these are set at. So the title is measured against the room its mode
+  // has, and shrunk until it fits.
+  //
+  // Lyrics mode needs one thing more. There the title floats over the stage,
+  // out of the flow, so nothing below it knows how tall it grew — a second line
+  // would land straight on the first lyric. Whatever it takes beyond one line
+  // is published as --title-extra, which the lyric box adds to its top padding
+  // and fitSong() then reads back, so the words move down and resize to match.
+  var titleBandFor = null;
+  function measureTitleBand() {
+    var key = T.mode + "|" + T.label + "|" +
+              stage.style.getPropertyValue("--sw") + "|" +
+              stage.style.getPropertyValue("--sh");
+    if (key === titleBandFor) return;
+
+    var maxLines = TITLE_MAX_LINES[T.mode] || 3;
+    var scale = 1;
+    // Unclamped for the measurement — see #labelText.measuring.
+    labelText.classList.add("measuring");
+    labelText.style.setProperty("--title-scale", "1");
+    var one = parseFloat(getComputedStyle(labelText).lineHeight);
+    var h = labelText.getBoundingClientRect().height;
+
+    // A stage that is not on screen yet measures zero, and the screen swap that
+    // puts it there happens on the same press that sets the title — so the
+    // first look at a new title is routinely a look at nothing. Leaving the key
+    // unset makes the next frame try again; recording it would freeze a title
+    // at the size it never got measured for, which is exactly the bug this
+    // whole function exists to prevent.
+    if (!(one > 0) || (!(h > 0) && T.label)) {
+      labelText.classList.remove("measuring");
+      return;
+    }
+    titleBandFor = key;
+
+    if (h > 0) {
+      for (var i = 0; i < 6; i++) {
+        var lines = Math.round(h / (one * scale));
+        if (lines <= maxLines) break;
+        // Smaller type both shortens each line and fits more on one, so going
+        // straight to the ratio overshoots and leaves the title needlessly
+        // small. The square root takes most of the way and converges in two or
+        // three passes.
+        var next = Math.max(.45, scale * Math.sqrt(maxLines / lines));
+        if (next >= scale) break;
+        scale = next;
+        labelText.style.setProperty("--title-scale", scale);
+        h = labelText.getBoundingClientRect().height;
+      }
+    }
+    labelText.classList.remove("measuring");
+
+    // Only lyrics mode floats the title. Everywhere else it is in normal flow
+    // and takes its own room, so there is nothing to hand down.
+    var extra = (T.mode === "lyrics" && h > 0)
+      ? Math.max(0, Math.round(h - one * scale))
+      : 0;
+    if (extra + "px" === stage.style.getPropertyValue("--title-extra")) return;
+    stage.style.setProperty("--title-extra", extra + "px");
+    // The box the lyrics fit into just changed height.
+    relayoutLyrics();
   }
 
   function renderStage() {
@@ -2239,12 +2500,15 @@ if ("serviceWorker" in navigator) {
     stage.classList.toggle("flashing", !!T.flashing);
     stage.classList.toggle("standby", !T.live);
     document.body.classList.toggle("on-lyrics", T.mode === "lyrics");
-    renderLyrics();
 
+    // Ahead of renderLyrics, not after it: the title decides how much height is
+    // left, so measuring it second would fit the song to the previous title.
     if (T.label !== shownLabel) {
       shownLabel = T.label;
       labelText.textContent = T.label;
     }
+    measureTitleBand();
+    renderLyrics();
 
     var remain = remainingMs();
     var over = remain <= 0;
@@ -2315,8 +2579,10 @@ if ("serviceWorker" in navigator) {
     if (!r.width || !r.height) return;
     stage.style.setProperty("--sw", r.width + "px");
     stage.style.setProperty("--sh", r.height + "px");
-    // The song was fitted to the old box, so it has to be measured again.
+    // The song was fitted to the old box, so it has to be measured again — and
+    // the title band with it, since the room it leaves is part of that box.
     relayoutLyrics();
+    measureTitleBand();
     renderLyrics();
   }
 
@@ -2438,6 +2704,8 @@ if ("serviceWorker" in navigator) {
   function closeLink() {
     clearInterval(watchdog);
     watchdog = 0;
+    clearInterval(beatTimer);
+    beatTimer = 0;
     roomCode = "";
     idRetries = 0;
     hostSlot = 0;
@@ -2588,22 +2856,67 @@ if ("serviceWorker" in navigator) {
     openLocalStream("display", applyState);
   }
 
-  function pushLocal() {
+  // A push that never arrives leaves the stage on the previous slide with
+  // nothing scheduled to correct it, so a failure gets one retry rather than
+  // being swallowed. The server holds whole state, so a late arrival is still
+  // the right state — there is nothing to replay in order.
+  function pushLocal(retry) {
     fetch("state?room=" + roomCode, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(snapshot())
-    }).catch(function () {});
+    }).then(function (r) {
+      if (!r.ok && !retry) setTimeout(function () { pushLocal(true); }, 400);
+    }).catch(function () {
+      if (!retry) setTimeout(function () { pushLocal(true); }, 400);
+    });
   }
 
   // ---- operator side ----
+  //
+  // Advancing a slide used to hand the whole song to every display, every
+  // press: a couple of kilobytes serialised, chunked and pushed down the data
+  // channel to say that one number went up by one. Most of the time that was
+  // merely wasteful. Occasionally it was not — the channel would be busy, the
+  // send would go nowhere, and because state only ever moved on a press there
+  // was nothing to correct it: the stage sat on the slide it already had until
+  // the operator happened to press again. That is the freeze.
+  //
+  // Two changes, and both are needed. The song travels only to a display that
+  // does not already hold it, so a press costs a few dozen bytes; and state is
+  // repeated on a slow heartbeat, so an update that fails to land is replaced
+  // by the next one rather than waiting for a human to notice.
   function broadcast() {
     if (role === "solo") return;   // nothing to talk to
     if (LOCAL) { pushLocal(); return; }
-    var msg = JSON.stringify({ t: "s", d: snapshot() });
+    var key = songKey(T.song);
+    var lite = null, full = null;
     conns.forEach(function (c) {
-      if (c.open) { try { c.send(msg); } catch (e) {} }
+      if (!c.open) return;
+      // A connection that has not been told about this song gets it in full.
+      // Marking it sent is safe because the display checks the key it was given
+      // against the song it holds and asks again if they disagree.
+      if (c.__songKey !== key) {
+        if (full === null) full = JSON.stringify({ t: "s", d: snapshot(false) });
+        try { c.send(full); c.__songKey = key; } catch (e) {}
+      } else {
+        if (lite === null) lite = JSON.stringify({ t: "s", d: snapshot(true) });
+        try { c.send(lite); } catch (e) {}
+      }
     });
+  }
+
+  // Cheap enough to run whether or not anything changed: with the song left out
+  // this is a couple of hundred bytes on a link that is otherwise idle, and it
+  // is the only thing standing between a dropped update and a stage stuck on
+  // the wrong slide.
+  var beatTimer = 0;
+  function startHeartbeat() {
+    clearInterval(beatTimer);
+    if (role !== "op" || LOCAL) return;
+    beatTimer = setInterval(function () {
+      if (conns.length) broadcast();
+    }, 2000);
   }
 
   function hostRoom(code) {
@@ -2628,6 +2941,7 @@ if ("serviceWorker" in navigator) {
         setLink("ready");
       }
       startWatchdog();
+      startHeartbeat();
       return;
     }
 
@@ -2644,24 +2958,34 @@ if ("serviceWorker" in navigator) {
     $("opRoomCode").textContent = code;
     setLink("connecting", "Connecting…");
     startWatchdog();
+    startHeartbeat();
 
     peer = new Peer(slotId(code, hostSlot), { debug: 0 });
 
     peer.on("open", function () { idRetries = 0; idBlocked = false; setLink("ready"); });
 
     peer.on("connection", function (conn) {
+      var sendFull = function () {
+        try {
+          conn.send(JSON.stringify({ t: "s", d: snapshot(false) }));
+          conn.__songKey = songKey(T.song);
+        } catch (e) { conn.__songKey = null; }
+      };
       conn.on("open", function () {
         conns.push(conn);
         renderLink();
-        try { conn.send(JSON.stringify({ t: "s", d: snapshot() })); } catch (e) {}
+        sendFull();
       });
       conn.on("data", function (raw) {
         var m;
         try { m = JSON.parse(raw); } catch (e) { return; }
         if (m.t === "ping") {
           try { conn.send(JSON.stringify({ t: "pong", c: m.c, s: Date.now() })); } catch (e) {}
-        } else if (m.t === "hello") {
-          try { conn.send(JSON.stringify({ t: "s", d: snapshot() })); } catch (e) {}
+        } else if (m.t === "hello" || m.t === "need") {
+          // "need" is a display saying the song it holds is not the one we are
+          // describing — it never has to guess, and we never have to keep a
+          // record of what actually arrived.
+          sendFull();
         }
       });
       var drop = function () {
@@ -2736,9 +3060,23 @@ if ("serviceWorker" in navigator) {
     absorbSample(rtt, m.s + rtt / 2 - Date.now());
   }
 
+  // The operator leaves the song out of most updates, so an absent `song` here
+  // means "unchanged", not "cleared" — which is exactly what the `key in T`
+  // filter already does. `songKey` is not a field of T, so it falls through the
+  // same filter and is only read below.
+  var lastNeedAt = 0;
   function applyState(d) {
     for (var key in d) if (key in T) T[key] = d[key];
     renderStage();
+
+    // Holding a different song from the one being described means an update
+    // carrying it went missing. Ask rather than sit on the wrong words.
+    if (typeof d.songKey === "string" && d.songKey !== songKey(T.song)) {
+      if (Date.now() - lastNeedAt > 1000 && dispConn && dispConn.open) {
+        lastNeedAt = Date.now();
+        try { dispConn.send(JSON.stringify({ t: "need" })); } catch (e) {}
+      }
+    }
   }
 
   function joinRoom(code) {
@@ -3802,6 +4140,11 @@ if ("serviceWorker" in navigator) {
         if (r.status === 401 || d.error === "revoked" || d.error === "code_rotated") {
           session = null;
           saveSession();
+          // Say which of those it was. Being quietly demoted to read-only in the
+          // middle of a service, with the edit buttons simply gone and no line
+          // of text about it, reads as the app breaking rather than as the owner
+          // having changed the code.
+          authError = err.message;
           applyRole();
         }
         throw err;
@@ -4182,6 +4525,25 @@ if ("serviceWorker" in navigator) {
     }).catch(function () { applyRole(); });
   }
 
+  // Nothing else on this device ever asks the server who it is unless it has
+  // something to upload. Someone who is only reading — which is most of a
+  // service — would therefore go on wearing a "collaborator" badge and a full
+  // set of edit buttons long after the owner had regenerated the code to put
+  // them out, and would only discover otherwise by trying to save something and
+  // having it refused. api() already drops a session the server has finished
+  // with; this is what makes sure the question gets asked. A minute is short
+  // enough that "regenerate the code" feels like it did something, and long
+  // enough to be nothing on a phone battery.
+  setInterval(function () {
+    if (!session || document.hidden) return;
+    refreshMe();
+  }, 60000);
+  // Coming back to a backgrounded tab is the other moment it matters, and the
+  // interval above deliberately does not run while hidden.
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden && session) refreshMe();
+  });
+
   // ----- signing in and out -----
 
   $("tokenToggle").addEventListener("click", function () {
@@ -4534,8 +4896,11 @@ if ("serviceWorker" in navigator) {
         nm.textContent = c.name;
         var by = document.createElement("span");
         by.className = "by";
-        by.textContent = c.role + " · joined " + fmtWhen(c.joinedAt) +
-          " · " + (c.revoked ? "revoked" : "active");
+        by.textContent = c.role + " · joined " + fmtWhen(c.joinedAt) + " · " +
+          (c.revoked
+            ? (c.revokedReason || "revoked") +
+              (c.revokedAt ? " " + fmtWhen(c.revokedAt) : "")
+            : "active");
         info.appendChild(nm);
         info.appendChild(by);
         row.appendChild(info);

@@ -226,12 +226,52 @@ async function testRotationAndRevocation() {
   r = await call(env, "/auth/me", { token: ownerToken });
   check("regeneration does not sign the owner out", r.status === 200, "status " + r.status);
 
+  check("regeneration reports how many it signed out", rot.body.endedSessions === 1,
+    "ended " + rot.body.endedSessions);
+
+  // The owner has to be able to see that it worked. A list that still says
+  // "active" for the person just put out is the same as no answer at all.
+  r = await call(env, "/admin/collaborators", { token: ownerToken });
+  const john = r.body.collaborators.find((c) => c.name === "John");
+  check("the collaborator list shows them out", john && john.revoked === true,
+    JSON.stringify(john));
+  check("and says why", john && /regenerated/.test(john.revokedReason || ""),
+    john && john.revokedReason);
+  const ownerRow = r.body.collaborators.find((c) => c.role === "owner");
+  check("the owner is not marked out", ownerRow && !ownerRow.revoked, JSON.stringify(ownerRow));
+
   r = await call(env, "/auth/join", { method: "POST", body: { code: newCode, name: "John" }, ip: "7.7.7.2" });
+  const johnAgain = r.body.token;
   check("new code works", r.status === 200, "status " + r.status);
 
-  await call(env, "/admin/code", { method: "DELETE", token: ownerToken });
-  r = await call(env, "/auth/join", { method: "POST", body: { code: newCode, name: "John" }, ip: "7.7.7.3" });
+  // Turning the flag off must not resurrect a session an owner already ended:
+  // the sweep marks the session itself, so there is no configuration left that
+  // could let the old token back in.
+  const rot2 = await call(env, "/admin/code", {
+    method: "POST", body: { rotateEndsSessions: false }, token: ownerToken
+  });
+  r = await call(env, "/auth/me", { token: johnToken });
+  check("a session ended earlier stays ended when the flag is turned off",
+    r.status === 403 && r.body.error === "code_rotated", "status " + r.status);
+  check("and turning the flag off keeps the current sessions", rot2.body.endedSessions === 0,
+    "ended " + rot2.body.endedSessions);
+  r = await call(env, "/auth/me", { token: johnAgain });
+  check("that rotation left the session it was told to leave", r.status === 200, "status " + r.status);
+
+  const rev = await call(env, "/admin/code", { method: "DELETE", token: ownerToken });
+  r = await call(env, "/auth/join", { method: "POST", body: { code: rot2.body.code, name: "John" }, ip: "7.7.7.3" });
   check("revoked code lets nobody in", r.status === 403, "status " + r.status);
+
+  // Revoking is the stronger of the two, so it ends sessions whatever the flag
+  // says — otherwise "revoke" would only mean "nobody new", which is not what
+  // an owner reaching for it wants.
+  r = await call(env, "/auth/me", { token: johnAgain });
+  check("revoking the code signs everyone already in out",
+    r.status === 403 && r.body.error === "code_rotated", "status " + r.status);
+  check("revoking reports how many it signed out", rev.body.endedSessions === 1,
+    "ended " + rev.body.endedSessions);
+  r = await call(env, "/auth/me", { token: ownerToken });
+  check("revoking does not sign the owner out", r.status === 200, "status " + r.status);
 }
 
 async function testOwnerAndCollaboratorCrud() {
