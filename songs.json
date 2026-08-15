@@ -1601,7 +1601,7 @@
  "setlists": [
   {
    "id": "sl_msum1irlmwvi",
-   "name": "Setlist",
+   "name": "16 Agustus",
    "entries": [
     {
      "id": "s_msuajvmp6nok",
@@ -1628,8 +1628,8 @@
      "ms": 0
     }
    ],
-   "updatedAt": 1786797935568,
-   "updatedBy": "Lid"
+   "updatedAt": 1786812706003,
+   "updatedBy": "Sam"
   }
  ],
  "setlist": [
@@ -1658,6 +1658,6 @@
    "ms": 0
   }
  ],
- "setlistAt": 1786797935568,
- "setlistBy": "Lid"
+ "setlistAt": 1786812706003,
+ "setlistBy": "Sam"
 }
