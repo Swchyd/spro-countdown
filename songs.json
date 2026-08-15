@@ -1080,6 +1080,119 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msuap6vm4p91",
+   "title": "[IND] Untitled",
+   "author": "",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bangsa-bangsa bagi kemuliaan-Mu",
+      "Nyatakanlah kebesaran-Mu",
+      "Kan kami tinggikan",
+      "Kami agungkan",
+      "Kau Yesus, Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Bangsa-bangsa bagi kemuliaan-Mu",
+      "Nyatakanlah kebesaran-Mu",
+      "Kan kami serukan",
+      "Kami nyatakan",
+      "Bangsa-bangsa bagi-Mu, Yesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Ini doa kami",
+      "Bagi bangsa-bangsa",
+      "Berbalik dari jalan yang jahat oo.",
+      "Kembali pada-Mu",
+      "Sujud menyembah-Mu",
+      "Sujud menyembah-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus",
+    "_1",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Bangsa-bangsa bagi kemuliaan-Mu",
+     "Nyatakanlah kebesaran-Mu"
+    ],
+    [
+     "Kan kami tinggikan",
+     "Kami agungkan"
+    ],
+    [
+     "Kau Yesus, Tuhan"
+    ],
+    [
+     "Bangsa-bangsa bagi kemuliaan-Mu",
+     "Nyatakanlah kebesaran-Mu"
+    ],
+    [
+     "Kan kami serukan",
+     "Kami nyatakan"
+    ],
+    [
+     "Bangsa-bangsa bagi-Mu, Yesus"
+    ],
+    [
+     "Ini doa kami",
+     "Bagi bangsa-bangsa"
+    ],
+    [
+     "Berbalik dari jalan yang jahat oo.",
+     "Kembali pada-Mu"
+    ],
+    [
+     "Sujud menyembah-Mu",
+     "Sujud menyembah-Mu"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Bridge",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786793477040,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlist": [],
