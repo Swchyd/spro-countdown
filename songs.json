@@ -1426,9 +1426,12 @@
      "key": "verse 1",
      "tag": "Verse 1",
      "lines": [
-      "Syukur untuk setiap rencana-Mu",
-      "Dan rancangan-Mu yang mulia",
-      "Dalam satu tubuh kami bersatu",
+      "Syukur untuk",
+      "setiap rencana-Mu",
+      "Dan rancangan-Mu",
+      "yang mulia",
+      "Dalam satu tubuh",
+      "kami bersatu",
       "Menjadi duta kerajaan-Mu"
      ],
      "notes": []
@@ -1448,11 +1451,16 @@
      "key": "chorus",
      "tag": "Chorus",
      "lines": [
-      "Bagi bangsa ini kami berdiri",
-      "Dan membawa doa kami kepada-Mu",
-      "Sesuatu yang besar pasti terjadi",
-      "Dan mengubahkan negeri kami",
-      "Hanya nama-Mu Tuhan ditinggikan",
+      "Bagi bangsa ini",
+      "kami berdiri",
+      "Dan membawa",
+      "doa kami kepada-Mu",
+      "Sesuatu yang besar",
+      "pasti terjadi",
+      "Dan mengubahkan",
+      "negeri kami",
+      "Hanya nama-Mu",
+      "Tuhan ditinggikan",
       "Atas seluruh bumi"
      ],
      "notes": []
@@ -1463,8 +1471,10 @@
      "lines": [
       "Kami rindu melihat Indonesia",
       "Pulih dari semua problema",
-      "Hidup dalam jalan kebenaran-Mu",
-      "Pancarkan terang Kemulian-Mu"
+      "Hidup dalam",
+      "jalan kebenaran-Mu",
+      "Pancarkan",
+      "terang Kemulian-Mu"
      ],
      "notes": []
     }
@@ -1477,11 +1487,18 @@
    ],
    "slides": [
     [
-     "Syukur untuk setiap rencana-Mu",
-     "Dan rancangan-Mu yang mulia"
+     "Syukur untuk",
+     "setiap rencana-Mu"
     ],
     [
-     "Dalam satu tubuh kami bersatu",
+     "Dan rancangan-Mu",
+     "yang mulia"
+    ],
+    [
+     "Dalam satu tubuh",
+     "kami bersatu"
+    ],
+    [
      "Menjadi duta kerajaan-Mu"
     ],
     [
@@ -1493,15 +1510,26 @@
      "Akan nyata"
     ],
     [
-     "Bagi bangsa ini kami berdiri",
-     "Dan membawa doa kami kepada-Mu"
+     "Bagi bangsa ini",
+     "kami berdiri"
     ],
     [
-     "Sesuatu yang besar pasti terjadi",
-     "Dan mengubahkan negeri kami"
+     "Dan membawa",
+     "doa kami kepada-Mu"
     ],
     [
-     "Hanya nama-Mu Tuhan ditinggikan",
+     "Sesuatu yang besar",
+     "pasti terjadi"
+    ],
+    [
+     "Dan mengubahkan",
+     "negeri kami"
+    ],
+    [
+     "Hanya nama-Mu",
+     "Tuhan ditinggikan"
+    ],
+    [
      "Atas seluruh bumi"
     ],
     [
@@ -1509,19 +1537,29 @@
      "Pulih dari semua problema"
     ],
     [
-     "Hidup dalam jalan kebenaran-Mu",
-     "Pancarkan terang Kemulian-Mu"
+     "Hidup dalam",
+     "jalan kebenaran-Mu"
+    ],
+    [
+     "Pancarkan",
+     "terang Kemulian-Mu"
     ]
    ],
    "tags": [
     "Verse 1",
+    "",
+    "",
     "",
     "Pre-Chorus",
     "",
     "Chorus",
     "",
     "",
+    "",
+    "",
+    "",
     "Verse 2",
+    "",
     ""
    ],
    "notes": [
@@ -1533,11 +1571,17 @@
     "",
     "",
     "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1786793651421,
+   "version": 2,
+   "updatedAt": 1786797680495,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
