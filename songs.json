@@ -809,6 +809,75 @@
    "updatedBy": "Samuel",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msuajvmp6nok",
+   "title": "[IND] Sio Manise",
+   "author": "",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Betapa heran betapa mulia",
+      "Kasih Yesus Kristus yang dicurahkan",
+      "Marilah mari mengenal kasih itu",
+      "Yang melampaui segala pengetahuan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Sio.. Sio.. Sio manise",
+      "Ale samua disayang Tuhan Yesus",
+      "Sio.. Sio.. Sio manise",
+      "Ale samua dicinta Tuhan Yesus"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Betapa heran betapa mulia",
+     "Kasih Yesus Kristus yang dicurahkan"
+    ],
+    [
+     "Marilah mari mengenal kasih itu",
+     "Yang melampaui segala pengetahuan"
+    ],
+    [
+     "Sio.. Sio.. Sio manise",
+     "Ale samua disayang Tuhan Yesus"
+    ],
+    [
+     "Sio.. Sio.. Sio manise",
+     "Ale samua dicinta Tuhan Yesus"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786793229089,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlist": [],
