@@ -1271,8 +1271,10 @@
      "key": "verse 1",
      "tag": "Verse 1",
      "lines": [
-      "Sungguh tak sabar kami berdiri bagi-Mu, Tuhan",
-      "Tak mau lagi dalam keg'lapan dunia"
+      "Sungguh tak sabar",
+      "kami berdiri bagi-Mu, Tuhan",
+      "Tak mau lagi",
+      "dalam keg'lapan dunia"
      ],
      "notes": []
     },
@@ -1280,8 +1282,10 @@
      "key": "verse 2",
      "tag": "Verse 2",
      "lines": [
-      "Menerjang maju ke titik terang di depan itu",
-      "Bersama Tuhan, kami lakukan sesuatu"
+      "Menerjang maju",
+      "ke titik terang di depan itu",
+      "Bersama Tuhan,",
+      "kami lakukan sesuatu"
      ],
      "notes": []
     },
@@ -1299,10 +1303,14 @@
      "key": "chorus",
      "tag": "Chorus",
      "lines": [
-      "Bersama-Mu, kami ubahkan dunia",
-      "Penuhi bumi dengan kasih-Mu, Tuhan",
-      "Bersama-Mu, kami ubahkan dunia",
-      "Melalui kami, dunia lihat bahwa kuasa-Mu nyata"
+      "Bersama-Mu,",
+      "kami ubahkan dunia",
+      "Penuhi bumi",
+      "dengan kasih-Mu, Tuhan",
+      "Bersama-Mu,",
+      "kami ubahkan dunia",
+      "Melalui kami, dunia lihat",
+      "bahwa kuasa-Mu nyata"
      ],
      "notes": []
     },
@@ -1327,12 +1335,20 @@
    ],
    "slides": [
     [
-     "Sungguh tak sabar kami berdiri bagi-Mu, Tuhan",
-     "Tak mau lagi dalam keg'lapan dunia"
+     "Sungguh tak sabar",
+     "kami berdiri bagi-Mu, Tuhan"
     ],
     [
-     "Menerjang maju ke titik terang di depan itu",
-     "Bersama Tuhan, kami lakukan sesuatu"
+     "Tak mau lagi",
+     "dalam keg'lapan dunia"
+    ],
+    [
+     "Menerjang maju",
+     "ke titik terang di depan itu"
+    ],
+    [
+     "Bersama Tuhan,",
+     "kami lakukan sesuatu"
     ],
     [
      "Tak memilih 'tuk menyerah",
@@ -1342,12 +1358,20 @@
      "Dengan kuasa surga"
     ],
     [
-     "Bersama-Mu, kami ubahkan dunia",
-     "Penuhi bumi dengan kasih-Mu, Tuhan"
+     "Bersama-Mu,",
+     "kami ubahkan dunia"
     ],
     [
-     "Bersama-Mu, kami ubahkan dunia",
-     "Melalui kami, dunia lihat bahwa kuasa-Mu nyata"
+     "Penuhi bumi",
+     "dengan kasih-Mu, Tuhan"
+    ],
+    [
+     "Bersama-Mu,",
+     "kami ubahkan dunia"
+    ],
+    [
+     "Melalui kami, dunia lihat",
+     "bahwa kuasa-Mu nyata"
     ],
     [
      "Wo, oh, oh, oh, oh",
@@ -1360,10 +1384,14 @@
    ],
    "tags": [
     "Verse 1",
+    "",
     "Verse 2",
+    "",
     "Pre-Chorus",
     "",
     "Chorus",
+    "",
+    "",
     "",
     "Bridge",
     ""
@@ -1376,11 +1404,15 @@
     "",
     "",
     "",
+    "",
+    "",
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1786793592447,
+   "version": 2,
+   "updatedAt": 1786797619772,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
