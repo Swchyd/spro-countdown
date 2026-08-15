@@ -1429,6 +1429,8 @@
   #library:not(.can-write) #newSongBtn,
   #library:not(.can-write) #edRow,
   #library:not(.can-write) #saveNextBtn,
+  /* No save buttons to gate, so nothing to say about them. */
+  #library:not(.can-write) #saveGate,
   #library:not(.can-write) .song-row .ed,
   #library:not(.can-write) .song-row .add,
   #library:not(.can-write) .set-row .rm { display: none; }
@@ -1624,12 +1626,54 @@
     color: var(--ink-dim);
     font-family: inherit; font-size: 13px;
     text-align: center;
-    /* The chevron is drawn as the closed value, matching the ▾ the title bank
-       already uses; leaving the native one on shows two arrows side by side. */
-    -webkit-appearance: none;
-    appearance: none;
   }
   #authorPick:disabled { opacity: .4; }
+  #authorPick.on { border-color: var(--accent); color: var(--accent); }
+
+  /* The list of names, narrowing as it is typed into.
+     It floats over what is below rather than pushing it down: on a phone this
+     field sits a thumb's width from the bottom of the form, and a list that
+     grew in the flow would move the save buttons every keystroke. */
+  #authorBox { position: relative; }
+  #authorSuggest {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 6;
+    max-height: 232px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel-2);
+    box-shadow: 0 14px 34px rgba(0,0,0,.5);
+  }
+  #authorSuggest[hidden] { display: none; }
+  .sug-row {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .sug-row:last-child { border-bottom: none; }
+  /* Both the keyboard's highlight and the finger's press land on the same
+     look, so it is never ambiguous which one Enter would take. */
+  .sug-row.on, .sug-row:active { background: var(--panel); }
+  .sug-row.on { box-shadow: inset 3px 0 0 var(--accent); }
+  .sug-row mark { background: transparent; color: var(--accent); font-weight: 800; }
+  /* Offered only when nothing in the library matches what was typed — which is
+     the whole point of the list: a name is added because it is new, not because
+     retyping one was quicker than finding it. */
+  .sug-new { color: var(--ink-dim); font-weight: 600; }
+  .sug-new b { color: var(--ink); font-weight: 800; }
+  .sug-empty { padding: 12px 14px; color: #5B6474; font-size: 13px; }
   #authorAdd {
     flex: 0 0 auto;
     width: 46px;
@@ -1671,6 +1715,60 @@
   }
   .author-chip .rm:active { background: var(--panel); color: var(--over); }
   #authorHint { margin-top: -4px; }
+
+  /* A quiet dot beside whatever is still wanted. The panel below says the same
+     thing in words; this is what points at where to go and answers it without
+     making five fields shout at once on a song that has only just been
+     started. */
+  .field-label.needs::after, .psl.needs::after {
+    content: "";
+    display: inline-block;
+    width: 5px; height: 5px;
+    margin-left: 7px;
+    vertical-align: middle;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  #saveGate {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+  }
+  #saveGate[hidden] { display: none; }
+  #saveGate .mark {
+    flex: 0 0 auto;
+    width: 19px; height: 19px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #1A1408;
+    font-size: 13px; font-weight: 800; line-height: 19px;
+    text-align: center;
+  }
+  #saveGate .body { min-width: 0; display: flex; flex-direction: column; gap: 7px; }
+  #saveGate .lead { font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--ink); }
+  #saveGateItems { display: flex; flex-wrap: wrap; gap: 6px; }
+  #saveGateItems .gate-item {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 12px; font-weight: 600;
+  }
+  /* Off, not hidden. A save button that vanishes reads as the app losing the
+     song; one that is plainly there and plainly not ready reads as a step not
+     done yet — and the panel above it says which. */
+  #saveNextBtn[disabled], #edRow .ghost[disabled] {
+    opacity: .38;
+    cursor: default;
+  }
 
   #edRow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   #edRow .ghost { padding: 12px 6px; font-size: 12px; }
@@ -1770,7 +1868,7 @@
     </div>
 
     <div id="songEditor">
-      <label class="field-label" for="pasteBox">Paste lyrics</label>
+      <label class="field-label" id="lblLyrics" for="pasteBox">Paste lyrics</label>
       <textarea id="pasteBox" class="textinput" rows="8" autocomplete="off"
         placeholder="Fill in the song here"></textarea>
       <!-- The rules used to live inside the box as placeholder text, where they
@@ -1847,36 +1945,55 @@ lyric line one</pre>
       <div id="arrangeRow"></div>
       <div id="parseNote"></div>
 
-      <label class="field-label" for="songTitleInput">Title</label>
       <!-- The language is part of the title on the shelf — "[IND] Kumenang" —
-           but typing brackets by hand is how "[Ind]" and "(IND)" get in. -->
+           but typing brackets by hand is how "[Ind]" and "(IND)" get in. It has
+           its own label rather than sharing the title's: they are two answers,
+           and one of them can be missing while the other is not. -->
+      <label class="field-label" id="lblLang">Language</label>
       <div id="langRow">
         <button type="button" class="lang-opt" data-lang="ENG">ENG</button>
         <button type="button" class="lang-opt" data-lang="IND">IND</button>
         <button type="button" class="lang-opt" data-lang="CHN">CHN</button>
       </div>
+
+      <label class="field-label" id="lblTitle" for="songTitleInput">Title</label>
       <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off">
 
-      <label class="field-label" for="songAuthorInput">Authors</label>
+      <label class="field-label" id="lblAuthors" for="songAuthorInput">Authors</label>
       <!-- Plural, because most songs are. The same writer also arrives many
            times over, and retyping the name is how one library ends up with two
-           of them — hence the picker beside the field. -->
+           of them — hence the list that narrows as you type. -->
       <div id="authorChips"></div>
-      <div id="authorRow">
-        <input id="songAuthorInput" class="textinput" type="text" placeholder="Songwriter or artist" autocomplete="off">
-        <select id="authorPick" aria-label="Pick an author already in the library"></select>
-        <button type="button" id="authorAdd" aria-label="Add this author">+</button>
+      <div id="authorBox">
+        <div id="authorRow">
+          <input id="songAuthorInput" class="textinput" type="text" placeholder="Songwriter or artist"
+                 autocomplete="off" role="combobox" aria-expanded="false"
+                 aria-autocomplete="list" aria-controls="authorSuggest">
+          <button type="button" id="authorPick" aria-label="Show every name in the library">▾</button>
+          <button type="button" id="authorAdd" aria-label="Add this name">+</button>
+        </div>
+        <div id="authorSuggest" role="listbox" hidden></div>
       </div>
       <div class="hint" id="authorHint">Enter after each name. A song can have as many as it has.</div>
 
       <div id="perSlideRow">
-        <span class="psl">Lines per slide</span>
+        <span class="psl" id="lblPerSlide">Lines per slide</span>
         <div id="perSlideOpts">
           <button type="button" class="ps-opt" data-ps="2">2</button>
           <button type="button" class="ps-opt" data-ps="3">3</button>
-          <button type="button" class="ps-opt on" data-ps="4">4</button>
+          <button type="button" class="ps-opt" data-ps="4">4</button>
           <button type="button" class="ps-opt" data-ps="5">5</button>
           <button type="button" class="ps-opt" data-ps="6">6</button>
+        </div>
+      </div>
+
+      <!-- What is still missing, in one place, rather than three buttons that
+           do nothing when pressed and do not say why. -->
+      <div id="saveGate" hidden>
+        <span class="mark" aria-hidden="true">!</span>
+        <div class="body">
+          <span class="lead">Before this song can be saved</span>
+          <span id="saveGateItems"></span>
         </div>
       </div>
 
@@ -5597,10 +5714,19 @@ if ("serviceWorker" in navigator) {
   songSearch.addEventListener("input", renderSongRows);
 
   // ----- the editor -----
-  function setPerSlide(n) {
+  //
+  // A new song starts with none of the five chosen, so the parse below has to
+  // run against something: 4 is what it uses, and what it has always used. The
+  // difference is that nothing claims the choice has been made — the buttons
+  // show none selected until one is pressed. Sunday is not the morning to find
+  // out a song was saved at whatever the box happened to be set to.
+  var perSlideChosen = false;
+
+  function setPerSlide(n, chosen) {
     perSlide = n;
+    perSlideChosen = !!chosen;
     Array.prototype.forEach.call(document.querySelectorAll(".ps-opt"), function (b) {
-      b.classList.toggle("on", parseInt(b.getAttribute("data-ps"), 10) === n);
+      b.classList.toggle("on", perSlideChosen && parseInt(b.getAttribute("data-ps"), 10) === n);
     });
     refreshParse();
   }
@@ -5633,6 +5759,7 @@ if ("serviceWorker" in navigator) {
     Array.prototype.forEach.call(document.querySelectorAll(".lang-opt"), function (b) {
       b.classList.toggle("on", b.getAttribute("data-lang") === songLang);
     });
+    refreshSaveGate();
   }
 
   Array.prototype.forEach.call(document.querySelectorAll(".lang-opt"), function (b) {
@@ -5687,26 +5814,123 @@ if ("serviceWorker" in navigator) {
     return out.sort(function (a, b) { return a.localeCompare(b); });
   }
 
-  function fillAuthorPick() {
-    // Names already on this song are not offered again — picking one twice can
-    // only be a mistake, and the list is shorter for leaving them out.
+  // Names not already on this song. Offering one twice can only be a mistake,
+  // and the list is shorter for leaving them out.
+  function offerableAuthors() {
     var on = {};
     editAuthors.forEach(function (a) { on[a.toLowerCase()] = true; });
-    var list = knownAuthors().filter(function (a) { return !on[a.toLowerCase()]; });
-    authorPick.innerHTML = "";
-    var head = document.createElement("option");
-    head.value = "";
-    head.textContent = "▾";
-    authorPick.appendChild(head);
-    list.forEach(function (a) {
-      var o = document.createElement("option");
-      o.value = a;
-      o.textContent = a;
-      authorPick.appendChild(o);
+    return knownAuthors().filter(function (a) { return !on[a.toLowerCase()]; });
+  }
+
+  // The spelling the library already uses, if it has one. This is what stops
+  // "sari simorangkir" from becoming a second Sari Simorangkir: a name typed
+  // rather than picked is still matched against what is there before it is
+  // treated as new.
+  function canonicalAuthor(name) {
+    var k = String(name).trim().toLowerCase();
+    var known = knownAuthors();
+    for (var i = 0; i < known.length; i++) if (known[i].toLowerCase() === k) return known[i];
+    return String(name).trim();
+  }
+
+  // ----- the suggestion list -----
+  //
+  // A name is added because it is new, not because retyping one was quicker
+  // than finding it. So typing filters the library rather than ignoring it, and
+  // "add as a new name" is offered only once nothing in it matches — which is
+  // the moment the name really is new.
+  var authorSuggest = $("authorSuggest");
+  var sugItems = [];   // what is on offer, in the order shown
+  var sugAt = -1;      // which one Enter would take, -1 for none
+
+  function closeSuggest() {
+    authorSuggest.hidden = true;
+    authorSuggest.innerHTML = "";
+    sugItems = [];
+    sugAt = -1;
+    songAuthorInput.setAttribute("aria-expanded", "false");
+    authorPick.classList.remove("on");
+  }
+
+  function markMatch(el, name, q) {
+    var at = q ? name.toLowerCase().indexOf(q.toLowerCase()) : -1;
+    if (at < 0) { el.textContent = name; return; }
+    el.appendChild(document.createTextNode(name.slice(0, at)));
+    var hit = document.createElement("mark");
+    hit.textContent = name.slice(at, at + q.length);
+    el.appendChild(hit);
+    el.appendChild(document.createTextNode(name.slice(at + q.length)));
+  }
+
+  // `all` is the ▾ button asking for the whole list rather than a filtered one.
+  function openSuggest(all) {
+    var q = songAuthorInput.value.trim();
+    var pool = offerableAuthors();
+    var matches = (all || !q)
+      ? pool
+      : pool.filter(function (a) { return a.toLowerCase().indexOf(q.toLowerCase()) >= 0; });
+
+    // Already on the song, spelled either way: say so rather than silently
+    // offering nothing, which reads as "no such person".
+    var already = q && editAuthors.some(function (a) { return a.toLowerCase() === q.toLowerCase(); });
+    var exists = q && knownAuthors().some(function (a) { return a.toLowerCase() === q.toLowerCase(); });
+
+    authorSuggest.innerHTML = "";
+    sugItems = [];
+    sugAt = -1;
+
+    if (editAuthors.length >= MAX_AUTHORS) { closeSuggest(); return; }
+
+    matches.forEach(function (a) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "sug-row";
+      b.setAttribute("role", "option");
+      b.setAttribute("data-i", sugItems.length);
+      markMatch(b, a, all ? "" : q);
+      authorSuggest.appendChild(b);
+      sugItems.push(a);
     });
-    // Nothing to pick from yet on a fresh library; a picker that opens onto an
-    // empty list reads as broken.
-    authorPick.disabled = !list.length;
+
+    if (q && !exists && !already) {
+      var add = document.createElement("button");
+      add.type = "button";
+      add.className = "sug-row sug-new";
+      add.setAttribute("role", "option");
+      add.setAttribute("data-i", sugItems.length);
+      add.appendChild(document.createTextNode("Add "));
+      var strong = document.createElement("b");
+      strong.textContent = q;
+      add.appendChild(strong);
+      add.appendChild(document.createTextNode(" as a new name"));
+      authorSuggest.appendChild(add);
+      sugItems.push(q);
+    }
+
+    if (!sugItems.length) {
+      var none = document.createElement("div");
+      none.className = "sug-empty";
+      none.textContent = already
+        ? "“" + q + "” is already on this song."
+        : "No names in the library yet — type one.";
+      authorSuggest.appendChild(none);
+    }
+
+    authorSuggest.hidden = false;
+    authorSuggest.scrollTop = 0;
+    songAuthorInput.setAttribute("aria-expanded", "true");
+    authorPick.classList.toggle("on", !!all);
+    // The first match is pre-armed, so typing a few letters and pressing Enter
+    // takes the name that is there rather than making a second one beside it.
+    highlightSuggest(sugItems.length ? 0 : -1);
+  }
+
+  function highlightSuggest(i) {
+    sugAt = i;
+    Array.prototype.forEach.call(authorSuggest.querySelectorAll(".sug-row"), function (b, n) {
+      b.classList.toggle("on", n === i);
+      if (n === i && b.scrollIntoView) b.scrollIntoView({ block: "nearest" });
+    });
   }
 
   function renderAuthorChips() {
@@ -5729,17 +5953,19 @@ if ("serviceWorker" in navigator) {
     });
     $("authorHint").textContent = editAuthors.length >= MAX_AUTHORS
       ? "That is as many names as one song can carry."
-      : "Enter after each name. A song can have as many as it has.";
-    fillAuthorPick();
+      : "Type to find a name; add it only if it is not already there.";
+    refreshSaveGate();
   }
 
   // Takes one name or several — pasting "A, B, C" in one go is how a credit
   // line usually arrives, and splitting it here is kinder than making someone
-  // do it by hand.
+  // do it by hand. Every one of them goes through canonicalAuthor, so a
+  // difference of capitals never becomes a second person.
   function addAuthors(text) {
     var have = {};
     editAuthors.forEach(function (a) { have[a.toLowerCase()] = true; });
-    toAuthors(text).forEach(function (a) {
+    toAuthors(text).forEach(function (raw) {
+      var a = canonicalAuthor(raw);
       if (have[a.toLowerCase()] || editAuthors.length >= MAX_AUTHORS) return;
       have[a.toLowerCase()] = true;
       editAuthors.push(a);
@@ -5747,35 +5973,73 @@ if ("serviceWorker" in navigator) {
     renderAuthorChips();
   }
 
+  // Whatever the field is holding, resolved the way the list would resolve it:
+  // the highlighted suggestion if one is armed, otherwise the typed text.
   function takeTypedAuthor() {
-    if (songAuthorInput.value.trim()) {
-      addAuthors(songAuthorInput.value);
-      songAuthorInput.value = "";
-    }
+    var pick = (sugAt >= 0 && sugItems[sugAt]) ? sugItems[sugAt] : songAuthorInput.value;
+    if (!String(pick).trim()) return;
+    addAuthors(pick);
+    songAuthorInput.value = "";
+    closeSuggest();
   }
 
-  authorPick.addEventListener("change", function () {
-    if (!authorPick.value) return;
-    addAuthors(authorPick.value);
-    authorPick.value = "";   // back to "▾"
+  authorPick.addEventListener("click", function () {
+    if (!authorSuggest.hidden && authorPick.classList.contains("on")) { closeSuggest(); return; }
+    openSuggest(true);
+    songAuthorInput.focus();
   });
 
   $("authorAdd").addEventListener("click", takeTypedAuthor);
 
+  songAuthorInput.addEventListener("input", function () {
+    openSuggest(false);
+    // The gate counts a name typed but not yet entered, so it has to hear this.
+    refreshSaveGate();
+  });
+  songAuthorInput.addEventListener("focus", function () { openSuggest(false); });
+
   songAuthorInput.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      if (authorSuggest.hidden) { openSuggest(false); return; }
+      if (!sugItems.length) return;
+      e.preventDefault();
+      var step = e.key === "ArrowDown" ? 1 : -1;
+      highlightSuggest((sugAt + step + sugItems.length) % sugItems.length);
+      return;
+    }
+    if (e.key === "Escape") { closeSuggest(); return; }
     // Comma too, because typing one is what someone does when they mean "and
     // the next name is".
-    if (e.key !== "Enter" && e.key !== ",") return;
-    e.preventDefault();
-    takeTypedAuthor();
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      takeTypedAuthor();
+      return;
+    }
+    // Backspace on an empty field takes the last chip back, which is what every
+    // other field of this shape does.
+    if (e.key === "Backspace" && !songAuthorInput.value && editAuthors.length) {
+      editAuthors.pop();
+      renderAuthorChips();
+      openSuggest(false);
+    }
   });
 
-  // Backspace on an empty field takes the last chip back, which is what every
-  // other field of this shape does.
-  songAuthorInput.addEventListener("keydown", function (e) {
-    if (e.key !== "Backspace" || songAuthorInput.value || !editAuthors.length) return;
-    editAuthors.pop();
-    renderAuthorChips();
+  // pointerdown rather than click: the field is about to lose focus to this
+  // press, and closing on blur first would take the row out from under it.
+  authorSuggest.addEventListener("pointerdown", function (e) {
+    var row = e.target.closest ? e.target.closest(".sug-row") : null;
+    if (!row) return;
+    e.preventDefault();
+    addAuthors(sugItems[parseInt(row.getAttribute("data-i"), 10)]);
+    songAuthorInput.value = "";
+    closeSuggest();
+    songAuthorInput.focus();
+  });
+
+  document.addEventListener("pointerdown", function (e) {
+    if (authorSuggest.hidden) return;
+    if (e.target.closest && e.target.closest("#authorBox")) return;
+    closeSuggest();
   });
 
   authorChips.addEventListener("click", function (e) {
@@ -5783,6 +6047,7 @@ if ("serviceWorker" in navigator) {
     if (!rm) return;
     editAuthors.splice(parseInt(rm.getAttribute("data-i"), 10), 1);
     renderAuthorChips();
+    if (!authorSuggest.hidden) openSuggest(false);
   });
 
   function openEditor(s) {
@@ -5793,8 +6058,11 @@ if ("serviceWorker" in navigator) {
     songTitleInput.value = t.title;
     songAuthorInput.value = "";
     editAuthors = authorsOf(s);
+    closeSuggest();
     renderAuthorChips();
-    setPerSlide(s && s.perSlide ? s.perSlide : 4);
+    // A song already in the library was saved with a number, so that number is
+    // a choice somebody made. A new one has not been chosen yet.
+    setPerSlide(s && s.perSlide ? s.perSlide : 4, !!(s && s.perSlide));
     disarmDelete();
     // Its own history entry, so back leaves the editor instead of the library.
     // Save & next re-opens it while already here, which libGo treats as no
@@ -5852,6 +6120,56 @@ if ("serviceWorker" in navigator) {
     }
     renderArrangement();
     saveSongBtn.classList.toggle("dirty", !!parsed.slides.length);
+    refreshSaveGate();
+  }
+
+  // ----- what a song has to have before it can be saved -----
+  //
+  // Every one of these is something the stage needs and nobody can supply
+  // later from memory: words to show, a language so the song sorts onto the
+  // right shelf, a title to find it by, who wrote it, and how many lines go on
+  // a slide — which decides how large the words are on the screen.
+  //
+  // They used to be optional, and the result was a library of songs that were
+  // each missing a different one. The three save buttons turn off together
+  // until all five are answered, and the panel above them says which are not.
+  function missingFields() {
+    var out = [];
+    if (!parsed || !parsed.slides.length) out.push({ el: "lblLyrics", name: "Lyrics" });
+    if (!songLang) out.push({ el: "lblLang", name: "Language" });
+    if (!songTitleInput.value.trim() && !(parsed && parsed.title)) out.push({ el: "lblTitle", name: "Title" });
+    // A name typed but not yet entered counts: it is about to be taken at save
+    // (see commitSong), so refusing to save over it would be the app arguing
+    // with something it has already been told.
+    if (!editAuthors.length && !songAuthorInput.value.trim()) out.push({ el: "lblAuthors", name: "Authors" });
+    if (!perSlideChosen) out.push({ el: "lblPerSlide", name: "Lines per slide" });
+    return out;
+  }
+
+  var GATE_LABELS = ["lblLyrics", "lblLang", "lblTitle", "lblAuthors", "lblPerSlide"];
+  var saveGate = $("saveGate"), saveGateItems = $("saveGateItems");
+
+  function refreshSaveGate() {
+    var missing = missingFields();
+    var want = {};
+    missing.forEach(function (m) { want[m.el] = true; });
+    GATE_LABELS.forEach(function (id) {
+      var el = $(id);
+      if (el) el.classList.toggle("needs", !!want[id]);
+    });
+
+    saveGate.hidden = !missing.length;
+    saveGateItems.innerHTML = "";
+    missing.forEach(function (m) {
+      var pill = document.createElement("span");
+      pill.className = "gate-item";
+      pill.textContent = m.name;
+      saveGateItems.appendChild(pill);
+    });
+
+    [$("saveNextBtn"), saveSongBtn, $("saveAsBtn")].forEach(function (b) {
+      if (b) b.disabled = !!missing.length;
+    });
   }
 
   // The running order as it will actually be sung, so a repeat that was meant
@@ -5875,14 +6193,19 @@ if ("serviceWorker" in navigator) {
 
   function commitSong(asNew) {
     if (!parsed || !parsed.slides.length) return null;
+    // A name typed but not yet entered counts. Losing it because the writer
+    // pressed Save instead of Enter would be the app quietly throwing away
+    // something they had already told it. Ahead of the check below, because it
+    // is what answers the Authors half of it.
+    takeTypedAuthor();
+    // The buttons are already off when anything is missing. This is the same
+    // answer reached a second way, so that a keyboard shortcut, a stale click
+    // or a future caller cannot get a half-filled song into the library.
+    if (missingFields().length) { refreshSaveGate(); return null; }
     // The tag is put back on here, not carried in the field, so it cannot be
     // doubled up or lost by editing around it.
     var bare = songTitleInput.value.trim() || splitTitle(parsed.title).title || "Untitled";
     var title = joinTitle(songLang, bare);
-    // A name typed but not yet entered counts. Losing it because the writer
-    // pressed Save instead of Enter would be the app quietly throwing away
-    // something they had already told it.
-    takeTypedAuthor();
     var authors = editAuthors.slice();
     var author = authors.join(", ");
     var existing = asNew ? null : songById(editingId);
@@ -5927,8 +6250,11 @@ if ("serviceWorker" in navigator) {
   $("newSongBtn").addEventListener("click", function () { openEditor(null); });
   $("editorBack").addEventListener("click", function () { history.back(); });
   pasteBox.addEventListener("input", refreshParse);
+  songTitleInput.addEventListener("input", refreshSaveGate);
   Array.prototype.forEach.call(document.querySelectorAll(".ps-opt"), function (b) {
-    b.addEventListener("click", function () { setPerSlide(parseInt(b.getAttribute("data-ps"), 10)); });
+    // Pressing one is the choice being made, which is the half the gate is
+    // waiting on — the number itself was already there.
+    b.addEventListener("click", function () { setPerSlide(parseInt(b.getAttribute("data-ps"), 10), true); });
   });
 
   saveSongBtn.addEventListener("click", function () {
