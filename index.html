@@ -312,9 +312,12 @@
     color: var(--ink-dim);
   }
   .room-code {
-    font-size: 26px;
+    /* Two digits longer than it used to be, and this row also carries a label
+       and a button, so it gives way on a narrow phone rather than pushing them
+       off the edge. */
+    font-size: min(26px, 6.4vw);
     font-weight: 800;
-    letter-spacing: .28em;
+    letter-spacing: .22em;
     font-variant-numeric: tabular-nums;
     color: var(--accent);
     margin-right: auto;
@@ -351,15 +354,17 @@
     border-radius: var(--radius);
     color: var(--ink);
     padding: 18px 16px;
-    font-size: 44px;
+    /* Six digits at 44px overrun a small phone; the type gives way instead of
+       the digits wrapping. */
+    font-size: min(44px, 10vw);
     font-weight: 800;
-    letter-spacing: .38em;
-    text-indent: .38em;
+    letter-spacing: .3em;
+    text-indent: .3em;
     text-align: center;
     font-variant-numeric: tabular-nums;
     font-family: inherit;
   }
-  #codeInput::placeholder { color: #3A4252; letter-spacing: .38em; }
+  #codeInput::placeholder { color: #3A4252; letter-spacing: .3em; }
 
   /* ---------- the stage (mirrored on both devices) ---------- */
   .stage-wrap {
@@ -2173,7 +2178,7 @@ lyric line one</pre>
 
     <div class="room-row" id="roomRow">
       <span class="rl">Room</span>
-      <span class="room-code" id="roomCode">····</span>
+      <span class="room-code" id="roomCode">······</span>
       <button type="button" class="ghost" id="newRoomBtn">New code</button>
     </div>
     <div class="link-status" id="opLink1"><span class="led"></span><span class="txt"></span></div>
@@ -2223,7 +2228,10 @@ lyric line one</pre>
 
     <div>
       <label class="field-label" for="codeInput">Room code</label>
-      <input id="codeInput" type="text" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off" aria-label="Room code">
+      <!-- Six now, but four is still accepted: a room opened before this build
+           is still on the air with the code its operator has already read out,
+           and refusing to dial it would strand a display mid-service. -->
+      <input id="codeInput" type="text" inputmode="numeric" maxlength="6" placeholder="000000" autocomplete="off" aria-label="Room code">
     </div>
 
     <div class="link-status" id="joinLink"><span class="led"></span><span class="txt"></span></div>
@@ -2238,7 +2246,7 @@ lyric line one</pre>
   <div id="opHead">
     <button type="button" id="opExit" aria-label="End session">✕</button>
     <div class="brand"><div class="dot"></div><h1>SPro Countdown</h1></div>
-    <div class="chip"><span>ROOM</span><b id="opRoomCode">····</b></div>
+    <div class="chip"><span>ROOM</span><b id="opRoomCode">······</b></div>
     <div class="link-status" id="opLink2"><span class="led"></span><span class="txt"></span></div>
     <div class="spacer"></div>
     <div id="opClock">00:00:00</div>
@@ -2958,8 +2966,24 @@ if ("serviceWorker" in navigator) {
 
   function havePeerJS() { return typeof Peer !== "undefined"; }
 
+  // Six digits, not four.
+  //
+  // Four gave nine thousand rooms, and the broker's id space is shared by
+  // everybody running this app. Two churches on a Sunday morning had about one
+  // chance in nine thousand of picking the same one; at a hundred at once, the
+  // odds that *some* pair collides are better than one in three — and a
+  // collision is not a harmless error, it is a display quietly showing another
+  // church's stage. Six digits is nine hundred thousand, which takes the same
+  // hundred rooms to about one chance in two hundred.
+  //
+  // It also matters for mistyping, which is the commoner accident: with a
+  // hundred rooms live, a wrong digit on a four-digit code lands on somebody
+  // else's service about one time in a hundred. On six it is one in ten
+  // thousand.
+  var ROOM_DIGITS = 6;
   function randomRoom() {
-    return String(Math.floor(1000 + Math.random() * 9000));
+    var lo = Math.pow(10, ROOM_DIGITS - 1);
+    return String(Math.floor(lo + Math.random() * (lo * 9)));
   }
 
   function destroyPeer() {
@@ -3188,6 +3212,33 @@ if ("serviceWorker" in navigator) {
     }, 2000);
   }
 
+  // Whether the code in hand was just invented, and so has to be proved unused.
+  //
+  // The broker already guarantees this — it refuses an id that is taken, which
+  // is exactly the check needed and comes from a server the pairing depends on
+  // anyway. The reason it was not used for this is that a refusal is ambiguous:
+  // almost always it is our *own* previous session, still registered because
+  // closing a tab does not close its socket, and re-rolling the code then would
+  // change a number the operator has already read out across the room for no
+  // reason. The slot walk below exists for exactly that case.
+  //
+  // A code we have only just made up has no session of ours behind it. A
+  // refusal there means somebody else genuinely holds it — so that one is worth
+  // re-rolling, and doing so makes a new code unique among every room live on
+  // the broker rather than merely unlikely to clash.
+  var claimingFresh = false;
+  var codeTries = 0;
+
+  function hostFreshRoom() {
+    idRetries = 0;
+    hostSlot = 0;
+    codeTries = 0;
+    claimingFresh = true;
+    var code = randomRoom();
+    if (LOCAL) hostLocal(code);
+    else hostRoom(code);
+  }
+
   function hostRoom(code) {
     // Already holding this exact code on a peer that is still alive? Keep it.
     //
@@ -3231,7 +3282,14 @@ if ("serviceWorker" in navigator) {
 
     peer = new Peer(slotId(code, hostSlot), { debug: 0 });
 
-    peer.on("open", function () { idRetries = 0; idBlocked = false; setLink("ready"); });
+    // The broker accepted the id, so this code is ours and nobody else's. It
+     // has stopped being a fresh one the moment it is held.
+    peer.on("open", function () {
+      idRetries = 0;
+      idBlocked = false;
+      claimingFresh = false;
+      setLink("ready");
+    });
 
     peer.on("connection", function (conn) {
       var sendFull = function () {
@@ -3268,16 +3326,30 @@ if ("serviceWorker" in navigator) {
     peer.on("error", function (err) {
       if (!err) return;
       if (err.type === "unavailable-id") {
-        // Our own previous session still holds this id on the broker. It is
-        // released a little after the socket dies, so keep asking rather than
-        // making the operator invent a new code.
-        // Taken — almost always by our own previous session, which the broker
-        // will not release. Step to the next slot instead of asking again for
-        // something that is not coming back. The code on screen does not
-        // change, so nobody has to retype anything.
         idBlocked = true;
-        idRetries++;
         clearTimeout(retryTimer);
+
+        // A code invented seconds ago cannot be held by a previous session of
+        // ours, so this is somebody else on the same number. Take a different
+        // one — nobody has read this out yet, so it costs nothing, and it is
+        // what makes a new code unique rather than merely improbable.
+        if (claimingFresh) {
+          codeTries++;
+          if (codeTries > 8) {
+            setLink("error", "Could not get a free room code — press New code to try again.");
+            return;
+          }
+          var other = randomRoom();
+          setLink("connecting", "That code is taken — picking another…");
+          retryTimer = setTimeout(function () { hostRoom(other); }, 200);
+          return;
+        }
+
+        // Otherwise it is our own previous session, still registered because
+        // closing a tab does not close its socket. Step to the next slot rather
+        // than asking again for something that is not coming back: the code on
+        // screen does not change, so nobody has to retype anything.
+        idRetries++;
         if (idRetries > SLOTS.length) {
           setLink("error", "Every line for code " + code + " is busy — use New code.");
           return;
@@ -3620,9 +3692,16 @@ if ("serviceWorker" in navigator) {
     // slot 0 once the zombie holding it finally times out on the broker.
     idRetries = 0;
     hostSlot = 0;
-    var code = cfg.room || randomRoom();
-    if (LOCAL) hostLocal(code);
-    else hostRoom(code);
+    // A remembered code is kept as it is — it is the one already written on
+    // somebody's run sheet. Only a first-ever run has to invent one, and that
+    // one gets claimed properly.
+    if (cfg.room) {
+      claimingFresh = false;
+      if (LOCAL) hostLocal(cfg.room);
+      else hostRoom(cfg.room);
+    } else {
+      hostFreshRoom();
+    }
   });
 
   // Standalone needs no link at all — one device does everything.
@@ -3661,7 +3740,7 @@ if ("serviceWorker" in navigator) {
   // ----- display: join flow -----
   var codeInput = $("codeInput");
   codeInput.addEventListener("input", function () {
-    var v = codeInput.value.replace(/\D/g, "").slice(0, 4);
+    var v = codeInput.value.replace(/\D/g, "").slice(0, ROOM_DIGITS);
     if (v !== codeInput.value) codeInput.value = v;
   });
   codeInput.addEventListener("keydown", function (e) {
@@ -3670,8 +3749,10 @@ if ("serviceWorker" in navigator) {
 
   $("joinBtn").addEventListener("click", function () {
     var code = codeInput.value.replace(/\D/g, "");
-    if (code.length !== 4) {
-      setLink("error", "Enter the 4-digit room code.");
+    // Four to six: six is what a room gets now, four is what rooms opened
+    // before this build are still holding.
+    if (code.length < 4 || code.length > ROOM_DIGITS) {
+      setLink("error", "Enter the room code shown on the operator's screen.");
       return;
     }
     enterDisplay();
@@ -3723,13 +3804,7 @@ if ("serviceWorker" in navigator) {
     persist();
   });
 
-  $("newRoomBtn").addEventListener("click", function () {
-    idRetries = 0;
-    hostSlot = 0;
-    var code = randomRoom();
-    if (LOCAL) hostLocal(code);
-    else hostRoom(code);
-  });
+  $("newRoomBtn").addEventListener("click", hostFreshRoom);
 
   // ============================================================
   //  Title bank — shared by the setup screen and the console
