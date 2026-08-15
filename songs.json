@@ -1142,7 +1142,8 @@
      "key": "chorus",
      "tag": "Chorus",
      "lines": [
-      "Bangsa-bangsa bagi kemuliaan-Mu",
+      "Bangsa-bangsa",
+      "bagi kemuliaan-Mu",
       "Nyatakanlah kebesaran-Mu",
       "Kan kami tinggikan",
       "Kami agungkan",
@@ -1154,11 +1155,13 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "Bangsa-bangsa bagi kemuliaan-Mu",
+      "Bangsa-bangsa",
+      "bagi kemuliaan-Mu",
       "Nyatakanlah kebesaran-Mu",
       "Kan kami serukan",
       "Kami nyatakan",
-      "Bangsa-bangsa bagi-Mu, Yesus"
+      "Bangsa-bangsa",
+      "bagi-Mu, Yesus"
      ],
      "notes": []
     },
@@ -1168,7 +1171,8 @@
      "lines": [
       "Ini doa kami",
       "Bagi bangsa-bangsa",
-      "Berbalik dari jalan yang jahat oo.",
+      "Berbalik dari jalan",
+      "yang jahat oo.",
       "Kembali pada-Mu",
       "Sujud menyembah-Mu",
       "Sujud menyembah-Mu"
@@ -1183,37 +1187,45 @@
    ],
    "slides": [
     [
-     "Bangsa-bangsa bagi kemuliaan-Mu",
-     "Nyatakanlah kebesaran-Mu"
+     "Bangsa-bangsa",
+     "bagi kemuliaan-Mu"
     ],
     [
-     "Kan kami tinggikan",
-     "Kami agungkan"
+     "Nyatakanlah kebesaran-Mu",
+     "Kan kami tinggikan"
     ],
     [
+     "Kami agungkan",
      "Kau Yesus, Tuhan"
     ],
     [
-     "Bangsa-bangsa bagi kemuliaan-Mu",
-     "Nyatakanlah kebesaran-Mu"
+     "Bangsa-bangsa",
+     "bagi kemuliaan-Mu"
     ],
     [
-     "Kan kami serukan",
-     "Kami nyatakan"
+     "Nyatakanlah kebesaran-Mu",
+     "Kan kami serukan"
     ],
     [
-     "Bangsa-bangsa bagi-Mu, Yesus"
+     "Kami nyatakan",
+     "Bangsa-bangsa"
+    ],
+    [
+     "bagi-Mu, Yesus"
     ],
     [
      "Ini doa kami",
      "Bagi bangsa-bangsa"
     ],
     [
-     "Berbalik dari jalan yang jahat oo.",
-     "Kembali pada-Mu"
+     "Berbalik dari jalan",
+     "yang jahat oo."
     ],
     [
-     "Sujud menyembah-Mu",
+     "Kembali pada-Mu",
+     "Sujud menyembah-Mu"
+    ],
+    [
      "Sujud menyembah-Mu"
     ]
    ],
@@ -1224,7 +1236,9 @@
     "",
     "",
     "",
+    "",
     "Bridge",
+    "",
     "",
     ""
    ],
@@ -1237,11 +1251,13 @@
     "",
     "",
     "",
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1786793523383,
+   "version": 3,
+   "updatedAt": 1786797543628,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
