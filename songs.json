@@ -1660,6 +1660,102 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msvagc33u7as",
+   "title": "[IND] RINDU SLALU",
+   "authors": [
+    "JPCC Worship"
+   ],
+   "author": "JPCC Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Rindu selalu bersamaMu",
+      "Tinggal di dalam kediamanMu",
+      "Oh Tuhan",
+      "S'bab kusukai hadiratMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Tak ingin kuterpisahkan",
+      "Dekat denganMu",
+      "Itu yang kurindukan",
+      "S'bab kudapati kedamaian."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kunikmati keindahan dan",
+      "KeagunganMu oh Tuhan",
+      "Kunikmati kemuliaanMu",
+      "MenyembahMu dengan segenap hatiku."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Rindu selalu bersamaMu",
+     "Tinggal di dalam kediamanMu"
+    ],
+    [
+     "Oh Tuhan",
+     "S'bab kusukai hadiratMu."
+    ],
+    [
+     "Tak ingin kuterpisahkan",
+     "Dekat denganMu"
+    ],
+    [
+     "Itu yang kurindukan",
+     "S'bab kudapati kedamaian."
+    ],
+    [
+     "Kunikmati keindahan dan",
+     "KeagunganMu oh Tuhan"
+    ],
+    [
+     "Kunikmati kemuliaanMu",
+     "MenyembahMu dengan segenap hatiku."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786853528433,
+   "updatedBy": "Sam",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
