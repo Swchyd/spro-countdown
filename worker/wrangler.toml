@@ -18,6 +18,17 @@ GH_BRANCH = "main"
 # private/LAN addresses are already allowed in code — this is for anything else.
 ALLOWED_ORIGINS = ""
 
+# The stage relay: one object per room code, holding the operator's socket and
+# its displays. SQLite-backed because that is the only kind the free plan
+# allows — nothing is actually written to it, the class keeps no storage at all.
+[[durable_objects.bindings]]
+name = "ROOM"
+class_name = "Room"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Room"]
+
 # Access codes, sessions, collaborator records, the audit log and rate-limit
 # counters. Create it once with:
 #   npx wrangler kv namespace create SPRO

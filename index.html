@@ -2374,7 +2374,8 @@ if ("serviceWorker" in navigator) {
     seconds: 0,
     bank: [],        // saved titles, in the order they were added
     room: "",        // operator's own room code
-    join: ""         // last room code this display joined
+    join: "",        // last room code this display joined
+    dev: ""          // this device, so it can reclaim its own room code
   };
 
   try {
@@ -2387,6 +2388,21 @@ if ("serviceWorker" in navigator) {
 
   function persist() {
     try { localStorage.setItem(LS_KEY, JSON.stringify(cfg)); } catch (e) {}
+  }
+
+  // Who this device is, kept for as long as the browser keeps anything.
+  //
+  // It exists to answer one question the relay has to get right: an operator
+  // arriving on a code that already has one is either the same device coming
+  // back — the app reopened, the tablet woke up, and the socket nobody closed
+  // is still registered — or it is a different room that happens to have rolled
+  // the same six digits. The first must be allowed to take its code back
+  // without anybody retyping anything. The second must be refused, because
+  // "replace whoever is there" would put one church's timer on another
+  // church's stage.
+  if (!cfg.dev) {
+    cfg.dev = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+    persist();
   }
 
   var $ = function (id) { return document.getElementById(id); };
@@ -2926,26 +2942,194 @@ if ("serviceWorker" in navigator) {
     return PEER_PREFIX + code + SLOTS[i % SLOTS.length];
   }
 
-  // ---- finding a path between the two devices ----
+  // ---- the stage relay ----
   //
-  // On one wifi this hardly matters: both devices are on the same subnet, they
-  // exchange local addresses and talk directly. On two different networks each
-  // one sits behind its own router doing NAT, neither can address the other,
-  // and unless some server in the middle agrees to relay for them there is no
-  // path at all. That is not a slow connection — it is no connection, for ever,
-  // in both directions, which is exactly what a tablet on the other wifi saw.
+  // The transport that actually pairs two devices now. Both ends dial out to
+  // the Worker over wss on 443, so there is no NAT to get through and no
+  // difference between "same wifi" and "two different networks" — which is the
+  // whole bug this replaces. See worker/src/worker.js for the other half.
   //
-  // PeerJS's own defaults are a single Google STUN server and one relay on UDP
-  // 3478 — the first port a guest, church or corporate network blocks.
+  // WebRTC is kept below it as a fallback, used only if the socket cannot be
+  // opened at all. It is the transport that worked on one wifi yesterday, so
+  // falling back to it is falling back to what people already had, rather than
+  // to nothing.
+  var relay = null;        // the socket, either role
+  var relayCode = "";      // the room it was opened on
+  var relayId = "";        // display: what the relay calls us, so pongs return
+  var relayPeers = 0;      // operator: displays the relay says are connected
+  var relaySongKey = null; // operator: the song the displays were last given
+  var relayGaveUp = false; // the socket would not open; WebRTC has it from here
+  var relayTaken = false;  // this code belongs to another room; do not redial it
+
+  function relayOn() { return !LOCAL && !relayGaveUp; }
+
+  // Displays on the relay, displays on WebRTC, or displays the stage server is
+  // reporting — the status line does not care which, only how many.
+  function peerCount() {
+    if (LOCAL) return localPeers;
+    return relayOn() ? relayPeers : conns.length;
+  }
+
+  function relayURL(code, asRole) {
+    return API_BASE.replace(/^http/, "ws") + "/room/" + code +
+           "?role=" + asRole + "&dev=" + encodeURIComponent(cfg.dev);
+  }
+
+  function closeRelay() {
+    relayPeers = 0;
+    relayId = "";
+    relaySongKey = null;
+    relayTaken = false;
+    if (relay) {
+      var r = relay;
+      relay = null;
+      try { r.close(); } catch (e) {}
+    }
+  }
+
+  // Sent by a display that needs something from the operator. The relay stamps
+  // it with who asked and routes the answer back.
+  function sendUp(msg) {
+    if (relayOn()) {
+      if (!relay || relay.readyState !== 1) return;
+      try { relay.send(JSON.stringify(msg)); } catch (e) {}
+      return;
+    }
+    if (dispConn && dispConn.open) {
+      try { dispConn.send(JSON.stringify(msg)); } catch (e) {}
+    }
+  }
+
+  function openRelay(asRole, code) {
+    closeRelay();
+    relayCode = code;
+    relayTaken = false;
+
+    var ws;
+    try { ws = new WebSocket(relayURL(code, asRole)); }
+    catch (e) { relayFailed(asRole, code); return; }
+    relay = ws;
+
+    var opened = false;
+    // Six seconds is generous for a socket to a CDN edge and short enough that
+    // nobody is left staring at a dead screen before a service.
+    var giveUp = setTimeout(function () {
+      if (opened || relay !== ws) return;
+      try { ws.close(); } catch (e) {}
+      relayFailed(asRole, code);
+    }, 6000);
+
+    ws.onopen = function () {
+      opened = true;
+      clearTimeout(giveUp);
+      if (relay !== ws) return;
+      if (asRole === "op") {
+        // Nothing is assumed about what the displays are holding across a
+        // reconnect, so the next update carries the song.
+        relaySongKey = null;
+        setLink("ready");
+      } else {
+        setLink("linked");
+        syncSamples = [];
+        sendUp({ t: "hello" });
+        startPings();
+      }
+    };
+
+    ws.onmessage = function (ev) {
+      if (relay !== ws) return;
+      var m;
+      try { m = JSON.parse(ev.data); } catch (e) { return; }
+
+      if (m.t === "welcome") { relayId = m.id; return; }
+
+      // Somebody else's room is on this number. A code just invented has not
+      // been read out to anyone yet, so rolling another costs nothing — and
+      // doing so is what makes a new code actually unique rather than merely
+      // unlikely to clash. A code we were already using is a different matter:
+      // it is on a screen and in people's notes, so say so and let the operator
+      // decide.
+      if (m.t === "taken") {
+        relayTaken = true;
+        try { ws.close(); } catch (e) {}
+        if (claimingFresh && codeTries++ < 8) {
+          setLink("connecting", "That code is taken — picking another…");
+          clearTimeout(retryTimer);
+          var other = randomRoom();
+          retryTimer = setTimeout(function () { hostRoom(other); }, 200);
+        } else {
+          setLink("error", "Code " + code + " is in use by another room — press New code.");
+        }
+        return;
+      }
+
+      if (asRole === "op") {
+        if (m.t === "peers") { relayPeers = m.n; renderLink(); return; }
+        // A display asking for the full picture. It goes to all of them: the
+        // song is the only expensive part, this happens when somebody joins,
+        // and telling everyone costs less than tracking who was told what.
+        if (m.t === "need" || m.t === "hello") { relaySongKey = null; broadcast(); return; }
+        if (m.t === "ping") {
+          try { ws.send(JSON.stringify({ t: "pong", c: m.c, s: Date.now(), to: m.from })); } catch (e) {}
+        }
+        return;
+      }
+
+      if (m.t === "s") applyState(m.d);
+      else if (m.t === "pong") absorbPong(m);
+    };
+
+    ws.onclose = function () {
+      if (relay !== ws) return;
+      clearTimeout(giveUp);
+      relay = null;
+      relayPeers = 0;
+      // Refused because the code belongs to somebody else. The message
+      // explaining that is already on screen and redialling would only take it
+      // off again — the operator has been asked for a decision, not a retry.
+      if (relayTaken) return;
+      if (!opened) { relayFailed(asRole, code); return; }
+      // It was up and went away. The watchdog rebuilds it on the same code
+      // within three seconds, so this only has to say so.
+      clearInterval(pingTimer);
+      setLink(asRole === "op" ? "connecting" : "lost",
+              asRole === "op" ? "Reconnecting…" : "Link lost — timer still running");
+    };
+
+    ws.onerror = function () { /* onclose follows, and it does the work */ };
+  }
+
+  // The socket never came up. That is a network that will not carry it at all,
+  // so hand the session to WebRTC and do not try the relay again until the role
+  // is left and re-entered.
+  function relayFailed(asRole, code) {
+    if (relayGaveUp) return;
+    relayGaveUp = true;
+    relay = null;
+    setLink("connecting", "Relay unreachable — pairing directly…");
+    if (asRole === "op") hostPeer(code);
+    else joinPeer(code);
+  }
+
+  // ---- finding a path between the two devices, the old way ----
   //
-  // The relay that actually does the work is Cloudflare's, and the Worker hands
-  // out credentials for it at /turn. Without a TURN key set on the Worker there
-  // is no working relay at all: both public ones below were measured on
-  // 2026-08-16 with iceTransportPolicy "relay" and neither produced a single
-  // relay candidate, while a plain STUN control on the same machine gathered
-  // host and srflx normally. They are kept because they cost nothing and may
-  // come back — but they are not the fix, and a display on another network will
-  // still fail if /turn has nothing to give it.
+  // Everything from here to joinPeer is the WebRTC fallback: the transport this
+  // app used to pair on, kept for the case where the relay's socket will not
+  // open. It works on one wifi, which is what makes it worth keeping and also
+  // all it is good for.
+  //
+  // On two networks each device sits behind its own router doing NAT, neither
+  // can address the other, and without a relay in the middle there is no path
+  // at all. PeerJS's defaults are one Google STUN server and one relay on UDP
+  // 3478 — the first port a guest, church or corporate network blocks — and
+  // both public relays below were measured on 2026-08-16 with
+  // iceTransportPolicy "relay" without producing a single relay candidate,
+  // while a plain STUN control on the same machine gathered host and srflx
+  // normally. They are kept because they cost nothing if they come back.
+  //
+  // /turn on the Worker supplies Cloudflare credentials if a TURN key was ever
+  // set up. It is optional now in a way it was not before: the relay above
+  // crosses networks without any of this.
   var ICE_FALLBACK = [
     { urls: [
       "stun:stun.l.google.com:19302",
@@ -3024,7 +3208,7 @@ if ("serviceWorker" in navigator) {
     var cls = "", txt = linkNote;
     if (role === "op") {
       if (linkState === "ready") {
-        var n = LOCAL ? localPeers : conns.length;
+        var n = peerCount();
         cls = n ? "live" : "warn";
         txt = n ? (n + (n === 1 ? " display connected" : " displays connected")) : "Waiting for a display";
       } else if (linkState === "connecting") { cls = "warn"; txt = txt || "Connecting…"; }
@@ -3092,6 +3276,11 @@ if ("serviceWorker" in navigator) {
     idBlocked = false;
     dialing = 0;
     destroyPeer();
+    closeRelay();
+    relayCode = "";
+    // Leaving the role is the one moment worth trying the relay again: the
+    // network may be a different one by the next time anybody pairs.
+    relayGaveUp = false;
     clearInterval(pingTimer);
     clearInterval(localSyncTimer);
     localPeers = 0;
@@ -3108,6 +3297,17 @@ if ("serviceWorker" in navigator) {
     if (LOCAL || role === "solo" || !roomCode) return;
     if (navigator.onLine === false) return;   // wait for the network to exist
     if (peerBooting) return;                  // one is being built right now
+
+    // On the relay there is one thing to watch and one thing to do about it:
+    // if the socket is gone, open it again on the same code.
+    if (relayOn()) {
+      if (relayTaken) return;   // waiting on the operator, not on the network
+      if (!relay || relay.readyState > 1) {
+        if (role === "op") hostRoom(roomCode);
+        else joinRoom(roomCode);
+      }
+      return;
+    }
 
     if (!peer || peer.destroyed) {
       if (role === "op") hostRoom(roomCode);
@@ -3140,6 +3340,10 @@ if ("serviceWorker" in navigator) {
   // rebuilds the link on the same code within three seconds.
   window.addEventListener("pagehide", function () {
     if (peer && !peer.destroyed) { try { peer.destroy(); } catch (e) {} }
+    // Less urgent on the relay — a returning operator replaces its own stale
+    // socket rather than being locked out by it — but a display that has gone
+    // away should stop being counted as present.
+    if (relay) { try { relay.close(); } catch (e) {} }
   });
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "visible") setTimeout(superviseLink, 300);
@@ -3269,6 +3473,22 @@ if ("serviceWorker" in navigator) {
   function broadcast() {
     if (role === "solo") return;   // nothing to talk to
     if (LOCAL) { pushLocal(); return; }
+
+    // On the relay there is one socket rather than one per display, so "who
+    // has been told about this song" is a single answer instead of a set. The
+    // relay sends whatever arrives to everybody, and a display that finds the
+    // key does not match what it holds asks for the song itself.
+    if (relayOn()) {
+      if (!relay || relay.readyState !== 1) return;
+      var k = songKey(T.song);
+      var withSong = relaySongKey !== k;
+      try {
+        relay.send(JSON.stringify({ t: "s", d: snapshot(!withSong) }));
+        if (withSong) relaySongKey = k;
+      } catch (e) {}
+      return;
+    }
+
     var key = songKey(T.song);
     var lite = null, full = null;
     conns.forEach(function (c) {
@@ -3295,7 +3515,7 @@ if ("serviceWorker" in navigator) {
     clearInterval(beatTimer);
     if (role !== "op" || LOCAL) return;
     beatTimer = setInterval(function () {
-      if (conns.length) broadcast();
+      if (peerCount()) broadcast();
     }, 2000);
   }
 
@@ -3326,7 +3546,31 @@ if ("serviceWorker" in navigator) {
     else hostRoom(code);
   }
 
+  // Hosting a room, whichever transport is carrying it. The relay is tried
+  // first and WebRTC only if it will not come up — see relayFailed.
   function hostRoom(code) {
+    if (!relayOn()) { hostPeer(code); return; }
+
+    roomCode = code;
+    cfg.room = code;
+    persist();
+    $("roomCode").textContent = code;
+    $("opRoomCode").textContent = code;
+    startWatchdog();
+    startHeartbeat();
+
+    // Re-entering Operator on a code the socket is already holding costs
+    // nothing. Tearing it down and reopening would drop every display for a
+    // second to arrive back exactly where it started.
+    if (relay && relayCode === code && relay.readyState <= 1) {
+      setLink(relay.readyState === 1 ? "ready" : "connecting", "");
+      return;
+    }
+    setLink("connecting", "Connecting…");
+    openRelay("op", code);
+  }
+
+  function hostPeer(code) {
     // Already holding this exact code on a peer that is still alive? Keep it.
     //
     // Tearing it down and immediately asking the broker for the same id again
@@ -3433,7 +3677,7 @@ if ("serviceWorker" in navigator) {
           }
           var other = randomRoom();
           setLink("connecting", "That code is taken — picking another…");
-          retryTimer = setTimeout(function () { hostRoom(other); }, 200);
+          retryTimer = setTimeout(function () { hostPeer(other); }, 200);
           return;
         }
 
@@ -3448,7 +3692,7 @@ if ("serviceWorker" in navigator) {
         }
         hostSlot = (hostSlot + 1) % SLOTS.length;
         setLink("connecting", "Code " + code + " — finding a free line…");
-        retryTimer = setTimeout(function () { hostRoom(code); }, 250);
+        retryTimer = setTimeout(function () { hostPeer(code); }, 250);
       } else if (err.type === "network" || err.type === "socket-error" ||
                  err.type === "socket-closed" || err.type === "server-error") {
         // The watchdog rebuilds this; just say what is happening.
@@ -3475,8 +3719,18 @@ if ("serviceWorker" in navigator) {
   var pingTimer = 0, syncSamples = [];
 
   function sendPing() {
-    if (!dispConn || !dispConn.open) return;
-    try { dispConn.send(JSON.stringify({ t: "ping", c: Date.now() })); } catch (e) {}
+    sendUp({ t: "ping", c: Date.now() });
+  }
+
+  // A quick burst to pin the clock down, then a slow one to keep it honest.
+  function startPings() {
+    var burst = 0;
+    var b = setInterval(function () {
+      sendPing();
+      if (++burst >= 5) clearInterval(b);
+    }, 200);
+    clearInterval(pingTimer);
+    pingTimer = setInterval(sendPing, 20000);
   }
 
   function absorbSample(rtt, offset) {
@@ -3506,14 +3760,30 @@ if ("serviceWorker" in navigator) {
     // Holding a different song from the one being described means an update
     // carrying it went missing. Ask rather than sit on the wrong words.
     if (typeof d.songKey === "string" && d.songKey !== songKey(T.song)) {
-      if (Date.now() - lastNeedAt > 1000 && dispConn && dispConn.open) {
+      if (Date.now() - lastNeedAt > 1000) {
         lastNeedAt = Date.now();
-        try { dispConn.send(JSON.stringify({ t: "need" })); } catch (e) {}
+        sendUp({ t: "need" });
       }
     }
   }
 
   function joinRoom(code) {
+    if (!relayOn()) { joinPeer(code); return; }
+
+    roomCode = code;
+    cfg.join = code;
+    persist();
+    startWatchdog();
+
+    if (relay && relayCode === code && relay.readyState <= 1) {
+      setLink(relay.readyState === 1 ? "linked" : "connecting", "");
+      return;
+    }
+    setLink("connecting", "Connecting to room " + code + "…");
+    openRelay("display", code);
+  }
+
+  function joinPeer(code) {
     destroyPeer();
     if (!havePeerJS()) {
       setLink("error", "Connection module failed to load — reload the page.");
@@ -3628,14 +3898,7 @@ if ("serviceWorker" in navigator) {
       setLink("linked");
       syncSamples = [];
       try { conn.send(JSON.stringify({ t: "hello" })); } catch (e) {}
-      // A quick burst first, then a slow keep-honest ping.
-      var burst = 0;
-      var b = setInterval(function () {
-        sendPing();
-        if (++burst >= 5) clearInterval(b);
-      }, 200);
-      clearInterval(pingTimer);
-      pingTimer = setInterval(sendPing, 20000);
+      startPings();
     });
 
     conn.on("data", function (raw) {

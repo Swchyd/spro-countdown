@@ -20,7 +20,194 @@
 // The last one is the point. Roles stop the wrong person; the blast-radius
 // check stops the right person having a bad day.
 
-const VERSION = "1.0.0";
+const VERSION = "1.1.0";
+
+// ---------------------------------------------------------------------------
+// The stage relay
+//
+// Pairing used to be peer-to-peer over WebRTC. On one wifi that is ideal — the
+// two devices talk directly and nothing sits in the middle. On two networks it
+// is impossible: each device is behind its own NAT, neither can address the
+// other, and the only way through is a relay both can reach. The public ones
+// were measured dead (see README), and Cloudflare's TURN wants a card on file.
+//
+// So the relay is this, and it is a better fit than TURN ever was. Both devices
+// dial *out* to this Worker over wss on 443 — the one port every network has to
+// let through — so there is no NAT to traverse, nothing to negotiate, and no
+// difference at all between "same wifi" and "opposite ends of the city".
+//
+// It also deletes a whole class of bug. The old broker only freed a room code
+// when its socket closed, which closing a tab does not do, so a code stayed
+// taken and the app grew six "slots" per code to walk around its own zombies.
+// Here a second operator on a code simply replaces the first. There is nothing
+// to squat.
+//
+// One Durable Object per room code, and it is deliberately close to dumb: it
+// routes messages between one operator and its displays and counts heads. The
+// meaning of the messages stays in the app, where it was.
+//
+// Hibernation matters for the bill. Between messages the object is evicted and
+// costs nothing, which is why nothing important is kept in its memory — a
+// display that arrives to an empty cache asks the operator, and the operator's
+// two-second heartbeat answers within one beat anyway.
+// ---------------------------------------------------------------------------
+
+export class Room {
+  constructor(ctx, env) {
+    this.ctx = ctx;
+    this.env = env;
+    // Survives only until the next hibernation, and is treated as such: it is
+    // an optimisation for a display joining mid-service, never the source of
+    // truth. The operator is that.
+    this.snap = null;
+    this.nextId = 1;
+  }
+
+  // `except` is how a departure is counted. A socket that is closing is still
+  // in getWebSockets while its handler runs, so without this the operator is
+  // told the display is still there and the count never comes back down.
+  sockets(role, except) {
+    return this.ctx.getWebSockets().filter((ws) => {
+      if (ws === except) return false;
+      const a = ws.deserializeAttachment();
+      return a && (!role || a.role === role);
+    });
+  }
+
+  operator(except) {
+    return this.sockets("op", except)[0] || null;
+  }
+
+  send(ws, msg) {
+    try {
+      ws.send(JSON.stringify(msg));
+    } catch {
+      // A socket that will not take a message is one the close handler is
+      // about to hear about. Nothing to do here but not throw.
+    }
+  }
+
+  // The operator's own status line reads off this, so it is sent on every
+  // arrival and every departure rather than polled.
+  tellOperator(except) {
+    const op = this.operator(except);
+    if (op) this.send(op, { t: "peers", n: this.sockets("display", except).length });
+  }
+
+  async fetch(request) {
+    const url = new URL(request.url);
+    const role = url.searchParams.get("role") === "op" ? "op" : "display";
+    const dev = url.searchParams.get("dev") || "";
+
+    const pair = new WebSocketPair();
+    const [client, server] = Object.values(pair);
+
+    const id = String(this.nextId++) + "-" + Math.random().toString(36).slice(2, 8);
+    this.ctx.acceptWebSocket(server);
+    server.serializeAttachment({ role, id, dev });
+
+    // Two operators on one code are two different situations wearing the same
+    // shape, and telling them apart is the whole job here.
+    //
+    // The same device arriving again is the ordinary way back in: the app
+    // reopened, the tablet woke, and the socket still registered is one nobody
+    // is holding. It takes its code back, which is what makes "leave Operator
+    // and come straight back" cost nothing.
+    //
+    // A *different* device is a six-digit collision — another room that rolled
+    // the same number. Replacing it would put this church's timer on that
+    // church's stage, so it is refused instead and the app rolls a new code.
+    if (role === "op") {
+      const others = [];
+      for (const old of this.sockets("op", server)) {
+        const a = old.deserializeAttachment() || {};
+        if (dev && a.dev === dev) {
+          this.send(old, { t: "replaced" });
+          try {
+            old.close(4000, "replaced by the same device");
+          } catch {}
+        } else {
+          others.push(old);
+        }
+      }
+      if (others.length) {
+        // Demoted before it is told anything. close() inside this handler does
+        // not reliably reach a socket whose handshake has not finished — the
+        // client saw the refusal and no close frame — so the socket is made
+        // inert instead and the app hangs up its own end. "rejected" is a role
+        // nothing routes to: it cannot be the operator, it is not counted as a
+        // display, and any state it sends is dropped on the floor.
+        server.serializeAttachment({ role: "rejected", id, dev });
+        this.send(server, { t: "taken" });
+        try {
+          server.close(4001, "another device is hosting this code");
+        } catch {}
+        return new Response(null, { status: 101, webSocket: client });
+      }
+    }
+
+    this.send(server, { t: "welcome", id, role });
+
+    if (role === "display") {
+      // Whatever is remembered, straight away — then ask the operator for the
+      // real thing regardless, because the cache may be empty or stale and the
+      // display must never be left showing a guess.
+      if (this.snap) this.send(server, { t: "s", d: this.snap });
+      const op = this.operator();
+      if (op) this.send(op, { t: "need", from: id });
+    }
+    this.tellOperator();
+
+    return new Response(null, { status: 101, webSocket: client });
+  }
+
+  async webSocketMessage(ws, raw) {
+    let m;
+    try {
+      m = JSON.parse(raw);
+    } catch {
+      return;
+    }
+    const self = ws.deserializeAttachment() || {};
+    if (self.role === "rejected") return;
+
+    if (self.role === "op") {
+      if (m.t === "s") {
+        // Updates arrive with the song left out most of the time, so the cache
+        // is merged rather than replaced: a display joining after a slide
+        // change still needs the song that came three minutes ago.
+        this.snap = Object.assign({}, this.snap, m.d);
+        for (const ws2 of this.sockets("display")) this.send(ws2, m);
+        return;
+      }
+      if (m.t === "pong" && m.to) {
+        // Clock sync is between the display and the operator, not the display
+        // and this Worker — the countdown is described in the operator's clock,
+        // so the operator's is the one worth measuring against.
+        for (const ws2 of this.sockets("display")) {
+          const a = ws2.deserializeAttachment();
+          if (a && a.id === m.to) this.send(ws2, m);
+        }
+      }
+      return;
+    }
+
+    // Displays only ever ask for things, and every one of them is for the
+    // operator. Stamped with who asked, so the answer can be routed back.
+    if (m.t === "ping" || m.t === "hello" || m.t === "need") {
+      const op = this.operator();
+      if (op) this.send(op, Object.assign({}, m, { from: self.id }));
+    }
+  }
+
+  async webSocketClose(ws) {
+    this.tellOperator(ws);
+  }
+
+  async webSocketError(ws) {
+    this.tellOperator(ws);
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Policy
@@ -1585,6 +1772,24 @@ export default {
     const origin = request.headers.get("Origin");
     if (origin && !originAllowed(origin, env)) {
       return json({ error: "origin", message: "Origin not allowed." }, 403, request, env);
+    }
+
+    // The stage relay. Handled before route() because this one does not answer
+    // with JSON — it answers with 101 and a socket, and it has to reach the
+    // Durable Object for the room rather than any code in this file.
+    const url = new URL(request.url);
+    const room = url.pathname.match(/^\/room\/([0-9]{4,8})$/);
+    if (room) {
+      if ((request.headers.get("Upgrade") || "").toLowerCase() !== "websocket") {
+        return json({ error: "upgrade", message: "This endpoint speaks WebSocket." }, 426, request, env);
+      }
+      if (!env.ROOM) {
+        return json({ error: "no_relay", message: "The relay is not bound." }, 503, request, env);
+      }
+      // Named by the room code, so every device that types the same six digits
+      // lands in the same object, wherever in the world it dials from.
+      const stub = env.ROOM.get(env.ROOM.idFromName(room[1]));
+      return await stub.fetch(request);
     }
 
     try {

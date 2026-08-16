@@ -173,46 +173,72 @@ Owner only:
 
 There is no route that edits or deletes an audit entry, for anyone.
 
-## The relay (`/turn`)
+## The stage relay (`/room/:code`)
 
-Two devices on the same wifi pair directly and never touch this. Two devices on
-different networks — operator on the church wifi, display on a hotspot — each
-sit behind their own NAT and cannot address each other at all. The only way
-through is a TURN server that both can reach and that relays between them.
-Without one this is not a slow link, it is no link, in both directions.
+How an operator and a display find each other.
 
-PeerJS ships a relay on UDP 3478 and there is a well-known public one at
-openrelay.metered.ca. Measured on 2026-08-16, with `iceTransportPolicy: "relay"`
-against each in turn, **neither returned a single relay candidate** — a plain
-STUN control on the same machine gathered `host` and `srflx` normally, so this
-is the servers, not the network. They stay in the app's fallback list because
-they cost nothing if they come back, but they cannot be relied on.
+Pairing used to be peer-to-peer over WebRTC. On one wifi that is ideal — the two
+devices talk directly and nothing sits in the middle. On two networks it is
+impossible: each device is behind its own NAT, neither can address the other,
+and the only way through is a server both can reach. That is not a slow link, it
+is no link, in either direction, which is what a tablet on a different wifi saw.
 
-So the relay this app actually uses is Cloudflare's, and setting it up is the
-step that makes cross-network pairing work:
+WebRTC's answer to that is a TURN server. The public ones are dead — measured on
+2026-08-16 with `iceTransportPolicy: "relay"`, neither the PeerJS relay nor
+openrelay.metered.ca returned a single relay candidate, while a plain STUN
+control on the same machine gathered `host` and `srflx` normally — and
+Cloudflare's own TURN wants a card on file before it will issue a key.
 
-1. Cloudflare dashboard → **Realtime** → **TURN Keys** → create a key. Note the
-   key id and the API token (the token is shown once).
-2. Give them to the Worker:
+So the relay is a Durable Object here instead. Both devices dial *out* over
+`wss` on 443, the one port every network has to let through, so there is no NAT
+to traverse and no difference between "same wifi" and "opposite ends of the
+city". It costs nothing: one room is a few hundred messages an hour, incoming
+WebSocket messages bill at 20:1, and the free plan allows 100,000 requests a
+day.
 
-   ```bash
-   npx wrangler secret put TURN_KEY_ID
-   npx wrangler secret put TURN_KEY_API_TOKEN
-   npx wrangler deploy
-   ```
+It also deletes a whole class of bug. The old broker only released a room code
+when its socket closed, which closing a tab does not do, so a code stayed taken
+and the app grew six "slots" per code to walk around its own zombies. Here an
+operator returning to its own code replaces itself and is back in under a
+second.
 
-3. Check it: `curl https://spro-library.<subdomain>.workers.dev/turn` should
-   answer `{"iceServers":[…],"configured":true}` with a `turn:` entry carrying a
-   username and credential.
+    GET /room/<4-8 digits>?role=op|display&dev=<device id>   (WebSocket)
+
+`dev` is what makes a code safe to reuse. An operator arriving on a code that
+already has one is either the same device coming back — allowed, and the stale
+socket is closed with 4000 — or a different room that rolled the same six
+digits, which is refused with `{"t":"taken"}` and closed with 4001. Replacing
+blindly would put one church's timer on another church's stage.
+
+Messages are relayed, not interpreted: `s` (state) and `pong` go operator →
+displays, `ping`/`hello`/`need` go display → operator stamped with `from`, and
+the operator is told `peers` whenever the head count changes. The object keeps
+the last merged snapshot in memory so a display joining mid-service has
+something immediately, but it is only ever an optimisation — the operator is
+asked as well, and its two-second heartbeat would answer within one beat anyway.
+
+WebRTC is still in the app underneath, used only when the socket will not open
+at all. Falling back to it is falling back to what worked on one wifi before,
+rather than to nothing.
+
+## TURN credentials (`/turn`) — optional
+
+Only feeds the WebRTC fallback above, and only matters if that fallback ever has
+to carry a cross-network pairing. Everything works without it.
+
+If you do want it: Cloudflare dashboard → **Media** → **Realtime** → **TURN
+Server** → **Get Started** (it asks for a payment method; usage is $0 below
+1,000 GB/month, shared with SFU) → create a key, then
+
+```bash
+npx wrangler secret put TURN_KEY_ID
+npx wrangler secret put TURN_KEY_API_TOKEN
+npx wrangler deploy
+```
 
 Credentials are minted with a six-hour life and cached in KV for five, so a room
-filling up on a Sunday morning costs one call to Cloudflare rather than one per
-device. The free tier covers 1 TB of relayed traffic a month; a stage timer
-sends a few hundred bytes a second, so a service is measured in megabytes.
-
-Unconfigured is a normal state, not an error. `/turn` answers `200` with an
-empty list and `configured: false`, and the app falls back — it just will not
-cross networks.
+filling up costs one call rather than one per device. Unconfigured is a normal
+state: `/turn` answers `200` with an empty list and `configured: false`.
 
 ## Tests
 
@@ -223,3 +249,11 @@ npm test
 Runs the Worker's real code against a fake KV and a fake GitHub Contents API
 that tracks `sha` and rejects stale writes, so the concurrency path is exercised
 rather than assumed. Nothing touches the live repo.
+
+The relay needs the Worker actually running — the thing under test is socket
+behaviour, and there is no honest way to fake that:
+
+```bash
+npx wrangler dev --port 8787 --local    # one terminal
+npm run test:relay                      # another
+```
