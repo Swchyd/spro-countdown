@@ -29,3 +29,9 @@ id = "2b0c3d2e724e46958bf1125a8f7bd0b8"
 # Secrets are NOT set here — they would end up in git. Set them with:
 #   npx wrangler secret put GITHUB_TOKEN
 #   npx wrangler secret put OWNER_KEY
+#
+# And, for /turn — the WebRTC relay that lets an operator and a display on two
+# different networks reach each other at all. Without these the app still works
+# on one wifi and never works across two. See README.md.
+#   npx wrangler secret put TURN_KEY_ID
+#   npx wrangler secret put TURN_KEY_API_TOKEN

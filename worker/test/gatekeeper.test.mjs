@@ -791,8 +791,84 @@ async function testCollaboratorIdsAreRoutable() {
   check("every collaborator can be revoked by the owner", unreachable.length === 0, unreachable.slice(0, 3).join(" · "));
 }
 
+// The relay endpoint is the difference between "the display on the other wifi
+// connects" and "it never does", so the thing worth pinning down is that it
+// never takes the page down with it: no key, a refusing API and an unreachable
+// one all have to answer 200 with an empty list, because the app treats that as
+// "use your own fallbacks" and a 500 as nothing at all.
+async function testTurnCredentials() {
+  section("TURN credentials");
+  const kv = makeKV();
+  const env = makeEnv(kv);
+
+  const bare = await call(env, "/turn");
+  check("unconfigured answers 200, not an error", bare.status === 200, "got " + bare.status);
+  check("and says so", bare.body.configured === false);
+  check("with no relays to offer", Array.isArray(bare.body.iceServers) && bare.body.iceServers.length === 0);
+
+  // Configured, and Cloudflare answering.
+  const realFetch = globalThis.fetch;
+  let mints = 0;
+  const ICE = [
+    { urls: ["stun:stun.cloudflare.com:3478"] },
+    { urls: ["turn:turn.cloudflare.com:3478?transport=udp"], username: "u", credential: "c" }
+  ];
+  env.TURN_KEY_ID = "key123";
+  env.TURN_KEY_API_TOKEN = "token456";
+
+  globalThis.fetch = async (url, opts = {}) => {
+    if (!String(url).includes("rtc.live.cloudflare.com")) return realFetch(url, opts);
+    mints++;
+    check(
+      "the mint call carries the key id in the path",
+      String(url).includes("/keys/key123/credentials/generate-ice-servers")
+    );
+    check("and the token as a bearer", opts.headers.Authorization === "Bearer token456");
+    return new Response(JSON.stringify({ iceServers: ICE }), { status: 201 });
+  };
+
+  try {
+    const first = await call(env, "/turn");
+    check("a configured key returns relays", first.body.iceServers.length === 2);
+    check("including one that can actually relay", first.body.iceServers.some((s) => String(s.urls).includes("turn:")));
+    check("and it carries a credential", first.body.iceServers[1].credential === "c");
+
+    const second = await call(env, "/turn");
+    check("a second device is served from cache", mints === 1, "minted " + mints + " times");
+    check("and gets the same relays", JSON.stringify(second.body.iceServers) === JSON.stringify(ICE));
+
+    // A refusal must not become a 500: the app still has its own fallbacks.
+    await kv.delete("turn:ice");
+    globalThis.fetch = async (url, opts = {}) => {
+      if (!String(url).includes("rtc.live.cloudflare.com")) return realFetch(url, opts);
+      return new Response("nope", { status: 401 });
+    };
+    const refused = await call(env, "/turn");
+    check("a refused mint still answers 200", refused.status === 200, "got " + refused.status);
+    check("with an empty list", refused.body.iceServers.length === 0);
+    check("and nothing is cached from the failure", (await kv.get("turn:ice")) === null);
+
+    // So must a network that eats the call outright.
+    globalThis.fetch = async (url, opts = {}) => {
+      if (!String(url).includes("rtc.live.cloudflare.com")) return realFetch(url, opts);
+      throw new Error("connection reset");
+    };
+    const dead = await call(env, "/turn");
+    check("an unreachable mint still answers 200", dead.status === 200, "got " + dead.status);
+    check("with an empty list", dead.body.iceServers.length === 0);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+
+  // It has to work with no credential at all — pairing happens before anyone
+  // has signed in, and the display never signs in.
+  const anon = await call(env, "/turn");
+  check("no token is needed to pair", anon.status === 200, "got " + anon.status);
+}
+
 const suites = [
   testPlatformLimits,
+  testTurnCredentials,
   testCollaboratorIdsAreRoutable,
   testAuthentication,
   testBruteForce,

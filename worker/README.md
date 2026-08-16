@@ -152,6 +152,7 @@ Public:
 
 - `GET /health`
 - `GET /library` — live songs, no credential needed
+- `GET /turn` — WebRTC relay credentials, no credential needed (see below)
 
 Session required (`Authorization: Bearer <token>`):
 
@@ -171,6 +172,47 @@ Owner only:
 - `GET /audit`
 
 There is no route that edits or deletes an audit entry, for anyone.
+
+## The relay (`/turn`)
+
+Two devices on the same wifi pair directly and never touch this. Two devices on
+different networks — operator on the church wifi, display on a hotspot — each
+sit behind their own NAT and cannot address each other at all. The only way
+through is a TURN server that both can reach and that relays between them.
+Without one this is not a slow link, it is no link, in both directions.
+
+PeerJS ships a relay on UDP 3478 and there is a well-known public one at
+openrelay.metered.ca. Measured on 2026-08-16, with `iceTransportPolicy: "relay"`
+against each in turn, **neither returned a single relay candidate** — a plain
+STUN control on the same machine gathered `host` and `srflx` normally, so this
+is the servers, not the network. They stay in the app's fallback list because
+they cost nothing if they come back, but they cannot be relied on.
+
+So the relay this app actually uses is Cloudflare's, and setting it up is the
+step that makes cross-network pairing work:
+
+1. Cloudflare dashboard → **Realtime** → **TURN Keys** → create a key. Note the
+   key id and the API token (the token is shown once).
+2. Give them to the Worker:
+
+   ```bash
+   npx wrangler secret put TURN_KEY_ID
+   npx wrangler secret put TURN_KEY_API_TOKEN
+   npx wrangler deploy
+   ```
+
+3. Check it: `curl https://spro-library.<subdomain>.workers.dev/turn` should
+   answer `{"iceServers":[…],"configured":true}` with a `turn:` entry carrying a
+   username and credential.
+
+Credentials are minted with a six-hour life and cached in KV for five, so a room
+filling up on a Sunday morning costs one call to Cloudflare rather than one per
+device. The free tier covers 1 TB of relayed traffic a month; a stage timer
+sends a few hundred bytes a second, so a service is measured in megabytes.
+
+Unconfigured is a normal state, not an error. `/turn` answers `200` with an
+empty list and `configured: false`, and the app falls back — it just will not
+cross networks.
 
 ## Tests
 

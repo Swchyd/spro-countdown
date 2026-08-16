@@ -1,4 +1,4 @@
-var CACHE = "stagetimer-v3";
+var CACHE = "stagetimer-v4";
 var ASSETS = ["./", "index.html", "manifest.json", "icon-180.png", "peerjs.min.js"];
 
 self.addEventListener("install", function (e) {

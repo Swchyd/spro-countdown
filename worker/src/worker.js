@@ -1375,6 +1375,78 @@ async function handlePolicy(request, env, actor, cfg) {
 }
 
 // ---------------------------------------------------------------------------
+// TURN
+//
+// Two devices on the same wifi negotiate a direct WebRTC link and never touch
+// this. Two devices on different networks usually cannot: each is behind its
+// own NAT, neither can address the other, and the only way through is a server
+// that both can reach and that agrees to relay for them. Without one, "operator
+// on the church wifi, display on somebody's hotspot" is not slow — it never
+// connects, in either direction.
+//
+// Cloudflare's TURN service is that relay. It issues short-lived credentials
+// rather than a shared password, which is the whole reason this lives here: the
+// API token that mints them must not ship inside index.html. The result is
+// cached for most of its life, so a room filling up on a Sunday morning costs
+// one call rather than one per device.
+//
+// Unconfigured is a normal state, not an error — the app has its own fallback
+// list of public relays and works without this. Set it up with:
+//   npx wrangler secret put TURN_KEY_ID
+//   npx wrangler secret put TURN_KEY_API_TOKEN
+// ---------------------------------------------------------------------------
+
+const TURN_TTL = 6 * 60 * 60;        // how long a minted credential is good for
+const TURN_CACHE_TTL = 5 * 60 * 60;  // re-mint with an hour still on the clock
+
+async function handleTurn(env) {
+  if (!env.TURN_KEY_ID || !env.TURN_KEY_API_TOKEN) {
+    return { iceServers: [], configured: false };
+  }
+
+  const cached = await env.SPRO.get("turn:ice", "json");
+  if (cached && Array.isArray(cached.iceServers) && cached.iceServers.length) {
+    return { iceServers: cached.iceServers, configured: true };
+  }
+
+  let res;
+  try {
+    res = await fetch(
+      `https://rtc.live.cloudflare.com/v1/turn/keys/${env.TURN_KEY_ID}/credentials/generate-ice-servers`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.TURN_KEY_API_TOKEN}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ ttl: TURN_TTL })
+      }
+    );
+  } catch {
+    return { iceServers: [], configured: true, error: "unreachable" };
+  }
+
+  // A relay that cannot be minted is not a reason to fail the page. The app
+  // falls back to its public list, which is worse but is not nothing.
+  if (!res.ok) {
+    console.error("turn mint failed", res.status);
+    return { iceServers: [], configured: true, error: "mint_failed" };
+  }
+
+  const body = await res.json();
+  // The API has answered with both a single object and an array of them over
+  // its life; take either and hand the client one shape.
+  const raw = body && body.iceServers;
+  const list = Array.isArray(raw) ? raw : raw ? [raw] : [];
+  if (!list.length) return { iceServers: [], configured: true, error: "empty" };
+
+  await env.SPRO.put("turn:ice", JSON.stringify({ iceServers: list }), {
+    expirationTtl: TURN_CACHE_TTL
+  });
+  return { iceServers: list, configured: true };
+}
+
+// ---------------------------------------------------------------------------
 // Router
 // ---------------------------------------------------------------------------
 
@@ -1386,6 +1458,11 @@ async function route(request, env) {
   if (p === "/" || p === "/health") {
     return { ok: true, version: VERSION };
   }
+
+  // Public for the same reason the library is: every display on the stage has
+  // to be able to pair with no credential at all, and pairing is the first
+  // thing it does.
+  if (p === "/turn" && method === "GET") return await handleTurn(env);
 
   // Reads are public by design: the library lives in a public repo, and every
   // display on the stage has to be able to load it with no credential at all.

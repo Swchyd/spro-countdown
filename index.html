@@ -2925,6 +2925,92 @@ if ("serviceWorker" in navigator) {
   function slotId(code, i) {
     return PEER_PREFIX + code + SLOTS[i % SLOTS.length];
   }
+
+  // ---- finding a path between the two devices ----
+  //
+  // On one wifi this hardly matters: both devices are on the same subnet, they
+  // exchange local addresses and talk directly. On two different networks each
+  // one sits behind its own router doing NAT, neither can address the other,
+  // and unless some server in the middle agrees to relay for them there is no
+  // path at all. That is not a slow connection — it is no connection, for ever,
+  // in both directions, which is exactly what a tablet on the other wifi saw.
+  //
+  // PeerJS's own defaults are a single Google STUN server and one relay on UDP
+  // 3478 — the first port a guest, church or corporate network blocks.
+  //
+  // The relay that actually does the work is Cloudflare's, and the Worker hands
+  // out credentials for it at /turn. Without a TURN key set on the Worker there
+  // is no working relay at all: both public ones below were measured on
+  // 2026-08-16 with iceTransportPolicy "relay" and neither produced a single
+  // relay candidate, while a plain STUN control on the same machine gathered
+  // host and srflx normally. They are kept because they cost nothing and may
+  // come back — but they are not the fix, and a display on another network will
+  // still fail if /turn has nothing to give it.
+  var ICE_FALLBACK = [
+    { urls: [
+      "stun:stun.l.google.com:19302",
+      "stun:stun1.l.google.com:19302",
+      "stun:stun.cloudflare.com:3478"
+    ] },
+    { urls: ["turn:eu-0.turn.peerjs.com:3478", "turn:us-0.turn.peerjs.com:3478"],
+      username: "peerjs", credential: "peerjsp" },
+    { urls: [
+      "turn:openrelay.metered.ca:80",
+      "turn:openrelay.metered.ca:443",
+      "turns:openrelay.metered.ca:443?transport=tcp"
+    ], username: "openrelayproject", credential: "openrelayproject" }
+  ];
+  var iceServers = ICE_FALLBACK;
+  var iceLoaded = false;
+  var icePending = null;   // callers waiting on the first answer from /turn
+
+  function peerOpts() {
+    return { debug: 0, config: { iceServers: iceServers, sdpSemantics: "unified-plan" } };
+  }
+
+  // Ask the Worker for relay credentials. Called once at boot so the answer is
+  // already in hand by the time anyone taps Operator or Display.
+  function loadIce() {
+    if (iceLoaded || icePending) return;
+    icePending = [];
+
+    var settle = function () {
+      var waiting = icePending;
+      if (!waiting) return;
+      icePending = null;
+      iceLoaded = true;
+      waiting.forEach(function (fn) { try { fn(); } catch (e) {} });
+    };
+
+    // Nothing here is allowed to hold up a service. If the Worker is slow or
+    // unreachable we go with the fallback list and carry on.
+    var t = setTimeout(settle, 2500);
+
+    fetch(API_BASE + "/turn", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (j) {
+        if (j && j.iceServers && j.iceServers.length) {
+          // Cloudflare's relay first, the public ones kept on the end: a key
+          // that lapses degrades to what we had rather than to nothing.
+          iceServers = j.iceServers.concat(ICE_FALLBACK);
+        }
+      })
+      .catch(function () {})
+      .then(function () { clearTimeout(t); settle(); });
+  }
+
+  // Run fn once the relay list is settled — immediately, if it already is.
+  // While it is waiting there is no peer object at all, and the watchdog must
+  // not read that as a dead link and start a second one on top.
+  var peerBooting = false;
+  function withIce(fn) {
+    if (iceLoaded) { fn(); return; }
+    loadIce();
+    if (!icePending) { fn(); return; }
+    peerBooting = true;
+    icePending.push(function () { peerBooting = false; fn(); });
+  }
+
   var watchdog = 0;
   var dialing = 0;       // when the current connect attempt started
 
@@ -3021,6 +3107,7 @@ if ("serviceWorker" in navigator) {
   function superviseLink() {
     if (LOCAL || role === "solo" || !roomCode) return;
     if (navigator.onLine === false) return;   // wait for the network to exist
+    if (peerBooting) return;                  // one is being built right now
 
     if (!peer || peer.destroyed) {
       if (role === "op") hostRoom(roomCode);
@@ -3280,7 +3367,12 @@ if ("serviceWorker" in navigator) {
     startWatchdog();
     startHeartbeat();
 
-    peer = new Peer(slotId(code, hostSlot), { debug: 0 });
+    withIce(function () {
+    // Waiting for the relay list is the one thing that can happen between the
+    // tap and here, so re-check that this is still the room being hosted.
+    if (role !== "op" || roomCode !== code) return;
+
+    peer = new Peer(slotId(code, hostSlot), peerOpts());
 
     // The broker accepted the id, so this code is ours and nobody else's. It
      // has stopped being a fresh one the moment it is held.
@@ -3376,6 +3468,7 @@ if ("serviceWorker" in navigator) {
       setLink("connecting", "Reconnecting…");
       if (peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} }
     });
+    });
   }
 
   // ---- display side ----
@@ -3432,7 +3525,10 @@ if ("serviceWorker" in navigator) {
     setLink("connecting", "Connecting to room " + code + "…");
     startWatchdog();
 
-    peer = new Peer({ debug: 0 });
+    withIce(function () {
+    if (role !== "display" || roomCode !== code) return;
+
+    peer = new Peer(peerOpts());
 
     peer.on("open", function () { openConn(code); });
 
@@ -3459,13 +3555,23 @@ if ("serviceWorker" in navigator) {
     peer.on("disconnected", function () {
       if (peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} }
     });
+    });
   }
+
+  // How long a dial is given before the sweep moves to the next slot. Two
+  // numbers, because there are two things being waited on and they take very
+  // different times — see the timer in openConn.
+  var PROBE_MS = 2500;
+  var NEGOTIATE_MS = 20000;
 
   function openConn(code) {
     if (!peer || peer.destroyed || peer.disconnected) return;
     if (dispConn && dispConn.open) return;
-    // A dial in flight gets a few seconds before we try another one.
-    if (dialing && Date.now() - dialing < 6000) return;
+    // A dial in flight owns the slot until its own timer gives up on it. This
+    // guard used to expire at six seconds, which was shorter than a relayed
+    // handshake takes — so the watchdog started a second dial across the top of
+    // one that was still working, and the two knocked each other over.
+    if (dialing && Date.now() - dialing < NEGOTIATE_MS + 5000) return;
     dialing = Date.now();
 
     var conn = peer.connect(slotId(code, dialSlot), { reliable: true });
@@ -3473,25 +3579,51 @@ if ("serviceWorker" in navigator) {
     dispConn = conn;
 
     var everOpened = false;
+    var dialStart = Date.now();
 
     // Dialling an id nobody is holding does not fail. Measured on the public
     // broker: no peer-unavailable, no error, no close — the call simply hangs
     // for ever. So the sweep cannot be driven by failures, because there are
-    // none. It gets its own clock: if a slot has not answered in two and a
-    // half seconds, treat it as empty and move to the next one.
-    var dialTimer = setTimeout(function () {
-      if (everOpened || dispConn !== conn) return;
+    // none. It gets its own clock.
+    //
+    // The clock has to tell two different waits apart, and not doing so was the
+    // other half of the cross-network bug. An empty slot never answers at all:
+    // no SDP ever comes back, and two and a half seconds is long enough to be
+    // sure nobody is there. A slot with the operator on it answers almost at
+    // once and then spends real time agreeing a route — across two networks,
+    // through a relay, ten seconds and more is ordinary. The old flat 2.5s
+    // killed every one of those mid-handshake and stepped to the next slot, so
+    // the display swept the room for ever while the operator sat right there.
+    //
+    // So: the answer is what starts the second clock. Once it has arrived we
+    // are talking to somebody and the only reasons to give up are ICE saying it
+    // failed, or twenty seconds passing.
+    var dialTimer = setInterval(function () {
+      if (everOpened || dispConn !== conn) { clearInterval(dialTimer); return; }
+      var pc = conn.peerConnection;
+      var answered = !!(pc && pc.remoteDescription);
+      var waited = Date.now() - dialStart;
+      var giveUp = answered
+        ? (waited > NEGOTIATE_MS || (pc && pc.iceConnectionState === "failed"))
+        : (waited > PROBE_MS);
+      if (!giveUp) {
+        // Worth saying which of the two waits this is: "found, still working on
+        // it" is a different thing to look at than "still looking".
+        if (answered) setLink("connecting", "Operator found — agreeing a route…");
+        return;
+      }
+      clearInterval(dialTimer);
       try { conn.close(); } catch (e) {}
       dispConn = null;
       dialing = 0;
       dialSlot = (dialSlot + 1) % SLOTS.length;
       setLink("connecting", "Looking for the operator in room " + code + "…");
       openConn(code);
-    }, 2500);
+    }, 500);
 
     conn.on("open", function () {
       everOpened = true;
-      clearTimeout(dialTimer);
+      clearInterval(dialTimer);
       dialing = 0;
       setLink("linked");
       syncSamples = [];
@@ -3519,7 +3651,7 @@ if ("serviceWorker" in navigator) {
     var lost = function () {
       // A stale link closing must not tear down the one that replaced it.
       if (dispConn !== conn) return;
-      clearTimeout(dialTimer);
+      clearInterval(dialTimer);
       clearInterval(pingTimer);
       dispConn = null;
       dialing = 0;
@@ -6988,6 +7120,10 @@ if ("serviceWorker" in navigator) {
     $("pickOp").disabled = false;
     $("pickDisp").disabled = false;
   });
+
+  // Fetch the relay credentials now, while the menu is being read, so pairing
+  // never has to wait on a round trip it could have made earlier.
+  loadIce();
 
   // Catch up with the shared library on the way in, and push anything this
   // device saved while it was offline. Reading needs no token, so this works
