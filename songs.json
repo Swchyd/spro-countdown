@@ -1690,10 +1690,14 @@
     {
      "id": "s_msuasxz2kqp7",
      "ms": 0
+    },
+    {
+     "id": "s_msv2igzoxavs",
+     "ms": 0
     }
    ],
-   "updatedAt": 1786812706003,
-   "updatedBy": "Sam"
+   "updatedAt": 1786840195271,
+   "updatedBy": "Lid"
   }
  ],
  "setlist": [
@@ -1720,8 +1724,12 @@
   {
    "id": "s_msuasxz2kqp7",
    "ms": 0
+  },
+  {
+   "id": "s_msv2igzoxavs",
+   "ms": 0
   }
  ],
- "setlistAt": 1786812706003,
- "setlistBy": "Sam"
+ "setlistAt": 1786840195271,
+ "setlistBy": "Lid"
 }
