@@ -1756,6 +1756,151 @@
    "updatedBy": "Sam",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msvdwr6vqfzm",
+   "title": "[ENG] Appointed Hour",
+   "authors": [
+    "Lewi Matheus Dethan",
+    "GMS Live"
+   ],
+   "author": "Lewi Matheus Dethan, GMS Live",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "The glory of",
+      "the Lord is here",
+      "The Spirit of",
+      "the Lord is near",
+      "Moving in",
+      "our generation now"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "We gather here",
+      "with lifted hands",
+      "Hungry hearts",
+      "across this land",
+      "We are ready",
+      "for Your call"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "chorus",
+     "lines": [
+      "Let Your fire",
+      "fall on us",
+      "Let Your oil",
+      "be poured on us",
+      "This is our",
+      "appointed hour"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "bridge",
+     "lines": [
+      "For the glory",
+      "of Your kingdom",
+      "And the glory",
+      "in Your church"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "_1",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "The glory of",
+     "the Lord is here"
+    ],
+    [
+     "The Spirit of",
+     "the Lord is near"
+    ],
+    [
+     "Moving in",
+     "our generation now"
+    ],
+    [
+     "We gather here",
+     "with lifted hands"
+    ],
+    [
+     "Hungry hearts",
+     "across this land"
+    ],
+    [
+     "We are ready",
+     "for Your call"
+    ],
+    [
+     "Let Your fire",
+     "fall on us"
+    ],
+    [
+     "Let Your oil",
+     "be poured on us"
+    ],
+    [
+     "This is our",
+     "appointed hour"
+    ],
+    [
+     "For the glory",
+     "of Your kingdom"
+    ],
+    [
+     "And the glory",
+     "in Your church"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "chorus",
+    "",
+    "",
+    "bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786859334175,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
