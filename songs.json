@@ -1596,6 +1596,70 @@
    "updatedBy": "Samuel",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_msv2igzoxavs",
+   "title": "[IND] Kucinta Kau Yesus",
+   "authors": [
+    "Yehuda Singers"
+   ],
+   "author": "Yehuda Singers",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Kucinta Kau, Yesus",
+      "Kupuji Kau, Yesus",
+      "Kusembah Kau, Yesus",
+      "Tuhan dan Rajaku",
+      "Dengan seg'nap hati",
+      "Dan dengan seg'nap jiwaku",
+      "Akal budi",
+      "Kucinta Kau"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1"
+   ],
+   "slides": [
+    [
+     "Kucinta Kau, Yesus",
+     "Kupuji Kau, Yesus"
+    ],
+    [
+     "Kusembah Kau, Yesus",
+     "Tuhan dan Rajaku"
+    ],
+    [
+     "Dengan seg'nap hati",
+     "Dan dengan seg'nap jiwaku"
+    ],
+    [
+     "Akal budi",
+     "Kucinta Kau"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1786840192117,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
