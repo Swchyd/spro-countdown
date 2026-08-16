@@ -94,6 +94,16 @@ export class Room {
     if (op) this.send(op, { t: "peers", n: this.sockets("display", except).length });
   }
 
+  // Whether there is an operator in this room, which is the only thing a
+  // display actually wants to know. Reaching the relay is not the same as
+  // reaching the stage — a display that types a code nobody is hosting gets a
+  // perfectly good socket and no timer for ever, and saying "connected" to that
+  // is a lie that costs somebody a service before anyone works out why.
+  tellDisplays(except) {
+    const on = !!this.operator(except);
+    for (const ws of this.sockets("display", except)) this.send(ws, { t: "host", on });
+  }
+
   async fetch(request) {
     const url = new URL(request.url);
     const role = url.searchParams.get("role") === "op" ? "op" : "display";
@@ -149,12 +159,17 @@ export class Room {
     this.send(server, { t: "welcome", id, role });
 
     if (role === "display") {
+      const op = this.operator();
+      this.send(server, { t: "host", on: !!op });
       // Whatever is remembered, straight away — then ask the operator for the
       // real thing regardless, because the cache may be empty or stale and the
       // display must never be left showing a guess.
       if (this.snap) this.send(server, { t: "s", d: this.snap });
-      const op = this.operator();
       if (op) this.send(op, { t: "need", from: id });
+    } else {
+      // An operator arriving is the event every display in the room is waiting
+      // on, and none of them can see it happen any other way.
+      this.tellDisplays();
     }
     this.tellOperator();
 
@@ -201,11 +216,20 @@ export class Room {
   }
 
   async webSocketClose(ws) {
-    this.tellOperator(ws);
+    this.departed(ws);
   }
 
   async webSocketError(ws) {
+    this.departed(ws);
+  }
+
+  departed(ws) {
+    const a = ws.deserializeAttachment() || {};
     this.tellOperator(ws);
+    // An operator going away has to reach the displays. Without this they sit
+    // on a live socket showing a countdown that stopped being driven, which is
+    // the same lie as before wearing the opposite face.
+    if (a.role === "op") this.tellDisplays(ws);
   }
 }
 

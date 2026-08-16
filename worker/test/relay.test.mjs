@@ -108,6 +108,33 @@ check("a late display still gets the song from the merged cache", !!cached.song,
 check("with the current time, not the one the song arrived with", cached.remainMs === 30000);
 
 // ---------------------------------------------------------------------------
+// Reaching the relay is not reaching the stage. A display that joins a code
+// nobody is hosting gets a perfectly good socket, and if that reads as
+// "connected" it stands by for ever with nothing to explain why — which is
+// exactly what happened the first time this shipped.
+console.log("\nA display is told whether anyone is hosting\n" +
+            "------------------------------------------");
+check("a display in a hosted room is told so", (last(d1, "host") || {}).on === true,
+  JSON.stringify(seen(d1, "host")));
+
+const empty = rnd();
+const alone = await open(empty, "display", "devE");
+await until(() => last(alone, "host"));
+check("a display in an empty room is told there is nobody", (last(alone, "host") || {}).on === false,
+  JSON.stringify(alone.inbox));
+
+const late = await open(empty, "op", "devF");
+await until(() => (last(alone, "host") || {}).on === true);
+check("and hears about it the moment an operator opens the room",
+  (last(alone, "host") || {}).on === true, JSON.stringify(seen(alone, "host")));
+
+late.close();
+await until(() => (last(alone, "host") || {}).on === false);
+check("and hears about it again when the operator walks out",
+  (last(alone, "host") || {}).on === false, JSON.stringify(seen(alone, "host")));
+alone.close();
+
+// ---------------------------------------------------------------------------
 console.log("\nClock sync is routed back to the display that asked\n" +
             "--------------------------------------------------");
 send(d1, { t: "ping", c: 1111 });

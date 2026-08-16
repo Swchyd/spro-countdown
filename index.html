@@ -2960,6 +2960,7 @@ if ("serviceWorker" in navigator) {
   var relaySongKey = null; // operator: the song the displays were last given
   var relayGaveUp = false; // the socket would not open; WebRTC has it from here
   var relayTaken = false;  // this code belongs to another room; do not redial it
+  var relayHost = false;   // display: is there actually an operator in there
 
   function relayOn() { return !LOCAL && !relayGaveUp; }
 
@@ -2980,6 +2981,7 @@ if ("serviceWorker" in navigator) {
     relayId = "";
     relaySongKey = null;
     relayTaken = false;
+    relayHost = false;
     if (relay) {
       var r = relay;
       relay = null;
@@ -2998,6 +3000,16 @@ if ("serviceWorker" in navigator) {
     if (dispConn && dispConn.open) {
       try { dispConn.send(JSON.stringify(msg)); } catch (e) {}
     }
+  }
+
+  // What a display on the relay should say it is doing. Three states, and the
+  // difference between the last two is the whole point: a room nobody is
+  // hosting used to read "Connected" and then stand by for ever.
+  function showDisplayLink() {
+    if (!relay || relay.readyState !== 1) return;
+    if (relayHost) setLink("linked");
+    else if (T.live) setLink("lost", "Operator disconnected — timer still running");
+    else setLink("connecting", "Waiting for the operator to open room " + relayCode + "…");
   }
 
   function openRelay(asRole, code) {
@@ -3029,10 +3041,9 @@ if ("serviceWorker" in navigator) {
         relaySongKey = null;
         setLink("ready");
       } else {
-        setLink("linked");
-        syncSamples = [];
-        sendUp({ t: "hello" });
-        startPings();
+        // Deliberately not "linked" yet. Reaching the relay is not reaching the
+        // stage, and the relay says which within the same breath — see "host".
+        showDisplayLink();
       }
     };
 
@@ -3042,6 +3053,23 @@ if ("serviceWorker" in navigator) {
       try { m = JSON.parse(ev.data); } catch (e) { return; }
 
       if (m.t === "welcome") { relayId = m.id; return; }
+
+      // Is anybody hosting this code? The answer arrives on joining and again
+      // every time it changes, so a display waiting for an operator to open the
+      // app, and one whose operator has just walked out, both say so.
+      if (m.t === "host") {
+        var was = relayHost;
+        relayHost = !!m.on;
+        if (relayHost && !was) {
+          syncSamples = [];
+          sendUp({ t: "hello" });
+          startPings();
+        } else if (!relayHost) {
+          clearInterval(pingTimer);
+        }
+        showDisplayLink();
+        return;
+      }
 
       // Somebody else's room is on this number. A code just invented has not
       // been read out to anyone yet, so rolling another costs nothing — and
@@ -3776,7 +3804,8 @@ if ("serviceWorker" in navigator) {
     startWatchdog();
 
     if (relay && relayCode === code && relay.readyState <= 1) {
-      setLink(relay.readyState === 1 ? "linked" : "connecting", "");
+      if (relay.readyState === 1) showDisplayLink();
+      else setLink("connecting", "Connecting to room " + code + "…");
       return;
     }
     setLink("connecting", "Connecting to room " + code + "…");
