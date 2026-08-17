@@ -5115,6 +5115,20 @@ if ("serviceWorker" in navigator) {
   // snapshot catches up. Entries clear themselves once it does.
   var confirmedWrites = {}, confirmedDeletes = {};
 
+  // The same protection for setlists, which had none. Adding a song to a
+  // running order is a setlist write, and it had two windows in which a pull
+  // could quietly undo it: before the queued write reached the outbox, and
+  // after the server had acknowledged it but the snapshot still showed the
+  // old entries. Both looked identical from the chair — press +, nothing
+  // happens, press it again.
+  //
+  // Bounded, unlike the song map: an entry here can push a setlist back into a
+  // snapshot that does not contain it, and if another device has genuinely
+  // deleted that setlist there would otherwise be nothing to stop this one
+  // resurrecting it on every pull for ever.
+  var confirmedSetlists = {};
+  var CONFIRM_TTL = 120000;
+
   function saveSession() {
     try {
       if (session) localStorage.setItem(SESSION_KEY, JSON.stringify(session));
@@ -5288,6 +5302,12 @@ if ("serviceWorker" in navigator) {
       if (op.kind === "setlist" && op.setlistId) heldBack[op.setlistId] = true;
       if (op.kind === "setlist-delete" && op.setlistId) dropping[op.setlistId] = true;
     });
+    // A change is held from the moment it is made, not from the moment it
+    // reaches the outbox. queueSetlist waits 1200ms before it enqueues
+    // anything, so a pull already in flight when the song was tapped came back
+    // inside that window, found nothing held, and adopted the server's copy
+    // over the edit that had just been made.
+    Object.keys(setlistTimers).forEach(function (id) { heldBack[id] = true; });
 
     var remoteSets = migrateSetlists(remote);
     var known = {};
@@ -5307,6 +5327,24 @@ if ("serviceWorker" in navigator) {
       if (at === -1) nextSets.push(s);
       else nextSets.splice(Math.min(at, nextSets.length), 0, s);
     });
+
+    // Same rule the songs above follow: a write the server said yes to is true
+    // even when this snapshot disagrees. raw.githubusercontent can be minutes
+    // behind a commit the API has already returned, and adopting it takes back
+    // the song that was just added.
+    Object.keys(confirmedSetlists).forEach(function (id) {
+      var held = confirmedSetlists[id];
+      if (dropping[id] || Date.now() - held.at > CONFIRM_TTL) {
+        delete confirmedSetlists[id];
+        return;
+      }
+      var seen = -1;
+      for (var i = 0; i < nextSets.length; i++) if (nextSets[i].id === id) { seen = i; break; }
+      if (seen === -1) nextSets.push(held.set);
+      else if ((nextSets[seen].updatedAt || 0) < (held.set.updatedAt || 0)) nextSets[seen] = held.set;
+      else delete confirmedSetlists[id];   // the snapshot has caught up
+    });
+
     setlists = nextSets;
     persistLocal();
   }
@@ -5368,6 +5406,21 @@ if ("serviceWorker" in navigator) {
         persistLocal();
       }
       if (op.kind === "delete" && op.id) confirmedDeletes[op.id] = true;
+
+      // The setlist equivalent, and the reason adding a song used to need two
+      // or three presses. The server's timestamp is adopted onto our copy so
+      // the comparison on the next pull is against the same clock.
+      if (res && res.setlist && res.setlist.id) {
+        var ls = setlistById(res.setlist.id);
+        if (ls) {
+          ls.updatedAt = res.setlist.updatedAt;
+          ls.updatedBy = res.setlist.updatedBy;
+        }
+        confirmedSetlists[res.setlist.id] = { set: ls || res.setlist, at: Date.now() };
+        persistLocal();
+      }
+      if (op.kind === "setlist-delete" && op.setlistId) delete confirmedSetlists[op.setlistId];
+
       outbox.shift();
       saveOutbox();
       return flushOutbox();
@@ -5452,6 +5505,8 @@ if ("serviceWorker" in navigator) {
     if (!canWrite() || !id) return;
     clearTimeout(setlistTimers[id]);
     delete setlistTimers[id];
+    // Including the acknowledgement that would otherwise put it back.
+    delete confirmedSetlists[id];
     // Anything still queued for a list that is going away is moot.
     outbox = outbox.filter(function (op) {
       return !(op.kind === "setlist" && op.setlistId === id);
