@@ -1606,8 +1606,8 @@
    "author": "Yehuda Singers",
    "sections": [
     {
-     "key": "_1",
-     "tag": "",
+     "key": "chorus",
+     "tag": "Chorus",
      "lines": [
       "Kucinta Kau, Yesus",
       "Kupuji Kau, Yesus",
@@ -1622,7 +1622,7 @@
     }
    ],
    "order": [
-    "_1"
+    "chorus"
    ],
    "slides": [
     [
@@ -1643,7 +1643,7 @@
     ]
    ],
    "tags": [
-    "",
+    "Chorus",
     "",
     "",
     ""
@@ -1655,8 +1655,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1786952025754,
+   "version": 3,
+   "updatedAt": 1786952386320,
    "updatedBy": "Sam",
    "lastUsed": 0,
    "hidden": false
