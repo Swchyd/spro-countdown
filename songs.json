@@ -1905,26 +1905,6 @@
  ],
  "setlists": [
   {
-   "id": "sl_mswvnn3s41wg",
-   "name": "Setlist 17/8",
-   "entries": [
-    {
-     "id": "s_msvdwr6vqfzm",
-     "ms": 0
-    },
-    {
-     "id": "s_msuap6vm4p91",
-     "ms": 0
-    },
-    {
-     "id": "s_mskncam8q8sb",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1786949746982,
-   "updatedBy": "Sam"
-  },
-  {
    "id": "sl_mswvqojki1h4",
    "name": "Setlist 17/8 (2)",
    "entries": [],
