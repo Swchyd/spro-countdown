@@ -1903,16 +1903,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_mswvqpgybt8y",
-   "name": "Setlist 17/8 (4)",
-   "entries": [],
-   "updatedAt": 1786949753572,
-   "updatedBy": "Sam"
-  }
- ],
+ "setlists": [],
  "setlist": [],
- "setlistAt": 1786949753572,
- "setlistBy": "Sam"
+ "setlistAt": 0,
+ "setlistBy": ""
 }
