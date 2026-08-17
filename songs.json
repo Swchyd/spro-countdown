@@ -1907,62 +1907,12 @@
   {
    "id": "sl_msum1irlmwvi",
    "name": "16 Agustus",
-   "entries": [
-    {
-     "id": "s_msuajvmp6nok",
-     "ms": 0
-    },
-    {
-     "id": "s_msuarobbucm0",
-     "ms": 0
-    },
-    {
-     "id": "s_msuasxz2kqp7",
-     "ms": 0
-    },
-    {
-     "id": "s_msuap6vm4p91",
-     "ms": 0
-    },
-    {
-     "id": "s_msvdwr6vqfzm",
-     "ms": 0
-    },
-    {
-     "id": "s_msuanguitbxn",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1786948520295,
+   "entries": [],
+   "updatedAt": 1786948542032,
    "updatedBy": "Owner"
   }
  ],
- "setlist": [
-  {
-   "id": "s_msuajvmp6nok",
-   "ms": 0
-  },
-  {
-   "id": "s_msuarobbucm0",
-   "ms": 0
-  },
-  {
-   "id": "s_msuasxz2kqp7",
-   "ms": 0
-  },
-  {
-   "id": "s_msuap6vm4p91",
-   "ms": 0
-  },
-  {
-   "id": "s_msvdwr6vqfzm",
-   "ms": 0
-  },
-  {
-   "id": "s_msuanguitbxn",
-   "ms": 0
-  }
- ],
- "setlistAt": 1786948520295,
+ "setlist": [],
+ "setlistAt": 1786948542032,
  "setlistBy": "Owner"
 }
