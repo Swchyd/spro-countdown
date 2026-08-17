@@ -225,6 +225,35 @@
     border-radius: var(--radius);
     padding: 12px 14px;
   }
+  /* A label with something sitting beside it. Kept as its own row even when
+     that something is missing, so two steppers side by side still line up. */
+  .lbl-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 26px;
+    margin-bottom: 7px;
+  }
+  .lbl-row label.field-label { margin-bottom: 0; }
+  /* The only way to reach a negative time on a phone: `inputmode="numeric"`
+     puts a keypad with no minus key in front of the operator, so the sign
+     cannot be a typed character alone. */
+  .sign-toggle {
+    flex: 0 0 auto;
+    min-width: 34px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: #5B6474;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .sign-toggle.on { border-color: var(--accent); color: var(--accent); }
+  .sign-toggle:active { background: var(--line); }
+
   .stepper {
     display: flex;
     align-items: center;
@@ -984,7 +1013,14 @@
      standalone floating bar too — it is pinned nowrap, so on a phone its six
      buttons overflowed the screen edge instead of wrapping. Grid makes the
      nowrap moot. */
+  /* Two steppers side by side leave about 28px for the number between their
+     buttons, which was enough while the widest thing it could hold was "180"
+     and only just. A negative minute count is four characters and the 5 of
+     "-25" was falling off the end. There is nothing else competing for the
+     height on this card, so they stack. */
   @media (max-width: 480px) {
+    .settings { grid-template-columns: 1fr; }
+
     #controls {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -2195,7 +2231,10 @@ lyric line one</pre>
 
     <div class="settings">
       <div class="setting">
-        <label class="field-label">Minutes</label>
+        <div class="lbl-row">
+          <label class="field-label">Minutes</label>
+          <button type="button" id="setupSign" class="sign-toggle" aria-pressed="false" aria-label="Start below zero" title="Start the countdown already in overtime">+</button>
+        </div>
         <div class="stepper">
           <button type="button" data-step="min" data-d="-1" aria-label="Fewer minutes">−</button>
           <div class="val"><input id="minVal" type="text" inputmode="numeric" value="10" autocomplete="off" aria-label="Minutes"><small>min</small></div>
@@ -2203,7 +2242,9 @@ lyric line one</pre>
         </div>
       </div>
       <div class="setting">
-        <label class="field-label">Seconds</label>
+        <!-- Empty row rather than a bare label: the two steppers have to line
+             up, and the minutes one now carries a button above it. -->
+        <div class="lbl-row"><label class="field-label">Seconds</label></div>
         <div class="stepper">
           <button type="button" data-step="sec" data-d="-1" aria-label="Fewer seconds">−</button>
           <div class="val"><input id="secVal" type="text" inputmode="numeric" value="00" autocomplete="off" aria-label="Seconds"><small>sec</small></div>
@@ -2282,7 +2323,10 @@ lyric line one</pre>
       </div>
 
       <div class="op-panel">
-        <label class="field-label">New time</label>
+        <div class="lbl-row">
+          <label class="field-label">New time</label>
+          <button type="button" id="opSign" class="sign-toggle" aria-pressed="false" aria-label="Start below zero" title="Start the countdown already in overtime">+</button>
+        </div>
         <div class="stepper">
           <button type="button" data-nstep="min" data-d="-1" aria-label="Fewer minutes">−</button>
           <div class="val"><input id="nextMin" type="text" inputmode="numeric" value="10" autocomplete="off" aria-label="Minutes"><small>min</small></div>
@@ -2370,8 +2414,9 @@ if ("serviceWorker" in navigator) {
   // ----- persisted config -----
   var cfg = {
     label: "",
-    minutes: 10,
+    minutes: 10,      // magnitude only — the sign lives in `neg` below
     seconds: 0,
+    neg: false,       // start the countdown already past zero
     bank: [],        // saved titles, in the order they were added
     room: "",        // operator's own room code
     join: "",        // last room code this display joined
@@ -2388,6 +2433,59 @@ if ("serviceWorker" in navigator) {
 
   function persist() {
     try { localStorage.setItem(LS_KEY, JSON.stringify(cfg)); } catch (e) {}
+  }
+
+  // ----- the configured time, as a signed number of seconds -----
+  //
+  // The countdown has always been able to sit below zero — the red "−5:00" on
+  // the stage is exactly that — but the only way in was to count down into it,
+  // or to press −1 min once per minute. A service that is already late starts
+  // *in* overtime, and there was no way to say so.
+  //
+  // The sign belongs to the whole time and not to the minutes: "−0 min 30 sec"
+  // is half a minute over, and a minus living on the minutes alone could not
+  // express it. So the config keeps a magnitude plus a flag, and every place
+  // that reads or writes a minutes/seconds pair goes through the four helpers
+  // here rather than doing its own arithmetic.
+  var MAX_SEC = 180 * 60 + 59;
+
+  function clampSec(total) {
+    return Math.max(-MAX_SEC, Math.min(MAX_SEC, Math.round(total)));
+  }
+  function cfgSeconds() {
+    return (cfg.neg ? -1 : 1) * (cfg.minutes * 60 + cfg.seconds);
+  }
+  function setCfgSeconds(total) {
+    total = clampSec(total);
+    cfg.neg = total < 0;
+    var a = Math.abs(total);
+    cfg.minutes = Math.floor(a / 60);
+    cfg.seconds = a % 60;
+  }
+
+  // Reading a pair of boxes back. The sign is whatever the minutes box starts
+  // with rather than the sign of its value, so a half-typed "-" and the "-0"
+  // that −0:30 has to display both survive — Number("-0") would not.
+  function readFields(minEl, secEl) {
+    var neg = /^\s*[-−]/.test(minEl.value);
+    var m = Math.min(180, Math.abs(parseInt(String(minEl.value).replace(/[^0-9]/g, ""), 10) || 0));
+    var s = Math.min(59, Math.abs(parseInt(String(secEl.value).replace(/[^0-9]/g, ""), 10) || 0));
+    return (neg ? -1 : 1) * (m * 60 + s);
+  }
+  function writeFields(minEl, secEl, total) {
+    var a = Math.abs(total);
+    minEl.value = (total < 0 ? "-" : "") + Math.floor(a / 60);
+    secEl.value = pad2(a % 60);
+  }
+
+  // The ± button shows the sign it is about to leave, not the one it will
+  // apply: a numeric keypad has no minus key, so on the phone this is the only
+  // way in — it has to read as the current state of the time.
+  function paintSign(btn, neg) {
+    if (!btn) return;
+    btn.textContent = neg ? "−" : "+";
+    btn.classList.toggle("on", !!neg);
+    btn.setAttribute("aria-pressed", neg ? "true" : "false");
   }
 
   // Who this device is, kept for as long as the browser keeps anything.
@@ -4192,36 +4290,59 @@ if ("serviceWorker" in navigator) {
   var labelInput = $("labelInput"), minVal = $("minVal"), secVal = $("secVal");
   labelInput.value = cfg.label;
 
+  var setupSign = $("setupSign");
+
   function renderSetup() {
-    minVal.value = cfg.minutes;
-    secVal.value = pad2(cfg.seconds);
+    writeFields(minVal, secVal, cfgSeconds());
+    paintSign(setupSign, cfg.neg);
     labelInput.value = cfg.label;
   }
 
   document.querySelectorAll("[data-step]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var d = Number(btn.dataset.d);
-      if (btn.dataset.step === "min") cfg.minutes = Math.min(180, Math.max(0, cfg.minutes + d));
+      // Minutes step the whole time, so it borrows: 0:30 with one press of −
+      // is −0:30, not −1:30. Seconds still wrap inside the minute, which is
+      // what makes them useful for dialling in an offset.
+      if (btn.dataset.step === "min") setCfgSeconds(cfgSeconds() + d * 60);
       if (btn.dataset.step === "sec") cfg.seconds = (cfg.seconds + d * 5 + 60) % 60;
       renderSetup(); persist();
     });
   });
 
-  // typed input: digits only while typing; clamp and save when done
-  function wireTypedValue(input, max, commit) {
+  setupSign.addEventListener("click", function () {
+    // The flag rather than the value, so flipping the sign of a time that is
+    // currently zero still sticks and the digits typed next come out negative.
+    cfg.neg = !cfg.neg;
+    renderSetup(); persist();
+  });
+
+  // typed input: digits only while typing — plus a leading minus where the
+  // field is allowed one. `commit` is handed the cleaned text, not a number,
+  // because "-" on its own and "-0" both have to survive being read back.
+  function wireTypedValue(input, commit, signed) {
     input.addEventListener("focus", function () { input.select(); });
     input.addEventListener("input", function () {
-      var v = input.value.replace(/\D/g, "");
+      var raw = input.value.replace(/[−–—]/g, "-");
+      var neg = signed && raw.charAt(0) === "-";
+      var v = (neg ? "-" : "") + raw.replace(/[^0-9]/g, "");
       if (v !== input.value) input.value = v;
-      if (v !== "") commit(Math.min(max, Number(v)));
+      commit(v);
     });
     input.addEventListener("blur", function () { renderSetup(); persist(); });
     input.addEventListener("keydown", function (e) {
       if (e.key === "Enter") input.blur();
     });
   }
-  wireTypedValue(minVal, 180, function (v) { cfg.minutes = v; });
-  wireTypedValue(secVal, 59, function (v) { cfg.seconds = v; });
+  wireTypedValue(minVal, function (v) {
+    cfg.neg = v.charAt(0) === "-";
+    var d = v.replace(/[^0-9]/g, "");
+    if (d !== "") cfg.minutes = Math.min(180, Number(d));
+    paintSign(setupSign, cfg.neg);
+  }, true);
+  wireTypedValue(secVal, function (v) {
+    if (v !== "") cfg.seconds = Math.min(59, Number(v));
+  });
 
   labelInput.addEventListener("input", function () {
     cfg.label = labelInput.value;
@@ -4501,8 +4622,8 @@ if ("serviceWorker" in navigator) {
     T.flashing = false;
     T.live = true;
     opLabelInput.value = cfg.label;
-    nextMin.value = cfg.minutes;
-    nextSec.value = pad2(cfg.seconds);
+    writeFields(nextMin, nextSec, cfgSeconds());
+    paintSign($("opSign"), cfg.neg);
 
     if (role === "solo") {
       enterSolo();
@@ -4510,7 +4631,7 @@ if ("serviceWorker" in navigator) {
       navigate("opScreen");
       mountStage(previewBox, false);
     }
-    armTimer((cfg.minutes * 60 + cfg.seconds) * 1000, true);
+    armTimer(cfgSeconds() * 1000, true);
   });
 
   // Leaving the console is a step back: teardown() stops the timer and, in
@@ -7310,22 +7431,39 @@ if ("serviceWorker" in navigator) {
     setLabel(opLabelInput.value.trim());
   });
 
+  // The console's boxes are their own source of truth until APPLY is pressed —
+  // a half-dialled time must not be able to change what Restart goes back to —
+  // so the sign is read off the text rather than kept in a variable beside it.
+  var opSign = $("opSign");
+  function opNeg() { return /^\s*[-−]/.test(nextMin.value); }
+
   document.querySelectorAll("[data-nstep]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var d = Number(btn.dataset.d);
       if (btn.dataset.nstep === "min") {
-        nextMin.value = Math.min(180, Math.max(0, (Number(nextMin.value) || 0) + d));
+        writeFields(nextMin, nextSec, clampSec(readFields(nextMin, nextSec) + d * 60));
       } else {
         nextSec.value = pad2(((Number(nextSec.value) || 0) + d * 5 + 60) % 60);
       }
+      paintSign(opSign, opNeg());
     });
   });
 
+  opSign.addEventListener("click", function () {
+    var digits = String(nextMin.value).replace(/[^0-9]/g, "") || "0";
+    nextMin.value = (opNeg() ? "" : "-") + digits;
+    paintSign(opSign, opNeg());
+  });
+
   [nextMin, nextSec].forEach(function (input) {
+    var signed = input === nextMin;
     input.addEventListener("focus", function () { input.select(); });
     input.addEventListener("input", function () {
-      var v = input.value.replace(/\D/g, "");
+      var raw = input.value.replace(/[−–—]/g, "-");
+      var neg = signed && raw.charAt(0) === "-";
+      var v = (neg ? "-" : "") + raw.replace(/[^0-9]/g, "");
       if (v !== input.value) input.value = v;
+      if (signed) paintSign(opSign, neg);
     });
     input.addEventListener("keydown", function (e) {
       e.stopPropagation();
@@ -7334,11 +7472,12 @@ if ("serviceWorker" in navigator) {
   });
 
   $("applyTimeBtn").addEventListener("click", function () {
-    cfg.minutes = Math.min(180, Math.max(0, Number(nextMin.value) || 0));
-    cfg.seconds = Math.min(59, Number(nextSec.value) || 0);
+    setCfgSeconds(readFields(nextMin, nextSec));
     persist();
     renderSetup();
-    armTimer((cfg.minutes * 60 + cfg.seconds) * 1000, true);
+    writeFields(nextMin, nextSec, cfgSeconds());
+    paintSign(opSign, cfg.neg);
+    armTimer(cfgSeconds() * 1000, true);
     setDrawer(false);
   });
 
