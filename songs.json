@@ -1906,13 +1906,39 @@
  "setlists": [
   {
    "id": "sl_mswvipuab714",
-   "name": "Setlist 17/8",
-   "entries": [],
-   "updatedAt": 1786949378731,
+   "name": "2",
+   "entries": [
+    {
+     "id": "s_msvdwr6vqfzm",
+     "ms": 0
+    },
+    {
+     "id": "s_msuap6vm4p91",
+     "ms": 0
+    },
+    {
+     "id": "s_mskncam8q8sb",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786949399239,
    "updatedBy": "Sam"
   }
  ],
- "setlist": [],
- "setlistAt": 1786949378731,
+ "setlist": [
+  {
+   "id": "s_msvdwr6vqfzm",
+   "ms": 0
+  },
+  {
+   "id": "s_msuap6vm4p91",
+   "ms": 0
+  },
+  {
+   "id": "s_mskncam8q8sb",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786949399239,
  "setlistBy": "Sam"
 }
