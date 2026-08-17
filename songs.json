@@ -1911,58 +1911,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_mswxc5krrb4m",
-   "name": "K",
-   "entries": [
-    {
-     "id": "s_msvdwr6vqfzm",
-     "ms": 0
-    },
-    {
-     "id": "s_msuap6vm4p91",
-     "ms": 0
-    },
-    {
-     "id": "s_mskncam8q8sb",
-     "ms": 0
-    },
-    {
-     "id": "s_msuasxz2kqp7",
-     "ms": 0
-    },
-    {
-     "id": "s_msuanguitbxn",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1786953456686,
-   "updatedBy": "Owner"
-  }
- ],
- "setlist": [
-  {
-   "id": "s_msvdwr6vqfzm",
-   "ms": 0
-  },
-  {
-   "id": "s_msuap6vm4p91",
-   "ms": 0
-  },
-  {
-   "id": "s_mskncam8q8sb",
-   "ms": 0
-  },
-  {
-   "id": "s_msuasxz2kqp7",
-   "ms": 0
-  },
-  {
-   "id": "s_msuanguitbxn",
-   "ms": 0
-  }
- ],
- "setlistAt": 1786953456686,
- "setlistBy": "Owner"
+ "setlists": [],
+ "setlist": [],
+ "setlistAt": 0,
+ "setlistBy": ""
 }
