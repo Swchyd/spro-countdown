@@ -7208,13 +7208,43 @@ if ("serviceWorker" in navigator) {
     }
   });
 
-  // pointerdown rather than click: the field is about to lose focus to this
-  // press, and closing on blur first would take the row out from under it.
+  // Choosing happens on the way up, not on the way down.
+  //
+  // It used to happen on pointerdown, to beat the press that was about to move
+  // focus out of the field. That made the list impossible to scroll on a
+  // touchscreen: putting a finger down on a name *is* how scrolling it starts,
+  // so whichever name the finger happened to land on was taken immediately,
+  // held or not. There was no gesture left that meant "I am only looking".
+  //
+  // So the press is remembered and the choice is made on release, and only if
+  // the finger stayed put. A pointer that travelled, or one the browser took
+  // over for scrolling, was never a tap.
+  var sugDown = null;
+
   authorSuggest.addEventListener("pointerdown", function (e) {
     var row = e.target.closest ? e.target.closest(".sug-row") : null;
     if (!row) return;
+    sugDown = { i: row.getAttribute("data-i"), x: e.clientX, y: e.clientY };
+    // Mouse only. On a mouse this is what keeps the press from moving focus out
+    // of the field; on touch the identical call cancels the scroll the gesture
+    // may still turn out to be, which is the whole bug.
+    if (e.pointerType === "mouse") e.preventDefault();
+  });
+
+  // The browser has taken the gesture for scrolling. Whatever it was, it was
+  // not a tap on a name.
+  authorSuggest.addEventListener("pointercancel", function () { sugDown = null; });
+
+  authorSuggest.addEventListener("pointerup", function (e) {
+    var down = sugDown;
+    sugDown = null;
+    if (!down) return;
+    if (Math.abs(e.clientX - down.x) > 10 || Math.abs(e.clientY - down.y) > 10) return;
+    var row = e.target.closest ? e.target.closest(".sug-row") : null;
+    // Lifted somewhere else, or on a different name than the one pressed.
+    if (!row || row.getAttribute("data-i") !== down.i) return;
     e.preventDefault();
-    addAuthors(sugItems[parseInt(row.getAttribute("data-i"), 10)]);
+    addAuthors(sugItems[parseInt(down.i, 10)]);
     songAuthorInput.value = "";
     closeSuggest();
     songAuthorInput.focus();
