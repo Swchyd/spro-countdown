@@ -1915,12 +1915,54 @@
   {
    "id": "sl_mswxc5krrb4m",
    "name": "K",
-   "entries": [],
-   "updatedAt": 1786953377820,
-   "updatedBy": "Sam"
+   "entries": [
+    {
+     "id": "s_msvdwr6vqfzm",
+     "ms": 0
+    },
+    {
+     "id": "s_msuap6vm4p91",
+     "ms": 0
+    },
+    {
+     "id": "s_mskncam8q8sb",
+     "ms": 0
+    },
+    {
+     "id": "s_msuasxz2kqp7",
+     "ms": 0
+    },
+    {
+     "id": "s_msuanguitbxn",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786953456686,
+   "updatedBy": "Owner"
   }
  ],
- "setlist": [],
- "setlistAt": 1786953377820,
- "setlistBy": "Sam"
+ "setlist": [
+  {
+   "id": "s_msvdwr6vqfzm",
+   "ms": 0
+  },
+  {
+   "id": "s_msuap6vm4p91",
+   "ms": 0
+  },
+  {
+   "id": "s_mskncam8q8sb",
+   "ms": 0
+  },
+  {
+   "id": "s_msuasxz2kqp7",
+   "ms": 0
+  },
+  {
+   "id": "s_msuanguitbxn",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786953456686,
+ "setlistBy": "Owner"
 }
