@@ -1146,6 +1146,86 @@
   #lyricOnScreen.on { background: var(--accent); border-color: var(--accent); color: #1A1408; }
   #lyricOnScreen:active { filter: brightness(.92); }
 
+  /* ---------- console: adding a song mid-service ----------
+     Walking out to the library from here never actually restarted anything —
+     the console stays mounted behind it and the room socket stays open — but
+     it looks exactly like leaving the session, and no operator is going to
+     take that on trust with a countdown running and a room full of people.
+     So the one thing that is genuinely needed then, putting another song on
+     the running order, happens without going anywhere at all. */
+  #opAddSong {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700;
+  }
+  #opAddSong.on { border-color: var(--accent); color: var(--accent); }
+  #opAddSong:active { background: var(--panel); }
+  #opAddPanel { display: flex; flex-direction: column; gap: 8px; }
+  #opAddPanel[hidden] { display: none; }
+  #opAddTop { display: flex; gap: 8px; }
+  #opAddSearch {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 15px;
+  }
+  #opAddClose {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 14px;
+  }
+  #opAddRows {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    max-height: 230px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .op-add-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    text-align: left;
+    background: transparent;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .op-add-row:last-child { border-bottom: none; }
+  .op-add-row .t { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .op-add-row .t small {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #5B6474;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .op-add-row .mk { flex: 0 0 auto; font-size: 16px; font-weight: 700; color: #5B6474; }
+  .op-add-row.in .mk { color: var(--accent); }
+  .op-add-row:active { background: var(--panel-2); }
+  #opAddNote { font-size: 12px; line-height: 1.45; color: #5B6474; }
+  #opAddNote:empty { display: none; }
+
   .slide-list {
     display: flex;
     flex-direction: column;
@@ -2345,7 +2425,16 @@ lyric line one</pre>
       <div id="setStrip"></div>
       <div id="lyricHead">
         <button type="button" id="opSongTitle">—</button>
+        <button type="button" id="opAddSong" aria-label="Add a song to the setlist" title="Add a song without leaving the console" aria-expanded="false">＋</button>
         <button type="button" id="lyricOnScreen">PUT ON SCREEN</button>
+      </div>
+      <div id="opAddPanel" hidden>
+        <div id="opAddTop">
+          <input id="opAddSearch" type="text" placeholder="Search the library…" autocomplete="off" aria-label="Search songs">
+          <button type="button" id="opAddClose" aria-label="Close">✕</button>
+        </div>
+        <div id="opAddRows"></div>
+        <div id="opAddNote"></div>
       </div>
       <div class="slide-list" id="opSlideList"></div>
       <div id="slideNote"></div>
@@ -4772,6 +4861,7 @@ if ("serviceWorker" in navigator) {
       b.classList.toggle("on", b.getAttribute("data-tab") === name);
     });
     if (name === "lyrics") { buildSlideList(); renderSetStrip(); }
+    else setOpAdd(false);   // it goes with the tab it belongs to
     refreshLyricUI();
   }
 
@@ -4870,6 +4960,126 @@ if ("serviceWorker" in navigator) {
   $("nextSlideBtn").addEventListener("click", function () { stepSlide(1); });
   blankBtn.addEventListener("click", function () { T.blank = !T.blank; commit(); });
   lyricOnScreen.addEventListener("click", toggleLyrics);
+
+  // ----- console: putting another song on the running order, in place -----
+  //
+  // Going out to the library has always been safe mid-service — the console is
+  // still mounted behind it, the countdown keeps its deadline and the room
+  // socket is never closed — but it is indistinguishable from walking out of
+  // the session, which is the one thing an operator will not risk halfway
+  // through a service. So the slice of the library that is actually wanted
+  // then lives here: search, tap, and the chip strip above has the song.
+  //
+  // Deliberately add-to-setlist only. Writing a new song is a paste and a
+  // parse and a title, and the place for that is the editor; what happens
+  // mid-service is that a song already in the library was not on the list.
+  var opAddPanel = $("opAddPanel"), opAddRows = $("opAddRows");
+  var opAddSearch = $("opAddSearch"), opAddSong = $("opAddSong"), opAddNote = $("opAddNote");
+
+  function opAddNoteText() {
+    if (!curSet()) {
+      return "This device is not on a setlist yet — open the song library from the menu and pick one, then this will fill in.";
+    }
+    return "Adding to “" + curSet().name + "”. Tap the chip above the song name to put one on deck.";
+  }
+
+  function renderOpAdd() {
+    // Reachable from syncNow, which can run during start-up — before the
+    // console's own variables have been assigned.
+    if (!opAddPanel || opAddPanel.hidden) return;
+    var q = opAddSearch.value.trim().toLowerCase();
+    opAddRows.innerHTML = "";
+
+    var list = songs.filter(function (s) {
+      if (s.hidden) return false;
+      if (!q) return true;
+      if (s.title.toLowerCase().indexOf(q) >= 0) return true;
+      return authorsOf(s).some(function (a) { return a.toLowerCase().indexOf(q) >= 0; });
+    }).sort(function (a, b) {
+      return titleKey(a.title).localeCompare(titleKey(b.title), undefined, { sensitivity: "base" });
+    });
+
+    if (!list.length) {
+      var none = document.createElement("div");
+      none.className = "slide-empty";
+      none.textContent = songs.length
+        ? "Nothing in the library matches that."
+        : "No songs on this device yet.";
+      opAddRows.appendChild(none);
+    }
+
+    list.forEach(function (s) {
+      var row = document.createElement("button");
+      row.type = "button";
+      var inSet = !!setEntryById(s.id);
+      row.className = "op-add-row" + (inSet ? " in" : "");
+      row.setAttribute("data-id", s.id);
+
+      var t = document.createElement("span");
+      t.className = "t";
+      t.textContent = s.title || "(untitled)";
+      var who = authorsOf(s).join(", ");
+      if (who) {
+        var sub = document.createElement("small");
+        sub.textContent = who;
+        t.appendChild(sub);
+      }
+
+      var mk = document.createElement("span");
+      mk.className = "mk";
+      mk.textContent = inSet ? "✓" : "+";
+
+      row.appendChild(t);
+      row.appendChild(mk);
+      opAddRows.appendChild(row);
+    });
+
+    opAddNote.textContent = opAddNoteText();
+  }
+
+  function setOpAdd(open) {
+    if (!opAddPanel) return;
+    opAddPanel.hidden = !open;
+    opAddSong.classList.toggle("on", !!open);
+    opAddSong.setAttribute("aria-expanded", open ? "true" : "false");
+    if (!open) return;
+    opAddSearch.value = "";
+    renderOpAdd();
+    // Whoever prepared the service may have added the song on their own phone
+    // ten minutes ago. Deliberately no focus() on the search box: a keyboard
+    // sliding up over the console mid-service is worse than one extra tap.
+    syncNow(true).then(renderOpAdd);
+  }
+
+  opAddSong.addEventListener("click", function () { setOpAdd(opAddPanel.hidden); });
+  $("opAddClose").addEventListener("click", function () { setOpAdd(false); });
+  opAddSearch.addEventListener("input", renderOpAdd);
+
+  opAddRows.addEventListener("click", function (e) {
+    var row = e.target.closest ? e.target.closest(".op-add-row") : null;
+    if (!row) return;
+    // Nothing to add it to until this device has said which running order it
+    // is building — dropping a song into somebody else's is what the per-device
+    // setlist choice exists to prevent.
+    if (!canWrite() || !curSet()) { opAddNote.textContent = opAddNoteText(); return; }
+
+    var id = row.getAttribute("data-id");
+    if (setEntryById(id)) {
+      putItems(setItems().filter(function (x) { return x.id !== id; }));
+      row.classList.remove("in");
+      row.querySelector(".mk").textContent = "+";
+    } else {
+      setItems().push({ id: id, ms: 0 });
+      row.classList.add("in");
+      row.querySelector(".mk").textContent = "✓";
+    }
+    // This row only, never the whole list: a rebuild throws away the scroll
+    // position, and with a couple of hundred songs every add would jump the
+    // operator back to the top.
+    saveSongs(true);
+    renderSetRows();
+    renderSetStrip();
+  });
 
   // ============================================================
   //  Song library
@@ -5531,6 +5741,7 @@ if ("serviceWorker" in navigator) {
         renderSetRows();
         renderSongRows();
         renderSetStrip();
+        renderOpAdd();
       });
   }
 
@@ -5588,6 +5799,14 @@ if ("serviceWorker" in navigator) {
     lib.classList.toggle("signed-in", !!session);
     lib.classList.toggle("can-write", canWrite());
     lib.classList.toggle("is-owner", isOwner());
+    // Same rule as the library, on the console's own copy of it: a viewer may
+    // read the running order, not change it. A role can be revoked between one
+    // service and the next, so the panel closes rather than sitting there inert.
+    var addBtn = $("opAddSong");
+    if (addBtn) {
+      addBtn.hidden = !canWrite();
+      if (!canWrite() && opAddPanel) setOpAdd(false);
+    }
     if (badge) {
       badge.className = "role-badge " + (session ? myRole() : "");
       badge.textContent = session ? myRole() : "read-only";
@@ -7555,6 +7774,13 @@ if ("serviceWorker" in navigator) {
   // Fetch the relay credentials now, while the menu is being read, so pairing
   // never has to wait on a round trip it could have made earlier.
   loadIce();
+
+  // What this device is allowed to do, settled before anything is on screen.
+  // It used to wait until the library was opened, which was fine while the
+  // library was the only place a write could start — the console's "add a
+  // song" button is the other one now, and it must not be sitting there
+  // waiting to be pressed by someone who only has read access.
+  applyRole();
 
   // Catch up with the shared library on the way in, and push anything this
   // device saved while it was offline. Reading needs no token, so this works
