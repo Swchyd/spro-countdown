@@ -1905,30 +1905,6 @@
  ],
  "setlists": [
   {
-   "id": "sl_mswx2orjk0mi",
-   "name": "Jans",
-   "entries": [
-    {
-     "id": "s_msvdwr6vqfzm",
-     "ms": 0
-    },
-    {
-     "id": "s_msuap6vm4p91",
-     "ms": 0
-    },
-    {
-     "id": "s_msuasxz2kqp7",
-     "ms": 0
-    },
-    {
-     "id": "s_msuanguitbxn",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1786951997576,
-   "updatedBy": "Sam"
-  },
-  {
    "id": "sl_mswx2tvvqap6",
    "name": "Setlist 17/8",
    "entries": [],
