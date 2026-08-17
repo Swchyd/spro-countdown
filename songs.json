@@ -1934,8 +1934,21 @@
   {
    "id": "sl_mswvqp18glhs",
    "name": "Setlist 17/8 (3)",
-   "entries": [],
-   "updatedAt": 1786949751323,
+   "entries": [
+    {
+     "id": "s_msvdwr6vqfzm",
+     "ms": 0
+    },
+    {
+     "id": "s_msuap6vm4p91",
+     "ms": 0
+    },
+    {
+     "id": "s_mskncam8q8sb",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786949767739,
    "updatedBy": "Sam"
   },
   {
@@ -1946,7 +1959,20 @@
    "updatedBy": "Sam"
   }
  ],
- "setlist": [],
- "setlistAt": 1786949753572,
+ "setlist": [
+  {
+   "id": "s_msvdwr6vqfzm",
+   "ms": 0
+  },
+  {
+   "id": "s_msuap6vm4p91",
+   "ms": 0
+  },
+  {
+   "id": "s_mskncam8q8sb",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786949767739,
  "setlistBy": "Sam"
 }
