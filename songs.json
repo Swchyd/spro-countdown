@@ -1903,16 +1903,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_msum1irlmwvi",
-   "name": "16 Agustus",
-   "entries": [],
-   "updatedAt": 1786948542032,
-   "updatedBy": "Owner"
-  }
- ],
+ "setlists": [],
  "setlist": [],
- "setlistAt": 1786948542032,
- "setlistBy": "Owner"
+ "setlistAt": 0,
+ "setlistBy": ""
 }
