@@ -2113,12 +2113,9 @@ lyric line one</pre>
       </div>
 
       <label class="field-label" id="lblTitle" for="songTitleInput">Title</label>
-      <!-- The hint is spelled out rather than left to the platform. With the
-           attribute absent, what a phone keyboard does to this field is its
-           own business, and "characters" is a state some of them can be left
-           in. This does not change what is stored — the field has never
-           transformed anything — it only says what the keyboard should do. -->
-      <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off" autocapitalize="sentences">
+      <!-- The keyboard is asked for capitals as well, so the phone agrees with
+           what the field is going to do to the text anyway. -->
+      <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off" autocapitalize="characters">
 
       <label class="field-label" id="lblAuthors" for="songAuthorInput">Authors</label>
       <!-- Plural, because most songs are. The same writer also arrives many
@@ -7242,7 +7239,10 @@ if ("serviceWorker" in navigator) {
     pasteBox.value = s ? songToText(s) : "";
     var t = splitTitle(s ? s.title : "");
     setLang(t.lang);
-    songTitleInput.value = t.title;
+    // Raised on the way in as well, so the box always shows the string that
+    // pressing save would store — including for a song written before titles
+    // were capitals.
+    songTitleInput.value = String(t.title || "").toUpperCase();
     songAuthorInput.value = "";
     editAuthors = authorsOf(s);
     closeSuggest();
@@ -7267,6 +7267,7 @@ if ("serviceWorker" in navigator) {
     if (parsed.title && !songTitleInput.value.trim()) {
       var pt = splitTitle(parsed.title);
       songTitleInput.value = pt.title;
+      upperTitle();
       if (pt.lang && !songLang) setLang(pt.lang);
     }
 
@@ -7391,7 +7392,9 @@ if ("serviceWorker" in navigator) {
     if (missingFields().length) { refreshSaveGate(); return null; }
     // The tag is put back on here, not carried in the field, so it cannot be
     // doubled up or lost by editing around it.
-    var bare = songTitleInput.value.trim() || splitTitle(parsed.title).title || "Untitled";
+    // The backstop. The box raises as it is typed, but a title can also arrive
+    // from the pasted text without the field ever being touched.
+    var bare = (songTitleInput.value.trim() || splitTitle(parsed.title).title || "Untitled").toUpperCase();
     var title = joinTitle(songLang, bare);
     var authors = editAuthors.slice();
     var author = authors.join(", ");
@@ -7437,7 +7440,38 @@ if ("serviceWorker" in navigator) {
   $("newSongBtn").addEventListener("click", function () { openEditor(null); });
   $("editorBack").addEventListener("click", function () { history.back(); });
   pasteBox.addEventListener("input", refreshParse);
-  songTitleInput.addEventListener("input", refreshSaveGate);
+
+  // Song titles are capitals. Every one in the library is, and typing a name in
+  // sentence case and then going back over it by hand was the last step of
+  // writing a song that nobody wanted to do. The value is raised rather than
+  // only its appearance: what a stage chip, a setlist row and the search all
+  // show is the stored string, and a field that displayed capitals while
+  // storing something else would just move the surprise further along.
+  var titleComposing = false;
+  function upperTitle() {
+    var v = songTitleInput.value, u = v.toUpperCase();
+    if (u === v) return;
+    var a = songTitleInput.selectionStart, b = songTitleInput.selectionEnd;
+    songTitleInput.value = u;
+    // Only put the caret back when raising the case did not change the length.
+    // A character that grows under toUpperCase — ß becomes SS — would other-
+    // wise leave it a place short of where the typing was.
+    if (u.length === v.length) {
+      try { songTitleInput.setSelectionRange(a, b); } catch (e) {}
+    }
+  }
+  // An IME is mid-word until it says otherwise, and rewriting the box under a
+  // composition destroys it. Chinese does not have a case to raise anyway.
+  songTitleInput.addEventListener("compositionstart", function () { titleComposing = true; });
+  songTitleInput.addEventListener("compositionend", function () {
+    titleComposing = false;
+    upperTitle();
+    refreshSaveGate();
+  });
+  songTitleInput.addEventListener("input", function () {
+    if (!titleComposing) upperTitle();
+    refreshSaveGate();
+  });
   Array.prototype.forEach.call(document.querySelectorAll(".ps-opt"), function (b) {
     // Pressing one is the choice being made, which is the half the gate is
     // waiting on — the number itself was already there.
