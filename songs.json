@@ -1903,8 +1903,50 @@
    "hidden": false
   }
  ],
- "setlists": [],
- "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlists": [
+  {
+   "id": "sl_mswx2jeazke8",
+   "name": "Tes",
+   "entries": [
+    {
+     "id": "s_msvdwr6vqfzm",
+     "ms": 0
+    },
+    {
+     "id": "s_msuap6vm4p91",
+     "ms": 0
+    },
+    {
+     "id": "s_mskncam8q8sb",
+     "ms": 0
+    },
+    {
+     "id": "s_msuasxz2kqp7",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786951986542,
+   "updatedBy": "Sam"
+  }
+ ],
+ "setlist": [
+  {
+   "id": "s_msvdwr6vqfzm",
+   "ms": 0
+  },
+  {
+   "id": "s_msuap6vm4p91",
+   "ms": 0
+  },
+  {
+   "id": "s_mskncam8q8sb",
+   "ms": 0
+  },
+  {
+   "id": "s_msuasxz2kqp7",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786951986542,
+ "setlistBy": "Sam"
 }
