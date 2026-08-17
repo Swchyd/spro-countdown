@@ -1151,13 +1151,20 @@
     flex-direction: column;
     border: 1px solid var(--line);
     border-radius: 10px;
-    max-height: 250px;
+    /* Rows hold a whole slide now, so the same box shows about a third as many
+       of them. Taller, but not so tall that Prev/Next leave the screen — the
+       list scrolls itself to the slide being sung, which is what actually
+       stops the operator hunting for their place. */
+    max-height: 320px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .slide-row {
     display: flex;
-    align-items: baseline;
+    /* Was baseline, which lined the part name up with the first line of the
+       slide. Now that the whole slide is here the part name belongs at the top
+       of the block it names. */
+    align-items: flex-start;
     gap: 10px;
     width: 100%;
     padding: 11px 12px;
@@ -1168,8 +1175,10 @@
     font-size: 14px;
   }
   .slide-row:last-child { border-bottom: none; }
-  .slide-row .n { min-width: 15px; max-width: 78px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 700; color: #5B6474; }
-  .slide-row .t { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .slide-row .n { flex: 0 0 auto; min-width: 15px; max-width: 78px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 700; color: #5B6474; padding-top: 2px; }
+  /* pre-line keeps the slide's own line breaks and still wraps a line too long
+     for the panel, so what is listed here has the same shape as the stage. */
+  .slide-row .t { flex: 1 1 auto; min-width: 0; white-space: pre-line; overflow-wrap: anywhere; line-height: 1.4; }
   /* The slides that carry a part on rather than start it. */
   .slide-row .n.cont { opacity: .5; font-weight: 600; }
   .slide-row.on { background: var(--panel-2); color: var(--ink); }
@@ -4764,6 +4773,7 @@ if ("serviceWorker" in navigator) {
   var opSlideList = $("opSlideList"), opSongTitle = $("opSongTitle");
   var lyricOnScreen = $("lyricOnScreen"), blankBtn = $("blankBtn");
   var builtSong = null;
+  var shownSlide = -1;   // which slide the list has already scrolled to
 
   function setOpTab(name) {
     opTab = name;
@@ -4779,6 +4789,7 @@ if ("serviceWorker" in navigator) {
     var song = T.song;
     if (songKey(song) === builtSong) return;
     builtSong = songKey(song);
+    shownSlide = -1;              // a fresh list has not scrolled anywhere yet
     opSlideList.innerHTML = "";
     // A dash is the shape of a field with nothing in it, which is exactly the
     // wrong thing to show: this is the way songs are added and changed, and it
@@ -4818,7 +4829,13 @@ if ("serviceWorker" in navigator) {
       n.textContent = tag ? tag : (i + 1);
       var t = document.createElement("span");
       t.className = "t";
-      t.textContent = slide[0] || "";
+      // The whole slide, not its first line. One line was enough to tell two
+      // slides apart, which is what a list is usually for — but this list is
+      // read while the song is being sung, and the question it has to answer is
+      // "how far into this slide are they", which only the last words can. The
+      // stage is showing all of it; so is this now, with the same line breaks
+      // so the two can be read against each other.
+      t.textContent = slide.join("\n");
       if (LY.notes[i]) {
         var note = document.createElement("span");
         note.className = "cue";
@@ -4843,11 +4860,25 @@ if ("serviceWorker" in navigator) {
     $("slideNote").textContent = cue;
     $("slideNote").style.display = cue ? "block" : "none";
 
+    var active = null;
     Array.prototype.forEach.call(opSlideList.children, function (row) {
       if (!row.getAttribute) return;
       var i = parseInt(row.getAttribute("data-i"), 10);
       row.classList.toggle("on", i === T.slide);
+      if (i === T.slide) active = row;
     });
+
+    // Follow the song down the list, but only when it has actually moved. Doing
+    // it on every refresh would yank the panel back while the operator was
+    // scrolling ahead to see what is coming, which is the other thing this list
+    // is for.
+    if (active && T.slide !== shownSlide) {
+      shownSlide = T.slide;
+      var box = opSlideList.getBoundingClientRect(), r = active.getBoundingClientRect();
+      if (r.top < box.top || r.bottom > box.bottom) {
+        opSlideList.scrollTop += r.top - box.top - (box.height - r.height) / 2;
+      }
+    }
   }
 
   opTabsEl.addEventListener("click", function (e) {
