@@ -1907,12 +1907,38 @@
   {
    "id": "sl_mswvn62fzwd4",
    "name": "Setlist 17/8",
-   "entries": [],
-   "updatedAt": 1786949586229,
+   "entries": [
+    {
+     "id": "s_mskncam8q8sb",
+     "ms": 0
+    },
+    {
+     "id": "s_msuap6vm4p91",
+     "ms": 0
+    },
+    {
+     "id": "s_msvdwr6vqfzm",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786949594108,
    "updatedBy": "Sam"
   }
  ],
- "setlist": [],
- "setlistAt": 1786949586229,
+ "setlist": [
+  {
+   "id": "s_mskncam8q8sb",
+   "ms": 0
+  },
+  {
+   "id": "s_msuap6vm4p91",
+   "ms": 0
+  },
+  {
+   "id": "s_msvdwr6vqfzm",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786949594108,
  "setlistBy": "Sam"
 }
