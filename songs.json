@@ -1903,8 +1903,42 @@
    "hidden": false
   }
  ],
- "setlists": [],
- "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlists": [
+  {
+   "id": "sl_mswx4cot4xmg",
+   "name": "Kk",
+   "entries": [
+    {
+     "id": "s_msuanguitbxn",
+     "ms": 0
+    },
+    {
+     "id": "s_msv2igzoxavs",
+     "ms": 0
+    },
+    {
+     "id": "s_mskjwqfpagxo",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786952070298,
+   "updatedBy": "Sam"
+  }
+ ],
+ "setlist": [
+  {
+   "id": "s_msuanguitbxn",
+   "ms": 0
+  },
+  {
+   "id": "s_msv2igzoxavs",
+   "ms": 0
+  },
+  {
+   "id": "s_mskjwqfpagxo",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786952070298,
+ "setlistBy": "Sam"
 }
