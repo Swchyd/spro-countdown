@@ -1911,8 +1911,16 @@
    "hidden": false
   }
  ],
- "setlists": [],
+ "setlists": [
+  {
+   "id": "sl_mswxc5krrb4m",
+   "name": "K",
+   "entries": [],
+   "updatedAt": 1786952430140,
+   "updatedBy": "Sam"
+  }
+ ],
  "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlistAt": 1786952430140,
+ "setlistBy": "Sam"
 }
