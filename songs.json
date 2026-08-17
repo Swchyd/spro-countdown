@@ -1915,12 +1915,22 @@
   {
    "id": "sl_mswxc5krrb4m",
    "name": "K",
-   "entries": [],
-   "updatedAt": 1786952430140,
+   "entries": [
+    {
+     "id": "s_msv2igzoxavs",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1786952434772,
    "updatedBy": "Sam"
   }
  ],
- "setlist": [],
- "setlistAt": 1786952430140,
+ "setlist": [
+  {
+   "id": "s_msv2igzoxavs",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1786952434772,
  "setlistBy": "Sam"
 }
