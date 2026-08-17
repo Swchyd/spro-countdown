@@ -1612,7 +1612,14 @@
       "Kucinta Kau, Yesus",
       "Kupuji Kau, Yesus",
       "Kusembah Kau, Yesus",
-      "Tuhan dan Rajaku",
+      "Tuhan dan Rajaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
       "Dengan seg'nap hati",
       "Dan dengan seg'nap jiwaku",
       "Akal budi",
@@ -1622,7 +1629,8 @@
     }
    ],
    "order": [
-    "chorus"
+    "chorus",
+    "_1"
    ],
    "slides": [
     [
@@ -1655,8 +1663,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 3,
-   "updatedAt": 1786952386320,
+   "version": 4,
+   "updatedAt": 1786952426773,
    "updatedBy": "Sam",
    "lastUsed": 0,
    "hidden": false
