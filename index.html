@@ -2113,7 +2113,12 @@ lyric line one</pre>
       </div>
 
       <label class="field-label" id="lblTitle" for="songTitleInput">Title</label>
-      <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off">
+      <!-- The hint is spelled out rather than left to the platform. With the
+           attribute absent, what a phone keyboard does to this field is its
+           own business, and "characters" is a state some of them can be left
+           in. This does not change what is stored — the field has never
+           transformed anything — it only says what the keyboard should do. -->
+      <input id="songTitleInput" class="textinput" type="text" placeholder="Song title" autocomplete="off" autocapitalize="sentences">
 
       <label class="field-label" id="lblAuthors" for="songAuthorInput">Authors</label>
       <!-- Plural, because most songs are. The same writer also arrives many
