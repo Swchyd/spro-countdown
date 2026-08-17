@@ -1951,26 +1951,16 @@
    ],
    "updatedAt": 1786951997576,
    "updatedBy": "Sam"
+  },
+  {
+   "id": "sl_mswx2tvvqap6",
+   "name": "Setlist 17/8",
+   "entries": [],
+   "updatedAt": 1786951999552,
+   "updatedBy": "Sam"
   }
  ],
- "setlist": [
-  {
-   "id": "s_msvdwr6vqfzm",
-   "ms": 0
-  },
-  {
-   "id": "s_msuap6vm4p91",
-   "ms": 0
-  },
-  {
-   "id": "s_msuasxz2kqp7",
-   "ms": 0
-  },
-  {
-   "id": "s_msuanguitbxn",
-   "ms": 0
-  }
- ],
- "setlistAt": 1786951997576,
+ "setlist": [],
+ "setlistAt": 1786951999552,
  "setlistBy": "Sam"
 }
