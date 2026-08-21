@@ -1911,16 +1911,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_mt32i581z2sa",
-   "name": "Setlist 21/8",
-   "entries": [],
-   "updatedAt": 1787323907127,
-   "updatedBy": "Sam"
-  }
- ],
+ "setlists": [],
  "setlist": [],
- "setlistAt": 1787323907127,
- "setlistBy": "Sam"
+ "setlistAt": 0,
+ "setlistBy": ""
 }
