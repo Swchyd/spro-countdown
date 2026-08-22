@@ -2503,6 +2503,127 @@
    "updatedBy": "Sam",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mt40qsde4ivi",
+   "title": "[ENG] JOY OF THE LORD",
+   "authors": [
+    "Yuliandono",
+    "Edward Benjamin",
+    "Luke Waters",
+    "Maria Elizabeth Tombokan"
+   ],
+   "author": "Yuliandono, Edward Benjamin, Luke Waters, Maria Elizabeth Tombokan",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "I’ve got the joy of the Lord",
+      "I’ve got the joy of the Lord",
+      "Nothing can stop it",
+      "It overflows",
+      "I’ve got the joy of the Lord"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "You’ve turned my mourning into dancing",
+      "You’ve turned my sorrow into joy",
+      "And I'll be singing Hallelujah",
+      "For the joy of the Lord is my strength"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Dance, dance, dance",
+      "In the house of the Lord",
+      "Move your body",
+      "With the joy of the Lord",
+      "Clap, clap, clap",
+      "In the house of the Lord",
+      "Shout your praises",
+      "With the joy of the Lord"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "I’ve got the joy of the Lord",
+     "I’ve got the joy of the Lord"
+    ],
+    [
+     "Nothing can stop it",
+     "It overflows"
+    ],
+    [
+     "I’ve got the joy of the Lord"
+    ],
+    [
+     "You’ve turned my mourning into dancing",
+     "You’ve turned my sorrow into joy"
+    ],
+    [
+     "And I'll be singing Hallelujah",
+     "For the joy of the Lord is my strength"
+    ],
+    [
+     "Dance, dance, dance",
+     "In the house of the Lord"
+    ],
+    [
+     "Move your body",
+     "With the joy of the Lord"
+    ],
+    [
+     "Clap, clap, clap",
+     "In the house of the Lord"
+    ],
+    [
+     "Shout your praises",
+     "With the joy of the Lord"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "Chorus",
+    "",
+    "Bridge",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1787381415994,
+   "updatedBy": "Sam",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
