@@ -2628,16 +2628,8 @@
    "deletedBy": "Sam"
   }
  ],
- "setlists": [
-  {
-   "id": "sl_mt3zu7re73zh",
-   "name": "Setlist 22/8",
-   "entries": [],
-   "updatedAt": 1787379897513,
-   "updatedBy": "Sam"
-  }
- ],
+ "setlists": [],
  "setlist": [],
- "setlistAt": 1787379897513,
- "setlistBy": "Sam"
+ "setlistAt": 0,
+ "setlistBy": ""
 }
