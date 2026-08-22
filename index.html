@@ -25,7 +25,26 @@
     --over: #E25C4A;
     --ok: #4ADE80;
     --radius: 14px;
+
+    /* How far down the top corner chrome has to start before it is pressable.
+       `black-translucent` puts the web view *under* the system status bar on
+       every iOS device, but only a device with a notch or an island reports a
+       safe-area inset — an iPad, or an iPhone SE, reports zero and paints the
+       clock over the first 20-24 points anyway. So an exit button placed at
+       `env(safe-area-inset-top)` landed underneath the clock and could not be
+       pressed, on exactly the two devices that run this thing on a stage.
+
+       Hence a floor rather than the raw inset. In a browser tab the page starts
+       below the toolbar and no floor is wanted, so the floor is raised only
+       once the app is actually running standalone. */
+    --top-chrome: max(10px, env(safe-area-inset-top));
   }
+  @media (display-mode: standalone) {
+    :root { --top-chrome: max(34px, env(safe-area-inset-top)); }
+  }
+  /* Older iOS knows navigator.standalone but not the media query above. */
+  body.standalone { --top-chrome: max(34px, env(safe-area-inset-top)); }
+
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; }
   body {
@@ -742,8 +761,8 @@
 
   #soloExit {
     position: fixed;
-    top: max(10px, env(safe-area-inset-top));
-    left: 14px;
+    top: var(--top-chrome);
+    left: max(14px, env(safe-area-inset-left));
     height: 44px;
     padding: 0 16px;
     border-radius: 999px;
@@ -848,8 +867,8 @@
   /* ---------- display device chrome ---------- */
   #dispBar {
     position: fixed;
-    top: max(10px, env(safe-area-inset-top));
-    left: 14px;
+    top: var(--top-chrome);
+    left: max(14px, env(safe-area-inset-left));
     z-index: 60;
     display: none;
     align-items: center;
@@ -871,10 +890,14 @@
     top: auto;
     bottom: max(10px, env(safe-area-inset-bottom));
   }
+  /* The bar is 40px tall but the ✕ inside it was only as wide as the glyph, so
+     the thing being aimed at on a moving stage was about ten points across. */
   #dispExit {
     color: var(--ink-dim);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
+    min-width: 34px;
+    align-self: stretch;
     padding-left: 10px;
     margin-left: 2px;
     border-left: 1px solid var(--line);
@@ -882,12 +905,15 @@
 
   /* ---------- operator console ---------- */
   #opScreen { flex-direction: column; padding: 0; }
+  /* The header is the top of the screen, so in a standalone app it is the strip
+     the system clock is painted over — and the ✕ is its first item. */
   #opHead {
     display: flex;
     align-items: center;
     gap: 14px;
     flex-wrap: wrap;
-    padding: 12px 16px;
+    padding: max(12px, var(--top-chrome)) max(16px, env(safe-area-inset-right))
+             12px max(16px, env(safe-area-inset-left));
     border-bottom: 1px solid var(--line);
   }
   #opHead .brand { margin: 0; }
@@ -2406,6 +2432,15 @@ lyric line one</pre>
 
 <script src="peerjs.min.js"></script>
 <script>
+// Marks the app as launched from the home screen, so the corner chrome can hold
+// itself clear of the system clock. The media query in the stylesheet says the
+// same thing on anything current; this is for the iOS versions that only ever
+// learned navigator.standalone.
+if (navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches)) {
+  document.body.classList.add("standalone");
+}
+
 if ("serviceWorker" in navigator) {
   // updateViaCache: "none" — sw.js is served with the same ten-minute
   // Cache-Control as everything else on GitHub Pages, and the browser honours
@@ -6125,13 +6160,27 @@ if ("serviceWorker" in navigator) {
   });
 
   $("rotateCodeBtn").addEventListener("click", function () {
+    // Signing everyone out is work the server cannot do instantly however fast
+    // it is, and a button that looks untouched invites a second press — which
+    // would throw away the code the first press just made and nobody has seen.
+    var btn = this;
+    if (btn.disabled) return;
+    btn.disabled = true;
+    var was = btn.textContent;
+    btn.textContent = "Regenerating…";
+    $("codeReveal").textContent = "";
+    $("codeState").textContent = "Making a new code and signing everyone out…";
     api("/admin/code", { method: "POST", body: {} }).then(function (d) {
       // Shown once and never again — there is nowhere it could be read back
       // from, which is the whole reason only a digest is kept.
-      $("codeReveal").textContent = d.code;
       renderAdmin();
       $("codeReveal").textContent = d.code;
-    }).catch(function (err) { $("codeState").textContent = err.message; });
+    }).catch(function (err) {
+      $("codeState").textContent = err.message;
+    }).then(function () {
+      btn.disabled = false;
+      btn.textContent = was;
+    });
   });
 
   $("revokeCodeBtn").addEventListener("click", function () {
