@@ -392,6 +392,30 @@ function now() {
   return Date.now();
 }
 
+// A KV round trip is tens of milliseconds of waiting and almost no work, so a
+// `for` loop that awaits one read per key spends its whole life idle: sixty
+// keys is sixty round trips laid end to end, and the owner watches all of them.
+// Running them side by side turns that into a handful of waits.
+//
+// The cap is not politeness — a Worker may only make so many subrequests in one
+// request, and firing an unbounded fan-out at a list that has grown for a year
+// is how that limit gets hit. Twenty-four in flight is fast enough that the wait
+// stops being noticeable and small enough that the ceiling stays far away.
+const KV_CONCURRENCY = 24;
+
+async function mapLimit(items, fn, limit = KV_CONCURRENCY) {
+  const out = new Array(items.length);
+  let next = 0;
+  const workers = new Array(Math.min(limit, items.length)).fill(0).map(async () => {
+    while (next < items.length) {
+      const i = next++;
+      out[i] = await fn(items[i], i);
+    }
+  });
+  await Promise.all(workers);
+  return out;
+}
+
 // ---------------------------------------------------------------------------
 // CORS
 //
@@ -1435,16 +1459,25 @@ async function endCodeSessions(env, cfg, reason) {
   const ended = [];
   let cursor;
   do {
-    const page = await env.SPRO.list({ prefix: "sess:", cursor, limit: 200 });
-    for (const k of page.keys) {
-      const rec = await env.SPRO.get(k.name, "json");
-      if (!rec || rec.role === "owner" || rec.codeEnded) continue;
+    const page = await env.SPRO.list({ prefix: "sess:", cursor, limit: 1000 });
+    // Read the page side by side, then write only the rows that changed side by
+    // side. Most of a page is usually rows that need nothing — owners, and
+    // sessions a previous rotation already struck dead but whose thirty days
+    // have not run out — and they cost a read each and nothing more.
+    const recs = await mapLimit(page.keys, (k) => env.SPRO.get(k.name, "json"));
+    const writes = [];
+    page.keys.forEach((k, i) => {
+      const rec = recs[i];
+      if (!rec || rec.role === "owner" || rec.codeEnded) return;
       rec.codeEnded = true;
       rec.codeEndedAt = now();
       rec.codeEndedReason = reason;
-      await env.SPRO.put(k.name, JSON.stringify(rec), { expirationTtl: ENDED_SESSION_TTL });
+      writes.push([k.name, rec]);
       ended.push(rec.id);
-    }
+    });
+    await mapLimit(writes, ([name, rec]) =>
+      env.SPRO.put(name, JSON.stringify(rec), { expirationTtl: ENDED_SESSION_TTL })
+    );
     cursor = page.list_complete ? null : page.cursor;
   } while (cursor);
 
@@ -1452,15 +1485,15 @@ async function endCodeSessions(env, cfg, reason) {
   // until when, is exactly the kind of thing worth still being able to answer
   // next month.
   const ttl = cfg.policy.sessionDays * 24 * 60 * 60;
-  for (const id of ended) {
+  await mapLimit(ended, async (id) => {
     const key = "collab:" + id;
     const rec = await env.SPRO.get(key, "json");
-    if (!rec || rec.role === "owner" || rec.revoked) continue;
+    if (!rec || rec.role === "owner" || rec.revoked) return;
     rec.revoked = true;
     rec.revokedAt = now();
     rec.revokedReason = reason;
     await env.SPRO.put(key, JSON.stringify(rec), { expirationTtl: ttl });
-  }
+  });
   return ended.length;
 }
 
@@ -1523,11 +1556,9 @@ async function handleCollaborators(env, actor) {
   const out = [];
   let cursor;
   do {
-    const page = await env.SPRO.list({ prefix: "collab:", cursor, limit: 200 });
-    for (const k of page.keys) {
-      const rec = await env.SPRO.get(k.name, "json");
-      if (rec) out.push(rec);
-    }
+    const page = await env.SPRO.list({ prefix: "collab:", cursor, limit: 1000 });
+    const recs = await mapLimit(page.keys, (k) => env.SPRO.get(k.name, "json"));
+    for (const rec of recs) if (rec) out.push(rec);
     cursor = page.list_complete ? null : page.cursor;
   } while (cursor);
   out.sort((a, b) => (b.joinedAt || 0) - (a.joinedAt || 0));
@@ -1563,11 +1594,8 @@ async function handleAudit(request, env, actor, url) {
   requireRole(actor, "admin");
   const limit = Math.min(200, Math.max(1, Number(url.searchParams.get("limit")) || 100));
   const page = await env.SPRO.list({ prefix: "audit:", limit, cursor: url.searchParams.get("cursor") || undefined });
-  const entries = [];
-  for (const k of page.keys) {
-    const rec = await env.SPRO.get(k.name, "json");
-    if (rec) entries.push(rec);
-  }
+  const recs = await mapLimit(page.keys, (k) => env.SPRO.get(k.name, "json"));
+  const entries = recs.filter(Boolean);
   return { entries, cursor: page.list_complete ? null : page.cursor };
 }
 
