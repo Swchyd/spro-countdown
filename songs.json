@@ -2632,12 +2632,54 @@
   {
    "id": "sl_mt40sfb2w9j3",
    "name": "23/8",
-   "entries": [],
-   "updatedAt": 1787381541038,
+   "entries": [
+    {
+     "id": "s_mt3zts3gv3pq",
+     "ms": 0
+    },
+    {
+     "id": "s_mt40cl00a3t8",
+     "ms": 0
+    },
+    {
+     "id": "s_mt40pvjc01yp",
+     "ms": 0
+    },
+    {
+     "id": "s_mt40e0yw4071",
+     "ms": 0
+    },
+    {
+     "id": "s_mt40l294llpw",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1787381553595,
    "updatedBy": "Sam"
   }
  ],
- "setlist": [],
- "setlistAt": 1787381541038,
+ "setlist": [
+  {
+   "id": "s_mt3zts3gv3pq",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40cl00a3t8",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40pvjc01yp",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40e0yw4071",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40l294llpw",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1787381553595,
  "setlistBy": "Sam"
 }
