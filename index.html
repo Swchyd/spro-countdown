@@ -1143,7 +1143,7 @@
 
   /* And the panel is held to the screen that is left under the preview, so the
      nav row stays where the thumb expects it however long the song is. Both
-     ceilings are written from JS by fitLyricPanel(), because neither can be
+     ceilings are written from JS by fitConsole(), because neither can be
      expressed here: they depend on the height of a header that wraps and of a
      preview sized from its own width. Nothing may shrink to make room for the
      transport — being pushed off the bottom is the whole point of moving it —
@@ -1159,6 +1159,20 @@
      be pushed out through the bottom of the panel. */
   #opBody.tab-lyrics .slide-list   { flex: 1 1 auto; min-height: 64px; max-height: none; }
   #setStrip, #lyricHead, #slideNote, #lyricNav { flex: 0 0 auto; }
+
+  /* The timer tab is pinned the same way, and for the same reason: the preview
+     is the thing being watched, so it is the thing that must not scroll away.
+     The two setting panels are what gives instead — a title and a new time are
+     touched between songs, not during one — so they scroll inside their own
+     box under a ceiling fitConsole() measures.
+
+     Scoped through #opBody because standalone moves this very grid into the
+     drawer, which does its own scrolling and must not inherit a ceiling meant
+     for the console. */
+  #opBody:not(.tab-lyrics) .op-grid {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
   #lyricHead { display: flex; align-items: center; gap: 10px; }
   /* The song name is the way into the library — changing song is the same
@@ -4705,9 +4719,9 @@ if ("serviceWorker" in navigator) {
     } else {
       navigate("opScreen");
       mountStage(previewBox, false);
-      // The console has a height at last, which is what the lyrics tab is
-      // measured against — a rotation while it was closed measured nothing.
-      fitLyricPanel();
+      // The console has a height at last, which is what both tabs are measured
+      // against — a rotation while it was closed measured nothing.
+      fitConsole();
     }
     armTimer(cfgSeconds() * 1000, true);
   });
@@ -4725,6 +4739,9 @@ if ("serviceWorker" in navigator) {
     controlsEl.classList.add("floating");
     soloOverlay.appendChild(controlsEl);
     opGrid.classList.add("stacked");
+    // The console's ceiling is inline, so it would travel into the drawer,
+    // which does its own scrolling and is not the console's height.
+    opGrid.style.maxHeight = "";
     drawerBody.appendChild(opGrid);
     setDrawer(false);
     soloOverlay.classList.add("on");
@@ -4851,16 +4868,18 @@ if ("serviceWorker" in navigator) {
       b.classList.toggle("on", b.getAttribute("data-tab") === name);
     });
     if (name === "lyrics") { buildSlideList(); renderSetStrip(); }
-    fitLyricPanel();
+    fitConsole();
     refreshLyricUI();
   }
 
-  // Running a song means watching three things at once: what is on the screen
-  // now, where we are in the list, and the button that moves it on. They only
-  // all fit if the panel knows how much screen is left under the preview, and
-  // there is no way to say that in a stylesheet — it depends on the height of
-  // a header that wraps on a phone and of a preview sized from its own width.
-  // So it is measured.
+  // Both tabs are pinned around the preview, because the preview is the thing
+  // being watched and the thing that must not scroll away. What gives is
+  // whatever sits under it — the slide list on one tab, the two setting panels
+  // on the other — inside a box with a ceiling.
+  //
+  // That ceiling cannot be written in a stylesheet: it depends on the height
+  // of a header that wraps on a phone and of a preview sized from its own
+  // width. So it is measured.
   //
   // The preview keeps at most this share of the console. Four-thirds of a
   // 620px column is 465px, which on an iPad in landscape is the whole console
@@ -4879,65 +4898,81 @@ if ("serviceWorker" in navigator) {
   // below this the nav row would be pushed out through the bottom of the
   // panel, so a shorter screen keeps the panel whole and scrolls instead.
   var LYRIC_PANEL_MIN = 264;
+  // The timer tab's own floor. A title field, or a pair of steppers, is about
+  // this much — enough that the box reads as something to scroll rather than
+  // as a slot.
+  var GRID_MIN = 200;
 
-  function fitLyricPanel() {
+  function offsetInBody(el) {
+    return el.getBoundingClientRect().top -
+           opBody.getBoundingClientRect().top + opBody.scrollTop;
+  }
+
+  function fitConsole() {
+    var lyrics = opTab === "lyrics";
     var panel = $("opLyricPanel");
-    if (opTab !== "lyrics") {
-      // Inline ceilings are not scoped to the tab the way the stylesheet is.
+    var box = lyrics ? panel : opGrid;       // the one that gives on this tab
+    // An inline ceiling travels with the element; the stylesheet's rules do
+    // not. So the tab that is leaving has to be put back by hand — and so does
+    // everything, when the console has no height to measure against.
+    (lyrics ? opGrid : panel).style.maxHeight = "";
+    var room = opBody.clientHeight;
+    if (!room) {                             // console not on screen yet
       previewBox.style.maxHeight = "";
-      panel.style.maxHeight = "";
+      box.style.maxHeight = "";
       return;
     }
-    var room = opBody.clientHeight;
-    if (!room) return;                       // console not on screen yet
 
-    // Measured from the panel's own top rather than by adding up what is above
+    // The lyrics panel runs right to the bottom edge, because the transport
+    // sits under it and being just off the screen is the point. Nothing
+    // follows the timer grid, so that one stops where the console's own
+    // padding begins and the tab does not scroll at all.
+    var tail = lyrics ? 0 : parseFloat(getComputedStyle(opBody).paddingBottom) || 0;
+
+    // Measured from the box's own top rather than by adding up what is above
     // it, so a header that wraps to two rows on a phone is already counted.
-    // scrollTop keeps the answer the same whether or not the operator has
-    // scrolled down to the transport.
-    function panelTop() {
-      return panel.getBoundingClientRect().top -
-             opBody.getBoundingClientRect().top + opBody.scrollTop;
-    }
-
-    // The panel ends at the bottom of the screen, wherever its top lands.
-    function fillToBottom() {
-      panel.style.maxHeight =
-        Math.max(LYRIC_PANEL_MIN, Math.round(room - panelTop())) + "px";
+    function fill() {
+      box.style.maxHeight = Math.max(lyrics ? LYRIC_PANEL_MIN : GRID_MIN,
+        Math.round(room - offsetInBody(box) - tail)) + "px";
     }
 
     previewBox.style.maxHeight = Math.round(room * PREVIEW_SHARE) + "px";
-    fillToBottom();
+    fill();
 
-    // On most screens that share leaves the preview at its own 4:3 and the
-    // list too short to read ahead in. The list is what the operator is
-    // reading, so it is served first: whatever it is short by comes out of the
-    // preview, down to the floor the stylesheet gives it.
+    // On most screens that share leaves the preview at its own 4:3 and the box
+    // under it too short to be worth scrolling. What the box is short by comes
+    // out of the preview, down to the floor the stylesheet gives it — but
+    // never more than the box has to show, or a two-slide song would shrink
+    // the picture to buy white space.
     //
-    // Asked of the list itself rather than worked out from the panel's parts,
-    // because adding those up was wrong by a row — a list under a ceiling is a
-    // scroll container and does not measure quite like a list without one.
-    // Every pixel the preview gives up is a pixel the list gains, so one pass
+    // Every pixel the preview gives up is a pixel the box gains, so one pass
     // lands it; the second is only there so this cannot spin.
     for (var pass = 0; pass < 2; pass++) {
-      // Never more than the list has to show. A song of two slides, or no song
-      // at all, has nothing to do with the room a third row would take, and
-      // taking it from the preview anyway would shrink the picture to buy
-      // white space.
-      var want = Math.min(LIST_WANT, opSlideList.scrollHeight);
-      var short = want - opSlideList.getBoundingClientRect().height;
+      var short;
+      if (lyrics) {
+        // Asked of the list rather than worked out from the panel's parts,
+        // because adding those up was wrong by a row: a list under a ceiling
+        // is a scroll container and does not measure like one without.
+        short = Math.min(LIST_WANT, opSlideList.scrollHeight) -
+                opSlideList.getBoundingClientRect().height;
+      } else {
+        // Here the box that gives is the box that scrolls, so the room it has
+        // can be asked for directly.
+        short = Math.min(GRID_MIN, opGrid.scrollHeight) -
+                (room - offsetInBody(box) - tail);
+      }
       if (short <= 0) break;
       var h = previewBox.getBoundingClientRect().height;
       var next = Math.max(PREVIEW_MIN, Math.round(h - short));
       if (next >= h) break;                  // the preview has nothing left
       previewBox.style.maxHeight = next + "px";
-      fillToBottom();
+      fill();
     }
   }
 
   // A rotation changes both the room and the height of the header above it.
-  window.addEventListener("resize", fitLyricPanel);
-  window.addEventListener("orientationchange", fitLyricPanel);
+  window.addEventListener("resize", fitConsole);
+  window.addEventListener("orientationchange", fitConsole);
 
   function buildSlideList() {
     var song = T.song;
