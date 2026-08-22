@@ -2361,6 +2361,148 @@
    "updatedBy": "Sam",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mt40pvjc01yp",
+   "title": "[ENG] GERBANG KUDUSMU",
+   "authors": [
+    "Yoel Christian Budiyono"
+   ],
+   "author": "Yoel Christian Budiyono",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Segenap hati tertuju pada-Mu",
+      "Dan serukan kemenangan dari-Mu",
+      "Sungguh dahsyat perbuatan-Mu Tuhan",
+      "Tak tertandingi apapun"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Kaulah Tuhan yang b’ri keselamatan",
+      "Menghapuskan s’luruh kegelapan",
+      "Menerbitkan pengharapan baru",
+      "Pulihkan segenap umat-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Kumasuki gerbang-Mu",
+      "Dengan nyanyian syukur"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 1",
+     "tag": "Chorus 1",
+     "lines": [
+      "Kini kubersorak",
+      "Masyhurkan keagungan-Mu",
+      "Beri puji dan hormat",
+      "Bagi-Mu Sang Raja"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 2",
+     "tag": "Chorus 2",
+     "lines": [
+      "Kini kubersuka",
+      "Nyanyikan kebesaran-Mu",
+      "Beri puji dan hormat",
+      "Bagi-Mu Allahku",
+      "Di gerbang kudus-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "pre-chorus",
+    "chorus 1",
+    "chorus 2"
+   ],
+   "slides": [
+    [
+     "Segenap hati tertuju pada-Mu",
+     "Dan serukan kemenangan dari-Mu"
+    ],
+    [
+     "Sungguh dahsyat perbuatan-Mu Tuhan",
+     "Tak tertandingi apapun"
+    ],
+    [
+     "Kaulah Tuhan yang b’ri keselamatan",
+     "Menghapuskan s’luruh kegelapan"
+    ],
+    [
+     "Menerbitkan pengharapan baru",
+     "Pulihkan segenap umat-Mu"
+    ],
+    [
+     "Kumasuki gerbang-Mu",
+     "Dengan nyanyian syukur"
+    ],
+    [
+     "Kini kubersorak",
+     "Masyhurkan keagungan-Mu"
+    ],
+    [
+     "Beri puji dan hormat",
+     "Bagi-Mu Sang Raja"
+    ],
+    [
+     "Kini kubersuka",
+     "Nyanyikan kebesaran-Mu"
+    ],
+    [
+     "Beri puji dan hormat",
+     "Bagi-Mu Allahku"
+    ],
+    [
+     "Di gerbang kudus-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Pre-Chorus",
+    "Chorus 1",
+    "",
+    "Chorus 2",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1787381409658,
+   "updatedBy": "Sam",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
