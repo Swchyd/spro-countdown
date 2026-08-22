@@ -2626,6 +2626,138 @@
    "hidden": true,
    "deletedAt": 1787381423905,
    "deletedBy": "Sam"
+  },
+  {
+   "id": "s_mt49304k58h3",
+   "title": "[ENG] WITH ALL I AM",
+   "authors": [
+    "Reuben Morgan"
+   ],
+   "author": "Reuben Morgan",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Into Your hands I commit again",
+      "With all I am for You Lord",
+      "You hold my world",
+      "in the palm of Your hands",
+      "And I am Yours forever"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Jesus I believe in You",
+      "Jesus I belong to You",
+      "You're the reason that I live",
+      "The reason that I sing",
+      "With all I am"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "I walk with You wherever You go",
+      "Through tears and joy I'll trust in You",
+      "And I will live in all of Your ways",
+      "And Your promises forever"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "I will worship",
+      "I will worship You",
+      "I will worship",
+      "I will worship You"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "chorus",
+    "verse 2",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Into Your hands I commit again",
+     "With all I am for You Lord"
+    ],
+    [
+     "You hold my world",
+     "in the palm of Your hands"
+    ],
+    [
+     "And I am Yours forever"
+    ],
+    [
+     "Jesus I believe in You",
+     "Jesus I belong to You"
+    ],
+    [
+     "You're the reason that I live",
+     "The reason that I sing"
+    ],
+    [
+     "With all I am"
+    ],
+    [
+     "I walk with You wherever You go",
+     "Through tears and joy I'll trust in You"
+    ],
+    [
+     "And I will live in all of Your ways",
+     "And Your promises forever"
+    ],
+    [
+     "I will worship",
+     "I will worship You"
+    ],
+    [
+     "I will worship",
+     "I will worship You"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1787395425772,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
