@@ -2140,6 +2140,155 @@
    "updatedBy": "Sam",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mt40e0yw4071",
+   "title": "[IND] DALAM KRISTUS",
+   "authors": [
+    "Donald A. Koch",
+    "Andrew Shawn Craig"
+   ],
+   "author": "Donald A. Koch, Andrew Shawn Craig",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Dalam Kristus",
+      "Kuberikan",
+      "Kemuliaan",
+      "Atas kem’nanganku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Sungguhku terpesona",
+      "Akan kekuatan dan kuasa-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Oh, tak dapat kumengukurnya",
+      "Namun semuanya",
+      "Tak dapat melampaui anug’rah-Mu",
+      "Yang Kut’rima"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Dalam Kristus",
+      "Kupercaya",
+      "Ada kemuliaan di balik salib-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "Kan aku nyatakan",
+      "Kemenangan dari-Mu",
+      "Kekuatanku",
+      "Harapanku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_4",
+     "tag": "",
+     "lines": [
+      "Dalam Kristus"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "_1",
+    "_2",
+    "chorus",
+    "_3",
+    "_4"
+   ],
+   "slides": [
+    [
+     "Dalam Kristus",
+     "Kuberikan"
+    ],
+    [
+     "Kemuliaan",
+     "Atas kem’nanganku"
+    ],
+    [
+     "Sungguhku terpesona",
+     "Akan kekuatan dan kuasa-Mu"
+    ],
+    [
+     "Oh, tak dapat kumengukurnya",
+     "Namun semuanya"
+    ],
+    [
+     "Tak dapat melampaui anug’rah-Mu",
+     "Yang Kut’rima"
+    ],
+    [
+     "Dalam Kristus",
+     "Kupercaya"
+    ],
+    [
+     "Ada kemuliaan di balik salib-Mu"
+    ],
+    [
+     "Kan aku nyatakan",
+     "Kemenangan dari-Mu"
+    ],
+    [
+     "Kekuatanku",
+     "Harapanku"
+    ],
+    [
+     "Dalam Kristus"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1787380846654,
+   "updatedBy": "Sam",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
