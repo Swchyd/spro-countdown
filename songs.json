@@ -2628,8 +2628,16 @@
    "deletedBy": "Sam"
   }
  ],
- "setlists": [],
+ "setlists": [
+  {
+   "id": "sl_mt40sfb2w9j3",
+   "name": "Setlist 22/8",
+   "entries": [],
+   "updatedAt": 1787381499193,
+   "updatedBy": "Sam"
+  }
+ ],
  "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlistAt": 1787381499193,
+ "setlistBy": "Sam"
 }
