@@ -936,13 +936,6 @@
     letter-spacing: .2em;
     font-variant-numeric: tabular-nums;
   }
-  #opClock {
-    font-size: 32px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: .04em;
-    color: var(--bright);
-  }
   #opExit {
     flex: 0 0 auto;
     width: 40px;
@@ -1551,6 +1544,11 @@
   /* the setlist, where the operator actually stands: one tap per song */
   #setStrip { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   #setStrip:empty { display: none; }
+  /* The strip is swiped, not dragged by a bar. iOS lays one over the top and
+     costs nothing, but a desktop bar sits in the flow and was taking sixteen
+     points out of the panel below — a quarter of a slide row. */
+  #setStrip { scrollbar-width: none; }
+  #setStrip::-webkit-scrollbar { display: none; }
   .set-chip {
     flex: 0 0 auto;
     max-width: 150px;
@@ -2359,7 +2357,6 @@ lyric line one</pre>
     <div class="chip"><span>ROOM</span><b id="opRoomCode">······</b></div>
     <div class="link-status" id="opLink2"><span class="led"></span><span class="txt"></span></div>
     <div class="spacer"></div>
-    <div id="opClock">00:00:00</div>
   </div>
 
   <div id="opBody">
@@ -2997,7 +2994,6 @@ if ("serviceWorker" in navigator) {
     if (t !== shownClock) {
       shownClock = t;
       clockEl.textContent = t;
-      if (opClockEl) opClockEl.textContent = t;
       if (setupClockEl) setupClockEl.textContent = t;
       if (setupClockEl2) setupClockEl2.textContent = t;
     }
@@ -3038,7 +3034,8 @@ if ("serviceWorker" in navigator) {
     tick();
   });
 
-  var opClockEl = $("opClock");
+  // The console has no clock of its own: the stage carries one, and the
+  // preview is showing the stage.
   var setupClockEl = $("setupClock"), setupClockEl2 = $("setupClock2");
 
   // Feeds the stage its own pixel size, which every font size is derived
@@ -4874,10 +4871,13 @@ if ("serviceWorker" in navigator) {
   var PREVIEW_SHARE = 0.42;
   // The preview may not be squeezed past the floor the stylesheet gives it.
   var PREVIEW_MIN = 180;
-  // The smallest panel that still holds a song title, a row and a half of list
-  // and the nav row. Going under this does not buy anything — the nav would
-  // simply be pushed out through the bottom of the panel — so a screen shorter
-  // than this scrolls instead.
+  // What the list is aiming for: three slides, which is the least that answers
+  // "what is coming next" rather than only "where are we". A two-line slide is
+  // about 62px.
+  var LIST_WANT = 186;
+  // And the floor under all of it, for a screen that cannot give that much:
+  // below this the nav row would be pushed out through the bottom of the
+  // panel, so a shorter screen keeps the panel whole and scrolls instead.
   var LYRIC_PANEL_MIN = 264;
 
   function fitLyricPanel() {
@@ -4900,17 +4900,39 @@ if ("serviceWorker" in navigator) {
              opBody.getBoundingClientRect().top + opBody.scrollTop;
     }
 
-    previewBox.style.maxHeight = Math.round(room * PREVIEW_SHARE) + "px";
-    var top = panelTop();
-    // On a short screen the share alone is not enough. The preview is the only
-    // thing above the panel with any give, so the shortfall comes out of it.
-    var missing = LYRIC_PANEL_MIN - (room - top);
-    if (missing > 0) {
-      var h = previewBox.getBoundingClientRect().height;
-      previewBox.style.maxHeight = Math.max(PREVIEW_MIN, Math.round(h - missing)) + "px";
-      top = panelTop();
+    // The panel ends at the bottom of the screen, wherever its top lands.
+    function fillToBottom() {
+      panel.style.maxHeight =
+        Math.max(LYRIC_PANEL_MIN, Math.round(room - panelTop())) + "px";
     }
-    panel.style.maxHeight = Math.max(LYRIC_PANEL_MIN, Math.round(room - top)) + "px";
+
+    previewBox.style.maxHeight = Math.round(room * PREVIEW_SHARE) + "px";
+    fillToBottom();
+
+    // On most screens that share leaves the preview at its own 4:3 and the
+    // list too short to read ahead in. The list is what the operator is
+    // reading, so it is served first: whatever it is short by comes out of the
+    // preview, down to the floor the stylesheet gives it.
+    //
+    // Asked of the list itself rather than worked out from the panel's parts,
+    // because adding those up was wrong by a row — a list under a ceiling is a
+    // scroll container and does not measure quite like a list without one.
+    // Every pixel the preview gives up is a pixel the list gains, so one pass
+    // lands it; the second is only there so this cannot spin.
+    for (var pass = 0; pass < 2; pass++) {
+      // Never more than the list has to show. A song of two slides, or no song
+      // at all, has nothing to do with the room a third row would take, and
+      // taking it from the preview anyway would shrink the picture to buy
+      // white space.
+      var want = Math.min(LIST_WANT, opSlideList.scrollHeight);
+      var short = want - opSlideList.getBoundingClientRect().height;
+      if (short <= 0) break;
+      var h = previewBox.getBoundingClientRect().height;
+      var next = Math.max(PREVIEW_MIN, Math.round(h - short));
+      if (next >= h) break;                  // the preview has nothing left
+      previewBox.style.maxHeight = next + "px";
+      fillToBottom();
+    }
   }
 
   // A rotation changes both the room and the height of the header above it.
