@@ -2289,6 +2289,78 @@
    "updatedBy": "Sam",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mt40l294llpw",
+   "title": "[IND] BAHAGIAKU PENUH",
+   "authors": [
+    "Fedrian Oktavian Tjeleni"
+   ],
+   "author": "Fedrian Oktavian Tjeleni",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Ku rindu diam di baitMu",
+      "Menikmati anugerahMu",
+      "Di hadiratMu  bahagiaku penuh",
+      "Yesusku Kau kerinduanku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "MenyembahMu, Tuhan dan Rajaku",
+      "MemujiMu, Yesus kekasih jiwaku",
+      "MengikutiMu seumur hidupku",
+      "Di hadiratMu, bahagiaku penuh."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ku rindu diam di baitMu",
+     "Menikmati anugerahMu"
+    ],
+    [
+     "Di hadiratMu  bahagiaku penuh",
+     "Yesusku Kau kerinduanku."
+    ],
+    [
+     "MenyembahMu, Tuhan dan Rajaku",
+     "MemujiMu, Yesus kekasih jiwaku"
+    ],
+    [
+     "MengikutiMu seumur hidupku",
+     "Di hadiratMu, bahagiaku penuh."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1787381150100,
+   "updatedBy": "Sam",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
