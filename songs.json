@@ -2792,16 +2792,34 @@
    ],
    "updatedAt": 1787395473838,
    "updatedBy": "Owner"
-  },
-  {
-   "id": "sl_mt4ctyyjo87g",
-   "name": "Setlist 22/8",
-   "entries": [],
-   "updatedAt": 1787401720650,
-   "updatedBy": "Gloria"
   }
  ],
- "setlist": [],
- "setlistAt": 1787401720650,
- "setlistBy": "Gloria"
+ "setlist": [
+  {
+   "id": "s_mt40cl00a3t8",
+   "ms": 0
+  },
+  {
+   "id": "s_mt3zts3gv3pq",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40e0yw4071",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40l294llpw",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40pvjc01yp",
+   "ms": 0
+  },
+  {
+   "id": "s_mt49304k58h3",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1787395473838,
+ "setlistBy": "Owner"
 }
