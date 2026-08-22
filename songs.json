@@ -2784,10 +2784,14 @@
     {
      "id": "s_mt40l294llpw",
      "ms": 0
+    },
+    {
+     "id": "s_mt49304k58h3",
+     "ms": 0
     }
    ],
-   "updatedAt": 1787381553595,
-   "updatedBy": "Sam"
+   "updatedAt": 1787395435605,
+   "updatedBy": "Owner"
   }
  ],
  "setlist": [
@@ -2810,8 +2814,12 @@
   {
    "id": "s_mt40l294llpw",
    "ms": 0
+  },
+  {
+   "id": "s_mt49304k58h3",
+   "ms": 0
   }
  ],
- "setlistAt": 1787381553595,
- "setlistBy": "Sam"
+ "setlistAt": 1787395435605,
+ "setlistBy": "Owner"
 }
