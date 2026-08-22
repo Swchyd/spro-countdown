@@ -2619,11 +2619,13 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1787381415994,
+   "version": 2,
+   "updatedAt": 1787381423905,
    "updatedBy": "Sam",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1787381423905,
+   "deletedBy": "Sam"
   }
  ],
  "setlists": [
