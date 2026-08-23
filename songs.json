@@ -2892,10 +2892,14 @@
     {
      "id": "s_mt49304k58h3",
      "ms": 0
+    },
+    {
+     "id": "s_mt52iwitwm8c",
+     "ms": 0
     }
    ],
-   "updatedAt": 1787401945834,
-   "updatedBy": "Gloria"
+   "updatedAt": 1787444897395,
+   "updatedBy": "Indra"
   },
   {
    "id": "sl_mt50xk71sgjk",
@@ -2905,7 +2909,36 @@
    "updatedBy": "Joel"
   }
  ],
- "setlist": [],
- "setlistAt": 1787442199106,
- "setlistBy": "Joel"
+ "setlist": [
+  {
+   "id": "s_mt40cl00a3t8",
+   "ms": 0
+  },
+  {
+   "id": "s_mt3zts3gv3pq",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40e0yw4071",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40l294llpw",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40pvjc01yp",
+   "ms": 0
+  },
+  {
+   "id": "s_mt49304k58h3",
+   "ms": 0
+  },
+  {
+   "id": "s_mt52iwitwm8c",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1787444897395,
+ "setlistBy": "Indra"
 }
