@@ -3090,10 +3090,14 @@
     {
      "id": "s_mt52m2ew3w7i",
      "ms": 0
+    },
+    {
+     "id": "s_mt5gr4wkus54",
+     "ms": 0
     }
    ],
-   "updatedAt": 1787445025039,
-   "updatedBy": "Indra"
+   "updatedAt": 1787468797461,
+   "updatedBy": "Gloria"
   },
   {
    "id": "sl_mt50xk71sgjk",
@@ -3110,7 +3114,44 @@
    "updatedBy": "Gloria"
   }
  ],
- "setlist": [],
- "setlistAt": 1787468785570,
+ "setlist": [
+  {
+   "id": "s_mt40cl00a3t8",
+   "ms": 0
+  },
+  {
+   "id": "s_mt3zts3gv3pq",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40e0yw4071",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40l294llpw",
+   "ms": 0
+  },
+  {
+   "id": "s_mt40pvjc01yp",
+   "ms": 0
+  },
+  {
+   "id": "s_mt49304k58h3",
+   "ms": 0
+  },
+  {
+   "id": "s_mt52iwitwm8c",
+   "ms": 0
+  },
+  {
+   "id": "s_mt52m2ew3w7i",
+   "ms": 0
+  },
+  {
+   "id": "s_mt5gr4wkus54",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1787468797461,
  "setlistBy": "Gloria"
 }
