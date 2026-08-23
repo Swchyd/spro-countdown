@@ -2980,6 +2980,78 @@
    "updatedBy": "Indra",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mt5gr4wkus54",
+   "title": "[IND] KUTAHU RENCANAMU",
+   "authors": [
+    "Welyar Kauntu"
+   ],
+   "author": "Welyar Kauntu",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Tuhan kupercaya rencanaMu indah",
+      "Walau saat ini tak kumengerti",
+      "Engkau t'lah berfirman memb’ri masa depan",
+      "Damai sejahtera penuh harapan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kutahu rencanaMu indah bagiku",
+      "Kutahu kehendakMu baik bagiku",
+      "Kutahu rancanganMu sempurna bagiku",
+      "Kutahu jalan-jalanMu yang terbaik bagiku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Tuhan kupercaya rencanaMu indah",
+     "Walau saat ini tak kumengerti"
+    ],
+    [
+     "Engkau t'lah berfirman memb’ri masa depan",
+     "Damai sejahtera penuh harapan"
+    ],
+    [
+     "Kutahu rencanaMu indah bagiku",
+     "Kutahu kehendakMu baik bagiku"
+    ],
+    [
+     "Kutahu rancanganMu sempurna bagiku",
+     "Kutahu jalan-jalanMu yang terbaik bagiku"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1787468772593,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
