@@ -2862,6 +2862,124 @@
    "updatedBy": "Indra",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mt52m2ew3w7i",
+   "title": "[IND] MIMPI DAN PENGLIHATAN",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Verse 1]",
+      "Tak terlambat pertolongan dariMu Tuhan",
+      "Kau setia dan tak meninggalkan",
+      "Erat kupegang",
+      "Seluruh Firman dan janjiMu  Yesus."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Kau bekerja mendatangkan kebaikan",
+      "Dengan iman kunyatakan s'karang",
+      "Dan langit pun takkan jadi batas",
+      "Bagi yang berharap padaMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "S'bab Engkau Tu - han  yang Mahata-hu",
+      "Yang b'ri mimpi dan penglihatan",
+      "Aku mau hi-dup  di dalam i - man",
+      "Dan berjalan dalam kemenangan."
+     ],
+     "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "Dan berjalan dalam kemenangan",
+      "BerkatMu  tercurah atasku."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "verse 2",
+    "chorus",
+    "ending"
+   ],
+   "slides": [
+    [
+     "Verse 1]",
+     "Tak terlambat pertolongan dariMu Tuhan"
+    ],
+    [
+     "Kau setia dan tak meninggalkan",
+     "Erat kupegang"
+    ],
+    [
+     "Seluruh Firman dan janjiMu  Yesus."
+    ],
+    [
+     "Kau bekerja mendatangkan kebaikan",
+     "Dengan iman kunyatakan s'karang"
+    ],
+    [
+     "Dan langit pun takkan jadi batas",
+     "Bagi yang berharap padaMu."
+    ],
+    [
+     "S'bab Engkau Tu - han  yang Mahata-hu",
+     "Yang b'ri mimpi dan penglihatan"
+    ],
+    [
+     "Aku mau hi-dup  di dalam i - man",
+     "Dan berjalan dalam kemenangan."
+    ],
+    [
+     "Dan berjalan dalam kemenangan",
+     "BerkatMu  tercurah atasku."
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "Ending"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1787445021402,
+   "updatedBy": "Indra",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
