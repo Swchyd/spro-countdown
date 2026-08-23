@@ -2758,6 +2758,110 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mt52iwitwm8c",
+   "title": "[IND] KETAATAN",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Bapa, Putra dan Roh Kudus",
+      "Allah penyelamatku",
+      "Oleh kasih dan anugerahMu",
+      "Ku dijadikan baru."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Dan kumau memuliakanMu",
+      "Menyenangkan hatiMu",
+      "Hidup dalam ketaatan",
+      "Melakukan firmanMu",
+      "S'bab hidupku bukannya aku lagi",
+      "Melainkan Kristus hidup dalamku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "S'bab hidupku bukannya aku lagi",
+      "Melainkan Kristus hidup dalamku",
+      "S'bab hidupku bukannya aku lagi",
+      "Melainkan Kristus hidup dalamku."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus",
+    "ending"
+   ],
+   "slides": [
+    [
+     "Bapa, Putra dan Roh Kudus",
+     "Allah penyelamatku"
+    ],
+    [
+     "Oleh kasih dan anugerahMu",
+     "Ku dijadikan baru."
+    ],
+    [
+     "Dan kumau memuliakanMu",
+     "Menyenangkan hatiMu"
+    ],
+    [
+     "Hidup dalam ketaatan",
+     "Melakukan firmanMu"
+    ],
+    [
+     "S'bab hidupku bukannya aku lagi",
+     "Melainkan Kristus hidup dalamku."
+    ],
+    [
+     "S'bab hidupku bukannya aku lagi",
+     "Melainkan Kristus hidup dalamku"
+    ],
+    [
+     "S'bab hidupku bukannya aku lagi",
+     "Melainkan Kristus hidup dalamku."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Ending",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1787444873426,
+   "updatedBy": "Indra",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
