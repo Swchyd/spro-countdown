@@ -3101,42 +3101,16 @@
    "entries": [],
    "updatedAt": 1787442199106,
    "updatedBy": "Joel"
+  },
+  {
+   "id": "sl_mt5gre7h0sx4",
+   "name": "Setlist 23/8 (2)",
+   "entries": [],
+   "updatedAt": 1787468785570,
+   "updatedBy": "Gloria"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mt40cl00a3t8",
-   "ms": 0
-  },
-  {
-   "id": "s_mt3zts3gv3pq",
-   "ms": 0
-  },
-  {
-   "id": "s_mt40e0yw4071",
-   "ms": 0
-  },
-  {
-   "id": "s_mt40l294llpw",
-   "ms": 0
-  },
-  {
-   "id": "s_mt40pvjc01yp",
-   "ms": 0
-  },
-  {
-   "id": "s_mt49304k58h3",
-   "ms": 0
-  },
-  {
-   "id": "s_mt52iwitwm8c",
-   "ms": 0
-  },
-  {
-   "id": "s_mt52m2ew3w7i",
-   "ms": 0
-  }
- ],
- "setlistAt": 1787445025039,
- "setlistBy": "Indra"
+ "setlist": [],
+ "setlistAt": 1787468785570,
+ "setlistBy": "Gloria"
 }
