@@ -217,9 +217,45 @@ the last merged snapshot in memory so a display joining mid-service has
 something immediately, but it is only ever an optimisation — the operator is
 asked as well, and its two-second heartbeat would answer within one beat anyway.
 
+### The keepalive
+
+Both ends can be legitimately silent for a long time. An operator who has opened
+a room and is waiting for the iPad has nothing to say; a display waiting for an
+operator to open the app has nothing to ask, and its clock pings are stopped for
+exactly as long as there is nobody to ping. Silence is the normal state of the
+half hour before a service.
+
+It is also what used to break it. A connection carrying no bytes is one every
+router, hotspot and church firewall in the path is free to drop, and they drop
+it *quietly* — no close frame reaches either end. `readyState` stays `1` for
+ever afterwards, so the app's watchdog sees a healthy link and rebuilds nothing.
+Both screens go on describing a connection that stopped existing minutes ago:
+the operator still reads "Waiting for a display", the display still reads
+"waiting for the operator", and neither will ever be true again. Quitting the
+app and retyping the code was the only cure, because only a brand-new socket is
+a live one. It is also the real reason behind the folklore fix of swapping the
+two roles round and swapping them back — that was never about roles, it was the
+only way to make both ends build sockets that were actually alive.
+
+So both ends now send `{"t":"k"}` every twenty seconds whether they have
+anything to say or not, and treat an answer that stops arriving for 55 seconds
+as the death certificate — the only one a half-open socket ever issues. The
+socket is then closed from this end and the watchdog rebuilds it on the same
+code, which is the reconnect nobody has to do by hand.
+
+`setWebSocketAutoResponse` answers it inside the runtime: the object is never
+woken, `webSocketMessage` never runs, and nothing is billed, while the bytes on
+the wire are enough to keep every box in the middle believing the connection is
+in use.
+
 WebRTC is still in the app underneath, used only when the socket will not open
-at all. Falling back to it is falling back to what worked on one wifi before,
-rather than to nothing.
+at all — after three attempts, not one. A tablet coming off standby or a wifi
+still handing out a lease can miss the first six-second window and open
+immediately on the second, and giving up on the first miss is how one end ends
+up on WebRTC while the other is on the relay. Those two never meet. It matters
+more than it looks because across two networks WebRTC has no path at all, so
+surrendering early does not trade a good transport for a worse one — it trades a
+working one for none.
 
 ## TURN credentials (`/turn`) — optional
 

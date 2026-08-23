@@ -52,10 +52,40 @@ const VERSION = "1.1.0";
 // two-second heartbeat answers within one beat anyway.
 // ---------------------------------------------------------------------------
 
+// The keepalive, and why a relay needs one at all.
+//
+// Both ends of this can be silent for a long time and still be perfectly
+// correct: an operator that has opened a room and is waiting for the iPad to
+// join has nothing to say, and a display waiting for an operator to open the
+// app has nothing to ask. Silence is the normal state of the minutes before a
+// service.
+//
+// It is also what breaks it. A TCP connection carrying nothing is one every
+// router, phone hotspot and church firewall between here and the stage is free
+// to drop, and when they do they drop it *quietly* — no close frame reaches
+// either end. Both sides go on believing they are connected: the operator's
+// screen still says "Waiting for a display", the display still says "waiting
+// for the operator", and neither will ever be true again. Quitting the app and
+// retyping the code was the only cure because only a brand-new socket is a
+// live one.
+//
+// So both ends now speak every twenty seconds whether they have anything to
+// say or not, and this is the sentence. setWebSocketAutoResponse answers it in
+// the runtime itself: the object is never woken, webSocketMessage is never
+// called, and nothing is billed — while the bytes on the wire are enough to
+// keep every box in the middle believing the connection is in use. It is also
+// how a client learns its socket has died: an answer that stops coming is the
+// only evidence a half-open socket ever gives.
+const KEEPALIVE = '{"t":"k"}';
+
 export class Room {
   constructor(ctx, env) {
     this.ctx = ctx;
     this.env = env;
+    // Set on every wake, because the constructor is what a wake runs.
+    this.ctx.setWebSocketAutoResponse(
+      new WebSocketRequestResponsePair(KEEPALIVE, KEEPALIVE)
+    );
     // Survives only until the next hibernation, and is treated as such: it is
     // an optimisation for a display joining mid-service, never the source of
     // truth. The operator is that.
@@ -184,6 +214,14 @@ export class Room {
       return;
     }
     const self = ws.deserializeAttachment() || {};
+
+    // Belt and braces. The auto-response above answers keepalives without ever
+    // reaching this method, so arriving here means it is not in effect — an
+    // older runtime, or a message that is a keepalive in spirit but not byte
+    // for byte. Answering costs nothing and a client left unanswered would
+    // hang up on a socket that is perfectly alive.
+    if (m.t === "k") { this.send(ws, { t: "k" }); return; }
+
     if (self.role === "rejected") return;
 
     if (self.role === "op") {

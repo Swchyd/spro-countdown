@@ -135,6 +135,41 @@ check("and hears about it again when the operator walks out",
 alone.close();
 
 // ---------------------------------------------------------------------------
+// The keepalive. Both ends can legitimately have nothing to say for minutes —
+// an operator waiting for the iPad, a display waiting for an operator — and a
+// socket carrying nothing is one the network is free to drop silently. So both
+// ends speak anyway, and this is the answer they listen for: no answer is the
+// only evidence a half-open socket ever gives.
+console.log("\nA silent socket is kept alive\n-----------------------------");
+send(d1, { t: "k" });
+await until(() => last(d1, "k"));
+check("a display's keepalive is answered", !!last(d1, "k"), JSON.stringify(d1.inbox.slice(-3)));
+
+send(op, { t: "k" });
+await until(() => last(op, "k"));
+check("and an operator's too", !!last(op, "k"));
+
+// The answer must not be mistaken for room traffic — a keepalive that reached
+// the displays as state, or bumped the head count, would be worse than none.
+const beatsBefore = seen(d2, "k").length;
+const headBefore = (last(op, "peers") || {}).n;
+send(op, { t: "k" });
+await until(() => seen(op, "k").length > 1);
+check("a keepalive is not relayed to anyone else", seen(d2, "k").length === beatsBefore);
+check("and does not disturb the head count", (last(op, "peers") || {}).n === headBefore,
+  "was " + headBefore + ", now " + (last(op, "peers") || {}).n);
+
+// An operator on a code nobody has joined is the case that broke: it is silent
+// by design, so it has to be able to hold a socket open on nothing but this.
+const quiet = rnd();
+const lonely = await open(quiet, "op", "devK");
+send(lonely, { t: "k" });
+await until(() => last(lonely, "k"));
+check("an operator alone in a room can hold its socket open",
+  !!last(lonely, "k") && lonely.readyState === 1, JSON.stringify(lonely.inbox));
+lonely.close();
+
+// ---------------------------------------------------------------------------
 console.log("\nClock sync is routed back to the display that asked\n" +
             "--------------------------------------------------");
 send(d1, { t: "ping", c: 1111 });

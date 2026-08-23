@@ -3149,7 +3149,56 @@ if ("serviceWorker" in navigator) {
   var relayTaken = false;  // this code belongs to another room; do not redial it
   var relayHost = false;   // display: is there actually an operator in there
 
+  // ---- keeping the socket honest ----
+  //
+  // The bug this exists for looked like two different bugs and was one.
+  //
+  // An operator opens a room and waits for the iPad: nothing to say, so nothing
+  // is sent — the heartbeat below only fires once a display is actually there.
+  // A display waits for an operator to open the app: nothing to ask, and its
+  // clock pings are stopped for exactly as long as there is nobody to ping. In
+  // both cases the socket carries no bytes at all for minutes, and a socket
+  // carrying no bytes is one any router in the path may drop without telling
+  // either end. readyState stays 1 for ever afterwards, so the watchdog sees a
+  // healthy link, and both screens go on describing a connection that stopped
+  // existing several minutes ago. That is why "swap the roles round and swap
+  // them back" worked: it was never about the roles, it was the only way to
+  // make both ends build a socket that was actually alive.
+  //
+  // So: say something every twenty seconds regardless, and treat an answer that
+  // stops arriving as the death certificate — it is the only one a half-open
+  // socket ever issues. The Worker answers in the runtime without waking the
+  // object, so this costs nothing to run.
+  var KEEPALIVE = '{"t":"k"}';
+  var RELAY_BEAT_MS = 20000;
+  var RELAY_DEAD_MS = 55000;   // two and a half missed beats
+  var relayBeat = 0;           // the interval sending them
+  var relayRx = 0;             // when this socket last heard anything at all
+  var relayTries = 0;          // consecutive failures to get the socket open
+
   function relayOn() { return !LOCAL && !relayGaveUp; }
+
+  function sendBeat() {
+    if (!relay || relay.readyState !== 1) return;
+    try { relay.send(KEEPALIVE); } catch (e) {}
+  }
+
+  function startRelayBeat() {
+    clearInterval(relayBeat);
+    relayBeat = setInterval(sendBeat, RELAY_BEAT_MS);
+  }
+
+  // Waking is the commonest way to arrive holding a socket that died while
+  // nobody was looking: an iPad that slept froze every timer in this page, so
+  // the last thing heard is minutes old through no fault of the socket's. Poke
+  // it and give it five seconds to answer rather than condemning it on a
+  // silence it was never given the chance to break.
+  function probeRelay() {
+    if (!relay || relay.readyState !== 1) return;
+    var grace = Date.now() - RELAY_DEAD_MS + 5000;
+    if (relayRx < grace) relayRx = grace;
+    sendBeat();
+  }
 
   // Displays on the relay, displays on WebRTC, or displays the stage server is
   // reporting — the status line does not care which, only how many.
@@ -3169,6 +3218,9 @@ if ("serviceWorker" in navigator) {
     relaySongKey = null;
     relayTaken = false;
     relayHost = false;
+    clearInterval(relayBeat);
+    relayBeat = 0;
+    relayRx = 0;
     if (relay) {
       var r = relay;
       relay = null;
@@ -3210,18 +3262,31 @@ if ("serviceWorker" in navigator) {
     relay = ws;
 
     var opened = false;
+    // Closing a socket that never opened fires onclose too, so without this the
+    // failure is reported twice for one socket — which used to be harmless and
+    // is not now that failures are counted towards giving up.
+    var gaveUp = false;
+    function failOnce() {
+      if (gaveUp) return;
+      gaveUp = true;
+      relayFailed(asRole, code);
+    }
+
     // Six seconds is generous for a socket to a CDN edge and short enough that
     // nobody is left staring at a dead screen before a service.
     var giveUp = setTimeout(function () {
       if (opened || relay !== ws) return;
       try { ws.close(); } catch (e) {}
-      relayFailed(asRole, code);
+      failOnce();
     }, 6000);
 
     ws.onopen = function () {
       opened = true;
       clearTimeout(giveUp);
       if (relay !== ws) return;
+      relayTries = 0;
+      relayRx = Date.now();
+      startRelayBeat();
       if (asRole === "op") {
         // Nothing is assumed about what the displays are holding across a
         // reconnect, so the next update carries the song.
@@ -3236,8 +3301,14 @@ if ("serviceWorker" in navigator) {
 
     ws.onmessage = function (ev) {
       if (relay !== ws) return;
+      // Anything at all counts as proof of life, including the keepalive's own
+      // echo. Stamped before the parse so a message we do not understand still
+      // says the socket is carrying bytes.
+      relayRx = Date.now();
       var m;
       try { m = JSON.parse(ev.data); } catch (e) { return; }
+
+      if (m.t === "k") return;   // the echo; the stamp above was the whole point
 
       if (m.t === "welcome") { relayId = m.id; return; }
 
@@ -3299,11 +3370,14 @@ if ("serviceWorker" in navigator) {
       clearTimeout(giveUp);
       relay = null;
       relayPeers = 0;
+      clearInterval(relayBeat);
+      relayBeat = 0;
+      relayRx = 0;
       // Refused because the code belongs to somebody else. The message
       // explaining that is already on screen and redialling would only take it
       // off again — the operator has been asked for a decision, not a retry.
       if (relayTaken) return;
-      if (!opened) { relayFailed(asRole, code); return; }
+      if (!opened) { failOnce(); return; }
       // It was up and went away. The watchdog rebuilds it on the same code
       // within three seconds, so this only has to say so.
       clearInterval(pingTimer);
@@ -3314,13 +3388,34 @@ if ("serviceWorker" in navigator) {
     ws.onerror = function () { /* onclose follows, and it does the work */ };
   }
 
-  // The socket never came up. That is a network that will not carry it at all,
-  // so hand the session to WebRTC and do not try the relay again until the role
-  // is left and re-entered.
+  // The socket never came up.
+  //
+  // Once is not evidence. A tablet coming off standby, a phone hotspot still
+  // finding the tower, a church wifi handing out a lease — plenty of things
+  // make the first socket of the day miss a six-second window and the second
+  // one open immediately. Giving up on the first miss is how one end quietly
+  // ends up on WebRTC while the other is on the relay, and those two never meet
+  // however long anybody stares at them.
+  //
+  // It matters more than it looks because of what is being fallen back TO. On
+  // one wifi WebRTC is fine. Across two networks it has no path at all — that
+  // is the entire reason this relay exists — so surrendering early does not
+  // trade a good transport for a worse one, it trades a working one for none.
+  // Three attempts, then hand over.
+  var relayRetry = 0;
   function relayFailed(asRole, code) {
     if (relayGaveUp) return;
-    relayGaveUp = true;
     relay = null;
+    if (++relayTries < 3) {
+      setLink("connecting", "Connecting…");
+      clearTimeout(relayRetry);
+      relayRetry = setTimeout(function () {
+        if (!relayOn() || roomCode !== code) return;
+        openRelay(asRole, code);
+      }, 600);
+      return;
+    }
+    relayGaveUp = true;
     setLink("connecting", "Relay unreachable — pairing directly…");
     if (asRole === "op") hostPeer(code);
     else joinPeer(code);
@@ -3496,6 +3591,8 @@ if ("serviceWorker" in navigator) {
     // Leaving the role is the one moment worth trying the relay again: the
     // network may be a different one by the next time anybody pairs.
     relayGaveUp = false;
+    relayTries = 0;
+    clearTimeout(relayRetry);
     clearInterval(pingTimer);
     clearInterval(localSyncTimer);
     localPeers = 0;
@@ -3517,6 +3614,25 @@ if ("serviceWorker" in navigator) {
     // if the socket is gone, open it again on the same code.
     if (relayOn()) {
       if (relayTaken) return;   // waiting on the operator, not on the network
+
+      // A socket that has not answered a keepalive in nearly a minute is dead,
+      // whatever readyState claims — see the keepalive note above. Hang up on
+      // this end so the rebuild below treats it as gone, because nothing else
+      // ever will.
+      if (relay && relay.readyState === 1 && relayRx &&
+          Date.now() - relayRx > RELAY_DEAD_MS) {
+        var dead = relay;
+        relay = null;
+        relayPeers = 0;
+        clearInterval(relayBeat);
+        relayBeat = 0;
+        relayRx = 0;
+        clearInterval(pingTimer);
+        try { dead.close(); } catch (e) {}
+        setLink(role === "op" ? "connecting" : "lost",
+                role === "op" ? "Reconnecting…" : "Link lost — timer still running");
+      }
+
       if (!relay || relay.readyState > 1) {
         if (role === "op") hostRoom(roomCode);
         else joinRoom(roomCode);
@@ -3542,7 +3658,10 @@ if ("serviceWorker" in navigator) {
   }
 
   // The browser tells us the moment the network is back; do not wait a tick.
-  window.addEventListener("online", function () { setTimeout(superviseLink, 300); });
+  window.addEventListener("online", function () {
+    probeRelay();
+    setTimeout(superviseLink, 300);
+  });
 
   // The broker only frees a room code when its socket closes. Close the tab, or
   // swipe the app away on the iPad, and nothing ever closes it — so the code
@@ -3561,7 +3680,9 @@ if ("serviceWorker" in navigator) {
     if (relay) { try { relay.close(); } catch (e) {} }
   });
   document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible") setTimeout(superviseLink, 300);
+    if (document.visibilityState !== "visible") return;
+    probeRelay();
+    setTimeout(superviseLink, 300);
   });
 
   // ---- local transport (stage server on this network) ----
