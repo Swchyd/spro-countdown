@@ -1365,24 +1365,17 @@
   #runPickRow, #runFoot, #runNav, #runEditBox { flex: 0 0 auto; }
 
   #runPickRow { display: flex; gap: 8px; align-items: center; }
-  /* A native select rather than the custom menu the setlist uses. That menu
-     exists because a setlist row carries a rename, a delete and a subtitle;
-     this one carries a name, so the control the operating system already
-     draws — and already makes usable one-handed on an iPad — is the whole of
-     what is needed. */
-  #runPick {
+  /* What the row used to hold was a picker. With one plan there is nothing to
+     pick, so what is left is a heading that says which of the two tabs this
+     is once the list has scrolled away from the tab bar. */
+  #runHeading {
     flex: 1 1 auto;
     min-width: 0;
-    height: 40px;
-    padding: 0 10px;
-    border-radius: 10px;
-    background: var(--panel-2);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-size: 14px;
-    font-weight: 600;
-    -webkit-appearance: none;
-    appearance: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #5B6474;
   }
   #runPickRow button {
     flex: 0 0 auto;
@@ -1436,7 +1429,11 @@
     border-radius: 8px;
     box-shadow: inset 3px 0 0 var(--accent);
   }
-  .run-row.live .st { color: var(--accent); }
+  /* Green for time in hand and red for time gone, whether the item is running
+     or finished with — one rule for the figure, so the colour never changes
+     meaning between the row being watched and the rows above it. The accent
+     bar down the left is what says which row is live. */
+  .run-row.live .st { color: var(--ok); }
   .run-row.live.late .st { color: var(--over); }
   .run-row.next .st { color: var(--accent); font-weight: 600; }
   .run-row:not(.editing):active { background: var(--panel-2); }
@@ -1477,17 +1474,6 @@
 
   #runEditBox { display: none; flex-direction: column; gap: 8px; }
   #opRunPanel.editing #runEditBox { display: flex; }
-  #runNameIn {
-    height: 40px;
-    padding: 0 12px;
-    border-radius: 10px;
-    background: var(--stage);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-size: 14px;
-    font-weight: 600;
-    font-family: inherit;
-  }
   #runEditBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   #runEditBtns button {
     height: 40px;
@@ -2813,17 +2799,20 @@ lyric line one</pre>
     <!-- The running order. Pressing a row starts that item: the countdown is
          armed with its target and the one being left is written down. -->
     <div id="opRunPanel" class="op-panel">
+      <!-- One plan per device, and no way to hold two. Keeping several was
+           insurance against somebody else changing the one being run, and
+           nobody else is here: this console is already behind the operator's
+           own room code. So there is nothing to pick between, nothing to name,
+           and no + to press before the list exists. -->
       <div id="runPickRow">
-        <select id="runPick" aria-label="Which rundown this device is running"></select>
-        <button type="button" id="runNewBtn" aria-label="Start a new rundown">+</button>
+        <span id="runHeading">Running order</span>
         <button type="button" id="runEditBtn">EDIT</button>
       </div>
 
       <div id="runEditBox">
-        <input id="runNameIn" type="text" maxlength="80" placeholder="Rundown name" autocomplete="off">
         <div id="runEditBtns">
           <button type="button" id="runAddBtn">+ ADD ITEM</button>
-          <button type="button" id="runDelBtn" class="danger">DELETE RUNDOWN</button>
+          <button type="button" id="runDelBtn" class="danger">CLEAR RUNDOWN</button>
         </div>
       </div>
 
@@ -5753,28 +5742,55 @@ if ("serviceWorker" in navigator) {
   // would put two people preparing two services straight back into each
   // other's work — the exact problem the setlist had to be split up to solve.
   var RUN_KEY = "spro-rundown-v1";
-  var runsheets = [], pickedRunId = "", runEditing = false;
+  var rundown = null, runEditing = false, runMigrated = false;
   var runRows = $("runRows"), runRowEls = [];
 
   try {
     var runRaw = JSON.parse(localStorage.getItem(RUN_KEY) || "null");
-    if (runRaw && Array.isArray(runRaw.rundowns)) runsheets = runRaw.rundowns;
-    if (runRaw && typeof runRaw.picked === "string") pickedRunId = runRaw.picked;
+    if (runRaw && runRaw.rundown) rundown = runRaw.rundown;
+    // Written by the first build, which held several sheets and a pick between
+    // them. Take the one this device was on, or failing that the first it
+    // wrote: a plan somebody typed out is worth more than a tidy start.
+    else if (runRaw && Array.isArray(runRaw.rundowns) && runRaw.rundowns.length) {
+      for (var ri = 0; ri < runRaw.rundowns.length; ri++) {
+        if (runRaw.rundowns[ri].id === runRaw.picked) rundown = runRaw.rundowns[ri];
+      }
+      if (!rundown) rundown = runRaw.rundowns[0];
+      // Written back at once rather than on the next edit, so the sheets that
+      // were not carried over are not left sitting there to be half-read by
+      // something later.
+      if (rundown) runMigrated = true;
+    }
+    if (rundown && !Array.isArray(rundown.items)) rundown = null;
   } catch (e) {}
 
   function persistRun() {
     try {
-      localStorage.setItem(RUN_KEY, JSON.stringify({
-        v: 1, rundowns: runsheets, picked: pickedRunId
-      }));
+      localStorage.setItem(RUN_KEY, JSON.stringify({ v: 2, rundown: rundown }));
     } catch (e) {}
   }
 
-  function curRun() {
-    for (var i = 0; i < runsheets.length; i++) {
-      if (runsheets[i].id === pickedRunId) return runsheets[i];
+  if (runMigrated) persistRun();
+
+  // The plan this device holds, whether or not anything is in it yet.
+  function theRun() {
+    if (!rundown) {
+      rundown = {
+        id: "rd_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        items: RUN_TEMPLATE.map(function (t) { return { name: t.name, secs: t.secs }; })
+      };
+      persistRun();
     }
-    return null;
+    return rundown;
+  }
+
+  // A plan there is something to run, which is not the same question. An empty
+  // rundown is how a device says it is not working to one — the tab shows the
+  // timer fields instead — and everything that drives the countdown from a
+  // plan has to see that as "no plan" rather than as a list of nothing.
+  function curRun() {
+    var r = theRun();
+    return r.items.length ? r : null;
   }
 
   // A new sheet starts with the shape a service usually has rather than empty.
@@ -5791,31 +5807,11 @@ if ("serviceWorker" in navigator) {
     { name: "Closing", secs: 3 * 60 }
   ];
 
-  function newRundown() {
-    var d = new Date();
-    var base = "Rundown " + d.getDate() + "/" + (d.getMonth() + 1);
-    var name = base, n = 2;
-    while (runsheets.some(function (r) { return r.name === name; })) name = base + " (" + (n++) + ")";
-
-    runsheets.push({
-      id: "rd_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      name: name,
-      items: RUN_TEMPLATE.map(function (t) { return { name: t.name, secs: t.secs }; })
-    });
-    pickedRunId = runsheets[runsheets.length - 1].id;
-    persistRun();
-    T.run = null;                 // a different sheet is a different service
-    syncRun();
-    setRunEditing(true);
-    commit();
-  }
-
   // ----- what travels: the plan, plus what has happened to it -----
 
   function freshRun(rs) {
     return {
       id: rs.id,
-      name: rs.name,
       i: -1,      // which item is live — only meaningful while `at` is set
       at: 0,      // when it started, on the operator's clock
       items: rs.items.map(function (it) {
@@ -5833,7 +5829,6 @@ if ("serviceWorker" in navigator) {
     if (!rs) { T.run = null; return; }
     var r = T.run;
     if (!r || r.id !== rs.id) { T.run = freshRun(rs); return; }
-    r.name = rs.name;
     r.items = rs.items.map(function (it, i) {
       var was = r.items[i];
       return { n: it.name, t: it.secs, a: was ? was.a : null };
@@ -5869,15 +5864,22 @@ if ("serviceWorker" in navigator) {
   // headline would swing the figure negative and back again every time an
   // item starts, which is not something anyone can read at a glance — so only
   // an overrun, which is time already spent, reaches the total.
+  // Everything here is time in hand: what an item gave back, positive, and
+  // what it took beyond its target, negative. It is the same figure the row
+  // shows — an item closed with five minutes still on the clock is +5:00 —
+  // added up, so the total is minutes gained or lost across the service.
   function runDrift() {
     var r = T.run, out = { done: 0, live: 0, total: 0 };
     if (!r) return out;
     for (var i = 0; i < r.items.length; i++) {
-      if (r.items[i].a != null) out.done += r.items[i].a - r.items[i].t;
+      if (r.items[i].a != null) out.done += r.items[i].t - r.items[i].a;
     }
     var live = runLive();
-    if (live >= 0) out.live = runElapsed() - r.items[live].t;
-    out.total = out.done + Math.max(0, out.live);
+    if (live >= 0) out.live = r.items[live].t - runElapsed();
+    // Time an item has not spent yet is not time gained: it is still being
+    // decided, and counting it would swing the total the moment every item
+    // starts. Time already spent past the target is settled, so that counts.
+    out.total = out.done + Math.min(0, out.live);
     return out;
   }
 
@@ -5897,9 +5899,11 @@ if ("serviceWorker" in navigator) {
     return now() + ms;
   }
 
+  // Minutes padded like the countdown they are read beside, so a column of
+  // them lines up and a glance can tell +05:00 from +50:00.
   function fmtSigned(sec) {
     var a = Math.abs(Math.round(sec));
-    return (sec < 0 ? "−" : "+") + Math.floor(a / 60) + ":" + pad2(a % 60);
+    return (sec < 0 ? "−" : "+") + pad2(Math.floor(a / 60)) + ":" + pad2(a % 60);
   }
 
   function fmtHM(ms) {
@@ -5977,8 +5981,8 @@ if ("serviceWorker" in navigator) {
     var rs = curRun();
     if (!rs || !T.run) return;
     var ran = T.run.at || T.run.items.some(function (it) { return it.a != null; });
-    if (ran && !window.confirm("Clear the times recorded against “" + rs.name +
-        "”? The plan itself is untouched — this is how the same rundown is run again for the next service.")) return;
+    if (ran && !window.confirm("Clear the times recorded against this rundown? " +
+        "The running order itself is untouched — this is how the same one is run again for the next service.")) return;
     T.run = freshRun(rs);
     commit();
     renderRun();
@@ -6052,7 +6056,8 @@ if ("serviceWorker" in navigator) {
   }
 
   function setRunEditing(on) {
-    runEditing = !!on && !!curRun();
+    // Editable while empty, because that is the state ADD ITEM exists for.
+    runEditing = !!on;
     $("opRunPanel").classList.toggle("editing", runEditing);
     $("runEditBtn").classList.toggle("on", runEditing);
     $("runEditBtn").textContent = runEditing ? "DONE" : "EDIT";
@@ -6060,36 +6065,8 @@ if ("serviceWorker" in navigator) {
     fitConsole();
   }
 
-  function renderRunPick() {
-    var sel = $("runPick"), cur = curRun(), opt;
-    sel.innerHTML = "";
-    if (!runsheets.length) {
-      opt = document.createElement("option");
-      opt.value = "";
-      opt.textContent = "No rundown yet";
-      sel.appendChild(opt);
-      sel.disabled = true;
-      return;
-    }
-    sel.disabled = false;
-    // A way back out. Not every service is run to a sheet — a rehearsal, a
-    // prayer meeting, a Sunday somebody is covering — and without this the
-    // only way to a plain countdown was to delete the plan.
-    opt = document.createElement("option");
-    opt.value = "";
-    opt.textContent = "— No rundown —";
-    sel.appendChild(opt);
-    runsheets.forEach(function (rs) {
-      var o = document.createElement("option");
-      o.value = rs.id;
-      o.textContent = rs.name;
-      sel.appendChild(o);
-    });
-    sel.value = cur ? cur.id : "";
-  }
 
   function renderRun() {
-    renderRunPick();
     syncRun();
     var rs = curRun(), r = T.run;
     // Out before the list is emptied: the timer grid is a child of it when
@@ -6097,20 +6074,19 @@ if ("serviceWorker" in navigator) {
     parkGrid(false);
     runRows.innerHTML = "";
     runRowEls = [];
-    $("runNameIn").value = rs ? rs.name : "";
-    // Nothing to advance through, nothing to be late against: with no plan
-    // the footer, the follow switch and NEXT ITEM all describe something that
-    // does not exist, and the tab is simply the old timer fields.
+    // Nothing to advance through, nothing to be late against: with an empty
+    // rundown the footer, the follow switch and NEXT ITEM all describe
+    // something that does not exist, and the tab is simply the timer fields.
     $("opRunPanel").classList.toggle("has-run", !!rs);
 
-    if (!rs || !rs.items.length) {
+    if (!rs) {
       var msg = document.createElement("div");
       msg.className = "hint";
-      msg.textContent = rs ? "Nothing in this rundown yet — press EDIT, then ADD ITEM."
-        : runsheets.length ? "No rundown for this service — set the time and title by hand below."
-        : "No rundown on this device yet. Press + to start one, or run the countdown by hand below.";
+      msg.textContent = runEditing
+        ? "Empty — press ADD ITEM to build the running order."
+        : "No running order on this device. The countdown runs on the time set here; press EDIT to build one.";
       runRows.appendChild(msg);
-      if (!rs) parkGrid(true);
+      parkGrid(true);
       paintRun();
       paintStartBtn();
       return;
@@ -6177,11 +6153,11 @@ if ("serviceWorker" in navigator) {
         var rec = r && r.items[i] ? r.items[i].a : null;
         if (i === live) {
           row.classList.add("live");
-          st.textContent = fmtSigned(runElapsed() - it.secs);
+          st.textContent = fmtSigned(it.secs - runElapsed());
         } else if (rec != null) {
           row.classList.add("done");
           if (rec > it.secs) row.classList.add("late");
-          st.textContent = fmtSigned(rec - it.secs);
+          st.textContent = fmtSigned(it.secs - rec);
         } else if (i === next) {
           row.classList.add("next");
           st.textContent = "NEXT";
@@ -6215,10 +6191,10 @@ if ("serviceWorker" in navigator) {
   function paintRun() {
     var r = T.run, live = runLive();
     if (live >= 0 && runRowEls[live] && !runEditing) {
-      var over = runElapsed() - r.items[live].t;
-      runRowEls[live].classList.toggle("late", over > 0);
+      var left = r.items[live].t - runElapsed();
+      runRowEls[live].classList.toggle("late", left < 0);
       var st = runRowEls[live].querySelector(".st");
-      if (st) st.textContent = fmtSigned(over);
+      if (st) st.textContent = fmtSigned(left);
     }
     paintRunFoot($("runDrift"), $("runEnd"));
 
@@ -6248,10 +6224,12 @@ if ("serviceWorker" in navigator) {
       endEl.textContent = "";
       return;
     }
+    // The figure alone. It is the same shape as the one against every row, in
+    // the same colours, so what it is needs no label: minutes in hand across
+    // the whole service, or minutes gone.
     var d = runDrift();
-    var cls = d.total > 0 ? "late" : d.total < 0 ? "early" : "";
-    driftEl.innerHTML = "Against plan <b class=\"" + cls + "\">" +
-      (d.total === 0 ? "on time" : fmtSigned(d.total)) + "</b>";
+    driftEl.innerHTML = "<b class=\"" + (d.total < 0 ? "late" : "early") + "\">" +
+      fmtSigned(d.total) + "</b>";
     endEl.innerHTML = runUpNext() < 0 && runLive() < 0
       ? "Finished"
       : "Ends <b>" + fmtHM(runProjectedEnd()) + "</b>";
@@ -6306,21 +6284,10 @@ if ("serviceWorker" in navigator) {
     paintRun();
   });
 
-  $("runPick").addEventListener("change", function () {
-    pickedRunId = this.value || "";
-    persistRun();
-    T.run = null;
-    renderRun();
-    commit();
-  });
-
-  $("runNewBtn").addEventListener("click", newRundown);
-
   $("runEditBtn").addEventListener("click", function () { setRunEditing(!runEditing); });
 
   $("runAddBtn").addEventListener("click", function () {
-    var rs = curRun();
-    if (!rs) return;
+    var rs = theRun();
     rs.items.push({ name: "New item", secs: 5 * 60 });
     persistRun();
     renderRun();
@@ -6330,23 +6297,15 @@ if ("serviceWorker" in navigator) {
     if (inp) { inp.focus(); inp.select(); }
   });
 
-  $("runNameIn").addEventListener("change", function () {
-    var rs = curRun();
-    if (!rs) return;
-    rs.name = (this.value || "").trim().slice(0, 80) || rs.name;
-    this.value = rs.name;
-    persistRun();
-    syncRun();
-    renderRunPick();
-    commit();
-  });
-
+  // Emptying it is how a device says it is not working to a plan this week —
+  // a rehearsal, a prayer meeting, a Sunday somebody is covering. The tab goes
+  // back to being the timer fields, which is where it started.
   $("runDelBtn").addEventListener("click", function () {
     var rs = curRun();
     if (!rs) return;
-    if (!window.confirm("Delete the rundown “" + rs.name + "”?")) return;
-    runsheets = runsheets.filter(function (x) { return x.id !== rs.id; });
-    pickedRunId = runsheets.length ? runsheets[0].id : "";
+    if (!window.confirm("Clear the running order? Every item goes, and the tab " +
+        "becomes a plain countdown again.")) return;
+    rs.items = [];
     persistRun();
     T.run = null;
     setRunEditing(false);
@@ -6362,8 +6321,10 @@ if ("serviceWorker" in navigator) {
     persist();
   });
 
-  // A device that has run one before lands back on it rather than on nothing.
-  if (!curRun() && runsheets.length) { pickedRunId = runsheets[0].id; persistRun(); }
+  // A device with nothing stored gets the shape a service usually has, rather
+  // than an empty box and an arrow pointing at ADD ITEM. Every line is one
+  // press from being renamed, retimed or removed.
+  theRun();
 
   // ----- the crew view -----
   //
@@ -6478,7 +6439,7 @@ if ("serviceWorker" in navigator) {
         else if (it.a != null) {
           row.classList.add("done");
           if (it.a > it.t) row.classList.add("late");
-          st.textContent = fmtSigned(it.a - it.t);
+          st.textContent = fmtSigned(it.t - it.a);
         } else if (i === next) {
           row.classList.add("next");
           st.textContent = "NEXT";
@@ -6493,8 +6454,8 @@ if ("serviceWorker" in navigator) {
     if (live >= 0) {
       var liveRow = $("crewList").querySelector('.run-row[data-i="' + live + '"]');
       if (liveRow) {
-        var d = runElapsed() - r.items[live].t;
-        liveRow.classList.toggle("late", d > 0);
+        var d = r.items[live].t - runElapsed();
+        liveRow.classList.toggle("late", d < 0);
         var lst = liveRow.querySelector(".st");
         if (lst) lst.textContent = fmtSigned(d);
       }
