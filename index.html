@@ -892,6 +892,20 @@
   }
   /* The bar is 40px tall but the ✕ inside it was only as wide as the glyph, so
      the thing being aimed at on a moving stage was about ten points across. */
+  /* Which of the two things this device is: the stage, or the plan behind it. */
+  #crewToggle {
+    padding: 0 10px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  #crewToggle.on { border-color: var(--accent); color: var(--accent); }
   #dispExit {
     color: var(--ink-dim);
     font-size: 15px;
@@ -1314,6 +1328,332 @@
      — an id alone loses to id+type and the accent would never show. */
   #lyricNav #nextSlideBtn { background: var(--accent); border-color: var(--accent); color: #1A1408; }
   #lyricNav #nextSlideBtn small { color: rgba(26,20,8,.6); }
+
+  /* ---------- console: the rundown ---------- */
+
+  /* The running order, with a target length against each item. A third tab
+     rather than a corner of the timer tab because it is watched for the whole
+     service the way the lyrics are, and anything watched for a whole service
+     has to sit under the pinned preview instead of scrolling away from it. */
+  #opRunPanel { width: 100%; max-width: 620px; flex: 0 0 auto; display: none; }
+  #opBody.tab-run .op-grid { display: none; }
+  #opBody.tab-run #opRunPanel { display: flex; }
+
+  /* The panel has three homes: the setup card, where the plan is built before
+     anything is live; the console, where it is run; and the standalone
+     drawer, which is both at once. One node moved between them rather than
+     three copies of it — for the same reason the timer grid is moved rather
+     than duplicated, which is that two places rendering the same list is two
+     places for it to go out of step. */
+  #opRunPanel.on-setup, #opRunPanel.on-solo { display: flex; }
+  /* On the setup card it is already inside a panel, so it does not bring a
+     second one with it. */
+  #opRunPanel.on-setup { padding: 0; background: none; border: 0; }
+  /* Nothing is running yet, so there is nothing to advance to: START TIMER is
+     what begins the rundown, and it is already on this card. */
+  #opRunPanel.on-setup #runNav { display: none; }
+  #opRunPanel.on-setup #runRows {
+    max-height: 264px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Same reason as the lyrics tab: the press that happens most here is NEXT
+     ITEM, and the transport is what was pushing it below the fold. */
+  #opBody.tab-run #controls { order: 1; }
+  #opBody.tab-run #runRows {
+    flex: 1 1 auto;
+    min-height: 84px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #runPickRow, #runFoot, #runNav, #runEditBox { flex: 0 0 auto; }
+
+  #runPickRow { display: flex; gap: 8px; align-items: center; }
+  /* A native select rather than the custom menu the setlist uses. That menu
+     exists because a setlist row carries a rename, a delete and a subtitle;
+     this one carries a name, so the control the operating system already
+     draws — and already makes usable one-handed on an iPad — is the whole of
+     what is needed. */
+  #runPick {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  #runPickRow button {
+    flex: 0 0 auto;
+    height: 40px;
+    min-width: 44px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+  #runPickRow button.on { border-color: var(--accent); color: var(--accent); }
+  #runPickRow button:active { background: var(--panel); }
+
+  .run-row {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr) auto auto;
+    gap: 10px;
+    align-items: center;
+    padding: 9px 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .run-row:last-child { border-bottom: 0; }
+  .run-row .n { font-size: 11px; font-weight: 700; color: #5B6474; }
+  .run-row .nm {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .run-row .tg { font-size: 12px; color: #5B6474; font-variant-numeric: tabular-nums; }
+  /* Wide enough for "−12:34" so the column does not jump about as items close
+     one after another. */
+  .run-row .st {
+    min-width: 58px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 700;
+    color: #5B6474;
+    font-variant-numeric: tabular-nums;
+  }
+  .run-row.done .nm { color: var(--ink-dim); font-weight: 500; }
+  .run-row.done .st { color: var(--ok); }
+  .run-row.done.late .st { color: var(--over); }
+  .run-row.live {
+    background: var(--panel-2);
+    border-radius: 8px;
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+  .run-row.live .st { color: var(--accent); }
+  .run-row.live.late .st { color: var(--over); }
+  .run-row.next .st { color: var(--accent); font-weight: 600; }
+  .run-row:not(.editing):active { background: var(--panel-2); }
+
+  /* Editing is its own state rather than buttons that are always there: the
+     row is pressed to start an item, and during a service the last thing that
+     may sit under that thumb is a delete. */
+  .run-row.editing { grid-template-columns: 18px minmax(0, 1fr) 62px auto; }
+  .run-row.editing .nm-in, .run-row.editing .t-in {
+    height: 36px;
+    padding: 0 8px;
+    border-radius: 8px;
+    background: var(--stage);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 14px;
+    font-family: inherit;
+    width: 100%;
+    min-width: 0;
+  }
+  .run-row.editing .t-in { text-align: center; font-variant-numeric: tabular-nums; }
+  .run-row .mv {
+    display: flex;
+    gap: 4px;
+  }
+  .run-row .mv button {
+    width: 30px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .run-row .mv button.del { color: var(--over); }
+  .run-row .mv button:active { background: var(--panel); }
+
+  #runEditBox { display: none; flex-direction: column; gap: 8px; }
+  #opRunPanel.editing #runEditBox { display: flex; }
+  #runNameIn {
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: var(--stage);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+  }
+  #runEditBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  #runEditBtns button {
+    height: 40px;
+    border-radius: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+  #runEditBtns button.danger { color: var(--over); }
+  #runEditBtns button:active { background: var(--panel); }
+
+  #runFoot {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: #5B6474;
+    font-variant-numeric: tabular-nums;
+  }
+  #runFoot b { font-weight: 700; color: var(--ink-dim); }
+  #runFoot b.late { color: var(--over); }
+  #runFoot b.early { color: var(--ok); }
+
+  #runNav { display: flex; gap: 8px; }
+  #runNav button {
+    flex: 1 1 0;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+  #runNav button:active { background: var(--panel); }
+  /* The button carries the name of the item it is about to start, and some of
+     those names are long. Better one clipped word than a button that grows a
+     second line and moves the thing under the thumb. */
+  #runNext {
+    flex: 2 1 0 !important;
+    min-width: 0;
+    padding: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: #1A1408 !important;
+  }
+  #runNext[disabled] {
+    background: var(--panel-2) !important;
+    border-color: var(--line) !important;
+    color: #5B6474 !important;
+  }
+  #runFollow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-dim);
+    padding: 2px;
+  }
+  #runFollow input { width: 18px; height: 18px; accent-color: var(--accent); }
+
+  /* ---------- the crew view ---------- */
+
+  /* A display device is a screen on the stage. A phone in somebody's pocket is
+     a display too, and what that person needs is not the countdown the
+     congregation is looking at but where the service has got to against its
+     own plan. Same socket, same snapshot, different rendering — so this costs
+     no new role on the relay, no new message, and nothing at all on a device
+     that never turns it on. */
+  #crewView {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    padding: calc(var(--top-chrome) + 44px) max(16px, env(safe-area-inset-left))
+             max(20px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-right));
+    background: var(--stage);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  body.crew-mode #crewView { display: flex; }
+  /* Written for a phone, which is what it is nearly always read on. A laptop
+     gets the same column rather than a list stretched across a metre of
+     screen, where the name and its figure end up too far apart to be one
+     line. */
+  #crewView > * { width: 100%; max-width: 560px; margin-left: auto; margin-right: auto; }
+  /* The stage is still rendered — it is what the countdown below is read from —
+     it is simply not what this device is showing. */
+  body.crew-mode #stageWrap.full { display: none !important; }
+  /* The link badge sits over the top of the crew view, where the lyrics rule
+     would otherwise have dropped it to the bottom over the item list. */
+  body.crew-mode #dispBar { top: var(--top-chrome); bottom: auto; opacity: 1; }
+
+  #crewNow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px;
+    border-radius: var(--radius);
+    background: var(--panel);
+    border: 1px solid var(--line);
+  }
+  #crewLbl {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  #crewName {
+    font-size: clamp(24px, 7vw, 40px);
+    font-weight: 800;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+  #crewTime {
+    font-size: clamp(40px, 14vw, 76px);
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.02em;
+  }
+  #crewTime.over { color: var(--over); }
+  #crewSub { font-size: 13px; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+  #crewNext { font-size: 14px; color: var(--ink-dim); }
+  #crewNext b { color: var(--ink); font-weight: 700; }
+  #crewList {
+    border-radius: var(--radius);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 4px 12px;
+  }
+  #crewFoot {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12.5px;
+    color: #5B6474;
+    font-variant-numeric: tabular-nums;
+    padding: 0 2px 8px;
+  }
+  #crewFoot b { font-weight: 700; color: var(--ink-dim); }
+  #crewFoot b.late { color: var(--over); }
+  #crewFoot b.early { color: var(--ok); }
+  #crewEmpty {
+    padding: 28px 16px;
+    text-align: center;
+    color: #5B6474;
+    font-size: 14px;
+    line-height: 1.6;
+  }
 
   /* ---------- song library ---------- */
   /* .textinput shouts, which is right for a stage title and wrong here: the
@@ -2364,6 +2704,13 @@ lyric line one</pre>
       </div>
     </div>
 
+    <!-- Where the running order is built, before anything is on the air. The
+         panel itself is moved in here from the console — see mountRunPanel. -->
+    <div>
+      <label class="field-label" for="runPick">Rundown</label>
+      <div id="runHome"></div>
+    </div>
+
     <button id="startBtn" class="primary" type="button">START TIMER</button>
     <button id="setupBack" class="ghost" type="button">‹ Back</button>
     <div id="setupClock2">00:00:00</div>
@@ -2418,6 +2765,7 @@ lyric line one</pre>
     <div id="opTabs">
       <button type="button" class="op-tab on" data-tab="timer">Timer</button>
       <button type="button" class="op-tab" data-tab="lyrics">Lyrics</button>
+      <button type="button" class="op-tab" data-tab="run">Rundown</button>
     </div>
 
     <div class="op-grid">
@@ -2465,6 +2813,41 @@ lyric line one</pre>
         <button type="button" id="blankBtn">◼<small>Blank</small></button>
       </div>
     </div>
+
+    <!-- The running order. Pressing a row starts that item: the countdown is
+         armed with its target and the one being left is written down. -->
+    <div id="opRunPanel" class="op-panel">
+      <div id="runPickRow">
+        <select id="runPick" aria-label="Which rundown this device is running"></select>
+        <button type="button" id="runNewBtn" aria-label="Start a new rundown">+</button>
+        <button type="button" id="runEditBtn">EDIT</button>
+      </div>
+
+      <div id="runEditBox">
+        <input id="runNameIn" type="text" maxlength="80" placeholder="Rundown name" autocomplete="off">
+        <div id="runEditBtns">
+          <button type="button" id="runAddBtn">+ ADD ITEM</button>
+          <button type="button" id="runDelBtn" class="danger">DELETE RUNDOWN</button>
+        </div>
+      </div>
+
+      <div id="runRows"></div>
+
+      <div id="runFoot">
+        <span id="runDrift"></span>
+        <span id="runEnd"></span>
+      </div>
+
+      <label id="runFollow">
+        <input type="checkbox" id="runFollowIn">
+        <span>Title on stage follows the item</span>
+      </label>
+
+      <div id="runNav">
+        <button type="button" id="runNext">NEXT ITEM ▸</button>
+        <button type="button" id="runStop">RESET</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2500,7 +2883,25 @@ lyric line one</pre>
 
 <div id="dispBar">
   <span class="link-status" id="dispLink"><span class="led"></span><span class="txt"></span></span>
+  <button type="button" id="crewToggle" aria-pressed="false">Crew</button>
   <button type="button" id="dispExit" aria-label="Exit">✕</button>
+</div>
+
+<!-- What the same snapshot looks like to somebody standing at the back rather
+     than to the congregation: where the service is against its plan. -->
+<div id="crewView">
+  <div id="crewNow">
+    <span id="crewLbl">Now</span>
+    <div id="crewName">—</div>
+    <div id="crewTime">0:00</div>
+    <div id="crewSub"></div>
+  </div>
+  <div id="crewNext"></div>
+  <div id="crewList"></div>
+  <div id="crewFoot">
+    <span id="crewDrift"></span>
+    <span id="crewEnd"></span>
+  </div>
 </div>
 
 <script src="peerjs.min.js"></script>
@@ -2539,7 +2940,9 @@ if ("serviceWorker" in navigator) {
     bank: [],        // saved titles, in the order they were added
     room: "",        // operator's own room code
     join: "",        // last room code this display joined
-    dev: ""          // this device, so it can reclaim its own room code
+    dev: "",         // this device, so it can reclaim its own room code
+    runTitle: true,  // starting a rundown item also puts its name on stage
+    crew: false      // this display shows the rundown, not the stage
   };
 
   try {
@@ -2652,7 +3055,13 @@ if ("serviceWorker" in navigator) {
     song: null,
     slide: 0,           // which slide of the current song is on stage
     blank: false,       // lyrics hidden, countdown left alone
-    flashing: false
+    flashing: false,
+    // The running order being worked, if there is one. A few hundred bytes —
+    // names, targets, and what each finished item actually took — so unlike
+    // the song it rides in every snapshot rather than only in the full one.
+    // That is what lets a phone joining halfway through a service be right
+    // immediately instead of having to ask for something.
+    run: null
   };
 
   var clockOffset = 0;  // display: add to Date.now() to match the operator
@@ -2677,7 +3086,7 @@ if ("serviceWorker" in navigator) {
       live: T.live, playing: T.playing, totalMs: T.totalMs,
       remainMs: T.remainMs, endAt: T.endAt, label: T.label,
       mode: T.mode, slide: T.slide, blank: T.blank,
-      flashing: T.flashing, songKey: songKey(T.song)
+      flashing: T.flashing, songKey: songKey(T.song), run: T.run
     };
     if (!lite) d.song = T.song;
     return d;
@@ -3041,6 +3450,13 @@ if ("serviceWorker" in navigator) {
       if (setupClockEl) setupClockEl.textContent = t;
       if (setupClockEl2) setupClockEl2.textContent = t;
     }
+
+    // Whatever else this device is showing, an item that is running is a
+    // number that moves. Both of these are repaints of figures already worked
+    // out, not rebuilds — and both are cheap enough to sit on the same tick as
+    // the stage, which is the one thing here guaranteed to keep running.
+    if (crewOn) renderCrew();
+    else if (opTab === "run") paintRun();
   }
 
   // A fixed 4 ticks/s spends three of every four wake-ups discovering there is
@@ -4402,7 +4818,10 @@ if ("serviceWorker" in navigator) {
       commit();
       if (id === "solo") leaveSolo();
     } else if (id === "display") {
-      document.body.classList.remove("display-mode");
+      // The class goes, the preference stays: leaving the room is not the same
+      // as saying this device is a stage screen after all.
+      crewOn = false;
+      document.body.classList.remove("display-mode", "crew-mode");
       stageWrap.classList.remove("full");
       stageWrap.style.display = "none";
       releaseWakeLock();
@@ -4433,7 +4852,7 @@ if ("serviceWorker" in navigator) {
     // history.go(-2) fires popstate once, so unwind every level in between.
     for (var s = currentScreen; s && s !== target; s = PARENT[s]) teardown(s);
     currentScreen = target;
-    if (target === "setup") renderSetup();
+    if (target === "setup") { renderSetup(); mountRunPanel("setup"); }
     show(target);
   });
 
@@ -4448,6 +4867,7 @@ if ("serviceWorker" in navigator) {
     role = "op";
     navigate("setup");
     renderSetup();
+    mountRunPanel("setup");
     $("setupHeading").textContent = "Operator";
     applyTransportUI();
     // Always start the walk at the simplest line, so a code drifts back to
@@ -4473,6 +4893,7 @@ if ("serviceWorker" in navigator) {
     setLink("", "");
     navigate("setup");
     renderSetup();
+    mountRunPanel("setup");
     $("setupHeading").textContent = "Standalone";
     // Nothing to connect to, so the room code and the link indicator — which
     // would otherwise sit there as a lone grey dot — both go away.
@@ -4485,6 +4906,11 @@ if ("serviceWorker" in navigator) {
     navigate("join");
     $("codeInput").value = cfg.join || "";
     setLink("", "");
+    // Whatever rundown this device has of its own belongs to it as an
+    // operator. As a display it holds the operator's, and until one arrives it
+    // holds none — showing the local one would be describing a service nobody
+    // is running.
+    T.run = null;
   });
 
   function enterDisplay() {
@@ -4493,6 +4919,9 @@ if ("serviceWorker" in navigator) {
     navigate("display");
     mountStage(stageWrap, true);
     T.live = false;
+    // A phone that was a crew screen last Sunday is one again without being
+    // asked. A screen bolted to the wall never turns it on and never sees it.
+    setCrew(cfg.crew === true);
     requestWakeLock();
   }
 
@@ -4861,6 +5290,9 @@ if ("serviceWorker" in navigator) {
     T.mode = "timer";
     T.flashing = false;
     T.live = true;
+    // Publish the plan as the session opens rather than waiting for the tab to
+    // be looked at, so a crew phone that joins early has something to read.
+    syncRun();
     opLabelInput.value = cfg.label;
     writeFields(nextMin, nextSec, cfgSeconds());
     paintSign($("opSign"), cfg.neg);
@@ -4868,13 +5300,28 @@ if ("serviceWorker" in navigator) {
     if (role === "solo") {
       enterSolo();
     } else {
+      // Out of the setup card and back under the tabs before the console is
+      // measured, or fitConsole() is given a panel that is not there yet.
+      mountRunPanel("console");
       navigate("opScreen");
       mountStage(previewBox, false);
-      // The console has a height at last, which is what both tabs are measured
-      // against — a rotation while it was closed measured nothing.
+      // The console has a height at last, which is what all three tabs are
+      // measured against — a rotation while it was closed measured nothing.
       fitConsole();
     }
-    armTimer(cfgSeconds() * 1000, true);
+    // With a rundown chosen the session starts on its first item rather than
+    // on the loose time above — which is what the button has been saying it
+    // would do since the moment the rundown was picked.
+    var rs = curRun();
+    if (rs && rs.items.length) {
+      // Started from a plan, so the console opens on the plan. Landing on the
+      // timer tab would mean the first thing anyone does after pressing start
+      // is go looking for the list they just pressed start from.
+      if (role !== "solo") setOpTab("run");
+      goRunItem(0);
+    } else {
+      armTimer(cfgSeconds() * 1000, true);
+    }
   });
 
   // Leaving the console is a step back: teardown() stops the timer and, in
@@ -4894,6 +5341,9 @@ if ("serviceWorker" in navigator) {
     // which does its own scrolling and is not the console's height.
     opGrid.style.maxHeight = "";
     drawerBody.appendChild(opGrid);
+    // The rundown comes along. One device driving itself is the case that
+    // most needs the plan within reach, not the one that can do without it.
+    mountRunPanel("solo");
     setDrawer(false);
     soloOverlay.classList.add("on");
     requestWakeLock();
@@ -4914,6 +5364,7 @@ if ("serviceWorker" in navigator) {
     opBody.appendChild(opTabsEl);
     opBody.appendChild(opGrid);
     opBody.appendChild($("opLyricPanel"));
+    mountRunPanel("console");
     releaseWakeLock();
   }
 
@@ -5015,10 +5466,12 @@ if ("serviceWorker" in navigator) {
   function setOpTab(name) {
     opTab = name;
     opBodyEl.classList.toggle("tab-lyrics", name === "lyrics");
+    opBodyEl.classList.toggle("tab-run", name === "run");
     Array.prototype.forEach.call(opTabsEl.querySelectorAll(".op-tab"), function (b) {
       b.classList.toggle("on", b.getAttribute("data-tab") === name);
     });
     if (name === "lyrics") { buildSlideList(); renderSetStrip(); }
+    if (name === "run") renderRun();
     fitConsole();
     refreshLyricUI();
   }
@@ -5053,6 +5506,14 @@ if ("serviceWorker" in navigator) {
   // this much — enough that the box reads as something to scroll rather than
   // as a slot.
   var GRID_MIN = 200;
+  // The rundown tab measures the same way as the lyrics one. Its floor has to
+  // clear the picker, the footer, the follow switch and a 52px NEXT ITEM —
+  // about 180 points of fixed rows — and still leave a couple of items
+  // visible, or the button walks off the bottom of the panel.
+  var RUN_PANEL_MIN = 288;
+  // Four items. Fewer than that answers "where are we" without answering
+  // "what is coming", which is half the reason to be looking at it.
+  var RUN_LIST_WANT = 172;
 
   function offsetInBody(el) {
     return el.getBoundingClientRect().top -
@@ -5060,13 +5521,19 @@ if ("serviceWorker" in navigator) {
   }
 
   function fitConsole() {
-    var lyrics = opTab === "lyrics";
-    var panel = $("opLyricPanel");
-    var box = lyrics ? panel : opGrid;       // the one that gives on this tab
+    // Three tabs, two shapes between them. The timer tab is a box that scrolls
+    // as a whole; the lyrics and rundown tabs are panels pinned to the bottom
+    // edge with one list inside them that gives. Which shape a tab is decides
+    // both its floor and how "what is this short by" has to be asked.
+    var panels = { timer: opGrid, lyrics: $("opLyricPanel"), run: $("opRunPanel") };
+    var pinned = opTab === "lyrics" || opTab === "run";
+    var box = panels[opTab] || opGrid;        // the one that gives on this tab
+    var floor = opTab === "lyrics" ? LYRIC_PANEL_MIN
+              : opTab === "run" ? RUN_PANEL_MIN : GRID_MIN;
     // An inline ceiling travels with the element; the stylesheet's rules do
-    // not. So the tab that is leaving has to be put back by hand — and so does
-    // everything, when the console has no height to measure against.
-    (lyrics ? opGrid : panel).style.maxHeight = "";
+    // not. So the tabs that are leaving have to be put back by hand — and so
+    // does everything, when the console has no height to measure against.
+    for (var pk in panels) if (panels[pk] !== box) panels[pk].style.maxHeight = "";
     var room = opBody.clientHeight;
     if (!room) {                             // console not on screen yet
       previewBox.style.maxHeight = "";
@@ -5074,16 +5541,16 @@ if ("serviceWorker" in navigator) {
       return;
     }
 
-    // The lyrics panel runs right to the bottom edge, because the transport
-    // sits under it and being just off the screen is the point. Nothing
-    // follows the timer grid, so that one stops where the console's own
-    // padding begins and the tab does not scroll at all.
-    var tail = lyrics ? 0 : parseFloat(getComputedStyle(opBody).paddingBottom) || 0;
+    // A pinned panel runs right to the bottom edge, because the transport sits
+    // under it and being just off the screen is the point. Nothing follows the
+    // timer grid, so that one stops where the console's own padding begins and
+    // the tab does not scroll at all.
+    var tail = pinned ? 0 : parseFloat(getComputedStyle(opBody).paddingBottom) || 0;
 
     // Measured from the box's own top rather than by adding up what is above
     // it, so a header that wraps to two rows on a phone is already counted.
     function fill() {
-      box.style.maxHeight = Math.max(lyrics ? LYRIC_PANEL_MIN : GRID_MIN,
+      box.style.maxHeight = Math.max(floor,
         Math.round(room - offsetInBody(box) - tail)) + "px";
     }
 
@@ -5100,12 +5567,22 @@ if ("serviceWorker" in navigator) {
     // lands it; the second is only there so this cannot spin.
     for (var pass = 0; pass < 2; pass++) {
       var short;
-      if (lyrics) {
+      if (pinned) {
         // Asked of the list rather than worked out from the panel's parts,
         // because adding those up was wrong by a row: a list under a ceiling
         // is a scroll container and does not measure like one without.
-        short = Math.min(LIST_WANT, opSlideList.scrollHeight) -
-                opSlideList.getBoundingClientRect().height;
+        var list = opTab === "lyrics" ? opSlideList : runRows;
+        var want = opTab === "lyrics" ? LIST_WANT : RUN_LIST_WANT;
+        short = Math.min(want, list.scrollHeight) -
+                list.getBoundingClientRect().height;
+        // The floor is a demand too, and it is the one a short list cannot
+        // make. A panel with nothing in its list still costs a picker, a
+        // footer and a 52px button, so fill() holds it at the floor — and if
+        // what is left under the preview is less than that, the difference
+        // does not appear as a list wanting rows. It appears as the button
+        // below the bottom edge of the screen, which is the single thing this
+        // measurement exists to prevent.
+        short = Math.max(short, floor - Math.round(room - offsetInBody(box) - tail));
       } else {
         // Here the box that gives is the box that scrolls, so the room it has
         // can be asked for directly.
@@ -5244,6 +5721,767 @@ if ("serviceWorker" in navigator) {
   $("nextSlideBtn").addEventListener("click", function () { stepSlide(1); });
   blankBtn.addEventListener("click", function () { T.blank = !T.blank; commit(); });
   lyricOnScreen.addEventListener("click", toggleLyrics);
+
+  // ============================================================
+  //  The rundown
+  //
+  //  A service has a plan — countdown, worship, offering, sermon — and until
+  //  now the timer was told about it one item at a time: type ten minutes,
+  //  press restart, retype the title. The plan itself lived on paper, so the
+  //  two questions worth asking during a service — what is next, and how far
+  //  behind are we — had no answer anywhere in the app.
+  //
+  //  This is that plan, kept beside the timer it drives. Pressing an item arms
+  //  the countdown with its target and starts it; leaving an item writes down
+  //  what it actually took. Nothing here does anything the operator could not
+  //  have done by hand: it is the same presses, minus the retyping, plus a
+  //  record that survives the service.
+  //
+  //  It is deliberately not a second opinion about the time. T.remainMs and
+  //  T.endAt are untouched, so −1 min, pause, swap and a hand-typed time all
+  //  still work mid-item and still win. An item's length is measured from the
+  //  wall clock rather than from the countdown for the same reason: what took
+  //  eleven minutes took eleven minutes, whether or not somebody added a
+  //  minute to the clock halfway through.
+  // ============================================================
+
+  // Its own key, and this device's own list.
+  //
+  // Setlists are uploaded because a song library is worth being the same
+  // library everywhere. A rundown is not that kind of object: it is one
+  // service's plan, written by whoever is running that service, and the names
+  // in it mean something for one Sunday. Sharing it would buy nothing and
+  // would put two people preparing two services straight back into each
+  // other's work — the exact problem the setlist had to be split up to solve.
+  var RUN_KEY = "spro-rundown-v1";
+  var runsheets = [], pickedRunId = "", runEditing = false;
+  var runRows = $("runRows"), runRowEls = [];
+
+  try {
+    var runRaw = JSON.parse(localStorage.getItem(RUN_KEY) || "null");
+    if (runRaw && Array.isArray(runRaw.rundowns)) runsheets = runRaw.rundowns;
+    if (runRaw && typeof runRaw.picked === "string") pickedRunId = runRaw.picked;
+  } catch (e) {}
+
+  function persistRun() {
+    try {
+      localStorage.setItem(RUN_KEY, JSON.stringify({
+        v: 1, rundowns: runsheets, picked: pickedRunId
+      }));
+    } catch (e) {}
+  }
+
+  function curRun() {
+    for (var i = 0; i < runsheets.length; i++) {
+      if (runsheets[i].id === pickedRunId) return runsheets[i];
+    }
+    return null;
+  }
+
+  // A new sheet starts with the shape a service usually has rather than empty.
+  // Every line is one press from being renamed or removed, and a list that
+  // shows what the thing is for beats a blank box with an arrow pointing at
+  // ADD ITEM.
+  var RUN_TEMPLATE = [
+    { name: "Countdown", secs: 5 * 60 },
+    { name: "Worship", secs: 18 * 60 },
+    { name: "Prayer", secs: 4 * 60 },
+    { name: "Offering", secs: 6 * 60 },
+    { name: "Sermon", secs: 35 * 60 },
+    { name: "Altar call", secs: 8 * 60 },
+    { name: "Closing", secs: 3 * 60 }
+  ];
+
+  function newRundown() {
+    var d = new Date();
+    var base = "Rundown " + d.getDate() + "/" + (d.getMonth() + 1);
+    var name = base, n = 2;
+    while (runsheets.some(function (r) { return r.name === name; })) name = base + " (" + (n++) + ")";
+
+    runsheets.push({
+      id: "rd_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      name: name,
+      items: RUN_TEMPLATE.map(function (t) { return { name: t.name, secs: t.secs }; })
+    });
+    pickedRunId = runsheets[runsheets.length - 1].id;
+    persistRun();
+    T.run = null;                 // a different sheet is a different service
+    syncRun();
+    setRunEditing(true);
+    commit();
+  }
+
+  // ----- what travels: the plan, plus what has happened to it -----
+
+  function freshRun(rs) {
+    return {
+      id: rs.id,
+      name: rs.name,
+      i: -1,      // which item is live — only meaningful while `at` is set
+      at: 0,      // when it started, on the operator's clock
+      items: rs.items.map(function (it) {
+        return { n: it.name, t: it.secs, a: null };
+      })
+    };
+  }
+
+  // Keep what is on the wire in step with the sheet without losing what has
+  // already been measured. Editing the plan during a service is rare but
+  // legitimate — a song is cut, an announcement is added — and the alternative
+  // is a crew phone still naming an item nobody is going to do.
+  function syncRun() {
+    var rs = curRun();
+    if (!rs) { T.run = null; return; }
+    var r = T.run;
+    if (!r || r.id !== rs.id) { T.run = freshRun(rs); return; }
+    r.name = rs.name;
+    r.items = rs.items.map(function (it, i) {
+      var was = r.items[i];
+      return { n: it.name, t: it.secs, a: was ? was.a : null };
+    });
+    if (r.i >= r.items.length) { r.i = -1; r.at = 0; }
+  }
+
+  // An item is live while `at` is set. `i` on its own is only where the last
+  // one was, which is what lets "the service has finished" be said without a
+  // second flag that could disagree with it.
+  function runLive() {
+    var r = T.run;
+    return r && r.at && r.i >= 0 && r.i < r.items.length ? r.i : -1;
+  }
+
+  function runUpNext() {
+    var r = T.run;
+    if (!r) return -1;
+    var live = runLive();
+    if (live >= 0) return live + 1 < r.items.length ? live + 1 : -1;
+    for (var i = 0; i < r.items.length; i++) if (r.items[i].a == null) return i;
+    return -1;
+  }
+
+  function runElapsed() {
+    var live = runLive();
+    return live < 0 ? 0 : Math.max(0, Math.round((now() - T.run.at) / 1000));
+  }
+
+  // Two numbers, kept apart on purpose. What the finished items cost is
+  // settled and cannot improve; what the live one is doing is still being
+  // decided. Counting a live item that is inside its target towards the
+  // headline would swing the figure negative and back again every time an
+  // item starts, which is not something anyone can read at a glance — so only
+  // an overrun, which is time already spent, reaches the total.
+  function runDrift() {
+    var r = T.run, out = { done: 0, live: 0, total: 0 };
+    if (!r) return out;
+    for (var i = 0; i < r.items.length; i++) {
+      if (r.items[i].a != null) out.done += r.items[i].a - r.items[i].t;
+    }
+    var live = runLive();
+    if (live >= 0) out.live = runElapsed() - r.items[live].t;
+    out.total = out.done + Math.max(0, out.live);
+    return out;
+  }
+
+  // When the service ends if everything still to come takes exactly what it
+  // was given. An item already past its target adds nothing further — the
+  // assumption is that it is about to be moved on, which is the only
+  // assumption that produces a number worth putting on a screen.
+  function runProjectedEnd() {
+    var r = T.run;
+    if (!r || !r.items.length) return 0;
+    var live = runLive(), ms = 0;
+    if (live >= 0) ms += Math.max(0, r.items[live].t - runElapsed()) * 1000;
+    for (var i = 0; i < r.items.length; i++) {
+      if (i === live) continue;
+      if (r.items[i].a == null && (live < 0 || i > live)) ms += r.items[i].t * 1000;
+    }
+    return now() + ms;
+  }
+
+  function fmtSigned(sec) {
+    var a = Math.abs(Math.round(sec));
+    return (sec < 0 ? "−" : "+") + Math.floor(a / 60) + ":" + pad2(a % 60);
+  }
+
+  function fmtHM(ms) {
+    var d = new Date(ms);
+    return pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+  }
+
+  // "12", "12:30" and "0:45" all mean what they look like. Anything else is
+  // left alone rather than quietly becoming zero, because a target of nothing
+  // is a countdown that is over the moment it starts.
+  function parseSecs(txt, fallback) {
+    var m = /^(\d{1,3})(?::([0-5]?\d))?$/.exec(String(txt).trim());
+    if (!m) return fallback;
+    var s = parseInt(m[1], 10) * 60 + (m[2] ? parseInt(m[2], 10) : 0);
+    return Math.max(1, Math.min(MAX_SEC, s));
+  }
+
+  // ----- running it -----
+
+  // Leaving an item is what measures it.
+  function closeRunItem() {
+    var live = runLive();
+    if (live < 0) return;
+    T.run.items[live].a = runElapsed();
+    T.run.at = 0;
+  }
+
+  function goRunItem(idx) {
+    var rs = curRun();
+    if (!rs || !rs.items.length) return;
+    syncRun();
+    var r = T.run;
+    idx = Math.max(0, Math.min(r.items.length - 1, idx));
+
+    closeRunItem();
+    r.i = idx;
+    r.at = now();
+    // Starting an item that has already been run clears what it cost, so a
+    // false start does not leave a four-second entry in the record.
+    r.items[idx].a = null;
+
+    if (cfg.runTitle !== false) {
+      T.label = r.items[idx].n;
+      cfg.label = T.label;
+      persist();
+      opLabelInput.value = T.label;
+      opTitle.render();
+    }
+    // A new item means the stage goes back to the countdown. It is the one
+    // thing here that overrules the operator, and it is one press to undo —
+    // but leaving a song up while the sermon starts is not something anybody
+    // would have chosen either.
+    T.mode = "timer";
+    T.live = true;
+    T.blank = false;
+    armTimer(r.items[idx].t * 1000, true);   // commits, and so broadcasts
+    renderRun();
+  }
+
+  function nextRunPress() {
+    var r = T.run;
+    if (!r || !r.items.length) return;
+    var live = runLive();
+    if (live >= 0 && live === r.items.length - 1) {
+      closeRunItem();
+      commit();
+      renderRun();
+      return;
+    }
+    var idx = runUpNext();
+    if (idx >= 0) goRunItem(idx);
+  }
+
+  function resetRun() {
+    var rs = curRun();
+    if (!rs || !T.run) return;
+    var ran = T.run.at || T.run.items.some(function (it) { return it.a != null; });
+    if (ran && !window.confirm("Clear the times recorded against “" + rs.name +
+        "”? The plan itself is untouched — this is how the same rundown is run again for the next service.")) return;
+    T.run = freshRun(rs);
+    commit();
+    renderRun();
+  }
+
+  // The record follows the plan when the plan is rearranged. syncRun() maps by
+  // position, so an item moved without its measurement moving with it would
+  // hand its eleven minutes to whatever took its place.
+  function moveRunRecord(from, to) {
+    var r = T.run;
+    if (!r || !r.items[from]) return;
+    r.items.splice(to, 0, r.items.splice(from, 1)[0]);
+    if (r.i === from) r.i = to;
+    else if (from < r.i && to >= r.i) r.i--;
+    else if (from > r.i && to <= r.i) r.i++;
+  }
+
+  function dropRunRecord(i) {
+    var r = T.run;
+    if (!r || !r.items[i]) return;
+    r.items.splice(i, 1);
+    if (r.i === i) { r.i = -1; r.at = 0; }
+    else if (r.i > i) r.i--;
+  }
+
+  // ----- the console side -----
+
+  // Where the panel is at the moment: "setup", "console" or "solo".
+  var runHomeNow = "";
+
+  function mountRunPanel(where) {
+    var panel = $("opRunPanel");
+    if (where === runHomeNow) { paintStartBtn(); return; }
+    runHomeNow = where;
+    panel.classList.toggle("on-setup", where === "setup");
+    panel.classList.toggle("on-solo", where === "solo");
+    // The inline ceiling belongs to the console and travels with the node, so
+    // it comes off on the way out: the setup card and the drawer both do their
+    // own scrolling and neither is the console's height.
+    panel.style.maxHeight = "";
+    if (where === "setup") $("runHome").appendChild(panel);
+    else if (where === "solo") drawerBody.appendChild(panel);
+    else opBody.appendChild(panel);
+    renderRun();
+  }
+
+  // The button says what it is about to do. With a rundown chosen that is not
+  // "start a ten-minute timer" — it is "start the first item" — and reading
+  // that item's name off the button is the last check anyone gets before a
+  // service goes live.
+  function paintStartBtn() {
+    var rs = curRun();
+    $("startBtn").textContent = rs && rs.items.length
+      ? "START · " + rs.items[0].name.toUpperCase() + " ▸"
+      : "START TIMER";
+  }
+
+  function setRunEditing(on) {
+    runEditing = !!on && !!curRun();
+    $("opRunPanel").classList.toggle("editing", runEditing);
+    $("runEditBtn").classList.toggle("on", runEditing);
+    $("runEditBtn").textContent = runEditing ? "DONE" : "EDIT";
+    renderRun();
+    fitConsole();
+  }
+
+  function renderRunPick() {
+    var sel = $("runPick"), cur = curRun(), opt;
+    sel.innerHTML = "";
+    if (!runsheets.length) {
+      opt = document.createElement("option");
+      opt.value = "";
+      opt.textContent = "No rundown yet";
+      sel.appendChild(opt);
+      sel.disabled = true;
+      return;
+    }
+    sel.disabled = false;
+    // A way back out. Not every service is run to a sheet — a rehearsal, a
+    // prayer meeting, a Sunday somebody is covering — and without this the
+    // only way to a plain countdown was to delete the plan.
+    opt = document.createElement("option");
+    opt.value = "";
+    opt.textContent = "— No rundown —";
+    sel.appendChild(opt);
+    runsheets.forEach(function (rs) {
+      var o = document.createElement("option");
+      o.value = rs.id;
+      o.textContent = rs.name;
+      sel.appendChild(o);
+    });
+    sel.value = cur ? cur.id : "";
+  }
+
+  function renderRun() {
+    renderRunPick();
+    syncRun();
+    var rs = curRun(), r = T.run;
+    runRows.innerHTML = "";
+    runRowEls = [];
+    $("runNameIn").value = rs ? rs.name : "";
+
+    if (!rs || !rs.items.length) {
+      var msg = document.createElement("div");
+      msg.className = "hint";
+      msg.textContent = rs ? "Nothing in this rundown yet — press EDIT, then ADD ITEM."
+        : runsheets.length ? "No rundown for this service — the countdown runs on the time set above."
+        : "No rundown on this device yet. Press + to start one — it stays here, on this device.";
+      runRows.appendChild(msg);
+      paintRun();
+      paintStartBtn();
+      return;
+    }
+
+    var live = runLive(), next = runUpNext();
+
+    rs.items.forEach(function (it, i) {
+      var row = document.createElement("div");
+      row.className = "run-row";
+      row.setAttribute("data-i", i);
+
+      var n = document.createElement("span");
+      n.className = "n";
+      n.textContent = i + 1;
+      row.appendChild(n);
+
+      if (runEditing) {
+        row.classList.add("editing");
+
+        var nmIn = document.createElement("input");
+        nmIn.className = "nm-in";
+        nmIn.type = "text";
+        nmIn.maxLength = 60;
+        nmIn.value = it.name;
+        nmIn.setAttribute("data-edit", "name");
+        nmIn.setAttribute("aria-label", "Item " + (i + 1) + " name");
+        row.appendChild(nmIn);
+
+        var tIn = document.createElement("input");
+        tIn.className = "t-in";
+        tIn.type = "text";
+        tIn.value = fmt(it.secs);
+        tIn.setAttribute("inputmode", "numeric");
+        tIn.setAttribute("data-edit", "secs");
+        tIn.setAttribute("aria-label", "Target length for " + it.name);
+        row.appendChild(tIn);
+
+        var mv = document.createElement("div");
+        mv.className = "mv";
+        [["up", "▲", "Move up"], ["down", "▼", "Move down"], ["del", "×", "Remove"]]
+          .forEach(function (b) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = b[0];
+            btn.textContent = b[1];
+            btn.setAttribute("aria-label", b[2] + " " + it.name);
+            mv.appendChild(btn);
+          });
+        row.appendChild(mv);
+      } else {
+        var nm = document.createElement("span");
+        nm.className = "nm";
+        nm.textContent = it.name;
+        row.appendChild(nm);
+
+        var tg = document.createElement("span");
+        tg.className = "tg";
+        tg.textContent = fmt(it.secs);
+        row.appendChild(tg);
+
+        var st = document.createElement("span");
+        st.className = "st";
+        var rec = r && r.items[i] ? r.items[i].a : null;
+        if (i === live) {
+          row.classList.add("live");
+          st.textContent = fmtSigned(runElapsed() - it.secs);
+        } else if (rec != null) {
+          row.classList.add("done");
+          if (rec > it.secs) row.classList.add("late");
+          st.textContent = fmtSigned(rec - it.secs);
+        } else if (i === next) {
+          row.classList.add("next");
+          st.textContent = "NEXT";
+        }
+        row.appendChild(st);
+      }
+
+      runRows.appendChild(row);
+      runRowEls[i] = row;
+    });
+
+    paintRun();
+    paintStartBtn();
+    scrollRunIntoView();
+  }
+
+  function scrollRunIntoView() {
+    var i = runLive();
+    if (i < 0) i = runUpNext();
+    var row = runRowEls[i];
+    if (!row) return;
+    var box = runRows.getBoundingClientRect(), rr = row.getBoundingClientRect();
+    if (rr.top < box.top || rr.bottom > box.bottom) {
+      runRows.scrollTop += rr.top - box.top - (box.height - rr.height) / 2;
+    }
+  }
+
+  // Everything that changes once a second, rather than the list, which changes
+  // when somebody presses something. Rebuilding the rows every second would
+  // also mean rebuilding the text boxes somebody is typing into.
+  function paintRun() {
+    var r = T.run, live = runLive();
+    if (live >= 0 && runRowEls[live] && !runEditing) {
+      var over = runElapsed() - r.items[live].t;
+      runRowEls[live].classList.toggle("late", over > 0);
+      var st = runRowEls[live].querySelector(".st");
+      if (st) st.textContent = fmtSigned(over);
+    }
+    paintRunFoot($("runDrift"), $("runEnd"));
+
+    var btn = $("runNext");
+    if (!r || !r.items.length) {
+      btn.disabled = true;
+      btn.textContent = "NEXT ITEM ▸";
+      return;
+    }
+    if (live >= 0 && live === r.items.length - 1) {
+      btn.disabled = false;
+      btn.textContent = "END SERVICE";
+      return;
+    }
+    var idx = runUpNext();
+    btn.disabled = idx < 0;
+    btn.textContent = idx < 0 ? "RUNDOWN FINISHED"
+      : (live < 0 ? "START · " : "NEXT · ") + r.items[idx].n.toUpperCase() + " ▸";
+  }
+
+  // Shared with the crew view, because the two screens are answering the same
+  // question and there is no version of this that should differ between them.
+  function paintRunFoot(driftEl, endEl) {
+    var r = T.run;
+    if (!r || !r.items.length) {
+      driftEl.textContent = "";
+      endEl.textContent = "";
+      return;
+    }
+    var d = runDrift();
+    var cls = d.total > 0 ? "late" : d.total < 0 ? "early" : "";
+    driftEl.innerHTML = "Against plan <b class=\"" + cls + "\">" +
+      (d.total === 0 ? "on time" : fmtSigned(d.total)) + "</b>";
+    endEl.innerHTML = runUpNext() < 0 && runLive() < 0
+      ? "Finished"
+      : "Ends <b>" + fmtHM(runProjectedEnd()) + "</b>";
+  }
+
+  runRows.addEventListener("click", function (e) {
+    var row = e.target.closest ? e.target.closest(".run-row") : null;
+    if (!row) return;
+    var i = parseInt(row.getAttribute("data-i"), 10);
+    var rs = curRun();
+    if (!rs || isNaN(i) || !rs.items[i]) return;
+
+    if (!runEditing) { goRunItem(i); return; }
+
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    if (btn.classList.contains("del")) {
+      rs.items.splice(i, 1);
+      dropRunRecord(i);
+    } else if (btn.classList.contains("up") && i > 0) {
+      rs.items.splice(i - 1, 0, rs.items.splice(i, 1)[0]);
+      moveRunRecord(i, i - 1);
+    } else if (btn.classList.contains("down") && i < rs.items.length - 1) {
+      rs.items.splice(i + 1, 0, rs.items.splice(i, 1)[0]);
+      moveRunRecord(i, i + 1);
+    } else return;
+    persistRun();
+    renderRun();
+    commit();
+  });
+
+  // On change rather than on input: retyping a name one letter at a time is
+  // not seven edits, and the crew view does not need to watch somebody think.
+  runRows.addEventListener("change", function (e) {
+    if (!runEditing) return;
+    var row = e.target.closest ? e.target.closest(".run-row") : null;
+    if (!row) return;
+    var i = parseInt(row.getAttribute("data-i"), 10);
+    var rs = curRun();
+    if (!rs || !rs.items[i]) return;
+    var what = e.target.getAttribute("data-edit");
+    if (what === "name") {
+      rs.items[i].name = (e.target.value || "").trim().slice(0, 60) || rs.items[i].name;
+      e.target.value = rs.items[i].name;
+    } else if (what === "secs") {
+      rs.items[i].secs = parseSecs(e.target.value, rs.items[i].secs);
+      e.target.value = fmt(rs.items[i].secs);
+    } else return;
+    persistRun();
+    syncRun();
+    commit();
+    paintRun();
+  });
+
+  $("runPick").addEventListener("change", function () {
+    pickedRunId = this.value || "";
+    persistRun();
+    T.run = null;
+    renderRun();
+    commit();
+  });
+
+  $("runNewBtn").addEventListener("click", newRundown);
+
+  $("runEditBtn").addEventListener("click", function () { setRunEditing(!runEditing); });
+
+  $("runAddBtn").addEventListener("click", function () {
+    var rs = curRun();
+    if (!rs) return;
+    rs.items.push({ name: "New item", secs: 5 * 60 });
+    persistRun();
+    renderRun();
+    commit();
+    var last = runRowEls[rs.items.length - 1];
+    var inp = last ? last.querySelector(".nm-in") : null;
+    if (inp) { inp.focus(); inp.select(); }
+  });
+
+  $("runNameIn").addEventListener("change", function () {
+    var rs = curRun();
+    if (!rs) return;
+    rs.name = (this.value || "").trim().slice(0, 80) || rs.name;
+    this.value = rs.name;
+    persistRun();
+    syncRun();
+    renderRunPick();
+    commit();
+  });
+
+  $("runDelBtn").addEventListener("click", function () {
+    var rs = curRun();
+    if (!rs) return;
+    if (!window.confirm("Delete the rundown “" + rs.name + "”?")) return;
+    runsheets = runsheets.filter(function (x) { return x.id !== rs.id; });
+    pickedRunId = runsheets.length ? runsheets[0].id : "";
+    persistRun();
+    T.run = null;
+    setRunEditing(false);
+    commit();
+  });
+
+  $("runNext").addEventListener("click", nextRunPress);
+  $("runStop").addEventListener("click", resetRun);
+
+  $("runFollowIn").checked = cfg.runTitle !== false;
+  $("runFollowIn").addEventListener("change", function () {
+    cfg.runTitle = !!this.checked;
+    persist();
+  });
+
+  // A device that has run one before lands back on it rather than on nothing.
+  if (!curRun() && runsheets.length) { pickedRunId = runsheets[0].id; persistRun(); }
+
+  // ----- the crew view -----
+  //
+  // The same snapshot, rendered for somebody standing at the back instead of
+  // for the congregation. It is a display device in every other respect — same
+  // room code, same socket, same messages — so a phone becomes one of these by
+  // joining the room and pressing one button.
+
+  var crewOn = false, crewShape = "";
+
+  function setCrew(on) {
+    crewOn = !!on;
+    cfg.crew = crewOn;
+    persist();
+    document.body.classList.toggle("crew-mode", crewOn);
+    var btn = $("crewToggle");
+    btn.classList.toggle("on", crewOn);
+    btn.setAttribute("aria-pressed", crewOn ? "true" : "false");
+    // The button says where pressing it goes, not where it has been.
+    btn.textContent = crewOn ? "Stage" : "Crew";
+    crewShape = "";
+    if (crewOn) renderCrew();
+  }
+
+  // What has to be rebuilt for, as opposed to repainted. An item closing
+  // changes this string; a second passing does not.
+  function runShape(r) {
+    if (!r) return "";
+    return r.id + "|" + r.i + "|" + (r.at ? 1 : 0) + "|" +
+      r.items.map(function (it) { return it.n + "~" + it.t + "~" + (it.a == null ? "" : it.a); }).join("|");
+  }
+
+  function renderCrew() {
+    if (!crewOn) return;
+    var r = T.run, live = runLive();
+
+    if (!r || !r.items.length) {
+      $("crewLbl").textContent = "Rundown";
+      $("crewName").textContent = "No rundown";
+      $("crewTime").textContent = "—";
+      $("crewTime").classList.remove("over");
+      $("crewSub").textContent = "The operator has not opened one for this service.";
+      $("crewNext").textContent = "";
+      $("crewList").innerHTML = "";
+      $("crewDrift").textContent = "";
+      $("crewEnd").textContent = "";
+      crewShape = "";
+      return;
+    }
+
+    var next = runUpNext();
+    var head = live >= 0 ? live : next;
+
+    $("crewLbl").textContent = live >= 0 ? "Now" : next >= 0 ? "Up first" : "Rundown";
+    $("crewName").textContent = head >= 0 ? r.items[head].n : "Service finished";
+
+    // The countdown itself, not a second one worked out from the plan: what
+    // the crew is asking is how long the thing on the stage has left, and the
+    // stage already has an answer that everybody can see.
+    var remain = remainingMs(), over = remain <= 0;
+    $("crewTime").textContent = T.live
+      ? (over ? "−" + fmt(Math.floor(-remain / 1000)) : fmt(Math.ceil(remain / 1000)))
+      : "—";
+    $("crewTime").classList.toggle("over", T.live && over);
+
+    $("crewSub").textContent = head < 0 ? ""
+      : live >= 0
+        ? "Target " + fmt(r.items[live].t) + " · running " + fmt(runElapsed())
+        : "Target " + fmt(r.items[head].t) + " · not started";
+
+    $("crewNext").innerHTML = "";
+    if (live >= 0 && next >= 0) {
+      var nx = document.createElement("span");
+      nx.textContent = "Next: ";
+      var nb = document.createElement("b");
+      nb.textContent = r.items[next].n;
+      var nt = document.createElement("span");
+      nt.textContent = " · " + fmt(r.items[next].t);
+      $("crewNext").appendChild(nx);
+      $("crewNext").appendChild(nb);
+      $("crewNext").appendChild(nt);
+    }
+
+    var shape = runShape(r);
+    if (shape !== crewShape) {
+      crewShape = shape;
+      var list = $("crewList");
+      list.innerHTML = "";
+      r.items.forEach(function (it, i) {
+        var row = document.createElement("div");
+        row.className = "run-row";
+        row.setAttribute("data-i", i);
+
+        var n = document.createElement("span");
+        n.className = "n";
+        n.textContent = i + 1;
+        row.appendChild(n);
+
+        var nm = document.createElement("span");
+        nm.className = "nm";
+        nm.textContent = it.n;
+        row.appendChild(nm);
+
+        var tg = document.createElement("span");
+        tg.className = "tg";
+        tg.textContent = fmt(it.t);
+        row.appendChild(tg);
+
+        var st = document.createElement("span");
+        st.className = "st";
+        if (i === live) row.classList.add("live");
+        else if (it.a != null) {
+          row.classList.add("done");
+          if (it.a > it.t) row.classList.add("late");
+          st.textContent = fmtSigned(it.a - it.t);
+        } else if (i === next) {
+          row.classList.add("next");
+          st.textContent = "NEXT";
+        }
+        row.appendChild(st);
+        list.appendChild(row);
+      });
+    }
+
+    // The live row's own figure is repainted every second whether or not the
+    // list was rebuilt, which is the whole reason the two are separate.
+    if (live >= 0) {
+      var liveRow = $("crewList").querySelector('.run-row[data-i="' + live + '"]');
+      if (liveRow) {
+        var d = runElapsed() - r.items[live].t;
+        liveRow.classList.toggle("late", d > 0);
+        var lst = liveRow.querySelector(".st");
+        if (lst) lst.textContent = fmtSigned(d);
+      }
+    }
+
+    paintRunFoot($("crewDrift"), $("crewEnd"));
+  }
+
+  $("crewToggle").addEventListener("click", function () { setCrew(!crewOn); });
 
   // ============================================================
   //  Song library
