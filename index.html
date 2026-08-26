@@ -238,6 +238,10 @@
     grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
+  /* An operator sets the title and the length inside, where they are watched.
+     This card is then the room code, the button and the clock — which is all
+     anybody reads off it on the way to a service. */
+  #setup.lean #setupTitleBox, #setup.lean #setupTime { display: none; }
   .setting {
     background: var(--panel);
     border: 1px solid var(--line);
@@ -2683,7 +2687,7 @@ lyric line one</pre>
     </div>
     <div class="link-status" id="opLink1"><span class="led"></span><span class="txt"></span></div>
 
-    <div>
+    <div id="setupTitleBox">
       <label class="field-label" for="labelInput">Title</label>
       <div class="title-wrap" id="titleWrap">
         <textarea id="labelInput" class="textinput" rows="2" placeholder="ADD A TITLE…" autocomplete="off"></textarea>
@@ -2693,7 +2697,7 @@ lyric line one</pre>
       </div>
     </div>
 
-    <div class="settings">
+    <div class="settings" id="setupTime">
       <div class="setting">
         <div class="lbl-row">
           <label class="field-label">Minutes</label>
@@ -2717,10 +2721,14 @@ lyric line one</pre>
       </div>
     </div>
 
-    <!-- The rundown itself is not here: this card is the last thing between an
-         operator and a live stage, and it stays the two fields it has always
-         been. What the plan does reach is the button, which names the item it
-         is about to start — see paintStartBtn(). -->
+    <!-- What an operator gets here is the room code, this button and the
+         clock. The title and the length are set where they are watched — the
+         console has both, either as the items of a rundown or as the timer
+         fields the tab falls back to — and asking for them twice meant typing
+         a time on this card that the first item of the plan then replaced.
+         Standalone keeps them: it has no console to walk into. The plan
+         reaches this card only through the button, which names the item it is
+         about to start — see paintStartBtn(). -->
     <button id="startBtn" class="primary" type="button">START TIMER</button>
     <button id="setupBack" class="ghost" type="button">‹ Back</button>
     <div id="setupClock2">00:00:00</div>
@@ -4926,6 +4934,7 @@ if ("serviceWorker" in navigator) {
     renderSetup();
     paintStartBtn();
     $("setupHeading").textContent = "Operator";
+    $("setup").classList.add("lean");
     applyTransportUI();
     // Always start the walk at the simplest line, so a code drifts back to
     // slot 0 once the zombie holding it finally times out on the broker.
@@ -4952,6 +4961,9 @@ if ("serviceWorker" in navigator) {
     renderSetup();
     paintStartBtn();
     $("setupHeading").textContent = "Standalone";
+    // One device driving itself has no console to walk into, so its title and
+    // its length stay on the card they were always set from.
+    $("setup").classList.remove("lean");
     // Nothing to connect to, so the room code and the link indicator — which
     // would otherwise sit there as a lone grey dot — both go away.
     $("roomRow").hidden = true;
