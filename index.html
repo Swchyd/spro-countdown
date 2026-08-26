@@ -5253,7 +5253,40 @@ if ("serviceWorker" in navigator) {
   function adjust(ms) {
     if (T.playing) T.endAt += ms;
     else T.remainMs += ms;
+
+    // A minute given to the item on the air is a minute the plan now allows
+    // it, not a minute the plan is left lying about. The row's figure, the
+    // total and the projected end are all read off the target, so leaving the
+    // target alone made every one of them disagree with the clock by exactly
+    // the amount that had just been added — and Restart would have taken the
+    // minute back. With no item running this is the loose countdown it always
+    // was, and Restart still returns to the time that was set by hand.
+    var live = runLive(), rs = curRun();
+    if (live >= 0 && rs && rs.items[live]) {
+      var secs = Math.max(1, Math.min(MAX_SEC, rs.items[live].secs + Math.round(ms / 1000)));
+      rs.items[live].secs = secs;
+      T.totalMs = secs * 1000;
+      persistRun();
+      syncRun();
+      renderRun();
+    }
     commit();
+  }
+
+  // Re-arming the clock outright — Restart, or a time typed into the drawer —
+  // starts the item on the air again as well. Its figure is measured from when
+  // it started, so putting the clock back to the top without doing the same to
+  // the item would leave the two describing different amounts of one minute.
+  // Nudging with ±1 is the other case and is handled in adjust(): there the
+  // item is not restarted, it is simply allowed more or less time.
+  function restartRunItem(secs) {
+    var live = runLive(), rs = curRun();
+    if (live < 0) return;
+    if (secs != null && rs && rs.items[live]) { rs.items[live].secs = secs; persistRun(); }
+    T.run.at = now();
+    T.run.items[live].a = null;
+    syncRun();
+    renderRun();
   }
 
   function armTimer(totalMs, play) {
@@ -5394,7 +5427,7 @@ if ("serviceWorker" in navigator) {
     if (e.key === "Escape") { labelEdit.value = T.label; labelEdit.blur(); }
   });
 
-  $("restartBtn").addEventListener("click", function () { armTimer(T.totalMs, false); });
+  $("restartBtn").addEventListener("click", function () { restartRunItem(null); armTimer(T.totalMs, false); });
   $("minusBtn").addEventListener("click", function () { adjust(-60000); });
   $("plusBtn").addEventListener("click", function () { adjust(60000); });
   playBtn.addEventListener("click", function () { setPlaying(!T.playing); });
@@ -9332,6 +9365,9 @@ if ("serviceWorker" in navigator) {
     renderSetup();
     writeFields(nextMin, nextSec, cfgSeconds());
     paintSign(opSign, cfg.neg);
+    // In the drawer this sits beside a running plan, so the item on the air is
+    // given the typed length and started again with it.
+    restartRunItem(cfgSeconds());
     armTimer(cfgSeconds() * 1000, true);
     setDrawer(false);
   });
@@ -9363,7 +9399,7 @@ if ("serviceWorker" in navigator) {
     if (e.code === "Space") { e.preventDefault(); setPlaying(!T.playing); }
     else if (e.key === "ArrowUp") { e.preventDefault(); adjust(60000); }
     else if (e.key === "ArrowDown") { e.preventDefault(); adjust(-60000); }
-    else if (e.key === "r" || e.key === "R") armTimer(T.totalMs, false);
+    else if (e.key === "r" || e.key === "R") { restartRunItem(null); armTimer(T.totalMs, false); }
     else if (e.key === "f" || e.key === "F") { T.flashing = !T.flashing; commit(); }
     else if (e.key === "s" || e.key === "S") toggleMessage();
     else if (e.key === "l" || e.key === "L") toggleLyrics();
