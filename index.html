@@ -1864,19 +1864,49 @@
     box-shadow: 0 14px 34px rgba(0,0,0,.5);
   }
   #authorSuggest[hidden] { display: none; }
+  /* A name and the button that takes it out of the library, on one line. The
+     name is still its own button — it is what the keyboard walks through and
+     what a tap chooses — so the row was wrapped rather than turned into a
+     container, which would have taken the arrow keys with it. */
+  .sug-line { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+  #authorSuggest > *:last-child { border-bottom: none; }
   .sug-row {
     display: block;
+    flex: 1 1 auto;
+    min-width: 0;
     width: 100%;
     padding: 12px 14px;
     text-align: left;
     background: transparent;
     border: none;
-    border-bottom: 1px solid var(--line);
     color: var(--ink);
     font-size: 14px;
     font-weight: 600;
   }
-  .sug-row:last-child { border-bottom: none; }
+  /* Wide enough to aim at on a moving bus, and set apart from the name so a
+     thumb going for one cannot land on the other. */
+  .sug-del {
+    flex: 0 0 auto;
+    width: 46px;
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--line);
+    color: #5B6474;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .sug-del:active { background: var(--panel); color: var(--over); }
+  /* Hiding it from a viewer is a courtesy, not the control — the Worker
+     refuses the write whether or not the button was on screen. */
+  #library:not(.can-write) .sug-del { display: none; }
+  .sug-note {
+    padding: 11px 14px;
+    background: var(--panel);
+    color: var(--ink-dim);
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+  .sug-note b { color: var(--ink); font-weight: 700; }
   /* Both the keyboard's highlight and the finger's press land on the same
      look, so it is never ambiguous which one Enter would take. */
   .sug-row.on, .sug-row:active { background: var(--panel); }
@@ -7348,12 +7378,14 @@ if ("serviceWorker" in navigator) {
   var authorSuggest = $("authorSuggest");
   var sugItems = [];   // what is on offer, in the order shown
   var sugAt = -1;      // which one Enter would take, -1 for none
+  var sugNote = null;  // one line the next open has to carry, then drop
 
   function closeSuggest() {
     authorSuggest.hidden = true;
     authorSuggest.innerHTML = "";
     sugItems = [];
     sugAt = -1;
+    sugNote = null;
     songAuthorInput.setAttribute("aria-expanded", "false");
     authorPick.classList.remove("on");
   }
@@ -7387,18 +7419,46 @@ if ("serviceWorker" in navigator) {
 
     if (editAuthors.length >= MAX_AUTHORS) { closeSuggest(); return; }
 
+    // Something the last press has to say — why a name is still there, or how
+    // many songs it just came off. Shown once, at the top, and then forgotten:
+    // it is the answer to a press, not a state of the list.
+    if (sugNote) {
+      var note = document.createElement("div");
+      note.className = "sug-note";
+      note.appendChild(sugNote);
+      authorSuggest.appendChild(note);
+      sugNote = null;
+    }
+
     matches.forEach(function (a) {
+      var line = document.createElement("div");
+      line.className = "sug-line";
+
       var b = document.createElement("button");
       b.type = "button";
       b.className = "sug-row";
       b.setAttribute("role", "option");
       b.setAttribute("data-i", sugItems.length);
       markMatch(b, a, all ? "" : q);
-      authorSuggest.appendChild(b);
+      line.appendChild(b);
+
+      // A name is in this list because some song is credited to it, so this is
+      // the only place a misspelling can be taken back out of the library.
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "sug-del";
+      del.setAttribute("data-del", a);
+      del.setAttribute("aria-label", "Remove " + a + " from the library");
+      del.textContent = "×";
+      line.appendChild(del);
+
+      authorSuggest.appendChild(line);
       sugItems.push(a);
     });
 
     if (q && !exists && !already) {
+      var addLine = document.createElement("div");
+      addLine.className = "sug-line";
       var add = document.createElement("button");
       add.type = "button";
       add.className = "sug-row sug-new";
@@ -7409,7 +7469,8 @@ if ("serviceWorker" in navigator) {
       strong.textContent = q;
       add.appendChild(strong);
       add.appendChild(document.createTextNode(" as a new name"));
-      authorSuggest.appendChild(add);
+      addLine.appendChild(add);
+      authorSuggest.appendChild(addLine);
       sugItems.push(q);
     }
 
@@ -7429,6 +7490,78 @@ if ("serviceWorker" in navigator) {
     // The first match is pre-armed, so typing a few letters and pressing Enter
     // takes the name that is there rather than making a second one beside it.
     highlightSuggest(sugItems.length ? 0 : -1);
+  }
+
+  // Building the one-line answer the list carries on its next open.
+  function noteFrag(parts) {
+    var frag = document.createDocumentFragment();
+    parts.forEach(function (p) {
+      if (typeof p === "string") { frag.appendChild(document.createTextNode(p)); return; }
+      var b = document.createElement("b");
+      b.textContent = p.b;
+      frag.appendChild(b);
+    });
+    return frag;
+  }
+
+  // Taking a name out of the library.
+  //
+  // This list is not a list of people somebody keeps. It is everything the
+  // songs happen to be credited to, so a name is in it only because a song
+  // carries it — and the only way to remove one is to take it off those songs.
+  // That makes this a real edit to the library rather than a tidy-up of a
+  // dropdown, and it is written as one: every song it touches is queued like
+  // any other change and lands in the activity log under whoever pressed it.
+  function removeAuthorEverywhere(name) {
+    if (!canWrite()) return;
+    var k = String(name).toLowerCase();
+    var hits = songs.filter(function (s) {
+      return !s.deletedAt && authorsOf(s).some(function (a) { return a.toLowerCase() === k; });
+    });
+    if (!hits.length) return;
+
+    // A song with no name on it is below the bar this app sets for saving one,
+    // so a delete will not create one either. Which songs are in the way is
+    // more use than a refusal, because fixing them is the next thing to do.
+    var only = hits.filter(function (s) { return authorsOf(s).length === 1; });
+    if (only.length) {
+      sugNote = noteFrag([
+        { b: name }, " is the only name on ",
+        only.length === 1 ? "“" + bareTitle(only[0]) + "”"
+          : only.length + " songs, starting with “" + bareTitle(only[0]) + "”",
+        ". Put the right name on ", only.length === 1 ? "it" : "them",
+        " first — a song cannot be left with none."
+      ]);
+      openSuggest(true);
+      return;
+    }
+
+    if (!window.confirm("Remove “" + name + "” from " + hits.length + " song" +
+        (hits.length === 1 ? "" : "s") + "? The other names on them are kept.")) return;
+
+    hits.forEach(function (s) {
+      s.authors = authorsOf(s).filter(function (a) { return a.toLowerCase() !== k; });
+      s.author = s.authors.join(", ");
+      s.updatedAt = Date.now();
+      queueSongWrite(s, false);
+    });
+    // The song open in the editor is edited through editAuthors rather than
+    // through its stored copy, so it has to be told separately or the name
+    // comes straight back on the next save.
+    editAuthors = editAuthors.filter(function (a) { return a.toLowerCase() !== k; });
+
+    persistLocal();
+    renderAuthorChips();
+    renderSongRows();
+    sugNote = noteFrag([
+      "Removed ", { b: name }, " from " + hits.length + " song" + (hits.length === 1 ? "" : "s") + "."
+    ]);
+    openSuggest(true);
+  }
+
+  // The title as it reads on the shelf, without the language tag.
+  function bareTitle(s) {
+    return splitTitle(s && s.title).title || "Untitled";
   }
 
   function highlightSuggest(i) {
@@ -7544,6 +7677,14 @@ if ("serviceWorker" in navigator) {
   var sugDown = null;
 
   authorSuggest.addEventListener("pointerdown", function (e) {
+    // The × goes through the same press-and-release as the names, so it is
+    // equally safe to put a finger on while deciding whether to scroll.
+    var del = e.target.closest ? e.target.closest(".sug-del") : null;
+    if (del) {
+      sugDown = { del: del.getAttribute("data-del"), x: e.clientX, y: e.clientY };
+      if (e.pointerType === "mouse") e.preventDefault();
+      return;
+    }
     var row = e.target.closest ? e.target.closest(".sug-row") : null;
     if (!row) return;
     sugDown = { i: row.getAttribute("data-i"), x: e.clientX, y: e.clientY };
@@ -7562,6 +7703,19 @@ if ("serviceWorker" in navigator) {
     sugDown = null;
     if (!down) return;
     if (Math.abs(e.clientX - down.x) > 10 || Math.abs(e.clientY - down.y) > 10) return;
+
+    // The × rather than the name. It reopens the list itself, carrying one
+    // line about what it just did, so nothing here closes it — and the focus
+    // stays in the box, so the outside-press handler does not either.
+    if (down.del != null) {
+      var lift = e.target.closest ? e.target.closest(".sug-del") : null;
+      if (!lift || lift.getAttribute("data-del") !== down.del) return;
+      e.preventDefault();
+      removeAuthorEverywhere(down.del);
+      songAuthorInput.focus();
+      return;
+    }
+
     var row = e.target.closest ? e.target.closest(".sug-row") : null;
     // Lifted somewhere else, or on a different name than the one pressed.
     if (!row || row.getAttribute("data-i") !== down.i) return;
