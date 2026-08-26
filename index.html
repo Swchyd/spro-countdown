@@ -1331,32 +1331,28 @@
 
   /* ---------- console: the rundown ---------- */
 
-  /* The running order, with a target length against each item. A third tab
-     rather than a corner of the timer tab because it is watched for the whole
+  /* The running order, with a target length against each item. One of the two
+     tabs, and the one the console opens on: it is watched for the whole
      service the way the lyrics are, and anything watched for a whole service
      has to sit under the pinned preview instead of scrolling away from it. */
   #opRunPanel { width: 100%; max-width: 620px; flex: 0 0 auto; display: none; }
-  #opBody.tab-run .op-grid { display: none; }
+  /* Only while it sits directly in the console body — which is where it waits
+     when it has nothing to show. Inside the rundown list it is the tab. */
+  #opBody.tab-run > .op-grid { display: none; }
   #opBody.tab-run #opRunPanel { display: flex; }
 
-  /* The panel has three homes: the setup card, where the plan is built before
-     anything is live; the console, where it is run; and the standalone
-     drawer, which is both at once. One node moved between them rather than
-     three copies of it — for the same reason the timer grid is moved rather
-     than duplicated, which is that two places rendering the same list is two
-     places for it to go out of step. */
-  #opRunPanel.on-setup, #opRunPanel.on-solo { display: flex; }
-  /* On the setup card it is already inside a panel, so it does not bring a
-     second one with it. */
-  #opRunPanel.on-setup { padding: 0; background: none; border: 0; }
-  /* Nothing is running yet, so there is nothing to advance to: START TIMER is
-     what begins the rundown, and it is already on this card. */
-  #opRunPanel.on-setup #runNav { display: none; }
-  #opRunPanel.on-setup #runRows {
-    max-height: 264px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+  /* Two homes: the console, and the standalone drawer, which is console and
+     stage at once. One node moved between them rather than a copy in each —
+     for the same reason the timer grid is moved rather than duplicated, which
+     is that two places rendering the same thing is two places for it to go
+     out of step. */
+  #opRunPanel.on-solo { display: flex; }
+  /* With no plan there is nothing to advance through and nothing to be late
+     against, so what is left is the timer fields the list is holding. */
+  #opRunPanel:not(.has-run) #runFoot,
+  #opRunPanel:not(.has-run) #runFollow,
+  #opRunPanel:not(.has-run) #runNav { display: none; }
+  #opRunPanel .op-grid { padding-top: 4px; }
   /* Same reason as the lyrics tab: the press that happens most here is NEXT
      ITEM, and the transport is what was pushing it below the fold. */
   #opBody.tab-run #controls { order: 1; }
@@ -2704,13 +2700,10 @@ lyric line one</pre>
       </div>
     </div>
 
-    <!-- Where the running order is built, before anything is on the air. The
-         panel itself is moved in here from the console — see mountRunPanel. -->
-    <div>
-      <label class="field-label" for="runPick">Rundown</label>
-      <div id="runHome"></div>
-    </div>
-
+    <!-- The rundown itself is not here: this card is the last thing between an
+         operator and a live stage, and it stays the two fields it has always
+         been. What the plan does reach is the button, which names the item it
+         is about to start — see paintStartBtn(). -->
     <button id="startBtn" class="primary" type="button">START TIMER</button>
     <button id="setupBack" class="ghost" type="button">‹ Back</button>
     <div id="setupClock2">00:00:00</div>
@@ -2750,7 +2743,7 @@ lyric line one</pre>
     <div class="spacer"></div>
   </div>
 
-  <div id="opBody">
+  <div id="opBody" class="tab-run">
     <div id="previewBox" class="stage-wrap"></div>
 
     <div id="controls">
@@ -2762,10 +2755,13 @@ lyric line one</pre>
       <button type="button" id="flashBtn">⚡<small>Flash</small></button>
     </div>
 
+    <!-- Two tabs. The timer grid used to be a third, but a rundown sets the
+         time and the title for every item that has one, so what was a tab of
+         its own is now what the rundown tab shows when there is no plan to
+         run — see parkGrid(). -->
     <div id="opTabs">
-      <button type="button" class="op-tab on" data-tab="timer">Timer</button>
+      <button type="button" class="op-tab on" data-tab="run">Rundown</button>
       <button type="button" class="op-tab" data-tab="lyrics">Lyrics</button>
-      <button type="button" class="op-tab" data-tab="run">Rundown</button>
     </div>
 
     <div class="op-grid">
@@ -4852,7 +4848,7 @@ if ("serviceWorker" in navigator) {
     // history.go(-2) fires popstate once, so unwind every level in between.
     for (var s = currentScreen; s && s !== target; s = PARENT[s]) teardown(s);
     currentScreen = target;
-    if (target === "setup") { renderSetup(); mountRunPanel("setup"); }
+    if (target === "setup") { renderSetup(); paintStartBtn(); }
     show(target);
   });
 
@@ -4867,7 +4863,7 @@ if ("serviceWorker" in navigator) {
     role = "op";
     navigate("setup");
     renderSetup();
-    mountRunPanel("setup");
+    paintStartBtn();
     $("setupHeading").textContent = "Operator";
     applyTransportUI();
     // Always start the walk at the simplest line, so a code drifts back to
@@ -4893,7 +4889,7 @@ if ("serviceWorker" in navigator) {
     setLink("", "");
     navigate("setup");
     renderSetup();
-    mountRunPanel("setup");
+    paintStartBtn();
     $("setupHeading").textContent = "Standalone";
     // Nothing to connect to, so the room code and the link indicator — which
     // would otherwise sit there as a lone grey dot — both go away.
@@ -5456,7 +5452,7 @@ if ("serviceWorker" in navigator) {
   }
 
   // ----- console: the lyrics tab -----
-  var opTab = "timer";
+  var opTab = "run";
   var opBodyEl = $("opBody"), opTabsEl = $("opTabs");
   var opSlideList = $("opSlideList"), opSongTitle = $("opSongTitle");
   var lyricOnScreen = $("lyricOnScreen"), blankBtn = $("blankBtn");
@@ -5572,7 +5568,10 @@ if ("serviceWorker" in navigator) {
         // because adding those up was wrong by a row: a list under a ceiling
         // is a scroll container and does not measure like one without.
         var list = opTab === "lyrics" ? opSlideList : runRows;
-        var want = opTab === "lyrics" ? LIST_WANT : RUN_LIST_WANT;
+        // With no plan the list is holding the timer fields, and what they
+        // want is what they wanted when they had a tab of their own.
+        var want = opTab === "lyrics" ? LIST_WANT
+                 : curRun() ? RUN_LIST_WANT : GRID_MIN;
         short = Math.min(want, list.scrollHeight) -
                 list.getBoundingClientRect().height;
         // The floor is a demand too, and it is the one a short list cannot
@@ -6007,23 +6006,38 @@ if ("serviceWorker" in navigator) {
 
   // ----- the console side -----
 
-  // Where the panel is at the moment: "setup", "console" or "solo".
+  // Where the panel is at the moment: "console" or "solo". The setup card was
+  // a third home and is not one any more — the plan is built and run in the
+  // same place, which is also the only place it can be changed once a service
+  // is under way.
   var runHomeNow = "";
 
   function mountRunPanel(where) {
     var panel = $("opRunPanel");
     if (where === runHomeNow) { paintStartBtn(); return; }
     runHomeNow = where;
-    panel.classList.toggle("on-setup", where === "setup");
     panel.classList.toggle("on-solo", where === "solo");
     // The inline ceiling belongs to the console and travels with the node, so
-    // it comes off on the way out: the setup card and the drawer both do their
-    // own scrolling and neither is the console's height.
+    // it comes off on the way out: the drawer does its own scrolling and is
+    // not the console's height.
     panel.style.maxHeight = "";
-    if (where === "setup") $("runHome").appendChild(panel);
-    else if (where === "solo") drawerBody.appendChild(panel);
+    if (where === "solo") drawerBody.appendChild(panel);
     else opBody.appendChild(panel);
     renderRun();
+  }
+
+  // The timer grid lost its tab, so it has two homes left. In the console it
+  // lives inside the rundown list, where it is what the tab shows when there
+  // is no plan to run — the same fields as before, one tab along. In the
+  // standalone drawer it belongs to the drawer, which shows everything at
+  // once, and is left where it is.
+  function parkGrid(intoList) {
+    if (runHomeNow === "solo") return;
+    if (intoList) {
+      if (opGrid.parentNode !== runRows) runRows.appendChild(opGrid);
+    } else if (opGrid.parentNode === runRows) {
+      opBody.insertBefore(opGrid, $("opLyricPanel"));
+    }
   }
 
   // The button says what it is about to do. With a rundown chosen that is not
@@ -6078,17 +6092,25 @@ if ("serviceWorker" in navigator) {
     renderRunPick();
     syncRun();
     var rs = curRun(), r = T.run;
+    // Out before the list is emptied: the timer grid is a child of it when
+    // there is no plan, and innerHTML would take the whole thing with it.
+    parkGrid(false);
     runRows.innerHTML = "";
     runRowEls = [];
     $("runNameIn").value = rs ? rs.name : "";
+    // Nothing to advance through, nothing to be late against: with no plan
+    // the footer, the follow switch and NEXT ITEM all describe something that
+    // does not exist, and the tab is simply the old timer fields.
+    $("opRunPanel").classList.toggle("has-run", !!rs);
 
     if (!rs || !rs.items.length) {
       var msg = document.createElement("div");
       msg.className = "hint";
       msg.textContent = rs ? "Nothing in this rundown yet — press EDIT, then ADD ITEM."
-        : runsheets.length ? "No rundown for this service — the countdown runs on the time set above."
-        : "No rundown on this device yet. Press + to start one — it stays here, on this device.";
+        : runsheets.length ? "No rundown for this service — set the time and title by hand below."
+        : "No rundown on this device yet. Press + to start one, or run the countdown by hand below.";
       runRows.appendChild(msg);
+      if (!rs) parkGrid(true);
       paintRun();
       paintStartBtn();
       return;
