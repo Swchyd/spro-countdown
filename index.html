@@ -87,6 +87,11 @@
     margin: auto 0;
   }
   #setup .card, #menu .card { margin: 0; }
+  /* Down to a room code, a button and the clock, the operator's card is the
+     size of the join screen's — so it sits where that one sits, in the middle
+     of the screen rather than pinned under the top edge with everything below
+     it empty. Standalone still has fields to fill in and stays at the top. */
+  #setup.lean .card { margin: auto 0; }
   .brand {
     display: flex;
     align-items: baseline;
@@ -1460,6 +1465,20 @@
      row is pressed to start an item, and during a service the last thing that
      may sit under that thumb is a delete. */
   .run-row.editing { grid-template-columns: 18px minmax(0, 1fr) 68px auto; }
+  /* The standalone drawer is 300 points wide. Once the number, the target box
+     and three move buttons had taken theirs, the name was left about thirty —
+     so the one thing being edited was the one thing that could not be read.
+     Narrow enough, it takes a row of its own and the rest sits underneath.
+     Measured rather than guessed at a screen width, because the drawer is
+     narrow on a laptop too — see setEditShape(). */
+  #opRunPanel.stack-edit .run-row.editing {
+    grid-template-columns: 18px minmax(0, 1fr) auto;
+    row-gap: 8px;
+  }
+  #opRunPanel.stack-edit .run-row.editing .n { grid-column: 1; grid-row: 1; }
+  #opRunPanel.stack-edit .run-row.editing .nm-in { grid-column: 2 / -1; grid-row: 1; }
+  #opRunPanel.stack-edit .run-row.editing .t-in { grid-column: 2; grid-row: 2; width: 68px; justify-self: start; }
+  #opRunPanel.stack-edit .run-row.editing .mv { grid-column: 3; grid-row: 2; justify-self: end; }
   .run-row.editing .nm-in, .run-row.editing .t-in {
     height: 38px;
     padding: 8px;
@@ -5705,7 +5724,7 @@ if ("serviceWorker" in navigator) {
   }
 
   // A rotation changes both the room and the height of the header above it.
-  window.addEventListener("resize", fitConsole);
+  window.addEventListener("resize", function () { setEditShape(); fitConsole(); });
   window.addEventListener("orientationchange", fitConsole);
 
   function buildSlideList() {
@@ -5860,46 +5879,79 @@ if ("serviceWorker" in navigator) {
   // would put two people preparing two services straight back into each
   // other's work — the exact problem the setlist had to be split up to solve.
   var RUN_KEY = "spro-rundown-v1";
-  var rundown = null, runEditing = false, runMigrated = false;
+  // One plan for each of the two things this device can be. Operator drives a
+  // service off a stage screen; standalone is somebody's own phone running its
+  // own clock, often a rehearsal or a different room altogether. They were one
+  // plan, and editing the rehearsal rewrote the service.
+  var runs = { op: null, solo: null };
+  var runEditing = false, runMigrated = false;
   var runRows = $("runRows"), runRowEls = [];
+
+  function runKey() { return role === "solo" ? "solo" : "op"; }
+
+  function newRunId() {
+    return "rd_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  // A copy, not the same object under two names — the whole point is that they
+  // part company from here — and a fresh id, so syncRun() sees a different
+  // plan when the role changes and rebuilds what is on the wire.
+  function copyRun(rs) {
+    return {
+      id: newRunId(),
+      items: (rs && rs.items || []).map(function (it) { return { name: it.name, secs: it.secs }; })
+    };
+  }
 
   try {
     var runRaw = JSON.parse(localStorage.getItem(RUN_KEY) || "null");
-    if (runRaw && runRaw.rundown) rundown = runRaw.rundown;
-    // Written by the first build, which held several sheets and a pick between
-    // them. Take the one this device was on, or failing that the first it
-    // wrote: a plan somebody typed out is worth more than a tidy start.
-    else if (runRaw && Array.isArray(runRaw.rundowns) && runRaw.rundowns.length) {
+    var one = null;
+    if (runRaw && runRaw.v === 3) {
+      runs.op = runRaw.op || null;
+      runs.solo = runRaw.solo || null;
+    } else if (runRaw && runRaw.rundown) {
+      one = runRaw.rundown;                 // the single plan of the build before
+    } else if (runRaw && Array.isArray(runRaw.rundowns) && runRaw.rundowns.length) {
+      // The first build held several sheets and a pick between them. Take the
+      // one this device was on, or failing that the first it wrote: a plan
+      // somebody typed out is worth more than a tidy start.
       for (var ri = 0; ri < runRaw.rundowns.length; ri++) {
-        if (runRaw.rundowns[ri].id === runRaw.picked) rundown = runRaw.rundowns[ri];
+        if (runRaw.rundowns[ri].id === runRaw.picked) one = runRaw.rundowns[ri];
       }
-      if (!rundown) rundown = runRaw.rundowns[0];
-      // Written back at once rather than on the next edit, so the sheets that
-      // were not carried over are not left sitting there to be half-read by
-      // something later.
-      if (rundown) runMigrated = true;
+      if (!one) one = runRaw.rundowns[0];
     }
-    if (rundown && !Array.isArray(rundown.items)) rundown = null;
+    // Whatever this device had, both roles start from it: which of the two it
+    // was typed in cannot be known now, and handing it to one of them would
+    // lose it for whoever was using the other.
+    if (one && Array.isArray(one.items)) {
+      runs.op = one;
+      runs.solo = copyRun(one);
+      runMigrated = true;                   // written back at once, not at the next edit
+    }
+    if (runs.op && !Array.isArray(runs.op.items)) runs.op = null;
+    if (runs.solo && !Array.isArray(runs.solo.items)) runs.solo = null;
   } catch (e) {}
 
   function persistRun() {
     try {
-      localStorage.setItem(RUN_KEY, JSON.stringify({ v: 2, rundown: rundown }));
+      localStorage.setItem(RUN_KEY, JSON.stringify({ v: 3, op: runs.op, solo: runs.solo }));
     } catch (e) {}
   }
 
   if (runMigrated) persistRun();
 
-  // The plan this device holds, whether or not anything is in it yet.
+  // The plan for whichever of the two this device is being, made on the spot
+  // if it has never been one before.
   function theRun() {
-    if (!rundown) {
-      rundown = {
-        id: "rd_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    var k = runKey();
+    if (!runs[k]) {
+      runs[k] = {
+        id: newRunId(),
         items: RUN_TEMPLATE.map(function (t) { return { name: t.name, secs: t.secs }; })
       };
       persistRun();
     }
-    return rundown;
+    return runs[k];
   }
 
   // A plan there is something to run, which is not the same question. An empty
@@ -6191,6 +6243,7 @@ if ("serviceWorker" in navigator) {
     panel.style.maxHeight = "";
     if (where === "solo") drawerBody.appendChild(panel);
     else opBody.appendChild(panel);
+    setEditShape();
     renderRun();
   }
 
@@ -6212,11 +6265,19 @@ if ("serviceWorker" in navigator) {
   // "start a ten-minute timer" — it is "start the first item" — and reading
   // that item's name off the button is the last check anyone gets before a
   // service goes live.
+  // The button says what pressing it does, and on this card that is going on
+  // the air — not the name of the first item, which is read in the console a
+  // second later and only made the button change shape between services.
   function paintStartBtn() {
-    var rs = curRun();
-    $("startBtn").textContent = rs && rs.items.length
-      ? "START · " + oneLine(rs.items[0].name).toUpperCase() + " ▸"
-      : "START TIMER";
+    $("startBtn").textContent = role === "op" ? "START AS OPERATOR" : "START";
+  }
+
+  // Whether a row can carry a name, a target and three buttons on one line.
+  // Asked of the panel's own width, so the 300-point standalone drawer and a
+  // phone get the same answer without either being named.
+  function setEditShape() {
+    var panel = $("opRunPanel"), w = panel.clientWidth;
+    panel.classList.toggle("stack-edit", w > 0 && w < 420);
   }
 
   function setRunEditing(on) {
@@ -6225,6 +6286,7 @@ if ("serviceWorker" in navigator) {
     $("opRunPanel").classList.toggle("editing", runEditing);
     $("runEditBtn").classList.toggle("on", runEditing);
     $("runEditBtn").textContent = runEditing ? "DONE" : "EDIT";
+    setEditShape();
     renderRun();
     fitConsole();
   }
