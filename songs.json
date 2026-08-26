@@ -2811,38 +2811,54 @@
    "slides": [
     [
      "Bapa, Putra dan Roh Kudus",
-     "Allah penyelamatku",
+     "Allah penyelamatku"
+    ],
+    [
      "Oleh kasih dan anugerahMu",
      "Ku dijadikan baru."
     ],
     [
      "Dan kumau memuliakanMu",
-     "Menyenangkan hatiMu",
+     "Menyenangkan hatiMu"
+    ],
+    [
      "Hidup dalam ketaatan",
-     "Melakukan firmanMu",
+     "Melakukan firmanMu"
+    ],
+    [
      "S'bab hidupku bukannya aku lagi",
      "Melainkan Kristus hidup dalamku."
     ],
     [
      "S'bab hidupku bukannya aku lagi",
-     "Melainkan Kristus hidup dalamku",
+     "Melainkan Kristus hidup dalamku"
+    ],
+    [
      "S'bab hidupku bukannya aku lagi",
      "Melainkan Kristus hidup dalamku."
     ]
    ],
    "tags": [
     "Verse",
+    "",
     "Chorus",
-    "Ending"
+    "",
+    "",
+    "Ending",
+    ""
    ],
    "notes": [
     "",
     "",
+    "",
+    "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 6,
-   "version": 2,
-   "updatedAt": 1787731626800,
+   "perSlide": 2,
+   "version": 3,
+   "updatedAt": 1787731681883,
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
