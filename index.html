@@ -1371,7 +1371,7 @@
   #runHeading {
     flex: 1 1 auto;
     min-width: 0;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: .14em;
     text-transform: uppercase;
@@ -1397,26 +1397,35 @@
     display: grid;
     grid-template-columns: 18px minmax(0, 1fr) auto auto;
     gap: 10px;
-    align-items: center;
-    padding: 9px 8px;
+    /* Top, not centre: an item carrying four lines of announcement would
+       otherwise float its number and its time in the middle of them. */
+    align-items: start;
+    padding: 10px 10px;
     border-bottom: 1px solid var(--line);
   }
+  /* The figures still sit on the first line of the name they belong to. */
+  .run-row .n, .run-row .tg, .run-row .st { padding-top: 2px; }
   .run-row:last-child { border-bottom: 0; }
   .run-row .n { font-size: 11px; font-weight: 700; color: #5B6474; }
+  /* An item's name is not always a name. "Pengumuman Tambahan" followed by the
+     four points somebody has to read out is one item, and the whole of it goes
+     on the stage, so the row here has to show the whole of it too: line breaks
+     kept, long lines wrapped, and the row growing downwards rather than the
+     text being cut off at the edge. */
   .run-row .nm {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
   }
-  .run-row .tg { font-size: 12px; color: #5B6474; font-variant-numeric: tabular-nums; }
+  .run-row .tg { font-size: 13px; color: #5B6474; font-variant-numeric: tabular-nums; }
   /* Wide enough for "−12:34" so the column does not jump about as items close
      one after another. */
   .run-row .st {
-    min-width: 58px;
+    min-width: 64px;
     text-align: right;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     color: #5B6474;
     font-variant-numeric: tabular-nums;
@@ -1441,27 +1450,39 @@
   /* Editing is its own state rather than buttons that are always there: the
      row is pressed to start an item, and during a service the last thing that
      may sit under that thumb is a delete. */
-  .run-row.editing { grid-template-columns: 18px minmax(0, 1fr) 62px auto; }
+  .run-row.editing { grid-template-columns: 18px minmax(0, 1fr) 68px auto; }
   .run-row.editing .nm-in, .run-row.editing .t-in {
-    height: 36px;
-    padding: 0 8px;
+    height: 38px;
+    padding: 8px;
     border-radius: 8px;
     background: var(--stage);
     border: 1px solid var(--line);
     color: var(--ink);
-    font-size: 14px;
+    font-size: 15px;
     font-family: inherit;
     width: 100%;
     min-width: 0;
   }
-  .run-row.editing .t-in { text-align: center; font-variant-numeric: tabular-nums; }
+  .run-row.editing .t-in { text-align: center; font-variant-numeric: tabular-nums; height: 38px; padding: 0 8px; }
+  /* A textarea rather than a field, so Enter puts the next point on the next
+     line instead of ending the edit. It grows to whatever it holds — there is
+     no scrollbar inside a two-line box to discover — and, like the title on
+     the stage, it is finished by touching somewhere else. */
+  .run-row.editing .nm-in {
+    height: auto;
+    min-height: 38px;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.35;
+    white-space: pre-wrap;
+  }
   .run-row .mv {
     display: flex;
     gap: 4px;
   }
   .run-row .mv button {
-    width: 30px;
-    height: 36px;
+    width: 32px;
+    height: 38px;
     border-radius: 8px;
     background: var(--panel-2);
     border: 1px solid var(--line);
@@ -1494,7 +1515,7 @@
     gap: 10px;
     padding-top: 10px;
     border-top: 1px solid var(--line);
-    font-size: 12px;
+    font-size: 13px;
     color: #5B6474;
     font-variant-numeric: tabular-nums;
   }
@@ -1505,12 +1526,12 @@
   #runNav { display: flex; gap: 8px; }
   #runNav button {
     flex: 1 1 0;
-    height: 52px;
+    height: 58px;
     border-radius: 12px;
     background: var(--panel-2);
     border: 1px solid var(--line);
     color: var(--ink);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: .06em;
   }
@@ -1538,7 +1559,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--ink-dim);
     padding: 2px;
   }
@@ -1594,11 +1615,16 @@
     text-transform: uppercase;
     color: var(--accent);
   }
+  /* An item may be a heading and the points under it, so this keeps the breaks
+     rather than running them together. Uppercase still, because it is a
+     heading first — the points are read off the stage, not off here. */
   #crewName {
     font-size: clamp(24px, 7vw, 40px);
     font-weight: 800;
     line-height: 1.1;
     text-transform: uppercase;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
   #crewTime {
     font-size: clamp(40px, 14vw, 76px);
@@ -2814,6 +2840,13 @@ lyric line one</pre>
           <button type="button" id="runAddBtn">+ ADD ITEM</button>
           <button type="button" id="runDelBtn" class="danger">CLEAR RUNDOWN</button>
         </div>
+        <!-- A setting, not a control: it is decided once and then never
+             touched again during a service. Sitting on the running panel it
+             cost a row of height that the preview above was paying for. -->
+        <label id="runFollow">
+          <input type="checkbox" id="runFollowIn">
+          <span>Title on stage follows the item</span>
+        </label>
       </div>
 
       <div id="runRows"></div>
@@ -2822,11 +2855,6 @@ lyric line one</pre>
         <span id="runDrift"></span>
         <span id="runEnd"></span>
       </div>
-
-      <label id="runFollow">
-        <input type="checkbox" id="runFollowIn">
-        <span>Title on stage follows the item</span>
-      </label>
 
       <div id="runNav">
         <button type="button" id="runNext">NEXT ITEM ▸</button>
@@ -5529,9 +5557,10 @@ if ("serviceWorker" in navigator) {
   // about 180 points of fixed rows — and still leave a couple of items
   // visible, or the button walks off the bottom of the panel.
   var RUN_PANEL_MIN = 288;
-  // Four items. Fewer than that answers "where are we" without answering
-  // "what is coming", which is half the reason to be looking at it.
-  var RUN_LIST_WANT = 172;
+  // The same as the lyrics list asks for, deliberately: the two tabs sit under
+  // one preview, and a tab wanting more of the screen than its neighbour
+  // shrinks that picture every time it is opened.
+  var RUN_LIST_WANT = LIST_WANT;
 
   function offsetInBody(el) {
     return el.getBoundingClientRect().top -
@@ -5944,6 +5973,33 @@ if ("serviceWorker" in navigator) {
     return pad2(d.getHours()) + ":" + pad2(d.getMinutes());
   }
 
+  // Long enough for a set of announcements read off the stage, short enough
+  // that nobody pastes a sermon into a row.
+  var MAX_ITEM_NAME = 400;
+
+  // Blank lines and stray spaces come off the ends, and nothing comes out of
+  // the middle: the empty line somebody left between two points is theirs.
+  var CR = String.fromCharCode(13);
+  function tidyName(v) {
+    var s = String(v == null ? "" : v).split(CR).join("");
+    while (s.length && s.charAt(0).trim() === "") s = s.slice(1);
+    while (s.length && s.charAt(s.length - 1).trim() === "") s = s.slice(0, -1);
+    return s.slice(0, MAX_ITEM_NAME);
+  }
+
+  // The box is as tall as what it holds, measured after the value is in it.
+  function growNameBox(el) {
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
+  }
+
+  // A name may be several lines by now, and a button is one line. Wherever it
+  // is spoken about rather than shown — the START button, NEXT ITEM — the
+  // breaks become spaces so the first words still read as the item.
+  function oneLine(s) {
+    return String(s == null ? "" : s).replace(/\s+/g, " ").trim();
+  }
+
   // "12", "12:30" and "0:45" all mean what they look like. Anything else is
   // left alone rather than quietly becoming zero, because a target of nothing
   // is a countdown that is over the moment it starts.
@@ -6084,7 +6140,7 @@ if ("serviceWorker" in navigator) {
   function paintStartBtn() {
     var rs = curRun();
     $("startBtn").textContent = rs && rs.items.length
-      ? "START · " + rs.items[0].name.toUpperCase() + " ▸"
+      ? "START · " + oneLine(rs.items[0].name).toUpperCase() + " ▸"
       : "START TIMER";
   }
 
@@ -6140,14 +6196,15 @@ if ("serviceWorker" in navigator) {
       if (runEditing) {
         row.classList.add("editing");
 
-        var nmIn = document.createElement("input");
+        var nmIn = document.createElement("textarea");
         nmIn.className = "nm-in";
-        nmIn.type = "text";
-        nmIn.maxLength = 60;
+        nmIn.rows = 1;
+        nmIn.maxLength = MAX_ITEM_NAME;
         nmIn.value = it.name;
         nmIn.setAttribute("data-edit", "name");
         nmIn.setAttribute("aria-label", "Item " + (i + 1) + " name");
         row.appendChild(nmIn);
+        growNameBox(nmIn);
 
         var tIn = document.createElement("input");
         tIn.className = "t-in";
@@ -6155,7 +6212,7 @@ if ("serviceWorker" in navigator) {
         tIn.value = fmt(it.secs);
         tIn.setAttribute("inputmode", "numeric");
         tIn.setAttribute("data-edit", "secs");
-        tIn.setAttribute("aria-label", "Target length for " + it.name);
+        tIn.setAttribute("aria-label", "Target length for " + oneLine(it.name));
         row.appendChild(tIn);
 
         var mv = document.createElement("div");
@@ -6166,7 +6223,7 @@ if ("serviceWorker" in navigator) {
             btn.type = "button";
             btn.className = b[0];
             btn.textContent = b[1];
-            btn.setAttribute("aria-label", b[2] + " " + it.name);
+            btn.setAttribute("aria-label", b[2] + " " + oneLine(it.name));
             mv.appendChild(btn);
           });
         row.appendChild(mv);
@@ -6245,7 +6302,7 @@ if ("serviceWorker" in navigator) {
     var idx = runUpNext();
     btn.disabled = idx < 0;
     btn.textContent = idx < 0 ? "RUNDOWN FINISHED"
-      : (live < 0 ? "START · " : "NEXT · ") + r.items[idx].n.toUpperCase() + " ▸";
+      : (live < 0 ? "START · " : "NEXT · ") + oneLine(r.items[idx].n).toUpperCase() + " ▸";
   }
 
   // Shared with the crew view, because the two screens are answering the same
@@ -6296,6 +6353,12 @@ if ("serviceWorker" in navigator) {
 
   // On change rather than on input: retyping a name one letter at a time is
   // not seven edits, and the crew view does not need to watch somebody think.
+  // Typing, not just committing: the box follows the text down as the points
+  // are written, or the line being typed ends up out of sight.
+  runRows.addEventListener("input", function (e) {
+    if (e.target.classList && e.target.classList.contains("nm-in")) growNameBox(e.target);
+  });
+
   runRows.addEventListener("change", function (e) {
     if (!runEditing) return;
     var row = e.target.closest ? e.target.closest(".run-row") : null;
@@ -6305,8 +6368,11 @@ if ("serviceWorker" in navigator) {
     if (!rs || !rs.items[i]) return;
     var what = e.target.getAttribute("data-edit");
     if (what === "name") {
-      rs.items[i].name = (e.target.value || "").trim().slice(0, 60) || rs.items[i].name;
+      // Trimmed at the ends only: the blank line somebody left between two
+      // points is theirs to keep.
+      rs.items[i].name = tidyName(e.target.value) || rs.items[i].name;
       e.target.value = rs.items[i].name;
+      growNameBox(e.target);
     } else if (what === "secs") {
       rs.items[i].secs = parseSecs(e.target.value, rs.items[i].secs);
       e.target.value = fmt(rs.items[i].secs);
@@ -6433,7 +6499,7 @@ if ("serviceWorker" in navigator) {
       var nx = document.createElement("span");
       nx.textContent = "Next: ";
       var nb = document.createElement("b");
-      nb.textContent = r.items[next].n;
+      nb.textContent = oneLine(r.items[next].n);
       var nt = document.createElement("span");
       nt.textContent = " · " + fmt(r.items[next].t);
       $("crewNext").appendChild(nx);
