@@ -570,10 +570,15 @@
     align-items: center;
     padding: 0 calc(var(--sw) * .04);
   }
+  /* The starting point only. Message mode hands the whole middle of the stage
+     to the title, so fitTitleToZone() measures what is actually there and
+     scales it up until it fills that box — two words end up enormous, four
+     points end up as large as four points can be. */
   #stage.mode-message #labelText {
-    /* ~20 uppercase characters per line */
+    /* ~20 uppercase characters per line before the fit */
     --title-size: min(calc(var(--sw) * .058), calc(var(--sh) * .10));
     letter-spacing: .08em;
+    overflow-wrap: anywhere;
   }
 
   /* ---------- lyrics mode ---------- */
@@ -3372,6 +3377,42 @@ if ("serviceWorker" in navigator) {
   // is published as --title-extra, which the lyric box adds to its top padding
   // and fitSong() then reads back, so the words move down and resize to match.
   var titleBandFor = null;
+  // Message mode is the one place the title is the whole point of the screen,
+  // so there it takes the room rather than being sized for a job and left to
+  // sit in the middle of empty space. Everywhere else the type is the right
+  // size already and measurement only ever brings it down.
+  //
+  // The box is asked for rather than worked out from the percentages above:
+  // the zone's own padding, the corner the countdown moved to and whatever the
+  // safe area costs are all already in what it reports.
+  var TITLE_SCALE_MAX = 6;
+
+  function fitTitleToZone() {
+    var zs = getComputedStyle(labelZone);
+    var availH = labelZone.clientHeight - parseFloat(zs.paddingTop) - parseFloat(zs.paddingBottom);
+    var availW = labelZone.clientWidth - parseFloat(zs.paddingLeft) - parseFloat(zs.paddingRight);
+    if (!(availH > 0) || !(availW > 0)) return 1;
+
+    function fits(scale) {
+      labelText.style.setProperty("--title-scale", scale);
+      // scrollWidth catches the one thing wrapping cannot: a single word
+      // longer than the line it has to sit on.
+      return labelText.getBoundingClientRect().height <= availH + .5 &&
+             labelText.scrollWidth <= Math.ceil(availW) + 1;
+    }
+
+    if (fits(TITLE_SCALE_MAX)) return TITLE_SCALE_MAX;
+    // Halving from the whole range lands inside a tenth of a per cent in a
+    // dozen steps, which is finer than a pixel at any size this type reaches.
+    var lo = .4, hi = TITLE_SCALE_MAX, best = .4, mid;
+    for (var i = 0; i < 14; i++) {
+      mid = (lo + hi) / 2;
+      if (fits(mid)) { best = mid; lo = mid; } else hi = mid;
+    }
+    labelText.style.setProperty("--title-scale", best);
+    return best;
+  }
+
   function measureTitleBand() {
     var key = T.mode + "|" + T.label + "|" +
               stage.style.getPropertyValue("--sw") + "|" +
@@ -3398,7 +3439,10 @@ if ("serviceWorker" in navigator) {
     }
     titleBandFor = key;
 
-    if (h > 0) {
+    if (T.mode === "message" && h > 0) {
+      scale = fitTitleToZone();
+      h = labelText.getBoundingClientRect().height;
+    } else if (h > 0) {
       for (var i = 0; i < 6; i++) {
         var lines = Math.round(h / (one * scale));
         if (lines <= maxLines) break;
@@ -5920,6 +5964,21 @@ if ("serviceWorker" in navigator) {
     return live < 0 ? 0 : Math.max(0, Math.round((now() - T.run.at) / 1000));
   }
 
+  // What the item has left, read off the countdown itself rather than worked
+  // out from its target.
+  //
+  // The two are the same number while the plan and the clock move together,
+  // which they do: ±1 gives the item the minute it gives the clock. They come
+  // apart at the bottom, where an item cannot be cut below a second but the
+  // clock can go as far into overtime as it is pushed — and there the worked-
+  // out figure stopped counting minutes while the stage kept counting them,
+  // which is the one thing this figure exists to agree with. So it is the
+  // clock, on every device: a display holds the same endAt and reads the same
+  // number as the stage standing next to it.
+  function runLeft() {
+    return Math.round(remainingMs() / 1000);
+  }
+
   // Two numbers, kept apart on purpose. What the finished items cost is
   // settled and cannot improve; what the live one is doing is still being
   // decided. Counting a live item that is inside its target towards the
@@ -5937,7 +5996,7 @@ if ("serviceWorker" in navigator) {
       if (r.items[i].a != null) out.done += r.items[i].t - r.items[i].a;
     }
     var live = runLive();
-    if (live >= 0) out.live = r.items[live].t - runElapsed();
+    if (live >= 0) out.live = runLeft();
     // Time an item has not spent yet is not time gained: it is still being
     // decided, and counting it would swing the total the moment every item
     // starts. Time already spent past the target is settled, so that counts.
@@ -5953,7 +6012,7 @@ if ("serviceWorker" in navigator) {
     var r = T.run;
     if (!r || !r.items.length) return 0;
     var live = runLive(), ms = 0;
-    if (live >= 0) ms += Math.max(0, r.items[live].t - runElapsed()) * 1000;
+    if (live >= 0) ms += Math.max(0, runLeft()) * 1000;
     for (var i = 0; i < r.items.length; i++) {
       if (i === live) continue;
       if (r.items[i].a == null && (live < 0 || i > live)) ms += r.items[i].t * 1000;
@@ -6016,7 +6075,11 @@ if ("serviceWorker" in navigator) {
   function closeRunItem() {
     var live = runLive();
     if (live < 0) return;
-    T.run.items[live].a = runElapsed();
+    // What it cost is what the row was showing when it was left: the target
+    // less whatever was still on the clock. In an ordinary item that is the
+    // wall clock to the second, and where the two differ the figure that
+    // freezes is the one that was being read.
+    T.run.items[live].a = Math.max(0, T.run.items[live].t - runLeft());
     T.run.at = 0;
   }
 
@@ -6243,7 +6306,7 @@ if ("serviceWorker" in navigator) {
         var rec = r && r.items[i] ? r.items[i].a : null;
         if (i === live) {
           row.classList.add("live");
-          st.textContent = fmtSigned(it.secs - runElapsed());
+          st.textContent = fmtSigned(runLeft());
         } else if (rec != null) {
           row.classList.add("done");
           if (rec > it.secs) row.classList.add("late");
@@ -6281,7 +6344,7 @@ if ("serviceWorker" in navigator) {
   function paintRun() {
     var r = T.run, live = runLive();
     if (live >= 0 && runRowEls[live] && !runEditing) {
-      var left = r.items[live].t - runElapsed();
+      var left = runLeft();
       runRowEls[live].classList.toggle("late", left < 0);
       var st = runRowEls[live].querySelector(".st");
       if (st) st.textContent = fmtSigned(left);
@@ -6553,7 +6616,7 @@ if ("serviceWorker" in navigator) {
     if (live >= 0) {
       var liveRow = $("crewList").querySelector('.run-row[data-i="' + live + '"]');
       if (liveRow) {
-        var d = r.items[live].t - runElapsed();
+        var d = runLeft();
         liveRow.classList.toggle("late", d < 0);
         var lst = liveRow.querySelector(".st");
         if (lst) lst.textContent = fmtSigned(d);
