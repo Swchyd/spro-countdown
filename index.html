@@ -3220,12 +3220,27 @@ if ("serviceWorker" in navigator) {
   // work at all, which is what makes the search below affordable — and what
   // keeps a resize from re-measuring a whole song for every frame the iPad
   // spends settling.
+  // A song is a list of slides and a slide is a list of lines — but songs.json
+  // lives in a repo somebody can open and edit, and it has changed shape more
+  // than once already. One slide left as a bare string used to take the whole
+  // stage down mid-song with "slide.map is not a function", which is the worst
+  // possible moment and the hardest place to recover from. Every reader below
+  // goes through these two, and neither of them can throw.
+  function songSlides(song) {
+    return song && Array.isArray(song.slides) ? song.slides : [];
+  }
+  function slideLines(slide) {
+    if (Array.isArray(slide)) return slide;
+    if (slide == null) return [];
+    return [String(slide)];
+  }
+
   function measureSong(song) {
     fitCtx.font = stageFont(100);
     var space = fitCtx.measureText(" ").width;
     var widestWord = 0;
-    var slides = song.slides.map(function (slide) {
-      return slide.map(function (line) {
+    var slides = songSlides(song).map(function (slide) {
+      return slideLines(slide).map(function (line) {
         var text = stageCase(line);
         var words = text.split(/\s+/).filter(Boolean).map(function (t) {
           var w = fitCtx.measureText(t).width;
@@ -3283,7 +3298,7 @@ if ("serviceWorker" in navigator) {
   // is fewer rows to find room for.
   function fitSong(song) {
     var r = stage.getBoundingClientRect();
-    if (!r.width || !r.height || !song || !song.slides.length) return null;
+    if (!r.width || !r.height || !song || !songSlides(song).length) return null;
 
     // The space to fit into is the lyric box itself, read back from the
     // layout. It used to be r.width * .93 and r.height * .82 — the same
@@ -3360,7 +3375,8 @@ if ("serviceWorker" in navigator) {
   function slideText(slide, idx, limit) {
     var sl = (LY.m && LY.mFor === LY.fittedFor) ? LY.m.slides[idx] : null;
     if (!sl || !LY.wrapW) {
-      return stageCase((limit ? slide.slice(0, limit) : slide).join("\n"));
+      var lines = slideLines(slide);
+      return stageCase((limit ? lines.slice(0, limit) : lines).join("\n"));
     }
     var rows = [];
     for (var i = 0; i < sl.length; i++) {
@@ -3388,7 +3404,7 @@ if ("serviceWorker" in navigator) {
       shownSlide = null;
     }
 
-    var slides = T.song.slides;
+    var slides = songSlides(T.song);
     // Running one past the last slide is deliberate: the lyrics clear and the
     // countdown stays, so the end of a song never jumps somewhere by itself.
     var idx = Math.max(0, Math.min(T.slide, slides.length));
@@ -8268,8 +8284,8 @@ if ("serviceWorker" in navigator) {
       }).filter(Boolean).join("\n\n");
     }
     // Songs saved before arrangements existed only have the flattened slides.
-    return (s.slides || []).map(function (sl, i) {
-      return (s.tags && s.tags[i] ? "[" + s.tags[i] + "]\n" : "") + sl.join("\n");
+    return songSlides(s).map(function (sl, i) {
+      return (s.tags && s.tags[i] ? "[" + s.tags[i] + "]\n" : "") + slideLines(sl).join("\n");
     }).join("\n\n");
   }
 
