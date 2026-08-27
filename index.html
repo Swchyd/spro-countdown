@@ -3993,6 +3993,51 @@ if ("serviceWorker" in navigator) {
     return { debug: 0, config: { iceServers: iceServers, sdpSemantics: "unified-plan" } };
   }
 
+  // Not every device that can run a countdown has fetch. Android's stock browser
+  // had Promise a year before it, a WebView nobody ever updated can be older
+  // still, and a request goes out on the way in — so a missing fetch did not
+  // cost a feature, it threw on the boot path and took whatever came after it.
+  // XMLHttpRequest is the one transport every browser old enough to be a problem
+  // does have, and the seven calls here use so little of fetch that standing one
+  // up is twenty lines. Nothing else in the app has to know which it got.
+  var doFetch = typeof fetch === "function"
+    ? function (url, opts) { return fetch(url, opts); }
+    : function (url, opts) {
+        opts = opts || {};
+        var method = opts.method || "GET";
+        // XHR has no cache option, so the intent is carried in the URL instead —
+        // which is what the library calls were already doing by hand.
+        if (opts.cache === "no-store" && method === "GET") {
+          url += (url.indexOf("?") < 0 ? "?" : "&") + "_=" + Date.now();
+        }
+        return new Promise(function (resolve, reject) {
+          var x = new XMLHttpRequest();
+          x.open(method, url, true);
+          var h = opts.headers || {};
+          for (var k in h) {
+            if (Object.prototype.hasOwnProperty.call(h, k)) {
+              try { x.setRequestHeader(k, h[k]); } catch (e) {}
+            }
+          }
+          x.onload = function () {
+            var body = x.responseText;
+            resolve({
+              ok: x.status >= 200 && x.status < 300,
+              status: x.status,
+              json: function () {
+                return new Promise(function (res, rej) {
+                  try { res(JSON.parse(body)); } catch (e) { rej(e); }
+                });
+              },
+              text: function () { return Promise.resolve(body); }
+            });
+          };
+          x.onerror = function () { reject(new Error("network")); };
+          x.ontimeout = function () { reject(new Error("timeout")); };
+          x.send(opts.body == null ? null : opts.body);
+        });
+      };
+
   // Ask the Worker for relay credentials. Called once at boot so the answer is
   // already in hand by the time anyone taps Operator or Display.
   function loadIce() {
@@ -4011,7 +4056,7 @@ if ("serviceWorker" in navigator) {
     // unreachable we go with the fallback list and carry on.
     var t = setTimeout(settle, 2500);
 
-    fetch(API_BASE + "/turn", { cache: "no-store" })
+    doFetch(API_BASE + "/turn", { cache: "no-store" })
       .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
       .then(function (j) {
         if (j && j.iceServers && j.iceServers.length) {
@@ -4228,7 +4273,7 @@ if ("serviceWorker" in navigator) {
     var settled = false;
     var give = function (v) { if (!settled) { settled = true; clearTimeout(t); done(v); } };
     var t = setTimeout(function () { give(false); }, 2000);
-    fetch("time", { cache: "no-store" })
+    doFetch("time", { cache: "no-store" })
       .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
       .then(function (j) { give(typeof j.s === "number"); })
       .catch(function () { give(false); });
@@ -4237,7 +4282,7 @@ if ("serviceWorker" in navigator) {
   // One clock-offset sample; keeps the least-delayed of the last few.
   function sampleServerClock() {
     var t0 = Date.now();
-    fetch("time", { cache: "no-store" })
+    doFetch("time", { cache: "no-store" })
       .then(function (r) { return r.json(); })
       .then(function (j) {
         var rtt = Date.now() - t0;
@@ -4312,7 +4357,7 @@ if ("serviceWorker" in navigator) {
   // being swallowed. The server holds whole state, so a late arrival is still
   // the right state — there is nothing to replay in order.
   function pushLocal(retry) {
-    fetch("state?room=" + roomCode, {
+    doFetch("state?room=" + roomCode, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(snapshot())
@@ -6996,7 +7041,7 @@ if ("serviceWorker" in navigator) {
     opts = opts || {};
     var headers = { "Content-Type": "application/json" };
     if (session && session.token) headers.Authorization = "Bearer " + session.token;
-    return fetch(API_BASE + path, {
+    return doFetch(API_BASE + path, {
       method: opts.method || "GET",
       headers: headers,
       body: opts.body ? JSON.stringify(opts.body) : undefined,
@@ -7049,13 +7094,13 @@ if ("serviceWorker" in navigator) {
   // display that has never signed in, or a laptop with no route to Cloudflare,
   // still load the whole library. The stage does not depend on the gatekeeper.
   function pullLibrary() {
-    return fetch(API_BASE + "/library?t=" + Date.now(), { cache: "no-store" })
+    return doFetch(API_BASE + "/library?t=" + Date.now(), { cache: "no-store" })
       .then(function (r) {
         if (!r.ok) throw new Error("gatekeeper unavailable");
         return r.json();
       })
       .catch(function () {
-        return fetch(RAW_URL + "?t=" + Date.now(), { cache: "no-store" })
+        return doFetch(RAW_URL + "?t=" + Date.now(), { cache: "no-store" })
           .then(function (r) {
             if (r.status === 404) return { missing: true };
             return r.ok ? r.json() : null;
