@@ -86,12 +86,12 @@
     gap: 18px;
     margin: auto 0;
   }
-  #setup .card, #menu .card { margin: 0; }
-  /* Down to a room code, a button and the clock, the operator's card is the
+  #menu .card { margin: 0; }
+  /* Down to a room code, a button and the clock, either setup card is the
      size of the join screen's — so it sits where that one sits, in the middle
      of the screen rather than pinned under the top edge with everything below
-     it empty. Standalone still has fields to fill in and stays at the top. */
-  #setup.lean .card { margin: auto 0; }
+     it empty. */
+  #setup .card { margin: auto 0; }
   .brand {
     display: flex;
     align-items: baseline;
@@ -243,10 +243,13 @@
     grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
-  /* An operator sets the title and the length inside, where they are watched.
-     This card is then the room code, the button and the clock — which is all
-     anybody reads off it on the way to a service. */
-  #setup.lean #setupTitleBox, #setup.lean #setupTime { display: none; }
+  /* Both roles set the title and the length where they are watched: the
+     operator in the console, standalone in the drawer, which is handed the
+     same grid. This card is then the room code, the button and the clock —
+     which is all anybody reads off it on the way to a service. The fields
+     stay in the page because they are still where the remembered title and
+     length are held; nothing shows them any more. */
+  #setup #setupTitleBox, #setup #setupTime { display: none; }
   .setting {
     background: var(--panel);
     border: 1px solid var(--line);
@@ -2740,14 +2743,12 @@ lyric line one</pre>
       </div>
     </div>
 
-    <!-- What an operator gets here is the room code, this button and the
+    <!-- What either role gets here is the room code, this button and the
          clock. The title and the length are set where they are watched — the
          console has both, either as the items of a rundown or as the timer
-         fields the tab falls back to — and asking for them twice meant typing
-         a time on this card that the first item of the plan then replaced.
-         Standalone keeps them: it has no console to walk into. The plan
-         reaches this card only through the button, which names the item it is
-         about to start — see paintStartBtn(). -->
+         fields the tab falls back to, and standalone's drawer is handed that
+         same grid — and asking for them twice meant typing a time on this
+         card that the first item of the plan then replaced. -->
     <button id="startBtn" class="primary" type="button">START TIMER</button>
     <button id="setupBack" class="ghost" type="button">‹ Back</button>
     <div id="setupClock2">00:00:00</div>
@@ -4953,7 +4954,6 @@ if ("serviceWorker" in navigator) {
     renderSetup();
     paintStartBtn();
     $("setupHeading").textContent = "Operator";
-    $("setup").classList.add("lean");
     applyTransportUI();
     // Always start the walk at the simplest line, so a code drifts back to
     // slot 0 once the zombie holding it finally times out on the broker.
@@ -4980,9 +4980,6 @@ if ("serviceWorker" in navigator) {
     renderSetup();
     paintStartBtn();
     $("setupHeading").textContent = "Standalone";
-    // One device driving itself has no console to walk into, so its title and
-    // its length stay on the card they were always set from.
-    $("setup").classList.remove("lean");
     // Nothing to connect to, so the room code and the link indicator — which
     // would otherwise sit there as a lone grey dot — both go away.
     $("roomRow").hidden = true;
