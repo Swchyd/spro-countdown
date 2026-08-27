@@ -2872,10 +2872,9 @@
    "author": "GMS Live",
    "sections": [
     {
-     "key": "_1",
-     "tag": "",
+     "key": "verse 1",
+     "tag": "Verse 1",
      "lines": [
-      "Verse 1]",
       "Tak terlambat pertolongan dariMu Tuhan",
       "Kau setia dan tak meninggalkan",
       "Erat kupegang",
@@ -2916,21 +2915,18 @@
     }
    ],
    "order": [
-    "_1",
+    "verse 1",
     "verse 2",
     "chorus",
     "ending"
    ],
    "slides": [
     [
-     "Verse 1]",
-     "Tak terlambat pertolongan dariMu Tuhan"
+     "Tak terlambat pertolongan dariMu Tuhan",
+     "Kau setia dan tak meninggalkan"
     ],
     [
-     "Kau setia dan tak meninggalkan",
-     "Erat kupegang"
-    ],
-    [
+     "Erat kupegang",
      "Seluruh Firman dan janjiMu  Yesus."
     ],
     [
@@ -2955,8 +2951,7 @@
     ]
    ],
    "tags": [
-    "",
-    "",
+    "Verse 1",
     "",
     "Verse 2",
     "",
@@ -2971,13 +2966,12 @@
     "",
     "",
     "",
-    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1787445021402,
-   "updatedBy": "Indra",
+   "version": 2,
+   "updatedAt": 1787802733726,
+   "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
   },
