@@ -5350,26 +5350,22 @@ if ("serviceWorker" in navigator) {
     commit();
   }
 
+  // ±1 is a nudge to the clock, never an edit to the plan. Nothing here reads
+  // the target, so nothing here writes it: the row's figure is the countdown,
+  // and the total and the projected end are worked out from that same
+  // countdown, so all three follow the nudge without the running order being
+  // touched. Restart then puts the item back on the time the plan allows it,
+  // which is the point of having a plan.
+  //
+  // It used to give the minute to the target as well. Two things came of that
+  // and both were reported: the running order quietly rewrote itself every
+  // time somebody bought the stage a minute — an item nudged down again and
+  // again was left sitting at 0:01 — and, because only a *live* item could be
+  // written to, the nudge behaved differently after RESET, which clears what
+  // is live, than it did while an item was on the air.
   function adjust(ms) {
     if (T.playing) T.endAt += ms;
     else T.remainMs += ms;
-
-    // A minute given to the item on the air is a minute the plan now allows
-    // it, not a minute the plan is left lying about. The row's figure, the
-    // total and the projected end are all read off the target, so leaving the
-    // target alone made every one of them disagree with the clock by exactly
-    // the amount that had just been added — and Restart would have taken the
-    // minute back. With no item running this is the loose countdown it always
-    // was, and Restart still returns to the time that was set by hand.
-    var live = runLive(), rs = curRun();
-    if (live >= 0 && rs && rs.items[live]) {
-      var secs = Math.max(1, Math.min(MAX_SEC, rs.items[live].secs + Math.round(ms / 1000)));
-      rs.items[live].secs = secs;
-      T.totalMs = secs * 1000;
-      persistRun();
-      syncRun();
-      renderRun();
-    }
     commit();
   }
 
@@ -5377,8 +5373,8 @@ if ("serviceWorker" in navigator) {
   // starts the item on the air again as well. Its figure is measured from when
   // it started, so putting the clock back to the top without doing the same to
   // the item would leave the two describing different amounts of one minute.
-  // Nudging with ±1 is the other case and is handled in adjust(): there the
-  // item is not restarted, it is simply allowed more or less time.
+  // Nudging with ±1 is the other case and is handled in adjust(): there
+  // nothing about the item changes at all — only the clock it is run against.
   function restartRunItem(secs) {
     var live = runLive(), rs = curRun();
     if (live < 0) return;
@@ -6028,14 +6024,12 @@ if ("serviceWorker" in navigator) {
   // What the item has left, read off the countdown itself rather than worked
   // out from its target.
   //
-  // The two are the same number while the plan and the clock move together,
-  // which they do: ±1 gives the item the minute it gives the clock. They come
-  // apart at the bottom, where an item cannot be cut below a second but the
-  // clock can go as far into overtime as it is pushed — and there the worked-
-  // out figure stopped counting minutes while the stage kept counting them,
-  // which is the one thing this figure exists to agree with. So it is the
-  // clock, on every device: a display holds the same endAt and reads the same
-  // number as the stage standing next to it.
+  // The two part company the moment ±1 is pressed — the nudge belongs to the
+  // clock and the target belongs to the plan — and they part company again at
+  // the bottom, where the clock goes as far into overtime as it is pushed. The
+  // number this row exists to agree with is the one the stage is reading, so
+  // it is the clock that is asked, on every device: a display holds the same
+  // endAt and reads the same number as the stage standing next to it.
   function runLeft() {
     return Math.round(remainingMs() / 1000);
   }
