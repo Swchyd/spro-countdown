@@ -271,6 +271,7 @@
      puts a keypad with no minus key in front of the operator, so the sign
      cannot be a typed character alone. */
   .sign-toggle {
+    position: relative;
     flex: 0 0 auto;
     min-width: 34px;
     padding: 4px 10px;
@@ -281,6 +282,19 @@
     font-size: 14px;
     font-weight: 700;
     line-height: 1;
+  }
+  /* The pill is 24 points tall because it sits on a label row and the two
+     steppers under it have to line up. A thumb wants more than that, so the
+     area that answers a press is grown around the pill instead of the pill
+     being grown: nothing moves, and the target is 44 points either way. */
+  .sign-toggle::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max(100%, 44px);
+    height: 44px;
   }
   .sign-toggle.on { border-color: var(--accent); color: var(--accent); }
   .sign-toggle:active { background: var(--line); }
@@ -3114,7 +3128,11 @@ if ("serviceWorker" in navigator) {
   function now() { return Date.now() + clockOffset; }
 
   function remainingMs() {
-    return T.playing ? T.endAt - now() : T.remainMs;
+    var ms = T.playing ? T.endAt - now() : T.remainMs;
+    // The guard above this one is the real fix; this is the belt to its braces,
+    // because everything on the stage is worked out from this one number and
+    // there is no reading of a service where "NaN:NaN" is better than "0:00".
+    return isFinite(ms) ? ms : 0;
   }
 
   // `lite` leaves the song out. Every field here is a handful of bytes; the
@@ -4665,8 +4683,24 @@ if ("serviceWorker" in navigator) {
   // filter already does. `songKey` is not a field of T, so it falls through the
   // same filter and is only read below.
   var lastNeedAt = 0;
+  // What arrives here came off a socket, and the stage is the one screen that
+  // must not be able to show nonsense. A field whose shape is wrong is dropped
+  // rather than carried through: one number that is not a number is the
+  // difference between a countdown and "NaN:NaN", and because every later
+  // render reads that same field, the stage never recovers on its own — it has
+  // to be reloaded, in the middle of a service. The initial value of each field
+  // is what says what shape it should be, so the check needs no list to keep in
+  // step. `song` and `run` start as null, which is an object, so they are left
+  // alone here and go on being read defensively where they are used.
   function applyState(d) {
-    for (var key in d) if (key in T) T[key] = d[key];
+    for (var key in d) {
+      if (!(key in T)) continue;
+      var v = d[key], was = T[key];
+      if (typeof was === "number" && (typeof v !== "number" || !isFinite(v))) continue;
+      if (typeof was === "boolean" && typeof v !== "boolean") continue;
+      if (typeof was === "string" && typeof v !== "string") continue;
+      T[key] = v;
+    }
     renderStage();
 
     // Holding a different song from the one being described means an update
@@ -6567,6 +6601,12 @@ if ("serviceWorker" in navigator) {
       rs.items[i].name = tidyName(e.target.value) || rs.items[i].name;
       e.target.value = rs.items[i].name;
       growNameBox(e.target);
+      // The title on stage follows the item, and it has to keep following it
+      // when the item is renamed under it. Without this, correcting a typo in
+      // the thing currently on the air left the typo on the screen the
+      // congregation is looking at until the next item started.
+      syncRun();
+      if (cfg.runTitle !== false && runLive() === i) setLabel(rs.items[i].name);
     } else if (what === "secs") {
       rs.items[i].secs = parseSecs(e.target.value, rs.items[i].secs);
       e.target.value = fmt(rs.items[i].secs);
