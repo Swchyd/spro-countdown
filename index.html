@@ -827,13 +827,24 @@
 
   #drawer {
     position: fixed;
-    top: 50%;
+    /* A band rather than a point. The drawer runs from under the top chrome
+       down to just above the floating transport, because that bar is painted
+       after it and was catching the presses meant for the bottom of the
+       drawer: on a phone NEXT ITEM sat directly under -1 / pause / +1. The
+       bar's own height is measured into --bar-h, since it is one row on a
+       tablet and two on a phone. */
+    top: max(12px, var(--top-chrome));
+    bottom: calc(max(12px, env(safe-area-inset-bottom)) + var(--bar-h, 152px) + 12px);
     right: 0;
-    transform: translate(100%, -50%);
+    transform: translateX(100%);
     transition: transform .3s ease;
     display: flex;
+    /* Shorter than the band, it sits in the middle of it as it did before. */
+    align-items: center;
+    /* And nothing else on the overlay may be painted over it. */
+    z-index: 2;
   }
-  #drawer.open { transform: translate(0, -50%); }
+  #drawer.open { transform: translateX(0); }
   #drawerTab {
     position: absolute;
     left: -40px;
@@ -852,8 +863,11 @@
   }
   #drawerTab:hover, #drawer.open #drawerTab, #soloOverlay.paused #drawerTab { opacity: 1; }
   #drawerBody {
-    width: 300px;
-    max-height: 84vh;
+    /* 300 was a tablet figure. On a phone it left the rundown's names about
+       eighty points, which breaks a word as ordinary as "Countdown" across
+       two lines, so the drawer takes what the screen can spare instead. */
+    width: min(340px, calc(100vw - 52px));
+    max-height: 100%;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     background: var(--panel);
@@ -863,6 +877,12 @@
     padding: 12px;
   }
   #drawerBody .op-grid { max-width: none; gap: 12px; }
+  /* Standalone has a shorter way to the title than a panel: the stage itself
+     is tapped to retype it, and the rundown writes it for every item that has
+     one. So the drawer is the new time and the running order, and nothing
+     else. The console keeps the panel - it is not sitting in front of the
+     stage it would be editing. */
+  #drawerBody #opTitlePanel { display: none; }
 
   /* the drawer is narrower than the media query can see */
   .op-grid.stacked { grid-template-columns: 1fr; }
@@ -1461,6 +1481,12 @@
     color: #5B6474;
     font-variant-numeric: tabular-nums;
   }
+  /* In the standalone drawer every column is taking from the one that
+     matters. Trimming the gaps and the figures leaves the name a good third
+     more room, which is the difference between a word breaking and not. */
+  #opRunPanel.tight .run-row { gap: 8px; padding: 10px 6px; }
+  #opRunPanel.tight .run-row .tg { font-size: 12px; }
+  #opRunPanel.tight .run-row .st { min-width: 54px; font-size: 12px; }
   .run-row.done .nm { color: var(--ink-dim); font-weight: 500; }
   .run-row.done .st { color: var(--ok); }
   .run-row.done.late .st { color: var(--over); }
@@ -1581,9 +1607,10 @@
     letter-spacing: .06em;
   }
   #runNav button:active { background: var(--panel); }
-  /* The button carries the name of the item it is about to start, and some of
-     those names are long. Better one clipped word than a button that grows a
-     second line and moves the thing under the thumb. */
+  /* The button says what the press does and no more. It used to read the name
+     of the item it was about to start, which is already on the row below it
+     with NEXT against it, and which was what made the widest button on the
+     panel clip a word or change width between items. */
   #runNext {
     flex: 2 1 0 !important;
     min-width: 0;
@@ -2824,7 +2851,7 @@ lyric line one</pre>
     </div>
 
     <div class="op-grid">
-      <div class="op-panel">
+      <div class="op-panel" id="opTitlePanel">
         <label class="field-label" for="opLabelInput">Title</label>
         <div class="title-wrap" id="opTitleWrap">
           <textarea id="opLabelInput" class="textinput" rows="2" placeholder="NO TITLE" autocomplete="off"></textarea>
@@ -2904,7 +2931,7 @@ lyric line one</pre>
       </div>
 
       <div id="runNav">
-        <button type="button" id="runNext">NEXT ITEM ▸</button>
+        <button type="button" id="runNext">NEXT ▸</button>
         <button type="button" id="runStop">RESET</button>
       </div>
     </div>
@@ -5555,6 +5582,11 @@ if ("serviceWorker" in navigator) {
     mountRunPanel("solo");
     setDrawer(false);
     soloOverlay.classList.add("on");
+    // Both of these are measurements, and until the line above there was
+    // nothing on screen to measure: the overlay was display:none, so the bar
+    // had no height and the rundown inside the drawer had no width.
+    measureBar();
+    setEditShape();
     requestWakeLock();
   }
 
@@ -5579,7 +5611,17 @@ if ("serviceWorker" in navigator) {
 
   $("soloExit").addEventListener("click", function () { history.back(); });
 
+  // The drawer stops above the transport rather than under it, and the
+  // transport is six buttons on one row or two depending on the screen. So the
+  // height is measured rather than written down: everything below this line is
+  // the drawer's, and nothing of it can be pressed by accident.
+  function measureBar() {
+    var h = controlsEl.offsetHeight || 0;
+    if (h) soloOverlay.style.setProperty("--bar-h", h + "px");
+  }
+
   function setDrawer(open) {
+    if (open) measureBar();
     drawer.classList.toggle("open", open);
     drawerTab.textContent = open ? "›" : "‹";
   }
@@ -5812,7 +5854,7 @@ if ("serviceWorker" in navigator) {
   }
 
   // A rotation changes both the room and the height of the header above it.
-  window.addEventListener("resize", function () { setEditShape(); fitConsole(); });
+  window.addEventListener("resize", function () { setEditShape(); fitConsole(); measureBar(); });
   window.addEventListener("orientationchange", fitConsole);
 
   function buildSlideList() {
@@ -6385,6 +6427,9 @@ if ("serviceWorker" in navigator) {
   function setEditShape() {
     var panel = $("opRunPanel"), w = panel.clientWidth;
     panel.classList.toggle("stack-edit", w > 0 && w < 420);
+    // Narrower again: a drawer on a phone, where the name has to be given
+    // back what the gaps and the figures are holding.
+    panel.classList.toggle("tight", w > 0 && w < 340);
   }
 
   function setRunEditing(on) {
@@ -6535,7 +6580,7 @@ if ("serviceWorker" in navigator) {
     var btn = $("runNext");
     if (!r || !r.items.length) {
       btn.disabled = true;
-      btn.textContent = "NEXT ITEM ▸";
+      btn.textContent = "NEXT ▸";
       return;
     }
     if (live >= 0 && live === r.items.length - 1) {
@@ -6546,7 +6591,7 @@ if ("serviceWorker" in navigator) {
     var idx = runUpNext();
     btn.disabled = idx < 0;
     btn.textContent = idx < 0 ? "RUNDOWN FINISHED"
-      : (live < 0 ? "START · " : "NEXT · ") + oneLine(r.items[idx].n).toUpperCase() + " ▸";
+      : (live < 0 ? "START ▸" : "NEXT ▸");
   }
 
   // Shared with the crew view, because the two screens are answering the same
