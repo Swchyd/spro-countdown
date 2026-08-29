@@ -3126,6 +3126,116 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtedns1arbmc",
+   "title": "[IND] TERANGI DUNIA",
+   "authors": [
+    "Franky Kuncoro"
+   ],
+   "author": "Franky Kuncoro",
+   "sections": [
+    {
+     "key": "intro",
+     "tag": "Intro",
+     "lines": [
+      "Wooo.. ooo..  wooo..",
+      "Wooo.. ooo..  wooo.."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Bangkit kumau bangkit bagiMu",
+      "Bersinar dan memuliakanMu",
+      "Maju kumau maju bagiMu",
+      "Berjalan dengan kuat imanku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Kumau hidup jadi te - rangMu",
+      "Terangi dunia di sekelilingku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bangkit dan bersinar bagiMu",
+      "Sorakan NamaMu atas kemenanganku",
+      "Maju dan tinggikan NamaMu",
+      "Saksikan kemenangan",
+      "Nyatakan Kaulah Tuhan di hidupku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "intro",
+    "verse",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Wooo.. ooo..  wooo..",
+     "Wooo.. ooo..  wooo.."
+    ],
+    [
+     "Bangkit kumau bangkit bagiMu",
+     "Bersinar dan memuliakanMu"
+    ],
+    [
+     "Maju kumau maju bagiMu",
+     "Berjalan dengan kuat imanku"
+    ],
+    [
+     "Kumau hidup jadi te - rangMu",
+     "Terangi dunia di sekelilingku"
+    ],
+    [
+     "Bangkit dan bersinar bagiMu",
+     "Sorakan NamaMu atas kemenanganku"
+    ],
+    [
+     "Maju dan tinggikan NamaMu",
+     "Saksikan kemenangan"
+    ],
+    [
+     "Nyatakan Kaulah Tuhan di hidupku"
+    ]
+   ],
+   "tags": [
+    "Intro",
+    "Verse",
+    "",
+    "Pre-Chorus",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788007771774,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
