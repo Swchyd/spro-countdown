@@ -3356,6 +3356,76 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtedv1z9ohew",
+   "title": "[IND] KU CINTA KAU YESUS",
+   "authors": [
+    "Pdt. Dr. Danny Tumiwa S.H"
+   ],
+   "author": "Pdt. Dr. Danny Tumiwa S.H",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Ku cinta Kau Yesus",
+      "Ku puji Kau Yesus",
+      "Ku sembah Kau Yesus",
+      "Tuhan dan Rajaku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Dengan seg'nap hati",
+      "Dan dengan se-g'nap jiwaku",
+      "Akal budi, ku cin - ta Kau."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ku cinta Kau Yesus",
+     "Ku puji Kau Yesus"
+    ],
+    [
+     "Ku sembah Kau Yesus",
+     "Tuhan dan Rajaku."
+    ],
+    [
+     "Dengan seg'nap hati",
+     "Dan dengan se-g'nap jiwaku"
+    ],
+    [
+     "Akal budi, ku cin - ta Kau."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788008110340,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
