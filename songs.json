@@ -3046,6 +3046,86 @@
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtedclnxk2id",
+   "title": "[IND] ALLAH ITU BAIK",
+   "authors": [
+    "Welyar Kauntu"
+   ],
+   "author": "Welyar Kauntu",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Allah itu baik",
+      "Sungguh baik bagiku",
+      "DitunjukkanNya kasih setiaNya",
+      "Dia menyediakan yang kuperlukan",
+      "Menyatakan kebaikkan",
+      "Menyatakan kebaikkanNya bagiku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kasih setiaNya tak pernah berubah",
+      "Dulu s'karang dan s'lamanya",
+      "Ajaiblah kuasa dalam Na - ma - Nya",
+      "Yesusku luar biasa"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Allah itu baik",
+     "Sungguh baik bagiku"
+    ],
+    [
+     "DitunjukkanNya kasih setiaNya",
+     "Dia menyediakan yang kuperlukan"
+    ],
+    [
+     "Menyatakan kebaikkan",
+     "Menyatakan kebaikkanNya bagiku"
+    ],
+    [
+     "Kasih setiaNya tak pernah berubah",
+     "Dulu s'karang dan s'lamanya"
+    ],
+    [
+     "Ajaiblah kuasa dalam Na - ma - Nya",
+     "Yesusku luar biasa"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788007249444,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
