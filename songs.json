@@ -3539,12 +3539,22 @@
   {
    "id": "sl_mteda4mdxekj",
    "name": "Setlist 29/8",
-   "entries": [],
-   "updatedAt": 1788007134321,
+   "entries": [
+    {
+     "id": "s_mtedv1z9ohew",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1788008350855,
    "updatedBy": "Owner"
   }
  ],
- "setlist": [],
- "setlistAt": 1788007134321,
+ "setlist": [
+  {
+   "id": "s_mtedv1z9ohew",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1788008350855,
  "setlistBy": "Owner"
 }
