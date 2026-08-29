@@ -1663,11 +1663,13 @@
     ""
    ],
    "perSlide": 2,
-   "version": 5,
-   "updatedAt": 1786953321850,
-   "updatedBy": "Sam",
+   "version": 6,
+   "updatedAt": 1788008378764,
+   "updatedBy": "Owner",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1788008378764,
+   "deletedBy": "Owner"
   },
   {
    "id": "s_msvagc33u7as",
