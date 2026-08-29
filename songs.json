@@ -3426,6 +3426,113 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtedzln2rs8z",
+   "title": "[ENG] OPEN UP THE HEAVENS",
+   "authors": [
+    "Redo Daeng Badjie",
+    "Yoel Christian Budiyono",
+    "Maria Christiani Haryono",
+    "Daniel Budiman Prayogo"
+   ],
+   "author": "Redo Daeng Badjie, Yoel Christian Budiyono, Maria Christiani Haryono, Daniel Budiman Prayogo",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Open up the heavens as we sing",
+      "The Kingdom of the Lord is here",
+      "in this place",
+      "He shall reign over us",
+      "Let all the nations bless His name",
+      "The one and only name",
+      "that reigns forevermore",
+      "Behold, the name above all names, Jesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "The name that sets us free",
+      "Who gives us victory",
+      "He holds authority",
+      "He’s the great I am",
+      "The name that sets us free",
+      "Who gives us victory",
+      "He holds authority",
+      "He’s the great I am."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Open up the heavens as we sing",
+     "The Kingdom of the Lord is here"
+    ],
+    [
+     "in this place",
+     "He shall reign over us"
+    ],
+    [
+     "Let all the nations bless His name",
+     "The one and only name"
+    ],
+    [
+     "that reigns forevermore",
+     "Behold, the name above all names, Jesus"
+    ],
+    [
+     "The name that sets us free",
+     "Who gives us victory"
+    ],
+    [
+     "He holds authority",
+     "He’s the great I am"
+    ],
+    [
+     "The name that sets us free",
+     "Who gives us victory"
+    ],
+    [
+     "He holds authority",
+     "He’s the great I am."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788008322495,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
