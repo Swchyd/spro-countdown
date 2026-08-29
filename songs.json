@@ -3705,30 +3705,16 @@
    ],
    "updatedAt": 1788008418994,
    "updatedBy": "Owner"
+  },
+  {
+   "id": "sl_mtf1j3j3nzdr",
+   "name": "Setlist 30/8",
+   "entries": [],
+   "updatedAt": 1788047865643,
+   "updatedBy": "Pido"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtedv1z9ohew",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedqjb5aio7",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedzln2rs8z",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedclnxk2id",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedns1arbmc",
-   "ms": 0
-  }
- ],
- "setlistAt": 1788008418994,
- "setlistBy": "Owner"
+ "setlist": [],
+ "setlistAt": 1788047865643,
+ "setlistBy": "Pido"
 }
