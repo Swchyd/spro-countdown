@@ -3236,6 +3236,126 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtedqjb5aio7",
+   "title": "[IND] LEBIH DEKAT",
+   "authors": [
+    "Fedrian Oktovian Tjeleni"
+   ],
+   "author": "Fedrian Oktovian Tjeleni",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Tuhan, aku haus padaMu",
+      "Jiwaku merindukanMu",
+      "Hasrat di relung hatiku",
+      "Kuingin lebih lagi s’makin mengenalMu",
+      "Ajar aku mengasihiMu s’makin dalam",
+      "S’bab Kau lebih dulu mengasihiku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Yesus Engkau Bapaku",
+      "Yesus aku milik-Mu",
+      "Yesus kuingin mengenalMu",
+      "Semakin dalam ajarku mengasihiMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Bawaku dekat lebih dekat",
+      "Kuingin mengenal - Mu lebih dekat",
+      "Semakin dalam lebih dalam",
+      "KumengasihiMu",
+      "Bawaku dekat lebih dekat",
+      "Kuingin mengenal - Mu lebih dekat",
+      "Semakin dalam lebih dalam",
+      "KumengasihiMu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Tuhan, aku haus padaMu",
+     "Jiwaku merindukanMu"
+    ],
+    [
+     "Hasrat di relung hatiku",
+     "Kuingin lebih lagi s’makin mengenalMu"
+    ],
+    [
+     "Ajar aku mengasihiMu s’makin dalam",
+     "S’bab Kau lebih dulu mengasihiku"
+    ],
+    [
+     "Yesus Engkau Bapaku",
+     "Yesus aku milik-Mu"
+    ],
+    [
+     "Yesus kuingin mengenalMu",
+     "Semakin dalam ajarku mengasihiMu."
+    ],
+    [
+     "Bawaku dekat lebih dekat",
+     "Kuingin mengenal - Mu lebih dekat"
+    ],
+    [
+     "Semakin dalam lebih dalam",
+     "KumengasihiMu"
+    ],
+    [
+     "Bawaku dekat lebih dekat",
+     "Kuingin mengenal - Mu lebih dekat"
+    ],
+    [
+     "Semakin dalam lebih dalam",
+     "KumengasihiMu"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "Chorus",
+    "",
+    "Bridge",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788007899512,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
