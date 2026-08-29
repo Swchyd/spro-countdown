@@ -3599,6 +3599,82 @@
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtf1gmeiqe5r",
+   "title": "[IND] PERSEMBAHANKU",
+   "authors": [
+    "Franky Sihombing"
+   ],
+   "author": "Franky Sihombing",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Kubawa kepadaMu oh Tuhan",
+      "Persembahanku ini",
+      "Ku ingin Engkau menerima",
+      "Korban syukurku melalui pujian"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Takkan pernah kubawa",
+      "Selain yang terbaik",
+      "Yang harum dan sejati",
+      "Di hadapan tahta-Mu",
+      "Yesusku terimalah",
+      "Korban syukurku ini",
+      "Mengalir di hatiku",
+      "Sbagai penyembahanku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kubawa kepadaMu oh Tuhan",
+     "Persembahanku ini",
+     "Ku ingin Engkau menerima",
+     "Korban syukurku melalui pujian"
+    ],
+    [
+     "Takkan pernah kubawa",
+     "Selain yang terbaik",
+     "Yang harum dan sejati",
+     "Di hadapan tahta-Mu"
+    ],
+    [
+     "Yesusku terimalah",
+     "Korban syukurku ini",
+     "Mengalir di hatiku",
+     "Sbagai penyembahanku"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1788047749222,
+   "updatedBy": "Pido",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
