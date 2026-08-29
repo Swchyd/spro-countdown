@@ -3048,8 +3048,16 @@
    "hidden": false
   }
  ],
- "setlists": [],
+ "setlists": [
+  {
+   "id": "sl_mteda4mdxekj",
+   "name": "Setlist 29/8",
+   "entries": [],
+   "updatedAt": 1788007134321,
+   "updatedBy": "Owner"
+  }
+ ],
  "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlistAt": 1788007134321,
+ "setlistBy": "Owner"
 }
