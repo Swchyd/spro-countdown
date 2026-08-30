@@ -3688,8 +3688,8 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "Betapa hatiku,  berterima kasih Yesus",
-      "Kau mengasihiku,  Kau memilikiku"
+      "Betapa hatiku,",
+      "berterima kasih Yesus"
      ],
      "notes": []
     },
@@ -3697,13 +3697,23 @@
      "key": "_2",
      "tag": "",
      "lines": [
-      "Hanya ini Tuhan persembahanku",
-      "Segenap hidupku, jiwa dan raga- ku"
+      "Kau mengasihiku,",
+      "Kau memilikiku"
      ],
      "notes": []
     },
     {
      "key": "_3",
+     "tag": "",
+     "lines": [
+      "Hanya ini Tuhan persembahanku",
+      "Segenap hidupku,",
+      "jiwa dan raga- ku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_4",
      "tag": "",
      "lines": [
       "S'bab tak kumiliki harta kekayaan",
@@ -3712,7 +3722,7 @@
      "notes": []
     },
     {
-     "key": "_4",
+     "key": "_5",
      "tag": "",
      "lines": [
       "Hanya ini Tuhan permohonanku",
@@ -3721,7 +3731,7 @@
      "notes": []
     },
     {
-     "key": "_5",
+     "key": "_6",
      "tag": "",
      "lines": [
       "Pakailah hidupku sebagai alatMu",
@@ -3735,16 +3745,24 @@
     "_2",
     "_3",
     "_4",
-    "_5"
+    "_5",
+    "_6"
    ],
    "slides": [
     [
-     "Betapa hatiku,  berterima kasih Yesus",
-     "Kau mengasihiku,  Kau memilikiku"
+     "Betapa hatiku,",
+     "berterima kasih Yesus"
+    ],
+    [
+     "Kau mengasihiku,",
+     "Kau memilikiku"
     ],
     [
      "Hanya ini Tuhan persembahanku",
-     "Segenap hidupku, jiwa dan raga- ku"
+     "Segenap hidupku,"
+    ],
+    [
+     "jiwa dan raga- ku"
     ],
     [
      "S'bab tak kumiliki harta kekayaan",
@@ -3764,6 +3782,8 @@
     "",
     "",
     "",
+    "",
+    "",
     ""
    ],
    "notes": [
@@ -3771,11 +3791,13 @@
     "",
     "",
     "",
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1788050384607,
+   "version": 2,
+   "updatedAt": 1788050556670,
    "updatedBy": "Aldo",
    "lastUsed": 0,
    "hidden": false
