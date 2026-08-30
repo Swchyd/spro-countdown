@@ -3850,42 +3850,16 @@
    "entries": [],
    "updatedAt": 1788050454279,
    "updatedBy": "Aldo"
+  },
+  {
+   "id": "sl_mtf3d39hvsgk",
+   "name": "Setlist 30/8 (2)",
+   "entries": [],
+   "updatedAt": 1788050943630,
+   "updatedBy": "Aldo"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtedv1z9ohew",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedqjb5aio7",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedzln2rs8z",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedclnxk2id",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedns1arbmc",
-   "ms": 0
-  },
-  {
-   "id": "s_mtf1gmeiqe5r",
-   "ms": 0
-  },
-  {
-   "id": "s_mtf1b9fsakn7",
-   "ms": 0
-  },
-  {
-   "id": "s_mtf3160niiyu",
-   "ms": 0
-  }
- ],
- "setlistAt": 1788050470219,
+ "setlist": [],
+ "setlistAt": 1788050943630,
  "setlistBy": "Aldo"
 }
