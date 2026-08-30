@@ -3548,10 +3548,21 @@
      "key": "verse 1",
      "tag": "Verse 1",
      "lines": [
-      "Tak usah ku takutAllah menjagaku",
-      "Tak usah ku bimbang, Yesus p'liharaku",
-      "Tak usah ku susah, Roh Kudus hiburku",
-      "Tak usah ku cemas, Dia memberkatiku"
+      "Tak usah ku takut",
+      "Allah menjagaku",
+      "Tak usah ku bimbang,",
+      "Yesus p'liharaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Tak usah ku susah,",
+      "Roh Kudus hiburku",
+      "Tak usah ku cemas,",
+      "Dia memberkatiku"
      ],
      "notes": []
     },
@@ -3559,44 +3570,73 @@
      "key": "chorus",
      "tag": "Chorus",
      "lines": [
-      "El Shaddai, El Shaddai Allah Maha Kuasa",
-      "Dia besar, Dia besar El Shaddai mulia",
-      "El Shaddai, El Shaddai Allah Maha Kuasa",
-      "Berkat—Nya melimpah, El Shaddai"
+      "El Shaddai, El Shaddai",
+      "Allah Maha Kuasa",
+      "Dia besar, Dia besar",
+      "El Shaddai mulia"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "El Shaddai, El Shaddai",
+      "Allah Maha Kuasa",
+      "Berkat—Nya melimpah,",
+      "El Shaddai"
      ],
      "notes": []
     }
    ],
    "order": [
     "verse 1",
-    "chorus"
+    "_1",
+    "chorus",
+    "_2"
    ],
    "slides": [
     [
-     "Tak usah ku takutAllah menjagaku",
-     "Tak usah ku bimbang, Yesus p'liharaku",
-     "Tak usah ku susah, Roh Kudus hiburku",
-     "Tak usah ku cemas, Dia memberkatiku"
+     "Tak usah ku takut",
+     "Allah menjagaku",
+     "Tak usah ku bimbang,",
+     "Yesus p'liharaku"
     ],
     [
-     "El Shaddai, El Shaddai Allah Maha Kuasa",
-     "Dia besar, Dia besar El Shaddai mulia",
-     "El Shaddai, El Shaddai Allah Maha Kuasa",
-     "Berkat—Nya melimpah, El Shaddai"
+     "Tak usah ku susah,",
+     "Roh Kudus hiburku",
+     "Tak usah ku cemas,",
+     "Dia memberkatiku"
+    ],
+    [
+     "El Shaddai, El Shaddai",
+     "Allah Maha Kuasa",
+     "Dia besar, Dia besar",
+     "El Shaddai mulia"
+    ],
+    [
+     "El Shaddai, El Shaddai",
+     "Allah Maha Kuasa",
+     "Berkat—Nya melimpah,",
+     "El Shaddai"
     ]
    ],
    "tags": [
     "Verse 1",
-    "Chorus"
+    "",
+    "Chorus",
+    ""
    ],
    "notes": [
+    "",
+    "",
     "",
     ""
    ],
    "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1788047499114,
-   "updatedBy": "Pido",
+   "version": 2,
+   "updatedAt": 1788056809825,
+   "updatedBy": "Aldo",
    "lastUsed": 0,
    "hidden": false
   },
