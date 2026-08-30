@@ -3675,6 +3675,110 @@
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtf3160niiyu",
+   "title": "[IND] BETAPA HATIKU",
+   "authors": [
+    "Robert Sutanto"
+   ],
+   "author": "Robert Sutanto",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Betapa hatiku,  berterima kasih Yesus",
+      "Kau mengasihiku,  Kau memilikiku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Hanya ini Tuhan persembahanku",
+      "Segenap hidupku, jiwa dan raga- ku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "S'bab tak kumiliki harta kekayaan",
+      "Yang cukup berarti 'tuk kupersembahkan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_4",
+     "tag": "",
+     "lines": [
+      "Hanya ini Tuhan permohonanku",
+      "Terimalah Tuhan persembahan-ku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_5",
+     "tag": "",
+     "lines": [
+      "Pakailah hidupku sebagai alatMu",
+      "Seumur hidupku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "_2",
+    "_3",
+    "_4",
+    "_5"
+   ],
+   "slides": [
+    [
+     "Betapa hatiku,  berterima kasih Yesus",
+     "Kau mengasihiku,  Kau memilikiku"
+    ],
+    [
+     "Hanya ini Tuhan persembahanku",
+     "Segenap hidupku, jiwa dan raga- ku"
+    ],
+    [
+     "S'bab tak kumiliki harta kekayaan",
+     "Yang cukup berarti 'tuk kupersembahkan"
+    ],
+    [
+     "Hanya ini Tuhan permohonanku",
+     "Terimalah Tuhan persembahan-ku"
+    ],
+    [
+     "Pakailah hidupku sebagai alatMu",
+     "Seumur hidupku"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788050384607,
+   "updatedBy": "Aldo",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
