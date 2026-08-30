@@ -3817,38 +3817,16 @@
    ],
    "updatedAt": 1788047894786,
    "updatedBy": "Pido"
+  },
+  {
+   "id": "sl_mtf32mpyqn60",
+   "name": "Setlist 30/8",
+   "entries": [],
+   "updatedAt": 1788050454279,
+   "updatedBy": "Aldo"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtedv1z9ohew",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedqjb5aio7",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedzln2rs8z",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedclnxk2id",
-   "ms": 0
-  },
-  {
-   "id": "s_mtedns1arbmc",
-   "ms": 0
-  },
-  {
-   "id": "s_mtf1gmeiqe5r",
-   "ms": 0
-  },
-  {
-   "id": "s_mtf1b9fsakn7",
-   "ms": 0
-  }
- ],
- "setlistAt": 1788047894786,
- "setlistBy": "Pido"
+ "setlist": [],
+ "setlistAt": 1788050454279,
+ "setlistBy": "Aldo"
 }
