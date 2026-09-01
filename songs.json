@@ -3725,55 +3725,27 @@
    "author": "Robert Sutanto",
    "sections": [
     {
-     "key": "_1",
-     "tag": "",
+     "key": "verse",
+     "tag": "Verse",
      "lines": [
-      "Betapa hatiku,",
-      "berterima kasih Yesus"
-     ],
-     "notes": []
-    },
-    {
-     "key": "_2",
-     "tag": "",
-     "lines": [
-      "Kau mengasihiku,",
+      "Betapa hatiku",
+      "Berterima kasih Yesus",
+      "Kau mengasihiku",
       "Kau memilikiku"
      ],
      "notes": []
     },
     {
-     "key": "_3",
-     "tag": "",
+     "key": "chorus",
+     "tag": "Chorus",
      "lines": [
       "Hanya ini Tuhan persembahanku",
-      "Segenap hidupku,",
-      "jiwa dan raga- ku"
-     ],
-     "notes": []
-    },
-    {
-     "key": "_4",
-     "tag": "",
-     "lines": [
-      "S'bab tak kumiliki harta kekayaan",
-      "Yang cukup berarti 'tuk kupersembahkan"
-     ],
-     "notes": []
-    },
-    {
-     "key": "_5",
-     "tag": "",
-     "lines": [
+      "Segenap hidupku jiwa dan raga- ku",
+      "Sebab tak kumiliki harta kekayaan",
+      "Yang cukup berarti",
+      "tuk kupersembahkan",
       "Hanya ini Tuhan permohonanku",
-      "Terimalah Tuhan persembahan-ku"
-     ],
-     "notes": []
-    },
-    {
-     "key": "_6",
-     "tag": "",
-     "lines": [
+      "Terimalah Tuhan persembahan - ku",
       "Pakailah hidupku sebagai alatMu",
       "Seumur hidupku"
      ],
@@ -3781,46 +3753,42 @@
     }
    ],
    "order": [
-    "_1",
-    "_2",
-    "_3",
-    "_4",
-    "_5",
-    "_6"
+    "verse",
+    "chorus"
    ],
    "slides": [
     [
-     "Betapa hatiku,",
-     "berterima kasih Yesus"
+     "Betapa hatiku",
+     "Berterima kasih Yesus"
     ],
     [
-     "Kau mengasihiku,",
+     "Kau mengasihiku",
      "Kau memilikiku"
     ],
     [
      "Hanya ini Tuhan persembahanku",
-     "Segenap hidupku,"
+     "Segenap hidupku jiwa dan raga- ku"
     ],
     [
-     "jiwa dan raga- ku"
+     "Sebab tak kumiliki harta kekayaan",
+     "Yang cukup berarti"
     ],
     [
-     "S'bab tak kumiliki harta kekayaan",
-     "Yang cukup berarti 'tuk kupersembahkan"
+     "tuk kupersembahkan",
+     "Hanya ini Tuhan permohonanku"
     ],
     [
-     "Hanya ini Tuhan permohonanku",
-     "Terimalah Tuhan persembahan-ku"
+     "Terimalah Tuhan persembahan - ku",
+     "Pakailah hidupku sebagai alatMu"
     ],
     [
-     "Pakailah hidupku sebagai alatMu",
      "Seumur hidupku"
     ]
    ],
    "tags": [
+    "Verse",
     "",
-    "",
-    "",
+    "Chorus",
     "",
     "",
     "",
@@ -3836,9 +3804,9 @@
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1788050556670,
-   "updatedBy": "Aldo",
+   "version": 3,
+   "updatedAt": 1788230142818,
+   "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
   }
