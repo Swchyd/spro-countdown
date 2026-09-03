@@ -4077,6 +4077,102 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtlbgf12y12s",
+   "title": "[IND] TUHAN INILAH HIDUPKU",
+   "authors": [
+    "Shekinah Music Live"
+   ],
+   "author": "Shekinah Music Live",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Tuhan inilah hidupku",
+      "Kuserahkan padaMu",
+      "Segala cita - citaku masa depanku",
+      "Menjadi milikMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Jadikan kami terangMu",
+      "Di tengah kegelapan dunia",
+      "Membawa bangsa bangsa kepadaMu",
+      "Tuhan ini kerinduanku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "BagiMu Tuhan seluruh hidupku",
+      "Pakailah Tuhan bagi kemuliaanMu",
+      "Genapi seluruh rencanaMu",
+      "Sampai bumi penuh kemuliaanMu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Tuhan inilah hidupku",
+     "Kuserahkan padaMu"
+    ],
+    [
+     "Segala cita - citaku masa depanku",
+     "Menjadi milikMu"
+    ],
+    [
+     "Jadikan kami terangMu",
+     "Di tengah kegelapan dunia"
+    ],
+    [
+     "Membawa bangsa bangsa kepadaMu",
+     "Tuhan ini kerinduanku"
+    ],
+    [
+     "BagiMu Tuhan seluruh hidupku",
+     "Pakailah Tuhan bagi kemuliaanMu"
+    ],
+    [
+     "Genapi seluruh rencanaMu",
+     "Sampai bumi penuh kemuliaanMu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788427333620,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
