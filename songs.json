@@ -4179,12 +4179,22 @@
   {
    "id": "sl_mtlbghef76or",
    "name": "LC",
-   "entries": [],
-   "updatedAt": 1788427344055,
+   "entries": [
+    {
+     "id": "s_mtlbcjfrh7uy",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1788427357245,
    "updatedBy": "Owner"
   }
  ],
- "setlist": [],
- "setlistAt": 1788427344055,
+ "setlist": [
+  {
+   "id": "s_mtlbcjfrh7uy",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1788427357245,
  "setlistBy": "Owner"
 }
