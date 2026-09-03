@@ -3809,6 +3809,82 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtlbcjfrh7uy",
+   "title": "[ENG] LORD YOU ARE GOOD",
+   "authors": [
+    "Israel Houghton"
+   ],
+   "author": "Israel Houghton",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Lord, You are good and Your mercy endureth forever"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "People from every nation and tongue",
+      "From generation to generation"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 1",
+     "tag": "Chorus 1",
+     "lines": [
+      "We worship You, hallelujah, hallelujah",
+      "We worship You for who You are",
+      "And You are good"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "pre-chorus",
+    "chorus 1"
+   ],
+   "slides": [
+    [
+     "Lord, You are good and Your mercy endureth forever"
+    ],
+    [
+     "People from every nation and tongue",
+     "From generation to generation"
+    ],
+    [
+     "We worship You, hallelujah, hallelujah",
+     "We worship You for who You are"
+    ],
+    [
+     "And You are good"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Pre-Chorus",
+    "Chorus 1",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788427154525,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
