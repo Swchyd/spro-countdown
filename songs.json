@@ -3885,6 +3885,94 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtlbdpozicy3",
+   "title": "[IND] BIARLAH ROHMU MENYALA-NYALA",
+   "authors": [
+    "Welyar Kauntu"
+   ],
+   "author": "Welyar Kauntu",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Biarlah rohmu menyala-nyala",
+      "Dan layanilah Tuhan",
+      "Biarlah rohmu menyala-nyala,",
+      "Dan layanilah Tuhan."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Tak ada banyak waktu",
+      "Giatlah dan jangan lalai",
+      "Pekerjaan besar menunggu",
+      "Ladang siap dituai",
+      "Tanggalkan s’gala beban",
+      "Dan dosa yang merintangi",
+      "Berlari pada tujuan",
+      "Panggilan surgawi."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus",
+    "verse"
+   ],
+   "slides": [
+    [
+     "Biarlah rohmu menyala-nyala",
+     "Dan layanilah Tuhan"
+    ],
+    [
+     "Biarlah rohmu menyala-nyala,",
+     "Dan layanilah Tuhan."
+    ],
+    [
+     "Tak ada banyak waktu",
+     "Giatlah dan jangan lalai"
+    ],
+    [
+     "Pekerjaan besar menunggu",
+     "Ladang siap dituai"
+    ],
+    [
+     "Tanggalkan s’gala beban",
+     "Dan dosa yang merintangi"
+    ],
+    [
+     "Berlari pada tujuan",
+     "Panggilan surgawi."
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    "Verse",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788427208956,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
