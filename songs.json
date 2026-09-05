@@ -4173,6 +4173,100 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtobtmepxwdx",
+   "title": "[IND] S’BAB TUHAN MAHA BESAR",
+   "authors": [
+    "Welyar Kauntu"
+   ],
+   "author": "Welyar Kauntu",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Ceritakanlah kemuliaan-Nya",
+      "di antara segala bangsa",
+      "Dan perbuatan-Nya",
+      "yang sungguh Ajaib",
+      "Di antara suku bangsa"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "S'bab Tuhan mahabesar",
+      "dan sangat terpuji",
+      "Dia lebih dahsyat",
+      "dari s'gala allah",
+      "S'bab Tuhan mahabesar",
+      "dan sangat terpuji",
+      "Kuasa-Nya dahsyat",
+      "menghancurkan musuh"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ceritakanlah kemuliaan-Nya",
+     "di antara segala bangsa"
+    ],
+    [
+     "Dan perbuatan-Nya",
+     "yang sungguh Ajaib"
+    ],
+    [
+     "Di antara suku bangsa"
+    ],
+    [
+     "S'bab Tuhan mahabesar",
+     "dan sangat terpuji"
+    ],
+    [
+     "Dia lebih dahsyat",
+     "dari s'gala allah"
+    ],
+    [
+     "S'bab Tuhan mahabesar",
+     "dan sangat terpuji"
+    ],
+    [
+     "Kuasa-Nya dahsyat",
+     "menghancurkan musuh"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788609347776,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
