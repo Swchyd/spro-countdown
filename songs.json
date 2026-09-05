@@ -4419,12 +4419,22 @@
   {
    "id": "sl_mtobqf8xckc1",
    "name": "U1 U2 6/9",
-   "entries": [],
-   "updatedAt": 1788609219560,
+   "entries": [
+    {
+     "id": "s_mtobwgktfzwa",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1788609529777,
    "updatedBy": "Lid"
   }
  ],
- "setlist": [],
- "setlistAt": 1788609219560,
+ "setlist": [
+  {
+   "id": "s_mtobwgktfzwa",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1788609529777,
  "setlistBy": "Lid"
 }
