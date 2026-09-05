@@ -4175,50 +4175,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_mtlbghef76or",
-   "name": "LC",
-   "entries": [
-    {
-     "id": "s_mtlbcjfrh7uy",
-     "ms": 0
-    },
-    {
-     "id": "s_mtlbdpozicy3",
-     "ms": 0
-    },
-    {
-     "id": "s_mtlbf8515lsg",
-     "ms": 0
-    },
-    {
-     "id": "s_mtlbgf12y12s",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1788427414491,
-   "updatedBy": "Owner"
-  }
- ],
- "setlist": [
-  {
-   "id": "s_mtlbcjfrh7uy",
-   "ms": 0
-  },
-  {
-   "id": "s_mtlbdpozicy3",
-   "ms": 0
-  },
-  {
-   "id": "s_mtlbf8515lsg",
-   "ms": 0
-  },
-  {
-   "id": "s_mtlbgf12y12s",
-   "ms": 0
-  }
- ],
- "setlistAt": 1788427414491,
- "setlistBy": "Owner"
+ "setlists": [],
+ "setlist": [],
+ "setlistAt": 0,
+ "setlistBy": ""
 }
