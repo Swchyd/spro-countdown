@@ -4072,11 +4072,13 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1788427279973,
-   "updatedBy": "Owner",
+   "version": 2,
+   "updatedAt": 1788609519505,
+   "updatedBy": "Lid",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1788609519505,
+   "deletedBy": "Lid"
   },
   {
    "id": "s_mtlbgf12y12s",
