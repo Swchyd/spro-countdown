@@ -4304,9 +4304,12 @@
      "key": "chorus",
      "tag": "Chorus",
      "lines": [
-      "Urapi kami Tuhan dengan kuasa Roh Suci",
-      "Berikan hati yang terbeban dan penuh Kasih Ilahi",
-      "Penuhi kami dengan kuasa dari tempat yang tertinggi",
+      "Urapi kami Tuhan",
+      "dengan kuasa Roh Suci",
+      "Berikan hati yang terbeban",
+      "dan penuh Kasih Ilahi",
+      "Penuhi kami dengan kuasa",
+      "dari tempat yang tertinggi",
       "Dan teguhkan semua kesaksian"
      ],
      "notes": []
@@ -4335,11 +4338,18 @@
      "Melayani yang lelah dan berbeban"
     ],
     [
-     "Urapi kami Tuhan dengan kuasa Roh Suci",
-     "Berikan hati yang terbeban dan penuh Kasih Ilahi"
+     "Urapi kami Tuhan",
+     "dengan kuasa Roh Suci"
     ],
     [
-     "Penuhi kami dengan kuasa dari tempat yang tertinggi",
+     "Berikan hati yang terbeban",
+     "dan penuh Kasih Ilahi"
+    ],
+    [
+     "Penuhi kami dengan kuasa",
+     "dari tempat yang tertinggi"
+    ],
+    [
      "Dan teguhkan semua kesaksian"
     ]
    ],
@@ -4349,6 +4359,8 @@
     "Verse 2",
     "",
     "Chorus",
+    "",
+    "",
     ""
    ],
    "notes": [
@@ -4357,11 +4369,13 @@
     "",
     "",
     "",
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1788610834250,
+   "version": 3,
+   "updatedAt": 1788610906717,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
