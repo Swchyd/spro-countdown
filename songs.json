@@ -4857,6 +4857,55 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtoc8bhmvpwd",
+   "title": "[ENG] HOSANNA (BE LIFTED HIGHER)",
+   "authors": [
+    "Israel Houghton",
+    "Sidney Mohede"
+   ],
+   "author": "Israel Houghton, Sidney Mohede",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Hosanna in the highest",
+      "Let our King be lifted up hosanna",
+      "Hosanna in the highest",
+      "Let our King be lifted up hosanna"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Hosanna in the highest",
+     "Let our King be lifted up hosanna"
+    ],
+    [
+     "Hosanna in the highest",
+     "Let our King be lifted up hosanna"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788610033100,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
