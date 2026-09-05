@@ -4936,12 +4936,22 @@
   {
    "id": "sl_mtoc9lthakls",
    "name": "AOG 6/9",
-   "entries": [],
-   "updatedAt": 1788610114917,
+   "entries": [
+    {
+     "id": "s_mtoc1gidb641",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1788610124731,
    "updatedBy": "Lid"
   }
  ],
- "setlist": [],
- "setlistAt": 1788610114917,
+ "setlist": [
+  {
+   "id": "s_mtoc1gidb641",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1788610124731,
  "setlistBy": "Lid"
 }
