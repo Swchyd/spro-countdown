@@ -4753,6 +4753,110 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtoc6r3shg1y",
+   "title": "[IND] BESAR DAN AJAIBLAH KARYA-MU",
+   "authors": [
+    "Ir. Niko Njotorahardjo"
+   ],
+   "author": "Ir. Niko Njotorahardjo",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Besar dan ajaiblah karya-Mu",
+      "Adil dan benarlah jalan-Mu",
+      "Raja segala bangsa, Yang Mahakuasa",
+      "Mulia nama-Mu",
+      "Besar dan ajaiblah karya-Mu",
+      "Adil dan benarlah jalan-Mu",
+      "Raja segala bangsa, Yang Mahakuasa",
+      "Mulia nama-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Layaklah segala bangsa",
+      "Sujud kepada-Mu",
+      "S'bab Kau Allah yang kudus",
+      "Layak disembah",
+      "Layaklah segala bangsa",
+      "Sujud kepada-Mu",
+      "S'bab Kau Allah yang kudus",
+      "Layak disembah"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Besar dan ajaiblah karya-Mu",
+     "Adil dan benarlah jalan-Mu"
+    ],
+    [
+     "Raja segala bangsa, Yang Mahakuasa",
+     "Mulia nama-Mu"
+    ],
+    [
+     "Besar dan ajaiblah karya-Mu",
+     "Adil dan benarlah jalan-Mu"
+    ],
+    [
+     "Raja segala bangsa, Yang Mahakuasa",
+     "Mulia nama-Mu"
+    ],
+    [
+     "Layaklah segala bangsa",
+     "Sujud kepada-Mu"
+    ],
+    [
+     "S'bab Kau Allah yang kudus",
+     "Layak disembah"
+    ],
+    [
+     "Layaklah segala bangsa",
+     "Sujud kepada-Mu"
+    ],
+    [
+     "S'bab Kau Allah yang kudus",
+     "Layak disembah"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788609960417,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
