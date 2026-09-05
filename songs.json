@@ -4267,6 +4267,150 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtobwgktfzwa",
+   "title": "[IND] KAMI DATANG PENUHI PANGGILAN-MU",
+   "authors": [
+    "Simon Irianto"
+   ],
+   "author": "Simon Irianto",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Kami datang penuhi",
+      "panggilanMu Tuhan",
+      "Dengan apa yang",
+      "dapat kami b'rikan",
+      "Kami penuhi",
+      "amanat agungMu",
+      "Menyelamatkan",
+      "jiwa yang tersesat"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Kami datang penuhi",
+      "panggilanMu Tuhan",
+      "Dengan apa yang",
+      "dapat kami b'rikan",
+      "Kami penuhi",
+      "amanat agungMu",
+      "Melayani yang",
+      "lelah dan berbeban"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Urapi kami Tuhan",
+      "dengan kuasa Roh Suci",
+      "Berikan hati yang terbeban",
+      "dan penuh Kasih Ilahi",
+      "Penuhi kami dengan kuasa",
+      "dari tempat yang tertinggi",
+      "Dan teguhkan",
+      "semua kesaksian"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kami datang penuhi",
+     "panggilanMu Tuhan"
+    ],
+    [
+     "Dengan apa yang",
+     "dapat kami b'rikan"
+    ],
+    [
+     "Kami penuhi",
+     "amanat agungMu"
+    ],
+    [
+     "Menyelamatkan",
+     "jiwa yang tersesat"
+    ],
+    [
+     "Kami datang penuhi",
+     "panggilanMu Tuhan"
+    ],
+    [
+     "Dengan apa yang",
+     "dapat kami b'rikan"
+    ],
+    [
+     "Kami penuhi",
+     "amanat agungMu"
+    ],
+    [
+     "Melayani yang",
+     "lelah dan berbeban"
+    ],
+    [
+     "Urapi kami Tuhan",
+     "dengan kuasa Roh Suci"
+    ],
+    [
+     "Berikan hati yang terbeban",
+     "dan penuh Kasih Ilahi"
+    ],
+    [
+     "Penuhi kami dengan kuasa",
+     "dari tempat yang tertinggi"
+    ],
+    [
+     "Dan teguhkan",
+     "semua kesaksian"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788609479692,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
