@@ -4942,16 +4942,26 @@
    ],
    "updatedAt": 1788610157511,
    "updatedBy": "Lid"
-  },
-  {
-   "id": "sl_mtodr5awa7a9",
-   "name": "Setlist 5/9",
-   "entries": [],
-   "updatedAt": 1788612591870,
-   "updatedBy": "Gloria"
   }
  ],
- "setlist": [],
- "setlistAt": 1788612591870,
- "setlistBy": "Gloria"
+ "setlist": [
+  {
+   "id": "s_mtoc1gidb641",
+   "ms": 0
+  },
+  {
+   "id": "s_mtoc5kw2xqro",
+   "ms": 0
+  },
+  {
+   "id": "s_mtoc6r3shg1y",
+   "ms": 0
+  },
+  {
+   "id": "s_mtoc8bhmvpwd",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1788610157511,
+ "setlistBy": "Lid"
 }
