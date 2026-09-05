@@ -4530,30 +4530,40 @@
    "slides": [
     [
      "Segala dentingan melodi",
-     "Tak sanggup ungkapkan",
+     "Tak sanggup ungkapkan"
+    ],
+    [
      "betapa megahnya",
      "Keajaiban-Mu"
     ],
     [
      "Segala untaian puisi",
-     "Tak mampu tuliskan",
+     "Tak mampu tuliskan"
+    ],
+    [
      "betapa indahnya",
      "Dan agungnya karya-Mu"
     ],
     [
      "Kau yang merajut",
-     "segala kehidupan",
+     "segala kehidupan"
+    ],
+    [
      "Dengan jari-Mu",
      "yang mulia"
     ],
     [
      "Puja dan puji",
-     "p’nuhi takhta-Mu",
+     "p’nuhi takhta-Mu"
+    ],
+    [
      "Semesta bernyanyi"
     ],
     [
      "Besar dan ajaib perbuatan-Mu",
-     "Adil dan benar segala jalan-Mu",
+     "Adil dan benar segala jalan-Mu"
+    ],
+    [
      "Raja segala bangsa",
      "S’bab Engkau Allahku yang kudus"
     ],
@@ -4568,9 +4578,14 @@
    "tags": [
     "Verse",
     "",
+    "",
+    "",
     "Pre chorus",
     "",
+    "",
+    "",
     "Chorus",
+    "",
     "",
     "Bridge"
    ],
@@ -4581,11 +4596,16 @@
     "",
     "",
     "",
+    "",
+    "",
+    "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1788609712942,
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1788610733133,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
