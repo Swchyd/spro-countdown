@@ -4175,8 +4175,16 @@
    "hidden": false
   }
  ],
- "setlists": [],
+ "setlists": [
+  {
+   "id": "sl_mtobqf8xckc1",
+   "name": "Setlist 5/9",
+   "entries": [],
+   "updatedAt": 1788609199896,
+   "updatedBy": "Lid"
+  }
+ ],
  "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlistAt": 1788609199896,
+ "setlistBy": "Lid"
 }
