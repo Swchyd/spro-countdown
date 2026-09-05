@@ -4461,6 +4461,134 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtoc1gidb641",
+   "title": "[IND] SEMESTA BERNYANYI",
+   "authors": [
+    "Redo Daeng Badjie"
+   ],
+   "author": "Redo Daeng Badjie",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Segala dentingan melodi",
+      "Tak sanggup ungkapkan",
+      "betapa megahnya",
+      "Keajaiban-Mu",
+      "Segala untaian puisi",
+      "Tak mampu tuliskan",
+      "betapa indahnya",
+      "Dan agungnya karya-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre chorus",
+     "tag": "Pre chorus",
+     "lines": [
+      "Kau yang merajut",
+      "segala kehidupan",
+      "Dengan jari-Mu",
+      "yang mulia",
+      "Puja dan puji",
+      "p’nuhi takhta-Mu",
+      "Semesta bernyanyi"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Besar dan ajaib perbuatan-Mu",
+      "Adil dan benar segala jalan-Mu",
+      "Raja segala bangsa",
+      "S’bab Engkau Allahku yang kudus",
+      "Layaklah semua bangsa menyembah-Mu",
+      "Yesus Kaulah Raja kebenaran"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Woo. oo.. Woo. oo.."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre chorus",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Segala dentingan melodi",
+     "Tak sanggup ungkapkan",
+     "betapa megahnya",
+     "Keajaiban-Mu"
+    ],
+    [
+     "Segala untaian puisi",
+     "Tak mampu tuliskan",
+     "betapa indahnya",
+     "Dan agungnya karya-Mu"
+    ],
+    [
+     "Kau yang merajut",
+     "segala kehidupan",
+     "Dengan jari-Mu",
+     "yang mulia"
+    ],
+    [
+     "Puja dan puji",
+     "p’nuhi takhta-Mu",
+     "Semesta bernyanyi"
+    ],
+    [
+     "Besar dan ajaib perbuatan-Mu",
+     "Adil dan benar segala jalan-Mu",
+     "Raja segala bangsa",
+     "S’bab Engkau Allahku yang kudus"
+    ],
+    [
+     "Layaklah semua bangsa menyembah-Mu",
+     "Yesus Kaulah Raja kebenaran"
+    ],
+    [
+     "Woo. oo.. Woo. oo.."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Pre chorus",
+    "",
+    "Chorus",
+    "",
+    "Bridge"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1788609712942,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
