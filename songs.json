@@ -4413,6 +4413,54 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtobyjfcc3ml",
+   "title": "[IND] LAYAKLAH SEGALA BANGSA",
+   "authors": [
+    "Ir. Niko Njotorahardjo"
+   ],
+   "author": "Ir. Niko Njotorahardjo",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Layaklah segala bangsa",
+      "sujud kepada-Mu",
+      "S'bab Kau Allah yang Kudus",
+      "layak disembah"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Layaklah segala bangsa",
+     "sujud kepada-Mu"
+    ],
+    [
+     "S'bab Kau Allah yang Kudus",
+     "layak disembah"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788609577390,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
