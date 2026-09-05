@@ -4914,10 +4914,6 @@
    "name": "U1 U2 6/9",
    "entries": [
     {
-     "id": "s_mtobwgktfzwa",
-     "ms": 0
-    },
-    {
      "id": "s_mtlbcjfrh7uy",
      "ms": 0
     },
@@ -4926,19 +4922,19 @@
      "ms": 0
     },
     {
+     "id": "s_mtobwgktfzwa",
+     "ms": 0
+    },
+    {
      "id": "s_mtobyjfcc3ml",
      "ms": 0
     }
    ],
-   "updatedAt": 1788610083940,
+   "updatedAt": 1788610091460,
    "updatedBy": "Lid"
   }
  ],
  "setlist": [
-  {
-   "id": "s_mtobwgktfzwa",
-   "ms": 0
-  },
   {
    "id": "s_mtlbcjfrh7uy",
    "ms": 0
@@ -4948,10 +4944,14 @@
    "ms": 0
   },
   {
+   "id": "s_mtobwgktfzwa",
+   "ms": 0
+  },
+  {
    "id": "s_mtobyjfcc3ml",
    "ms": 0
   }
  ],
- "setlistAt": 1788610083940,
+ "setlistAt": 1788610091460,
  "setlistBy": "Lid"
 }
