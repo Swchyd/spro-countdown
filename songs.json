@@ -4589,6 +4589,170 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtoc5kw2xqro",
+   "title": "[ENG] ALL THE NATIONS",
+   "authors": [
+    "Redo Daeng Badjie"
+   ],
+   "author": "Redo Daeng Badjie",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "You're the One",
+      "who makes the sun shine",
+      "You're the One",
+      "who put the moon in the sky",
+      "In the sky"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "One by one You hung the stars",
+      "Nothing can compares",
+      "To Your great works",
+      "To Your great works"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "The heavens show",
+      "Your beauty on display",
+      "Parading Your splendor",
+      "And the great things You've done"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "All the nations You have made",
+      "Will come and worship here",
+      "Before You Lord",
+      "Before You Lord",
+      "All the nations You have made",
+      "Will bring all praises",
+      "To Your holy name",
+      "Your holy name"
+     ],
+     "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "Woo-ooh, woooh",
+      "Woo-ooh, Jesus You're the One",
+      "There's no one else but You"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "_1",
+    "pre-chorus",
+    "chorus",
+    "ending"
+   ],
+   "slides": [
+    [
+     "You're the One",
+     "who makes the sun shine"
+    ],
+    [
+     "You're the One",
+     "who put the moon in the sky"
+    ],
+    [
+     "In the sky"
+    ],
+    [
+     "One by one You hung the stars",
+     "Nothing can compares"
+    ],
+    [
+     "To Your great works",
+     "To Your great works"
+    ],
+    [
+     "The heavens show",
+     "Your beauty on display"
+    ],
+    [
+     "Parading Your splendor",
+     "And the great things You've done"
+    ],
+    [
+     "All the nations You have made",
+     "Will come and worship here"
+    ],
+    [
+     "Before You Lord",
+     "Before You Lord"
+    ],
+    [
+     "All the nations You have made",
+     "Will bring all praises"
+    ],
+    [
+     "To Your holy name",
+     "Your holy name"
+    ],
+    [
+     "Woo-ooh, woooh",
+     "Woo-ooh, Jesus You're the One"
+    ],
+    [
+     "There's no one else but You"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "",
+    "Pre-Chorus",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    "Ending",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788609905135,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
