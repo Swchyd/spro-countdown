@@ -4282,14 +4282,10 @@
      "key": "verse 1",
      "tag": "Verse 1",
      "lines": [
-      "Kami datang penuhi",
-      "panggilanMu Tuhan",
-      "Dengan apa yang",
-      "dapat kami b'rikan",
-      "Kami penuhi",
-      "amanat agungMu",
-      "Menyelamatkan",
-      "jiwa yang tersesat"
+      "Kami datang penuhi panggilanMu Tuhan",
+      "Dengan apa yang dapat kami b'rikan",
+      "Kami penuhi amanat agungMu",
+      "Menyelamatkan jiwa yang tersesat"
      ],
      "notes": []
     },
@@ -4297,14 +4293,10 @@
      "key": "verse 2",
      "tag": "Verse 2",
      "lines": [
-      "Kami datang penuhi",
-      "panggilanMu Tuhan",
-      "Dengan apa yang",
-      "dapat kami b'rikan",
-      "Kami penuhi",
-      "amanat agungMu",
-      "Melayani yang",
-      "lelah dan berbeban"
+      "Kami datang penuhi panggilanMu Tuhan",
+      "Dengan apa yang dapat kami b'rikan",
+      "Kami penuhi amanat agungMu",
+      "Melayani yang lelah dan berbeban"
      ],
      "notes": []
     },
@@ -4312,14 +4304,10 @@
      "key": "chorus",
      "tag": "Chorus",
      "lines": [
-      "Urapi kami Tuhan",
-      "dengan kuasa Roh Suci",
-      "Berikan hati yang terbeban",
-      "dan penuh Kasih Ilahi",
-      "Penuhi kami dengan kuasa",
-      "dari tempat yang tertinggi",
-      "Dan teguhkan",
-      "semua kesaksian"
+      "Urapi kami Tuhan dengan kuasa Roh Suci",
+      "Berikan hati yang terbeban dan penuh Kasih Ilahi",
+      "Penuhi kami dengan kuasa dari tempat yang tertinggi",
+      "Dan teguhkan semua kesaksian"
      ],
      "notes": []
     }
@@ -4331,66 +4319,36 @@
    ],
    "slides": [
     [
-     "Kami datang penuhi",
-     "panggilanMu Tuhan"
+     "Kami datang penuhi panggilanMu Tuhan",
+     "Dengan apa yang dapat kami b'rikan"
     ],
     [
-     "Dengan apa yang",
-     "dapat kami b'rikan"
+     "Kami penuhi amanat agungMu",
+     "Menyelamatkan jiwa yang tersesat"
     ],
     [
-     "Kami penuhi",
-     "amanat agungMu"
+     "Kami datang penuhi panggilanMu Tuhan",
+     "Dengan apa yang dapat kami b'rikan"
     ],
     [
-     "Menyelamatkan",
-     "jiwa yang tersesat"
+     "Kami penuhi amanat agungMu",
+     "Melayani yang lelah dan berbeban"
     ],
     [
-     "Kami datang penuhi",
-     "panggilanMu Tuhan"
+     "Urapi kami Tuhan dengan kuasa Roh Suci",
+     "Berikan hati yang terbeban dan penuh Kasih Ilahi"
     ],
     [
-     "Dengan apa yang",
-     "dapat kami b'rikan"
-    ],
-    [
-     "Kami penuhi",
-     "amanat agungMu"
-    ],
-    [
-     "Melayani yang",
-     "lelah dan berbeban"
-    ],
-    [
-     "Urapi kami Tuhan",
-     "dengan kuasa Roh Suci"
-    ],
-    [
-     "Berikan hati yang terbeban",
-     "dan penuh Kasih Ilahi"
-    ],
-    [
-     "Penuhi kami dengan kuasa",
-     "dari tempat yang tertinggi"
-    ],
-    [
-     "Dan teguhkan",
-     "semua kesaksian"
+     "Penuhi kami dengan kuasa dari tempat yang tertinggi",
+     "Dan teguhkan semua kesaksian"
     ]
    ],
    "tags": [
     "Verse 1",
     "",
-    "",
-    "",
     "Verse 2",
     "",
-    "",
-    "",
     "Chorus",
-    "",
-    "",
     ""
    ],
    "notes": [
@@ -4399,17 +4357,11 @@
     "",
     "",
     "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1788609479692,
+   "version": 2,
+   "updatedAt": 1788610834250,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
