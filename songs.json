@@ -5144,6 +5144,124 @@
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtpicq9cfnx9",
+   "title": "[IND] WE ARE THE ARMY OF GOD",
+   "authors": [
+    "Army of God"
+   ],
+   "author": "Army of God",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Now is the time",
+      "Your people arise",
+      "To be an army",
+      "To show Your glory"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "There is no one",
+      "Who can stop us",
+      "We’ll take this city",
+      "For Your glory"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Show Your greatness",
+      "And Your power",
+      "Give us the victory"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "We are, we are the Army of God",
+      "Burning, burning the fire of God yeah",
+      "We are, we are the Army of God",
+      "Burning, burning the fire of God yeah"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Now is the time",
+     "Your people arise"
+    ],
+    [
+     "To be an army",
+     "To show Your glory"
+    ],
+    [
+     "There is no one",
+     "Who can stop us"
+    ],
+    [
+     "We’ll take this city",
+     "For Your glory"
+    ],
+    [
+     "Show Your greatness",
+     "And Your power"
+    ],
+    [
+     "Give us the victory"
+    ],
+    [
+     "We are, we are the Army of God",
+     "Burning, burning the fire of God yeah"
+    ],
+    [
+     "We are, we are the Army of God",
+     "Burning, burning the fire of God yeah"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Pre-Chorus",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788680783770,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
