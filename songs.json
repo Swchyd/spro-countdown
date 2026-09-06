@@ -5040,10 +5040,9 @@
    "author": "Army of God",
    "sections": [
     {
-     "key": "_1",
-     "tag": "",
+     "key": "verse",
+     "tag": "Verse",
      "lines": [
-      "Verse]",
       "Kau telah memanggilku",
       "‘Tuk menjadi alat kerajaanMu",
       "Kumau melangkah maju",
@@ -5062,10 +5061,9 @@
      "notes": []
     },
     {
-     "key": "_2",
-     "tag": "",
+     "key": "chorus",
+     "tag": "Chorus",
      "lines": [
-      "[Chorus]  2X",
       "Pakailah Tuhan seluruh kehidupanku",
       "‘Tuk ceritakan kebesaranMu perbuatanMu",
       "Bagi-Mu Tuhan segenap masa mudaku",
@@ -5075,31 +5073,27 @@
      "notes": []
     },
     {
-     "key": "_3",
-     "tag": "",
+     "key": "outro",
+     "tag": "Outro",
      "lines": [
-      "[Outro]  2X",
       "‘Kan setia beritakan namaMu Yesus."
      ],
      "notes": []
     }
    ],
    "order": [
-    "_1",
+    "verse",
     "pre-chorus",
-    "_2",
-    "_3"
+    "chorus",
+    "outro"
    ],
    "slides": [
     [
-     "Verse]",
-     "Kau telah memanggilku"
+     "Kau telah memanggilku",
+     "‘Tuk menjadi alat kerajaanMu"
     ],
     [
-     "‘Tuk menjadi alat kerajaanMu",
-     "Kumau melangkah maju"
-    ],
-    [
+     "Kumau melangkah maju",
      "S’bab Roh Kuduslah yang memampukanku."
     ],
     [
@@ -5110,35 +5104,31 @@
      "Yesuslah Tuhan atas segala bangsa."
     ],
     [
-     "[Chorus]  2X",
-     "Pakailah Tuhan seluruh kehidupanku"
+     "Pakailah Tuhan seluruh kehidupanku",
+     "‘Tuk ceritakan kebesaranMu perbuatanMu"
     ],
     [
-     "‘Tuk ceritakan kebesaranMu perbuatanMu",
-     "Bagi-Mu Tuhan segenap masa mudaku"
+     "Bagi-Mu Tuhan segenap masa mudaku",
+     "Sampai akhir nafas hidupku"
     ],
     [
-     "Sampai akhir nafas hidupku",
      "‘Kan setia beritakan namaMu Yesus."
     ],
     [
-     "[Outro]  2X",
      "‘Kan setia beritakan namaMu Yesus."
     ]
    ],
    "tags": [
-    "",
-    "",
+    "Verse",
     "",
     "Pre-Chorus",
     "",
+    "Chorus",
     "",
     "",
-    "",
-    ""
+    "Outro"
    ],
    "notes": [
-    "",
     "",
     "",
     "",
@@ -5149,8 +5139,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1788679757922,
+   "version": 2,
+   "updatedAt": 1788679805421,
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
