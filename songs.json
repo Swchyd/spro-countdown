@@ -4892,6 +4892,144 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtphoq7zgi0s",
+   "title": "[IND] BERTUMBUH BERSAMA",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "intro",
+     "tag": "Intro",
+     "lines": [
+      "Na na na na na na na",
+      "Na na na na na na na",
+      "Na na na na na na na na na na."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Bersatulah, mari kita bersatu",
+      "Bersehati sepikiran",
+      "Runtuhkan tembok yang merintangi."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Bekerjalah, mari kita bekerja",
+      "Junjung kasih dan karunia",
+      "Gapai panggilan tertinggi."
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Tetaplah menyala, layani sesama",
+      "Terus bertumbuh bersama."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Dalam kasih, kita bergerak bersama",
+      "Memenangkan jiwa. Menjadi",
+      "Harapan bagi dunia",
+      "Dalam iman, kita kan menang bersama",
+      "B'ritakan Nama - Nya",
+      "Bertumbuh dalam Kristus dan g'rejaNya."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "intro",
+    "verse 1",
+    "verse 2",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Na na na na na na na",
+     "Na na na na na na na"
+    ],
+    [
+     "Na na na na na na na na na na."
+    ],
+    [
+     "Bersatulah, mari kita bersatu",
+     "Bersehati sepikiran"
+    ],
+    [
+     "Runtuhkan tembok yang merintangi."
+    ],
+    [
+     "Bekerjalah, mari kita bekerja",
+     "Junjung kasih dan karunia"
+    ],
+    [
+     "Gapai panggilan tertinggi."
+    ],
+    [
+     "Tetaplah menyala, layani sesama",
+     "Terus bertumbuh bersama."
+    ],
+    [
+     "Dalam kasih, kita bergerak bersama",
+     "Memenangkan jiwa. Menjadi"
+    ],
+    [
+     "Harapan bagi dunia",
+     "Dalam iman, kita kan menang bersama"
+    ],
+    [
+     "B'ritakan Nama - Nya",
+     "Bertumbuh dalam Kristus dan g'rejaNya."
+    ]
+   ],
+   "tags": [
+    "Intro",
+    "",
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Pre-Chorus",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788679662931,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
