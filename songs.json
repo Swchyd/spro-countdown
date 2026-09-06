@@ -5030,6 +5030,130 @@
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtphqrbxqiox",
+   "title": "[IND] KUMAU BRITAKAN",
+   "authors": [
+    "Army of God"
+   ],
+   "author": "Army of God",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Verse]",
+      "Kau telah memanggilku",
+      "‘Tuk menjadi alat kerajaanMu",
+      "Kumau melangkah maju",
+      "S’bab Roh Kuduslah yang memampukanku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Kumau b’ritakan",
+      "sampai seluruh dunia tahu",
+      "Yesuslah Tuhan atas segala bangsa."
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "[Chorus]  2X",
+      "Pakailah Tuhan seluruh kehidupanku",
+      "‘Tuk ceritakan kebesaranMu perbuatanMu",
+      "Bagi-Mu Tuhan segenap masa mudaku",
+      "Sampai akhir nafas hidupku",
+      "‘Kan setia beritakan namaMu Yesus."
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "[Outro]  2X",
+      "‘Kan setia beritakan namaMu Yesus."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "pre-chorus",
+    "_2",
+    "_3"
+   ],
+   "slides": [
+    [
+     "Verse]",
+     "Kau telah memanggilku"
+    ],
+    [
+     "‘Tuk menjadi alat kerajaanMu",
+     "Kumau melangkah maju"
+    ],
+    [
+     "S’bab Roh Kuduslah yang memampukanku."
+    ],
+    [
+     "Kumau b’ritakan",
+     "sampai seluruh dunia tahu"
+    ],
+    [
+     "Yesuslah Tuhan atas segala bangsa."
+    ],
+    [
+     "[Chorus]  2X",
+     "Pakailah Tuhan seluruh kehidupanku"
+    ],
+    [
+     "‘Tuk ceritakan kebesaranMu perbuatanMu",
+     "Bagi-Mu Tuhan segenap masa mudaku"
+    ],
+    [
+     "Sampai akhir nafas hidupku",
+     "‘Kan setia beritakan namaMu Yesus."
+    ],
+    [
+     "[Outro]  2X",
+     "‘Kan setia beritakan namaMu Yesus."
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "Pre-Chorus",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1788679757922,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
