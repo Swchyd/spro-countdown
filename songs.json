@@ -5328,38 +5328,16 @@
    ],
    "updatedAt": 1788680788209,
    "updatedBy": "Gloria"
+  },
+  {
+   "id": "sl_mtwf3uxx4940",
+   "name": "Setlist 11/9",
+   "entries": [],
+   "updatedAt": 1789098598225,
+   "updatedBy": "Owner"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtoc1gidb641",
-   "ms": 0
-  },
-  {
-   "id": "s_mtoc5kw2xqro",
-   "ms": 0
-  },
-  {
-   "id": "s_mtoc6r3shg1y",
-   "ms": 0
-  },
-  {
-   "id": "s_mtoc8bhmvpwd",
-   "ms": 0
-  },
-  {
-   "id": "s_mtphoq7zgi0s",
-   "ms": 0
-  },
-  {
-   "id": "s_mtphqrbxqiox",
-   "ms": 0
-  },
-  {
-   "id": "s_mtpicq9cfnx9",
-   "ms": 0
-  }
- ],
- "setlistAt": 1788680788209,
- "setlistBy": "Gloria"
+ "setlist": [],
+ "setlistAt": 1789098598225,
+ "setlistBy": "Owner"
 }
