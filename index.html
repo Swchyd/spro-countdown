@@ -688,7 +688,7 @@
   /* Casing is decided in JS (see LYRIC_CASE) so that the measured string and
      the rendered string are the same one. Nothing here may change the case or
      the tracking, or the fit stops matching what is on screen. */
-  #lyricNow, #lyricNext {
+  #lyricNow {
     font-weight: 700;
     letter-spacing: 0;
     text-transform: none;
@@ -699,18 +699,14 @@
        letting CSS break them instead would mean fitting to one layout and
        displaying another. */
     white-space: pre;
-  }
-  #lyricNow {
     font-size: var(--lyric-size, 4vh);
     color: var(--ink);
   }
-  #lyricNext {
-    font-size: calc(var(--lyric-size, 4vh) * .6);
-    color: var(--ink);
-    opacity: .34;
-    margin-top: calc(var(--lyric-size, 4vh) * .45);
-  }
-  #lyricZone.blank #lyricNow, #lyricZone.blank #lyricNext { visibility: hidden; }
+  /* No preview of the next slide under this one. It used to sit here dimmed,
+     and the user took it off the stage (2026-09-11): the operator already
+     knows what comes next, and on the stage it was a second block of words
+     competing with the one being sung. */
+  #lyricZone.blank #lyricNow { visibility: hidden; }
 
   /* standby (display connected, operator has not started yet) */
   #stage.standby #labelZone, #stage.standby #timeZone,
@@ -2957,7 +2953,6 @@ lyric line one</pre>
     <div id="timeZone"><div id="timeText">10:00</div></div>
     <div id="lyricZone">
       <div id="lyricNow"></div>
-      <div id="lyricNext"></div>
     </div>
     <div id="clock">00:00:00</div>
     <div id="standby">
@@ -3236,13 +3231,10 @@ if ("serviceWorker" in navigator) {
     return (s.id || s.title || "?") + "|" + (s.updatedAt || 0);
   }
 
-  var lyricZone = $("lyricZone"), lyricNow = $("lyricNow"), lyricNext = $("lyricNext");
+  var lyricZone = $("lyricZone"), lyricNow = $("lyricNow");
   var shownSlide = null;
 
   var LINE_H = 1.18;      // matches the CSS line-height
-  var NEXT_SCALE = .6;    // the dim preview, as a fraction of the live size
-  var NEXT_GAP = .45;
-  var NEXT_LINES = 2;     // how much of the next slide to show
 
   var fitCtx = document.createElement("canvas").getContext("2d");
 
@@ -3379,9 +3371,7 @@ if ("serviceWorker" in navigator) {
         for (var j = 0; j < sl.length; j++) rows += countRows(sl[j], maxW, m.space);
         if (rows > most) most = rows;
       }
-      // The dim preview is clipped to NEXT_LINES rows however long the next
-      // slide runs, so what it costs is the same at every size.
-      return (most * LINE_H + NEXT_GAP + NEXT_LINES * LINE_H * NEXT_SCALE) * px;
+      return most * LINE_H * px;
     }
 
     if (heightAt(hi) > availH) {
@@ -3408,19 +3398,12 @@ if ("serviceWorker" in navigator) {
   // The text for one slide, broken where the fit said it breaks. A stage that
   // has not been sized yet cannot be measured against, so that case falls back
   // to the raw lines: words that might overrun beat no words at all.
-  function slideText(slide, idx, limit) {
+  function slideText(slide, idx) {
     var sl = (LY.m && LY.mFor === LY.fittedFor) ? LY.m.slides[idx] : null;
-    if (!sl || !LY.wrapW) {
-      var lines = slideLines(slide);
-      return stageCase((limit ? lines.slice(0, limit) : lines).join("\n"));
-    }
+    if (!sl || !LY.wrapW) return stageCase(slideLines(slide).join("\n"));
     var rows = [];
     for (var i = 0; i < sl.length; i++) {
-      var part = wrapRows(sl[i], LY.wrapW, LY.m.space);
-      for (var j = 0; j < part.length; j++) {
-        rows.push(part[j]);
-        if (limit && rows.length >= limit) return rows.join("\n");
-      }
+      rows = rows.concat(wrapRows(sl[i], LY.wrapW, LY.m.space));
     }
     return rows.join("\n");
   }
@@ -3449,8 +3432,7 @@ if ("serviceWorker" in navigator) {
     shownSlide = mark;
 
     lyricZone.classList.toggle("blank", !!T.blank);
-    lyricNow.textContent = slides[idx] ? slideText(slides[idx], idx, 0) : "";
-    lyricNext.textContent = slides[idx + 1] ? slideText(slides[idx + 1], idx + 1, NEXT_LINES) : "";
+    lyricNow.textContent = slides[idx] ? slideText(slides[idx], idx) : "";
   }
 
   // How many lines a title may take before it is made smaller instead. Each is
