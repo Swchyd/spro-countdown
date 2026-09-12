@@ -6773,8 +6773,13 @@
   {
    "id": "sl_mtydhypax7cv",
    "name": "Setlist AOG 13/9",
-   "entries": [],
-   "updatedAt": 1789216843141,
+   "entries": [
+    {
+     "id": "s_mtyc7rnolthw",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1789216862438,
    "updatedBy": "Nicole"
   },
   {
@@ -6785,7 +6790,12 @@
    "updatedBy": "Nicole"
   }
  ],
- "setlist": [],
- "setlistAt": 1789216845277,
+ "setlist": [
+  {
+   "id": "s_mtyc7rnolthw",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1789216862438,
  "setlistBy": "Nicole"
 }
