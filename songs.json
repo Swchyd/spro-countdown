@@ -5532,6 +5532,94 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mty3et2ok7c0",
+   "title": "[IND] YESUS KEKASIH JIWAKU",
+   "authors": [
+    "Johny Putuhena"
+   ],
+   "author": "Johny Putuhena",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Yesus kekasih jiwaku",
+      "Sungguh ku percaya pada-Mu",
+      "Karena kasih-Mu padaku",
+      "Kau tebus dosaku",
+      "Dari terbitnya matahari",
+      "Dan sampai terbenamnya",
+      "Ku angkat lagu pujian",
+      "Tinggikan nama-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Dengan gendang ku puji",
+      "dengan kecapi",
+      "Ku bernyanyi haleluya",
+      "Yesus kekasihku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Yesus kekasih jiwaku",
+     "Sungguh ku percaya pada-Mu"
+    ],
+    [
+     "Karena kasih-Mu padaku",
+     "Kau tebus dosaku"
+    ],
+    [
+     "Dari terbitnya matahari",
+     "Dan sampai terbenamnya"
+    ],
+    [
+     "Ku angkat lagu pujian",
+     "Tinggikan nama-Mu"
+    ],
+    [
+     "Dengan gendang ku puji",
+     "dengan kecapi"
+    ],
+    [
+     "Ku bernyanyi haleluya",
+     "Yesus kekasihku"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789199882276,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
