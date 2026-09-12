@@ -5450,12 +5450,22 @@
   {
    "id": "sl_mtwf3uxx4940",
    "name": "Setlist 11/9",
-   "entries": [],
-   "updatedAt": 1789198100296,
+   "entries": [
+    {
+     "id": "s_mty2go56l8rx",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1789198293340,
    "updatedBy": "Owner"
   }
  ],
- "setlist": [],
- "setlistAt": 1789198100296,
+ "setlist": [
+  {
+   "id": "s_mty2go56l8rx",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1789198293340,
  "setlistBy": "Owner"
 }
