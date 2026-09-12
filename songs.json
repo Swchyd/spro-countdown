@@ -6044,6 +6044,118 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtycy0wow4kt",
+   "title": "[IND] BERTAHKTA S’LAMANYA",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kurasa dekap kasih-Mu, Tuhan",
+      "Menjamah, membelaiku",
+      "Kut′rima anug'rah perkenanan",
+      "Bawa ku masuk hadirat-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Kulihat terang yang b′ri damai",
+      "Terharu ku mengagumi-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kusembah, kusembah",
+      "Hanya Kau, Yesus, yang kusembah",
+      "Kau Tuhan, pribadi yang setia bagiku",
+      "S'luruh hidupku serahkan pada-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "S'lamanya, s′lamanya",
+      "Kau Tuhan, bertakhta s′lamanya",
+      "Nyatakan kemuliaan-Mu di tempat ini",
+      "Saat hatiku menyembah-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre-chorus",
+    "chorus",
+    "_1"
+   ],
+   "slides": [
+    [
+     "Kurasa dekap kasih-Mu, Tuhan",
+     "Menjamah, membelaiku"
+    ],
+    [
+     "Kut′rima anug'rah perkenanan",
+     "Bawa ku masuk hadirat-Mu"
+    ],
+    [
+     "Kulihat terang yang b′ri damai",
+     "Terharu ku mengagumi-Mu"
+    ],
+    [
+     "Kusembah, kusembah",
+     "Hanya Kau, Yesus, yang kusembah"
+    ],
+    [
+     "Kau Tuhan, pribadi yang setia bagiku",
+     "S'luruh hidupku serahkan pada-Mu"
+    ],
+    [
+     "S'lamanya, s′lamanya",
+     "Kau Tuhan, bertakhta s′lamanya"
+    ],
+    [
+     "Nyatakan kemuliaan-Mu di tempat ini",
+     "Saat hatiku menyembah-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Pre-Chorus",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789215893997,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
