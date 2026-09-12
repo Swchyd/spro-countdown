@@ -6355,6 +6355,78 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtyd9ns80nx3",
+   "title": "[IND] S’BAB KAU BESAR TUHAN",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "chorus 1",
+     "tag": "Chorus 1",
+     "lines": [
+      "S'bab Kau besar Tuhan",
+      "Lebihi langit",
+      "S'bab Kau besar Tuhan",
+      "Lebih dari s'galanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 2",
+     "tag": "Chorus 2",
+     "lines": [
+      "S'bab Kau besar Tuhan",
+      "Ku dapat lakukan",
+      "Segala perkara",
+      "Sesuai rencanaMu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus 1",
+    "chorus 2"
+   ],
+   "slides": [
+    [
+     "S'bab Kau besar Tuhan",
+     "Lebihi langit"
+    ],
+    [
+     "S'bab Kau besar Tuhan",
+     "Lebih dari s'galanya"
+    ],
+    [
+     "S'bab Kau besar Tuhan",
+     "Ku dapat lakukan"
+    ],
+    [
+     "Segala perkara",
+     "Sesuai rencanaMu"
+    ]
+   ],
+   "tags": [
+    "Chorus 1",
+    "",
+    "Chorus 2",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789216437208,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
