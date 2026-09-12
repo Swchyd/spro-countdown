@@ -5746,6 +5746,164 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtyc7rnolthw",
+   "title": "[IND] BERSUKA DALAM TUHAN",
+   "authors": [
+    "Arvid Gunardi dan Sari Simorangkir"
+   ],
+   "author": "Arvid Gunardi dan Sari Simorangkir",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Hari ini hari yang telah dijadikan Tuhan",
+      "Mari kita Bersuka"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Hari ini hari yang telah dijadikan Tuhan",
+      "Mari kita bersuka",
+      "Didalam Tuhan bersuka",
+      "Didalam Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bersuka.. bersuka dalam Tuhan",
+      "Mari bersuka bersukacitalah",
+      "Bersuka.. bersuka dalam Tuhan",
+      "Skarang bersuka bersukacitalah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge 1",
+     "tag": "Bridge 1",
+     "lines": [
+      "Bersuka didalam Tuhan",
+      "(Bersuka didalam Tuhan)",
+      "Mari bersukacita didalam Tuhan",
+      "(Mari bersukacita didalam Tuhan)"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge 2",
+     "tag": "Bridge 2",
+     "lines": [
+      "Bersuka didalam Tuhan",
+      "(Bersuka didalam Tuhan)",
+      "Bersuka bersuka didalam Tuhan",
+      "(Bersuka bersuka didalam Tuhan)",
+      "Mari kita bersukacita didalam Tuhan",
+      "(Mari bersukacita didalam Tuhan)"
+     ],
+     "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "Mari kita bersuka.."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "bridge 1",
+    "bridge 2",
+    "ending"
+   ],
+   "slides": [
+    [
+     "Hari ini hari yang telah dijadikan Tuhan",
+     "Mari kita Bersuka"
+    ],
+    [
+     "Hari ini hari yang telah dijadikan Tuhan",
+     "Mari kita bersuka"
+    ],
+    [
+     "Didalam Tuhan bersuka",
+     "Didalam Tuhan"
+    ],
+    [
+     "Bersuka.. bersuka dalam Tuhan",
+     "Mari bersuka bersukacitalah"
+    ],
+    [
+     "Bersuka.. bersuka dalam Tuhan",
+     "Skarang bersuka bersukacitalah"
+    ],
+    [
+     "Bersuka didalam Tuhan",
+     "(Bersuka didalam Tuhan)"
+    ],
+    [
+     "Mari bersukacita didalam Tuhan",
+     "(Mari bersukacita didalam Tuhan)"
+    ],
+    [
+     "Bersuka didalam Tuhan",
+     "(Bersuka didalam Tuhan)"
+    ],
+    [
+     "Bersuka bersuka didalam Tuhan",
+     "(Bersuka bersuka didalam Tuhan)"
+    ],
+    [
+     "Mari kita bersukacita didalam Tuhan",
+     "(Mari bersukacita didalam Tuhan)"
+    ],
+    [
+     "Mari kita bersuka.."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "Bridge 1",
+    "",
+    "Bridge 2",
+    "",
+    "",
+    "Ending"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789214668980,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
