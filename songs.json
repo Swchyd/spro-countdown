@@ -5272,15 +5272,22 @@
    "author": "Redo Daeng Badjie",
    "sections": [
     {
-     "key": "verse",
-     "tag": "Verse",
+     "key": "verse 1",
+     "tag": "Verse 1",
      "lines": [
       "KaryaMu mempesonaku",
-      "Kau angkatku dari gelap",
-      "Kasih tulus memberi warna",
+      "Kau angkatku dari kelam",
+      "Kasih tulus memberi warna"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
       "Kau buang semua gelisah",
       "Kau beriku sukacita",
-      "Kau buatku selalu tertawa."
+      "Kau buatku selalu tertawa"
      ],
      "notes": []
     },
@@ -5289,7 +5296,7 @@
      "tag": "Pre-Chorus",
      "lines": [
       "Kau taruh lagu baru dalam hatiku",
-      "Mulutku bersorak memuji namaMu."
+      "Mulutku bersorak memuji namaMu"
      ],
      "notes": []
     },
@@ -5300,34 +5307,47 @@
       "Dari hatiku mengalir",
       "Pujian bagiMu, oh sukacita",
       "RohMu hadir di sini",
-      "Dan ku menari memuji",
-      "Di hadapanMu Yesus",
-      "Sukacita RohMu hadir di sini."
+      "Dan 'ku menari, memuji",
+      "Di hadapanMu, Yesus, sukacita",
+      "RohMu hadir di sini"
+     ],
+     "notes": []
+    },
+    {
+     "key": "post-chorus",
+     "tag": "Post-Chorus",
+     "lines": [
+      "Lalalalalala.. Lalalalala..",
+      "Lala.. Haleluya.."
      ],
      "notes": []
     }
    ],
    "order": [
-    "verse",
+    "verse 1",
+    "verse 2",
     "pre-chorus",
-    "chorus"
+    "chorus",
+    "post-chorus"
    ],
    "slides": [
     [
      "KaryaMu mempesonaku",
-     "Kau angkatku dari gelap"
+     "Kau angkatku dari kelam"
     ],
     [
-     "Kasih tulus memberi warna",
-     "Kau buang semua gelisah"
+     "Kasih tulus memberi warna"
     ],
     [
-     "Kau beriku sukacita",
-     "Kau buatku selalu tertawa."
+     "Kau buang semua gelisah",
+     "Kau beriku sukacita"
+    ],
+    [
+     "Kau buatku selalu tertawa"
     ],
     [
      "Kau taruh lagu baru dalam hatiku",
-     "Mulutku bersorak memuji namaMu."
+     "Mulutku bersorak memuji namaMu"
     ],
     [
      "Dari hatiku mengalir",
@@ -5335,23 +5355,31 @@
     ],
     [
      "RohMu hadir di sini",
-     "Dan ku menari memuji"
+     "Dan 'ku menari, memuji"
     ],
     [
-     "Di hadapanMu Yesus",
-     "Sukacita RohMu hadir di sini."
+     "Di hadapanMu, Yesus, sukacita",
+     "RohMu hadir di sini"
+    ],
+    [
+     "Lalalalalala.. Lalalalala..",
+     "Lala.. Haleluya.."
     ]
    ],
    "tags": [
-    "Verse",
+    "Verse 1",
     "",
+    "Verse 2",
     "",
     "Pre-Chorus",
     "Chorus",
     "",
-    ""
+    "",
+    "Post-Chorus"
    ],
    "notes": [
+    "",
+    "",
     "",
     "",
     "",
@@ -5361,9 +5389,9 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1789198181763,
-   "updatedBy": "Owner",
+   "version": 2,
+   "updatedAt": 1789215588412,
+   "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
   },
