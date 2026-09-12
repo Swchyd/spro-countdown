@@ -6953,6 +6953,126 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtyfb63n6u9y",
+   "title": "[IND] MEMANDANG WAJAHMU",
+   "authors": [
+    "AOG Worship"
+   ],
+   "author": "AOG Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Betapa aku rindu",
+      "Berhadapan dengan-Mu",
+      "Bawaku lebih dalam",
+      "Di dekat-Mu, menyembah-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Murnikanlah hatiku",
+      "S′bab Kau yang mengenalku",
+      "Jiwaku pun terbuka",
+      "'Tuk suara-Mu, jamahan-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 1",
+     "tag": "Chorus 1",
+     "lines": [
+      "Kunikmati kehadiran-Mu",
+      "Bermuara dalam hatiku",
+      "Saat ku memandang wajah-Mu",
+      "Damai memenuhi"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 2",
+     "tag": "Chorus 2",
+     "lines": [
+      "Kulepas segala bebanku",
+      "Terhanyut ku dalam kasih-Mu",
+      "Saat ku memandang wajah-Mu",
+      "Kutemukan hidup"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus 1",
+    "chorus 2"
+   ],
+   "slides": [
+    [
+     "Betapa aku rindu",
+     "Berhadapan dengan-Mu"
+    ],
+    [
+     "Bawaku lebih dalam",
+     "Di dekat-Mu, menyembah-Mu"
+    ],
+    [
+     "Murnikanlah hatiku",
+     "S′bab Kau yang mengenalku"
+    ],
+    [
+     "Jiwaku pun terbuka",
+     "'Tuk suara-Mu, jamahan-Mu"
+    ],
+    [
+     "Kunikmati kehadiran-Mu",
+     "Bermuara dalam hatiku"
+    ],
+    [
+     "Saat ku memandang wajah-Mu",
+     "Damai memenuhi"
+    ],
+    [
+     "Kulepas segala bebanku",
+     "Terhanyut ku dalam kasih-Mu"
+    ],
+    [
+     "Saat ku memandang wajah-Mu",
+     "Kutemukan hidup"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus 1",
+    "",
+    "Chorus 2",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789219866337,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
