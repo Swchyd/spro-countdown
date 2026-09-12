@@ -5620,6 +5620,132 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtyavggz5vfz",
+   "title": "[IND] KAU YANG TERINDAH",
+   "authors": [
+    "Robert & Lea Sutanto"
+   ],
+   "author": "Robert & Lea Sutanto",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Kau yang terindah",
+      "Di dalam hidup ini",
+      "Tiada Allah Tuhan",
+      "Yang seperti Engkau",
+      "Besar perkasa penuh kemuliaan."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Kau yang termanis",
+      "Di dalam hidup ini",
+      "Kucinta Kau lebih dari segalanya",
+      "Besar kasih setiaMu kepadaku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 1",
+     "tag": "Chorus 1",
+     "lines": [
+      "Kusembah Kau ya Allahku",
+      "Kutinggikan namaMu selalu",
+      "Tiada lutut tak bertelut",
+      "Menyembah Yesus Tuhan Rajaku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 2",
+     "tag": "Chorus 2",
+     "lines": [
+      "Kusembah Kau ya Allahku",
+      "Kutinggikan NamaMu selalu",
+      "Semua lidah kan mengaku",
+      "Engkaulah Yesus Tuhan Rajaku."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus 1",
+    "chorus 2"
+   ],
+   "slides": [
+    [
+     "Kau yang terindah",
+     "Di dalam hidup ini"
+    ],
+    [
+     "Tiada Allah Tuhan",
+     "Yang seperti Engkau"
+    ],
+    [
+     "Besar perkasa penuh kemuliaan."
+    ],
+    [
+     "Kau yang termanis",
+     "Di dalam hidup ini"
+    ],
+    [
+     "Kucinta Kau lebih dari segalanya",
+     "Besar kasih setiaMu kepadaku."
+    ],
+    [
+     "Kusembah Kau ya Allahku",
+     "Kutinggikan namaMu selalu"
+    ],
+    [
+     "Tiada lutut tak bertelut",
+     "Menyembah Yesus Tuhan Rajaku."
+    ],
+    [
+     "Kusembah Kau ya Allahku",
+     "Kutinggikan NamaMu selalu"
+    ],
+    [
+     "Semua lidah kan mengaku",
+     "Engkaulah Yesus Tuhan Rajaku."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "Chorus 1",
+    "",
+    "Chorus 2",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789212416102,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
