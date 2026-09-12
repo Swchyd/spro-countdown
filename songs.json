@@ -6229,6 +6229,132 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtyd66sn0h6s",
+   "title": "[IND] LUBUK HATIKU",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Verse 1]",
+      "Kau melukis wajahku",
+      "Di hadapanMu",
+      "Dan mengukir namaku",
+      "Di telapak tanganMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Sampai masa tuaku",
+      "Kau tetaplah Tuhanku",
+      "Yang akan selalu menggendong",
+      "Hingga putih rambutku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "KemurahanMu itu membuatku tertegun",
+      "Kubulatkan hatiku mengikutMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kuangkat tanganku Yesus",
+      "Memuji perbuatanMu",
+      "Sungguh tiada terukur kasih setiaMu",
+      "Dalam naungan sayapMu",
+      "Ku mau terus menyembahMu",
+      "KasihMu terukir di lubuk hatiku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "verse 2",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Verse 1]",
+     "Kau melukis wajahku"
+    ],
+    [
+     "Di hadapanMu",
+     "Dan mengukir namaku"
+    ],
+    [
+     "Di telapak tanganMu"
+    ],
+    [
+     "Sampai masa tuaku",
+     "Kau tetaplah Tuhanku"
+    ],
+    [
+     "Yang akan selalu menggendong",
+     "Hingga putih rambutku"
+    ],
+    [
+     "KemurahanMu itu membuatku tertegun",
+     "Kubulatkan hatiku mengikutMu"
+    ],
+    [
+     "Kuangkat tanganku Yesus",
+     "Memuji perbuatanMu"
+    ],
+    [
+     "Sungguh tiada terukur kasih setiaMu",
+     "Dalam naungan sayapMu"
+    ],
+    [
+     "Ku mau terus menyembahMu",
+     "KasihMu terukir di lubuk hatiku"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "Pre-Chorus",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789216274749,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
