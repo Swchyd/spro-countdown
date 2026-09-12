@@ -5622,16 +5622,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_mtyam4pmuyk7",
-   "name": "Setlist 12/9 (4)",
-   "entries": [],
-   "updatedAt": 1789211993812,
-   "updatedBy": "Owner"
-  }
- ],
+ "setlists": [],
  "setlist": [],
- "setlistAt": 1789211993812,
- "setlistBy": "Owner"
+ "setlistAt": 0,
+ "setlistBy": ""
 }
