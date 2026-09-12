@@ -6731,6 +6731,228 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtydlj7szkma",
+   "title": "[ENG] I THANK GOD",
+   "authors": [
+    "Maverick City Music"
+   ],
+   "author": "Maverick City Music",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Wandering into the night",
+      "Wanting a place to hide",
+      "This weary soul",
+      "This bag of bones",
+      "And I try with all my might",
+      "But I just can’t win the fight",
+      "I’m slowly drifting",
+      "A vagabond"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus 1",
+     "tag": "Pre-Chorus 1",
+     "lines": [
+      "And just when I ran out of road",
+      "I met a Man I didn’t know",
+      "And He told me",
+      "That I was not alone"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "He picked me up",
+      "He turned me around",
+      "He placed my feet on solid ground",
+      "I thank the Master",
+      "I thank the Savior",
+      "Because He healed my heart",
+      "He changed my name",
+      "Forever free, I’m not the same",
+      "I thank the Master",
+      "I thank the Savior",
+      "I thank God"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "I cannot deny what I see",
+      "Got no choice but to beliеve",
+      "My doubts are burning",
+      "Like ashеs in the wind",
+      "So, so long to my old friends",
+      "Burden and bitterness",
+      "You can just keep it moving, hey",
+      "Nah, you ain’t welcome here"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus 2",
+     "tag": "Pre-Chorus 2",
+     "lines": [
+      "From now ’til I walk the streets of gold",
+      "I’ll sing of how You saved my soul",
+      "This wayward son has found",
+      "His way back home"
+     ],
+     "notes": []
+    },
+    {
+     "key": "vamp",
+     "tag": "Vamp",
+     "lines": [
+      "Get up get up get up",
+      "Get up outta that grave"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "pre-chorus 1",
+    "chorus",
+    "verse 2",
+    "pre-chorus 2",
+    "vamp"
+   ],
+   "slides": [
+    [
+     "Wandering into the night",
+     "Wanting a place to hide"
+    ],
+    [
+     "This weary soul",
+     "This bag of bones"
+    ],
+    [
+     "And I try with all my might",
+     "But I just can’t win the fight"
+    ],
+    [
+     "I’m slowly drifting",
+     "A vagabond"
+    ],
+    [
+     "And just when I ran out of road",
+     "I met a Man I didn’t know"
+    ],
+    [
+     "And He told me",
+     "That I was not alone"
+    ],
+    [
+     "He picked me up",
+     "He turned me around"
+    ],
+    [
+     "He placed my feet on solid ground",
+     "I thank the Master"
+    ],
+    [
+     "I thank the Savior",
+     "Because He healed my heart"
+    ],
+    [
+     "He changed my name",
+     "Forever free, I’m not the same"
+    ],
+    [
+     "I thank the Master",
+     "I thank the Savior"
+    ],
+    [
+     "I thank God"
+    ],
+    [
+     "I cannot deny what I see",
+     "Got no choice but to beliеve"
+    ],
+    [
+     "My doubts are burning",
+     "Like ashеs in the wind"
+    ],
+    [
+     "So, so long to my old friends",
+     "Burden and bitterness"
+    ],
+    [
+     "You can just keep it moving, hey",
+     "Nah, you ain’t welcome here"
+    ],
+    [
+     "From now ’til I walk the streets of gold",
+     "I’ll sing of how You saved my soul"
+    ],
+    [
+     "This wayward son has found",
+     "His way back home"
+    ],
+    [
+     "Get up get up get up",
+     "Get up outta that grave"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "",
+    "",
+    "Pre-Chorus 1",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "",
+    "",
+    "Pre-Chorus 2",
+    "",
+    "Vamp"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789216990954,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
