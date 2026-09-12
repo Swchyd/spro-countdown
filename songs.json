@@ -5444,6 +5444,94 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mty3dm4de6i0",
+   "title": "[IND] OH BETAPA INDAHNYA",
+   "authors": [
+    "Pdt. Ben Soriton"
+   ],
+   "author": "Pdt. Ben Soriton",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Oh betapa indahnya",
+      "Dan betapa eloknya",
+      "Bila saudara seiman",
+      "Hidup dalam kesatuan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bak urapan di kepala Harun",
+      "Yang ke janggut dan jubahnya turun",
+      "Seperti embun yang dari Hermon",
+      "Mengalir ke bukit Sion",
+      "Kesana t'lah dipr'rintahkan Tuhan",
+      "Agar berkat-berkat dicurahkan",
+      "Kehidupan untuk selamanya",
+      "O betapa indahnya"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Oh betapa indahnya",
+     "Dan betapa eloknya"
+    ],
+    [
+     "Bila saudara seiman",
+     "Hidup dalam kesatuan"
+    ],
+    [
+     "Bak urapan di kepala Harun",
+     "Yang ke janggut dan jubahnya turun"
+    ],
+    [
+     "Seperti embun yang dari Hermon",
+     "Mengalir ke bukit Sion"
+    ],
+    [
+     "Kesana t'lah dipr'rintahkan Tuhan",
+     "Agar berkat-berkat dicurahkan"
+    ],
+    [
+     "Kehidupan untuk selamanya",
+     "O betapa indahnya"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789199826030,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
