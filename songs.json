@@ -5268,30 +5268,12 @@
   {
    "id": "sl_mtwf3uxx4940",
    "name": "Setlist 11/9",
-   "entries": [
-    {
-     "id": "s_mtobyjfcc3ml",
-     "ms": 0
-    },
-    {
-     "id": "s_mtobwgktfzwa",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1789098665759,
+   "entries": [],
+   "updatedAt": 1789198100296,
    "updatedBy": "Owner"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtobyjfcc3ml",
-   "ms": 0
-  },
-  {
-   "id": "s_mtobwgktfzwa",
-   "ms": 0
-  }
- ],
- "setlistAt": 1789098665759,
+ "setlist": [],
+ "setlistAt": 1789198100296,
  "setlistBy": "Owner"
 }
