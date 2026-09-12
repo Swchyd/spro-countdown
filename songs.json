@@ -5790,10 +5790,31 @@
      "key": "bridge 1",
      "tag": "Bridge 1",
      "lines": [
-      "Bersuka didalam Tuhan",
-      "(Bersuka didalam Tuhan)",
-      "Mari bersukacita didalam Tuhan",
-      "(Mari bersukacita didalam Tuhan)"
+      "Bersuka didalam Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Bersuka didalam Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Bersuka didalam Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "Mari bersukacita didalam Tuhan"
      ],
      "notes": []
     },
@@ -5801,20 +5822,71 @@
      "key": "bridge 2",
      "tag": "Bridge 2",
      "lines": [
-      "Bersuka didalam Tuhan",
-      "(Bersuka didalam Tuhan)",
-      "Bersuka bersuka didalam Tuhan",
-      "(Bersuka bersuka didalam Tuhan)",
-      "Mari kita bersukacita didalam Tuhan",
-      "(Mari bersukacita didalam Tuhan)"
+      "Bersuka didalam Tuhan"
      ],
      "notes": []
     },
     {
-     "key": "ending",
-     "tag": "Ending",
+     "key": "_4",
+     "tag": "",
      "lines": [
-      "Mari kita bersuka.."
+      "Bersuka didalam Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_5",
+     "tag": "",
+     "lines": [
+      "Bersuka bersuka didalam Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_6",
+     "tag": "",
+     "lines": [
+      "Mari kita bersukacita didalam Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_7",
+     "tag": "",
+     "lines": [
+      "Mari kita bersuka.. (7x)"
+     ],
+     "notes": []
+    },
+    {
+     "key": "coda",
+     "tag": "Coda",
+     "lines": [
+      "Mari kita bersuka"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_8",
+     "tag": "",
+     "lines": [
+      "Sekarang kita bersuka"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_9",
+     "tag": "",
+     "lines": [
+      "Mari kita bersuka"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_10",
+     "tag": "",
+     "lines": [
+      "Ber//Su//kaa.."
      ],
      "notes": []
     }
@@ -5824,8 +5896,18 @@
     "verse 2",
     "chorus",
     "bridge 1",
+    "_1",
+    "_2",
+    "_3",
     "bridge 2",
-    "ending"
+    "_4",
+    "_5",
+    "_6",
+    "_7",
+    "coda",
+    "_8",
+    "_9",
+    "_10"
    ],
    "slides": [
     [
@@ -5849,27 +5931,43 @@
      "Skarang bersuka bersukacitalah"
     ],
     [
-     "Bersuka didalam Tuhan",
-     "(Bersuka didalam Tuhan)"
+     "Bersuka didalam Tuhan"
     ],
     [
-     "Mari bersukacita didalam Tuhan",
-     "(Mari bersukacita didalam Tuhan)"
+     "Bersuka didalam Tuhan"
     ],
     [
-     "Bersuka didalam Tuhan",
-     "(Bersuka didalam Tuhan)"
+     "Bersuka didalam Tuhan"
     ],
     [
-     "Bersuka bersuka didalam Tuhan",
-     "(Bersuka bersuka didalam Tuhan)"
+     "Mari bersukacita didalam Tuhan"
     ],
     [
-     "Mari kita bersukacita didalam Tuhan",
-     "(Mari bersukacita didalam Tuhan)"
+     "Bersuka didalam Tuhan"
     ],
     [
-     "Mari kita bersuka.."
+     "Bersuka didalam Tuhan"
+    ],
+    [
+     "Bersuka bersuka didalam Tuhan"
+    ],
+    [
+     "Mari kita bersukacita didalam Tuhan"
+    ],
+    [
+     "Mari kita bersuka.. (7x)"
+    ],
+    [
+     "Mari kita bersuka"
+    ],
+    [
+     "Sekarang kita bersuka"
+    ],
+    [
+     "Mari kita bersuka"
+    ],
+    [
+     "Ber//Su//kaa.."
     ]
    ],
    "tags": [
@@ -5880,12 +5978,26 @@
     "",
     "Bridge 1",
     "",
+    "",
+    "",
     "Bridge 2",
     "",
     "",
-    "Ending"
+    "",
+    "",
+    "Coda",
+    "",
+    "",
+    ""
    ],
    "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
     "",
     "",
     "",
@@ -5899,8 +6011,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1789214668980,
+   "version": 2,
+   "updatedAt": 1789215350471,
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
