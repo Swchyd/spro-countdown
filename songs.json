@@ -6427,6 +6427,126 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtyde8mpio9w",
+   "title": "[ENG] GLORIFY THY NAME",
+   "authors": [
+    "Kent Henry"
+   ],
+   "author": "Kent Henry",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Father we love You",
+      "We worship and adore You",
+      "Glorify Thy Name",
+      "In all the earth."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Glorify Thy Name",
+      "Glorify Thy Name",
+      "Glorify Thy Name",
+      "In all the earth"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Jesus we love You",
+      "We worship and adore You",
+      "Glorify Thy Name",
+      "In all the earth."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 3",
+     "tag": "Verse 3",
+     "lines": [
+      "Spirit we love You,",
+      "We worship and adore You",
+      "Glorify Thy Name",
+      "In all the earth"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "chorus",
+    "verse 2",
+    "verse 3"
+   ],
+   "slides": [
+    [
+     "Father we love You",
+     "We worship and adore You"
+    ],
+    [
+     "Glorify Thy Name",
+     "In all the earth."
+    ],
+    [
+     "Glorify Thy Name",
+     "Glorify Thy Name"
+    ],
+    [
+     "Glorify Thy Name",
+     "In all the earth"
+    ],
+    [
+     "Jesus we love You",
+     "We worship and adore You"
+    ],
+    [
+     "Glorify Thy Name",
+     "In all the earth."
+    ],
+    [
+     "Spirit we love You,",
+     "We worship and adore You"
+    ],
+    [
+     "Glorify Thy Name",
+     "In all the earth"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Chorus",
+    "",
+    "Verse 2",
+    "",
+    "Verse 3",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789216650375,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
