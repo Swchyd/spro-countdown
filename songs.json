@@ -5752,12 +5752,22 @@
   {
    "id": "sl_mtyamqtwfimi",
    "name": "Setlist 12/9",
-   "entries": [],
-   "updatedAt": 1789212019369,
+   "entries": [
+    {
+     "id": "s_mtyavggz5vfz",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1789212433486,
    "updatedBy": "Owner"
   }
  ],
- "setlist": [],
- "setlistAt": 1789212019369,
+ "setlist": [
+  {
+   "id": "s_mtyavggz5vfz",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1789212433486,
  "setlistBy": "Owner"
 }
