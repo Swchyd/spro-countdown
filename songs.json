@@ -5622,8 +5622,16 @@
    "hidden": false
   }
  ],
- "setlists": [],
+ "setlists": [
+  {
+   "id": "sl_mtyamqtwfimi",
+   "name": "Setlist 12/9",
+   "entries": [],
+   "updatedAt": 1789212019369,
+   "updatedBy": "Owner"
+  }
+ ],
  "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlistAt": 1789212019369,
+ "setlistBy": "Owner"
 }
