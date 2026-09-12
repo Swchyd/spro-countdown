@@ -6769,38 +6769,16 @@
    ],
    "updatedAt": 1789216821699,
    "updatedBy": "Nicole"
+  },
+  {
+   "id": "sl_mtydhypax7cv",
+   "name": "Setlist 12/9",
+   "entries": [],
+   "updatedAt": 1789216823935,
+   "updatedBy": "Nicole"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtyc7rnolthw",
-   "ms": 0
-  },
-  {
-   "id": "s_mty2ect4iu1z",
-   "ms": 0
-  },
-  {
-   "id": "s_mtycy0wow4kt",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd13hgo09e",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyavggz5vfz",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd66sn0h6s",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd9ns80nx3",
-   "ms": 0
-  }
- ],
- "setlistAt": 1789216821699,
+ "setlist": [],
+ "setlistAt": 1789216823935,
  "setlistBy": "Nicole"
 }
