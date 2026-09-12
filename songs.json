@@ -5366,6 +5366,84 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mty2go56l8rx",
+   "title": "[IND] BERSAMA KELUARGAKU",
+   "authors": [
+    "Robert & Lea Sutanto"
+   ],
+   "author": "Robert & Lea Sutanto",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kami datang dihadiratMu",
+      "Dalam satu kasih dengan bersehati",
+      "Berjanji setia sampai akhir",
+      "Mengasihi-Mu Tuhan."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bersama k'luargaku melayani Tuhan",
+      "Bersatu s'lamanya mengasihi Engkau",
+      "Tiada yang dapat melebihi",
+      "KasihMu ya Tuhan",
+      "Bagi kami Engkau segalanya."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kami datang dihadiratMu",
+     "Dalam satu kasih dengan bersehati"
+    ],
+    [
+     "Berjanji setia sampai akhir",
+     "Mengasihi-Mu Tuhan."
+    ],
+    [
+     "Bersama k'luargaku melayani Tuhan",
+     "Bersatu s'lamanya mengasihi Engkau"
+    ],
+    [
+     "Tiada yang dapat melebihi",
+     "KasihMu ya Tuhan"
+    ],
+    [
+     "Bagi kami Engkau segalanya."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789198289738,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
