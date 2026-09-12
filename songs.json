@@ -6156,6 +6156,79 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtyd13hgo09e",
+   "title": "[IND] KAU BERTAHTA",
+   "authors": [
+    "Ronny Daud Simeon",
+    "Jubilee (Shekinah Music Live Recording)"
+   ],
+   "author": "Ronny Daud Simeon, Jubilee (Shekinah Music Live Recording)",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kau bertahta atas pujian umatMu",
+      "Kau dipuja dalam hadiratMu",
+      "Kami masuk dalam tempat kudusMu",
+      "Tinggikan namaMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kutinggikan namaMu Yesus",
+      "Kuangkat tinggi panjiMu",
+      "Kubersujud dan menyembahMu",
+      "Raja s’gala Raja"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kau bertahta atas pujian umatMu",
+     "Kau dipuja dalam hadiratMu"
+    ],
+    [
+     "Kami masuk dalam tempat kudusMu",
+     "Tinggikan namaMu"
+    ],
+    [
+     "Kutinggikan namaMu Yesus",
+     "Kuangkat tinggi panjiMu"
+    ],
+    [
+     "Kubersujud dan menyembahMu",
+     "Raja s’gala Raja"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789216038194,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
