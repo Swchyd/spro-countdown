@@ -5760,14 +5760,16 @@
    ],
    "updatedAt": 1789214474651,
    "updatedBy": "Nicole"
-  }
- ],
- "setlist": [
+  },
   {
-   "id": "s_mty2ect4iu1z",
-   "ms": 0
+   "id": "sl_mtyc3o1f4i59",
+   "name": "Setlist 12/9",
+   "entries": [],
+   "updatedAt": 1789214476514,
+   "updatedBy": "Nicole"
   }
  ],
- "setlistAt": 1789214474651,
+ "setlist": [],
+ "setlistAt": 1789214476514,
  "setlistBy": "Nicole"
 }
