@@ -5754,28 +5754,20 @@
    "name": "Setlist 12/9",
    "entries": [
     {
-     "id": "s_mtyavggz5vfz",
-     "ms": 0
-    },
-    {
      "id": "s_mty2ect4iu1z",
      "ms": 0
     }
    ],
-   "updatedAt": 1789212462244,
-   "updatedBy": "Owner"
+   "updatedAt": 1789214458394,
+   "updatedBy": "Nicole"
   }
  ],
  "setlist": [
-  {
-   "id": "s_mtyavggz5vfz",
-   "ms": 0
-  },
   {
    "id": "s_mty2ect4iu1z",
    "ms": 0
   }
  ],
- "setlistAt": 1789212462244,
- "setlistBy": "Owner"
+ "setlistAt": 1789214458394,
+ "setlistBy": "Nicole"
 }
