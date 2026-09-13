@@ -5321,6 +5321,14 @@
       "Lala.. Haleluya.."
      ],
      "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "RohMu hadir di sini"
+     ],
+     "notes": []
     }
    ],
    "order": [
@@ -5328,7 +5336,8 @@
     "verse 2",
     "pre-chorus",
     "chorus",
-    "post-chorus"
+    "post-chorus",
+    "ending"
    ],
    "slides": [
     [
@@ -5364,6 +5373,9 @@
     [
      "Lalalalalala.. Lalalalala..",
      "Lala.. Haleluya.."
+    ],
+    [
+     "RohMu hadir di sini"
     ]
    ],
    "tags": [
@@ -5375,9 +5387,11 @@
     "Chorus",
     "",
     "",
-    "Post-Chorus"
+    "Post-Chorus",
+    "Ending"
    ],
    "notes": [
+    "",
     "",
     "",
     "",
@@ -5389,8 +5403,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1789215588412,
+   "version": 3,
+   "updatedAt": 1789267435275,
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
