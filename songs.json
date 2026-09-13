@@ -7273,46 +7273,16 @@
    ],
    "updatedAt": 1789267132629,
    "updatedBy": "Nicole"
+  },
+  {
+   "id": "sl_mtz89i55xokq",
+   "name": "Setlist 13/9",
+   "entries": [],
+   "updatedAt": 1789268499988,
+   "updatedBy": "Sam"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtyc7rnolthw",
-   "ms": 0
-  },
-  {
-   "id": "s_mtydhe2l7u4e",
-   "ms": 0
-  },
-  {
-   "id": "s_mtydlj7szkma",
-   "ms": 0
-  },
-  {
-   "id": "s_mtycy0wow4kt",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd13hgo09e",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyfb63n6u9y",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd9ns80nx3",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyde8mpio9w",
-   "ms": 0
-  },
-  {
-   "id": "s_mtz7g5ke7zyp",
-   "ms": 0
-  }
- ],
- "setlistAt": 1789267132629,
- "setlistBy": "Nicole"
+ "setlist": [],
+ "setlistAt": 1789268499988,
+ "setlistBy": "Sam"
 }
