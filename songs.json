@@ -7073,6 +7073,92 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mtz7g5ke7zyp",
+   "title": "[IND] NYANYI PUJI TUHAN",
+   "authors": [
+    "Lanny Nanlohy & Ir. Djohan E"
+   ],
+   "author": "Lanny Nanlohy & Ir. Djohan E",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Nyanyi puji Tuhan",
+      "Bangun bait kudusNya",
+      "Di tempat ini Yesus t'lah hadir",
+      "Kemuliaan Tuhan dinyatakan",
+      "Oh… sukacita",
+      "Bangun bait kudusNya",
+      "Persembahkanlah s'luruh hidupmu",
+      "Bagi kemu-liaanNya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Anug'rahNya bagiku",
+      "KasihNya dicurahkan",
+      "Sambutlah Dia, Juruselamat Bersoraklah"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus",
+    "verse"
+   ],
+   "slides": [
+    [
+     "Nyanyi puji Tuhan",
+     "Bangun bait kudusNya"
+    ],
+    [
+     "Di tempat ini Yesus t'lah hadir",
+     "Kemuliaan Tuhan dinyatakan"
+    ],
+    [
+     "Oh… sukacita",
+     "Bangun bait kudusNya"
+    ],
+    [
+     "Persembahkanlah s'luruh hidupmu",
+     "Bagi kemu-liaanNya"
+    ],
+    [
+     "Anug'rahNya bagiku",
+     "KasihNya dicurahkan"
+    ],
+    [
+     "Sambutlah Dia, Juruselamat Bersoraklah"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    "",
+    "",
+    "Verse",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789267128685,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
