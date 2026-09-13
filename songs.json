@@ -5890,7 +5890,7 @@
      "key": "coda",
      "tag": "Coda",
      "lines": [
-      "Mari kita bersuka"
+      "Mari bersuka"
      ],
      "notes": []
     },
@@ -5898,7 +5898,7 @@
      "key": "_8",
      "tag": "",
      "lines": [
-      "Sekarang kita bersuka"
+      "Sekarang bersuka"
      ],
      "notes": []
     },
@@ -5906,12 +5906,20 @@
      "key": "_9",
      "tag": "",
      "lines": [
-      "Mari kita bersuka"
+      "Mari bersuka"
      ],
      "notes": []
     },
     {
      "key": "_10",
+     "tag": "",
+     "lines": [
+      "Bersukacitalah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_11",
      "tag": "",
      "lines": [
       "Ber//Su//kaa.."
@@ -5935,7 +5943,8 @@
     "coda",
     "_8",
     "_9",
-    "_10"
+    "_10",
+    "_11"
    ],
    "slides": [
     [
@@ -5986,13 +5995,16 @@
      "Mari kita bersuka.. (7x)"
     ],
     [
-     "Mari kita bersuka"
+     "Mari bersuka"
     ],
     [
-     "Sekarang kita bersuka"
+     "Sekarang bersuka"
     ],
     [
-     "Mari kita bersuka"
+     "Mari bersuka"
+    ],
+    [
+     "Bersukacitalah"
     ],
     [
      "Ber//Su//kaa.."
@@ -6016,6 +6028,7 @@
     "Coda",
     "",
     "",
+    "",
     ""
    ],
    "notes": [
@@ -6036,11 +6049,12 @@
     "",
     "",
     "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1789215350471,
+   "version": 3,
+   "updatedAt": 1789267311651,
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
