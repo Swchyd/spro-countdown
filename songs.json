@@ -7269,9 +7269,13 @@
     {
      "id": "s_mtz7g5ke7zyp",
      "ms": 0
+    },
+    {
+     "id": "s_mty2ect4iu1z",
+     "ms": 0
     }
    ],
-   "updatedAt": 1789267132629,
+   "updatedAt": 1789285666853,
    "updatedBy": "Nicole"
   },
   {
@@ -7293,14 +7297,46 @@
  ],
  "setlist": [
   {
-   "id": "s_mtoc5kw2xqro",
+   "id": "s_mtyc7rnolthw",
    "ms": 0
   },
   {
-   "id": "s_mtedclnxk2id",
+   "id": "s_mtydhe2l7u4e",
+   "ms": 0
+  },
+  {
+   "id": "s_mtydlj7szkma",
+   "ms": 0
+  },
+  {
+   "id": "s_mtycy0wow4kt",
+   "ms": 0
+  },
+  {
+   "id": "s_mtyd13hgo09e",
+   "ms": 0
+  },
+  {
+   "id": "s_mtyfb63n6u9y",
+   "ms": 0
+  },
+  {
+   "id": "s_mtyd9ns80nx3",
+   "ms": 0
+  },
+  {
+   "id": "s_mtyde8mpio9w",
+   "ms": 0
+  },
+  {
+   "id": "s_mtz7g5ke7zyp",
+   "ms": 0
+  },
+  {
+   "id": "s_mty2ect4iu1z",
    "ms": 0
   }
  ],
- "setlistAt": 1789268511640,
- "setlistBy": "Sam"
+ "setlistAt": 1789285666853,
+ "setlistBy": "Nicole"
 }
