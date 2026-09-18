@@ -7450,6 +7450,108 @@
    "updatedBy": "Marvella",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu6t27jgl4ig",
+   "title": "[IND] KUPIKIRKAN SEMUA ITU",
+   "authors": [
+    "Redo Daeng Badjie"
+   ],
+   "author": "Redo Daeng Badjie",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Ketika ku kuatir",
+      "Kalut di hatiku",
+      "Kudatang padaMu",
+      "Nyatakan doa dan ucapan syukur"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Damai sejahtera",
+      "Yang melampaui",
+      "Segala akal",
+      "Akan memelihara",
+      "Hati dan pikiranku",
+      "Dalam Kristus Yesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Semua yang benar",
+      "Semua yang mulia",
+      "Semua yang adil dan suci",
+      "Semua yang manis",
+      "Yang sedap di dengar",
+      "Semua kebajikan yang patut dipuji",
+      "Kupikirkan semua itu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ketika ku kuatir",
+     "Kalut di hatiku",
+     "Kudatang padaMu",
+     "Nyatakan doa dan ucapan syukur"
+    ],
+    [
+     "Damai sejahtera",
+     "Yang melampaui",
+     "Segala akal",
+     "Akan memelihara"
+    ],
+    [
+     "Hati dan pikiranku",
+     "Dalam Kristus Yesus"
+    ],
+    [
+     "Semua yang benar",
+     "Semua yang mulia",
+     "Semua yang adil dan suci",
+     "Semua yang manis"
+    ],
+    [
+     "Yang sedap di dengar",
+     "Semua kebajikan yang patut dipuji",
+     "Kupikirkan semua itu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Verse 2",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1789726692230,
+   "updatedBy": "Marvella",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
