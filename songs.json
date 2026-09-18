@@ -7374,12 +7374,22 @@
   {
    "id": "sl_mu6spbz86kpi",
    "name": "Setlist 18/9",
-   "entries": [],
-   "updatedAt": 1789726092830,
+   "entries": [
+    {
+     "id": "s_mu6ssr7k3p9j",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1789726260584,
    "updatedBy": "Marvella"
   }
  ],
- "setlist": [],
- "setlistAt": 1789726092830,
+ "setlist": [
+  {
+   "id": "s_mu6ssr7k3p9j",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1789726260584,
  "setlistBy": "Marvella"
 }
