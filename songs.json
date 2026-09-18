@@ -7778,26 +7778,16 @@
    ],
    "updatedAt": 1789726700332,
    "updatedBy": "Marvella"
+  },
+  {
+   "id": "sl_mu6wp8zgz01h",
+   "name": "Setlist 18/9 (2)",
+   "entries": [],
+   "updatedAt": 1789732807847,
+   "updatedBy": "Pido"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mu6ssr7k3p9j",
-   "ms": 0
-  },
-  {
-   "id": "s_mu6sum6gkyh4",
-   "ms": 0
-  },
-  {
-   "id": "s_mu6sxrfhbbke",
-   "ms": 0
-  },
-  {
-   "id": "s_mu6t27jgl4ig",
-   "ms": 0
-  }
- ],
- "setlistAt": 1789726700332,
- "setlistBy": "Marvella"
+ "setlist": [],
+ "setlistAt": 1789732807847,
+ "setlistBy": "Pido"
 }
