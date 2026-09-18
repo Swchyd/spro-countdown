@@ -7658,82 +7658,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_mtyamqtwfimi",
-   "name": "Setlist UMUM 13/9",
-   "entries": [
-    {
-     "id": "s_mtyc7rnolthw",
-     "ms": 0
-    },
-    {
-     "id": "s_mty2ect4iu1z",
-     "ms": 0
-    },
-    {
-     "id": "s_mtycy0wow4kt",
-     "ms": 0
-    },
-    {
-     "id": "s_mtyd13hgo09e",
-     "ms": 0
-    },
-    {
-     "id": "s_mtyavggz5vfz",
-     "ms": 0
-    },
-    {
-     "id": "s_mtyd66sn0h6s",
-     "ms": 0
-    },
-    {
-     "id": "s_mtyd9ns80nx3",
-     "ms": 0
-    },
-    {
-     "id": "s_mtyde8mpio9w",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1789263692861,
-   "updatedBy": "Nicole"
-  }
- ],
- "setlist": [
-  {
-   "id": "s_mtyc7rnolthw",
-   "ms": 0
-  },
-  {
-   "id": "s_mty2ect4iu1z",
-   "ms": 0
-  },
-  {
-   "id": "s_mtycy0wow4kt",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd13hgo09e",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyavggz5vfz",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd66sn0h6s",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd9ns80nx3",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyde8mpio9w",
-   "ms": 0
-  }
- ],
- "setlistAt": 1789263692861,
- "setlistBy": "Nicole"
+ "setlists": [],
+ "setlist": [],
+ "setlistAt": 0,
+ "setlistBy": ""
 }
