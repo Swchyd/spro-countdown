@@ -7187,6 +7187,76 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu6ssr7k3p9j",
+   "title": "[IND] KECAPLAH DAN LIHATLAH",
+   "authors": [
+    "Franky Sihombing"
+   ],
+   "author": "Franky Sihombing",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kecaplah dan lihatlah",
+      "Betapa baiknya Tuhan itu",
+      "Rasakan dan nikmati",
+      "Kasih setia Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Syukur bagiMu Tuhan",
+      "S'gala hormat bagiMu Tuhan",
+      "Allah yang mengasihiku",
+      "Allah yang mem'liharaku",
+      "Selamanya"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kecaplah dan lihatlah",
+     "Betapa baiknya Tuhan itu",
+     "Rasakan dan nikmati",
+     "Kasih setia Tuhan"
+    ],
+    [
+     "Syukur bagiMu Tuhan",
+     "S'gala hormat bagiMu Tuhan",
+     "Allah yang mengasihiku",
+     "Allah yang mem'liharaku"
+    ],
+    [
+     "Selamanya"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1789726251190,
+   "updatedBy": "Marvella",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
