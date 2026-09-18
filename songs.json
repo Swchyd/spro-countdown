@@ -7293,50 +7293,16 @@
    ],
    "updatedAt": 1789268511640,
    "updatedBy": "Sam"
+  },
+  {
+   "id": "sl_mu6soshj91ig",
+   "name": "Setlist 18/9",
+   "entries": [],
+   "updatedAt": 1789726067135,
+   "updatedBy": "Marvella"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtyc7rnolthw",
-   "ms": 0
-  },
-  {
-   "id": "s_mtydhe2l7u4e",
-   "ms": 0
-  },
-  {
-   "id": "s_mtydlj7szkma",
-   "ms": 0
-  },
-  {
-   "id": "s_mtycy0wow4kt",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd13hgo09e",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyfb63n6u9y",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyd9ns80nx3",
-   "ms": 0
-  },
-  {
-   "id": "s_mtyde8mpio9w",
-   "ms": 0
-  },
-  {
-   "id": "s_mtz7g5ke7zyp",
-   "ms": 0
-  },
-  {
-   "id": "s_mty2ect4iu1z",
-   "ms": 0
-  }
- ],
- "setlistAt": 1789285666853,
- "setlistBy": "Nicole"
+ "setlist": [],
+ "setlistAt": 1789726067135,
+ "setlistBy": "Marvella"
 }
