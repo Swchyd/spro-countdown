@@ -7366,6 +7366,90 @@
    "updatedBy": "Marvella",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu6sxrfhbbke",
+   "title": "[IND] BAGIAN YANG TERBAIK",
+   "authors": [
+    "Joseph S. Djafar",
+    "Ronald Pangemanan",
+    "William Wira",
+    "Maria Priscilla",
+    "Melodi Malinda"
+   ],
+   "author": "Joseph S. Djafar, Ronald Pangemanan, William Wira, Maria Priscilla, Melodi Malinda",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Ku ingin s'lalu dekat",
+      "Mendengar suara-Mu Bapa",
+      "Lebih dari segalanya."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Ku ingin mengenal-Mu",
+      "Rahasia hati-Mu",
+      "Ha-nya itu rinduku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Memilih-Mu bagian yang terbaik",
+      "Selamanya tak akan terganti",
+      "Harta yang paling berharga",
+      "Hanya Kau Yesus selamanya."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ku ingin s'lalu dekat",
+     "Mendengar suara-Mu Bapa",
+     "Lebih dari segalanya."
+    ],
+    [
+     "Ku ingin mengenal-Mu",
+     "Rahasia hati-Mu",
+     "Ha-nya itu rinduku."
+    ],
+    [
+     "Memilih-Mu bagian yang terbaik",
+     "Selamanya tak akan terganti",
+     "Harta yang paling berharga",
+     "Hanya Kau Yesus selamanya."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Verse 2",
+    "Chorus"
+   ],
+   "notes": [
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1789726484890,
+   "updatedBy": "Marvella",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
