@@ -7552,6 +7552,102 @@
    "updatedBy": "Marvella",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu6woxqvifp9",
+   "title": "[IND] ALLAH YANG SETIA",
+   "authors": [
+    "GMB - Giving My Best"
+   ],
+   "author": "GMB - Giving My Best",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Yesus, Kau telah memulai",
+      "S'gala yang baik dalamku",
+      "Engkau menjadikanku",
+      "Serupa gambaranMu",
+      "Dan berharga di mataMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Yesus, Kau telah memulai",
+      "Karya yang mulia dalamku",
+      "Kau berikan hidupMu",
+      "S'bagai ganti dosaku",
+      "Kar'na kasihMu padaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "S'karangku memujiMu Allah yang setia",
+      "Yang tak pernah meninggalkan",
+      "Perbuatan tanganMu",
+      "S'karangku menyembahMu Allah yang mulia",
+      "Sempurnakan s'gnap hidupku",
+      "Agar indah bagiMu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Yesus, Kau telah memulai",
+     "S'gala yang baik dalamku",
+     "Engkau menjadikanku",
+     "Serupa gambaranMu",
+     "Dan berharga di mataMu"
+    ],
+    [
+     "Yesus, Kau telah memulai",
+     "Karya yang mulia dalamku",
+     "Kau berikan hidupMu",
+     "S'bagai ganti dosaku",
+     "Kar'na kasihMu padaku"
+    ],
+    [
+     "S'karangku memujiMu Allah yang setia",
+     "Yang tak pernah meninggalkan",
+     "Perbuatan tanganMu",
+     "S'karangku menyembahMu Allah yang mulia",
+     "Sempurnakan s'gnap hidupku"
+    ],
+    [
+     "Agar indah bagiMu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Verse 2",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 5,
+   "version": 1,
+   "updatedAt": 1789732791600,
+   "updatedBy": "Pido",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
