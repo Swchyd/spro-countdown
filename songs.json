@@ -7608,31 +7608,37 @@
     [
      "Yesus, Kau telah memulai",
      "S'gala yang baik dalamku",
-     "Engkau menjadikanku",
+     "Engkau menjadikanku"
+    ],
+    [
      "Serupa gambaranMu",
      "Dan berharga di mataMu"
     ],
     [
      "Yesus, Kau telah memulai",
      "Karya yang mulia dalamku",
-     "Kau berikan hidupMu",
+     "Kau berikan hidupMu"
+    ],
+    [
      "S'bagai ganti dosaku",
      "Kar'na kasihMu padaku"
     ],
     [
      "S'karangku memujiMu Allah yang setia",
      "Yang tak pernah meninggalkan",
-     "Perbuatan tanganMu",
-     "S'karangku menyembahMu Allah yang mulia",
-     "Sempurnakan s'gnap hidupku"
+     "Perbuatan tanganMu"
     ],
     [
+     "S'karangku menyembahMu Allah yang mulia",
+     "Sempurnakan s'gnap hidupku",
      "Agar indah bagiMu"
     ]
    ],
    "tags": [
     "Verse 1",
+    "",
     "Verse 2",
+    "",
     "Chorus",
     ""
    ],
@@ -7640,11 +7646,13 @@
     "",
     "",
     "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 5,
-   "version": 1,
-   "updatedAt": 1789732791600,
+   "perSlide": 3,
+   "version": 2,
+   "updatedAt": 1789732884049,
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
