@@ -7257,6 +7257,115 @@
    "updatedBy": "Marvella",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu6sum6gkyh4",
+   "title": "[IND] KEMENANGAN",
+   "authors": [
+    "Dito Kenanya",
+    "Yohanes Tjitra Hadi Kusuma"
+   ],
+   "author": "Dito Kenanya, Yohanes Tjitra Hadi Kusuma",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Walau badai menerpa s’tiap langkahku",
+      "Namun kupercaya Kau besertaku",
+      "S’gnap firman-Mu menerangi jalanku",
+      "Memberi kekuatan dalam jiwaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Yesus, Kaulah jawaban",
+      "Bersama-Mu ku ‘kan s'lalu menang"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Takkan kugoyah",
+      "Takkan kugentar",
+      "Hadapi semua",
+      "Kau yang setia",
+      "Dalam segala kelemahanku",
+      "Ku kan melihat kuasa-Mu nyata di dalam hidupku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Kusorakkan kemenangan",
+      "Ada dalam-Mu, ada dalam-Mu",
+      "Kusaksikan kemenangan",
+      "Ada dalamku, ada dalamku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre-chorus",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Walau badai menerpa s’tiap langkahku",
+     "Namun kupercaya Kau besertaku",
+     "S’gnap firman-Mu menerangi jalanku",
+     "Memberi kekuatan dalam jiwaku"
+    ],
+    [
+     "Yesus, Kaulah jawaban",
+     "Bersama-Mu ku ‘kan s'lalu menang"
+    ],
+    [
+     "Takkan kugoyah",
+     "Takkan kugentar",
+     "Hadapi semua",
+     "Kau yang setia"
+    ],
+    [
+     "Dalam segala kelemahanku",
+     "Ku kan melihat kuasa-Mu nyata di dalam hidupku"
+    ],
+    [
+     "Kusorakkan kemenangan",
+     "Ada dalam-Mu, ada dalam-Mu",
+     "Kusaksikan kemenangan",
+     "Ada dalamku, ada dalamku"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "Pre-Chorus",
+    "Chorus",
+    "",
+    "Bridge"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1789726338104,
+   "updatedBy": "Marvella",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
