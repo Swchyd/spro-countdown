@@ -7776,9 +7776,14 @@
   {
    "id": "sl_mu7udjknnn5i",
    "name": "Setlist 19/9",
-   "entries": [],
-   "updatedAt": 1789789368106,
-   "updatedBy": "Pido"
+   "entries": [
+    {
+     "id": "s_mu83bx73otus",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1789804439835,
+   "updatedBy": "Owner"
   },
   {
    "id": "sl_mu83c4o9ushz",
@@ -7788,7 +7793,12 @@
    "updatedBy": "Owner"
   }
  ],
- "setlist": [],
- "setlistAt": 1789804420602,
+ "setlist": [
+  {
+   "id": "s_mu83bx73otus",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1789804439835,
  "setlistBy": "Owner"
 }
