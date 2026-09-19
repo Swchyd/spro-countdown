@@ -7882,6 +7882,80 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu83ibcnv6r8",
+   "title": "[IND] TEPAT WAKTU",
+   "authors": [
+    "Fedrian Oktavian Tjeleni"
+   ],
+   "author": "Fedrian Oktavian Tjeleni",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Engkau pegang tanganku",
+      "Hadir dalam pergumulanku",
+      "Saat kuhadapi kesulitan hidup",
+      "Pertolonganmu tepat waktu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kubersyukur kubersyukur",
+      "Kau baik Kau setia",
+      "JanjiMu Tuhan",
+      "Tak pernah terlambat",
+      "PertolonganMu tepat waktu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Engkau pegang tanganku",
+     "Hadir dalam pergumulanku",
+     "Saat kuhadapi kesulitan hidup"
+    ],
+    [
+     "Pertolonganmu tepat waktu"
+    ],
+    [
+     "Kubersyukur kubersyukur",
+     "Kau baik Kau setia",
+     "JanjiMu Tuhan"
+    ],
+    [
+     "Tak pernah terlambat",
+     "PertolonganMu tepat waktu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1789804708526,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
