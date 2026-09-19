@@ -8597,12 +8597,22 @@
   {
    "id": "sl_mu8724qsl3us",
    "name": "vol 101",
-   "entries": [],
-   "updatedAt": 1789810675733,
+   "entries": [
+    {
+     "id": "s_mu87a4mrp4tp",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1789811725385,
    "updatedBy": "Owner"
   }
  ],
- "setlist": [],
- "setlistAt": 1789810675733,
+ "setlist": [
+  {
+   "id": "s_mu87a4mrp4tp",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1789811725385,
  "setlistBy": "Owner"
 }
