@@ -7727,7 +7727,9 @@
    "slides": [
     [
      "Satu nama yang besar",
-     "Hanyalah nama-Mu Tuhan",
+     "Hanyalah nama-Mu Tuhan"
+    ],
+    [
      "Gunung batu kekuatan",
      "Hanyalah nama-Mu Tuhan"
     ],
@@ -7737,12 +7739,16 @@
     ],
     [
      "Kami bawa pujian",
-     "Nyanyian kemenangan",
+     "Nyanyian kemenangan"
+    ],
+    [
      "Masuki gerbang-Mu hati kami bersuka"
     ],
     [
      "Tangan kami terangkat",
-     "Sorakkan kemenangan",
+     "Sorakkan kemenangan"
+    ],
+    [
      "Terpujilah nama-Mu Yesus raja",
      "Segala raja"
     ],
@@ -7752,8 +7758,11 @@
    ],
    "tags": [
     "Verse",
+    "",
     "Pre Chorus",
     "Chorus",
+    "",
+    "",
     "",
     "Ending"
    ],
@@ -7762,11 +7771,14 @@
     "",
     "",
     "",
+    "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1789804410849,
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1789804902858,
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
