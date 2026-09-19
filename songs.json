@@ -7946,19 +7946,21 @@
    "slides": [
     [
      "Engkau pegang tanganku",
-     "Hadir dalam pergumulanku",
-     "Saat kuhadapi kesulitan hidup"
+     "Hadir dalam pergumulanku"
     ],
     [
+     "Saat kuhadapi kesulitan hidup",
      "Pertolonganmu tepat waktu"
     ],
     [
      "Kubersyukur kubersyukur",
-     "Kau baik Kau setia",
-     "JanjiMu Tuhan"
+     "Kau baik Kau setia"
     ],
     [
-     "Tak pernah terlambat",
+     "JanjiMu Tuhan",
+     "Tak pernah terlambat"
+    ],
+    [
      "PertolonganMu tepat waktu"
     ]
    ],
@@ -7966,17 +7968,19 @@
     "Verse 1",
     "",
     "Chorus",
+    "",
     ""
    ],
    "notes": [
     "",
     "",
     "",
+    "",
     ""
    ],
-   "perSlide": 3,
-   "version": 1,
-   "updatedAt": 1789804708526,
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1789804934966,
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
