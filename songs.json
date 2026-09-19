@@ -8367,34 +8367,16 @@
    "entries": [],
    "updatedAt": 1789804420602,
    "updatedBy": "Owner"
+  },
+  {
+   "id": "sl_mu8724qsl3us",
+   "name": "Setlist 19/9 (3)",
+   "entries": [],
+   "updatedAt": 1789810670577,
+   "updatedBy": "Owner"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mu83gnimhvw1",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83bx73otus",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83ibcnv6r8",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83juwxokjc",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83xmkx34hp",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83ykdzokkd",
-   "ms": 0
-  }
- ],
- "setlistAt": 1789805500098,
+ "setlist": [],
+ "setlistAt": 1789810670577,
  "setlistBy": "Owner"
 }
