@@ -8334,6 +8334,10 @@
    "name": "Setlist 19/9",
    "entries": [
     {
+     "id": "s_mu83gnimhvw1",
+     "ms": 0
+    },
+    {
      "id": "s_mu83bx73otus",
      "ms": 0
     },
@@ -8352,13 +8356,9 @@
     {
      "id": "s_mu83ykdzokkd",
      "ms": 0
-    },
-    {
-     "id": "s_mu83gnimhvw1",
-     "ms": 0
     }
    ],
-   "updatedAt": 1789805493858,
+   "updatedAt": 1789805500098,
    "updatedBy": "Owner"
   },
   {
@@ -8370,6 +8370,10 @@
   }
  ],
  "setlist": [
+  {
+   "id": "s_mu83gnimhvw1",
+   "ms": 0
+  },
   {
    "id": "s_mu83bx73otus",
    "ms": 0
@@ -8389,12 +8393,8 @@
   {
    "id": "s_mu83ykdzokkd",
    "ms": 0
-  },
-  {
-   "id": "s_mu83gnimhvw1",
-   "ms": 0
   }
  ],
- "setlistAt": 1789805493858,
+ "setlistAt": 1789805500098,
  "setlistBy": "Owner"
 }
