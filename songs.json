@@ -8440,6 +8440,118 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu87fn5abswr",
+   "title": "[IND] SEGALANYA",
+   "authors": [
+    "Eric Thanos"
+   ],
+   "author": "Eric Thanos",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Kunaikkan syukur",
+      "Buat segala perbuatan-Mu",
+      "Dan kasih-Mu didalam hidupku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Tiada terukur",
+      "Betapa besar kasih-Mu",
+      "Sungguhku kagum akan Engkau"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 1",
+     "tag": "Chorus 1",
+     "lines": [
+      "Yesus kaulah segalanya",
+      "Melebihi semua",
+      "Yang ada padaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 2",
+     "tag": "Chorus 2",
+     "lines": [
+      "Yesus kaulah segalanya",
+      "Seutuhnya kuberikan",
+      "Hatiku untuk-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus 1",
+    "chorus 2"
+   ],
+   "slides": [
+    [
+     "Kunaikkan syukur",
+     "Buat segala perbuatan-Mu"
+    ],
+    [
+     "Dan kasih-Mu didalam hidupku"
+    ],
+    [
+     "Tiada terukur",
+     "Betapa besar kasih-Mu"
+    ],
+    [
+     "Sungguhku kagum akan Engkau"
+    ],
+    [
+     "Yesus kaulah segalanya",
+     "Melebihi semua"
+    ],
+    [
+     "Yang ada padaku"
+    ],
+    [
+     "Yesus kaulah segalanya",
+     "Seutuhnya kuberikan"
+    ],
+    [
+     "Hatiku untuk-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus 1",
+    "",
+    "Chorus 2",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789811300041,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
