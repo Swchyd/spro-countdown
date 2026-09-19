@@ -7833,37 +7833,46 @@
    "slides": [
     [
      "Bukan dengan kuat gagahku",
-     "Namun karena kasih-Mu",
+     "Namun karena kasih-Mu"
+    ],
+    [
      "Kau yang menebus segenap jiwaku"
     ],
     [
      "Lewati badai tak ku ragu",
-     "Karna Kau tinggal dalamku",
+     "Karna Kau tinggal dalamku"
+    ],
+    [
      "Dengan imanku, kuberseru"
     ],
     [
      "Kaulah raja, Allah perkasa",
-     "Surga bumi pun menyembah",
-     "S'bab firman-Mu"
+     "Surga bumi pun menyembah"
     ],
     [
-     "T’rangi jalanku",
+     "S'bab firman-Mu",
+     "T’rangi jalanku"
+    ],
+    [
      "Kaulah Tuhan Allah",
      "Yang perkasa"
     ],
     [
      "Yesus Kau Tuhan, Allah Perkasa",
-     "Yesus Kau Tuhan, Allah Perkasa",
      "Yesus Kau Tuhan, Allah Perkasa"
     ],
     [
+     "Yesus Kau Tuhan, Allah Perkasa",
      "Yesus Kau Tuhan, Allah Perkasa"
     ]
    ],
    "tags": [
     "Verse",
     "",
+    "",
+    "",
     "Chorus",
+    "",
     "",
     "Ending",
     ""
@@ -7874,11 +7883,14 @@
     "",
     "",
     "",
+    "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 3,
-   "version": 1,
-   "updatedAt": 1789804631563,
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1789804893527,
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
