@@ -8208,6 +8208,124 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu83ykdzokkd",
+   "title": "[IND] CIPTAAN BARU",
+   "authors": [
+    "Redo Daeng Badjie"
+   ],
+   "author": "Redo Daeng Badjie",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Ku percaya Kaulah Tuhan",
+      "Mengubah hidup menjadi baru",
+      "Ku percaya Kaulah Tuhan",
+      "Mengubah hidup menjadi indah."
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Besar kasih setia",
+      "Yang tlah Kau tunjukkan",
+      "Besar kasih setia",
+      "Yang tlah Kau nyatakan."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ku tahu diriku menjadi ciptaan baru",
+      "Karena kasihMu ku akan selalu bersorak",
+      "Hey! Hey! Yesuslah Tuhan Ooooo",
+      "Hey! Hey! Yesuslah Tuhan."
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Kau ubahkan diriku",
+      "Menjadi ciptaan baru",
+      "Kini ku hidup bagiMu."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre-chorus",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Ku percaya Kaulah Tuhan",
+     "Mengubah hidup menjadi baru"
+    ],
+    [
+     "Ku percaya Kaulah Tuhan",
+     "Mengubah hidup menjadi indah."
+    ],
+    [
+     "Besar kasih setia",
+     "Yang tlah Kau tunjukkan"
+    ],
+    [
+     "Besar kasih setia",
+     "Yang tlah Kau nyatakan."
+    ],
+    [
+     "Ku tahu diriku menjadi ciptaan baru",
+     "Karena kasihMu ku akan selalu bersorak"
+    ],
+    [
+     "Hey! Hey! Yesuslah Tuhan Ooooo",
+     "Hey! Hey! Yesuslah Tuhan."
+    ],
+    [
+     "Kau ubahkan diriku",
+     "Menjadi ciptaan baru"
+    ],
+    [
+     "Kini ku hidup bagiMu."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Pre-Chorus",
+    "",
+    "Chorus",
+    "",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789805469996,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
