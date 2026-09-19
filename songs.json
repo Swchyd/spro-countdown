@@ -8326,6 +8326,120 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu87a4mrp4tp",
+   "title": "[IND] KUBRI YANG TERBAIK",
+   "authors": [
+    "Redo Daeng Badjie"
+   ],
+   "author": "Redo Daeng Badjie",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "T'lah kutemukan kasih",
+      "Yang sejati, tiada pernah berubah",
+      "Hanya di dalam-Mu, Yesus Tuhanku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Kasih yang t'lah Kauberi",
+      "Lebihi s'gala yang terbaik dalamku",
+      "Tak berkesudahan, kekal selamanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Kini kubawa kepada-Mu",
+      "Hidupku s'bagai persembahan",
+      "T'rimalah pujian dari hatiku",
+      "Hanyalah untuk-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kub'ri yang terbaik hanyalah bagi-Mu",
+      "Hanya untuk-Mu yang termulia",
+      "Berkenan bagi-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "T'lah kutemukan kasih",
+     "Yang sejati, tiada pernah berubah"
+    ],
+    [
+     "Hanya di dalam-Mu, Yesus Tuhanku"
+    ],
+    [
+     "Kasih yang t'lah Kauberi",
+     "Lebihi s'gala yang terbaik dalamku"
+    ],
+    [
+     "Tak berkesudahan, kekal selamanya"
+    ],
+    [
+     "Kini kubawa kepada-Mu",
+     "Hidupku s'bagai persembahan"
+    ],
+    [
+     "T'rimalah pujian dari hatiku",
+     "Hanyalah untuk-Mu"
+    ],
+    [
+     "Kub'ri yang terbaik hanyalah bagi-Mu",
+     "Hanya untuk-Mu yang termulia"
+    ],
+    [
+     "Berkenan bagi-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Pre-Chorus",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789811043150,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
