@@ -7658,8 +7658,16 @@
    "hidden": false
   }
  ],
- "setlists": [],
+ "setlists": [
+  {
+   "id": "sl_mu7udjknnn5i",
+   "name": "Setlist 19/9",
+   "entries": [],
+   "updatedAt": 1789789368106,
+   "updatedBy": "Pido"
+  }
+ ],
  "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlistAt": 1789789368106,
+ "setlistBy": "Pido"
 }
