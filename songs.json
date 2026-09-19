@@ -7956,6 +7956,78 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu83juwxokjc",
+   "title": "[IND] WAKTUMU YANG TERBAIK",
+   "authors": [
+    "Yuliandono"
+   ],
+   "author": "Yuliandono",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ku percaya Engkau bekerja",
+      "Buat kebaikanku",
+      "Walau belumku melihat",
+      "Namun kuasa-Mu sempurna"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Ku percaya pasti Tuhan",
+      "Bukakan jalanku",
+      "Di waktu-Mu yang terbaik",
+      "S'turut kehendak-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus",
+    "_1"
+   ],
+   "slides": [
+    [
+     "Ku percaya Engkau bekerja",
+     "Buat kebaikanku",
+     "Walau belumku melihat"
+    ],
+    [
+     "Namun kuasa-Mu sempurna"
+    ],
+    [
+     "Ku percaya pasti Tuhan",
+     "Bukakan jalanku",
+     "Di waktu-Mu yang terbaik"
+    ],
+    [
+     "S'turut kehendak-Mu"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1789804780862,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
