@@ -7656,6 +7656,120 @@
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu83bx73otus",
+   "title": "[IND] NYANYIAN KEMENANGAN",
+   "authors": [
+    "Franky Kuncoro",
+    "Redo Daeng Badjie",
+    "Ezra Lewina"
+   ],
+   "author": "Franky Kuncoro, Redo Daeng Badjie, Ezra Lewina",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Satu nama yang besar",
+      "Hanyalah nama-Mu Tuhan",
+      "Gunung batu kekuatan",
+      "Hanyalah nama-Mu Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre chorus",
+     "tag": "Pre Chorus",
+     "lines": [
+      "Tak terbatas kuasa-Mu Tuhan",
+      "Ajaib hebat Raja Perkasa"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kami bawa pujian",
+      "Nyanyian kemenangan",
+      "Masuki gerbang-Mu hati kami bersuka"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Tangan kami terangkat",
+      "Sorakkan kemenangan",
+      "Terpujilah nama-Mu Yesus raja",
+      "Segala raja"
+     ],
+     "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "Yesus Kau Raja"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre chorus",
+    "chorus",
+    "_1",
+    "ending"
+   ],
+   "slides": [
+    [
+     "Satu nama yang besar",
+     "Hanyalah nama-Mu Tuhan",
+     "Gunung batu kekuatan",
+     "Hanyalah nama-Mu Tuhan"
+    ],
+    [
+     "Tak terbatas kuasa-Mu Tuhan",
+     "Ajaib hebat Raja Perkasa"
+    ],
+    [
+     "Kami bawa pujian",
+     "Nyanyian kemenangan",
+     "Masuki gerbang-Mu hati kami bersuka"
+    ],
+    [
+     "Tangan kami terangkat",
+     "Sorakkan kemenangan",
+     "Terpujilah nama-Mu Yesus raja",
+     "Segala raja"
+    ],
+    [
+     "Yesus Kau Raja"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "Pre Chorus",
+    "Chorus",
+    "",
+    "Ending"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1789804410849,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
