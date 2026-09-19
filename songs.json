@@ -7770,6 +7770,118 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu83gnimhvw1",
+   "title": "[IND] ALLAH PERKASA",
+   "authors": [
+    "Andre Hermanto"
+   ],
+   "author": "Andre Hermanto",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Bukan dengan kuat gagahku",
+      "Namun karena kasih-Mu",
+      "Kau yang menebus segenap jiwaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Lewati badai tak ku ragu",
+      "Karna Kau tinggal dalamku",
+      "Dengan imanku, kuberseru"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kaulah raja, Allah perkasa",
+      "Surga bumi pun menyembah",
+      "S'bab firman-Mu",
+      "T’rangi jalanku",
+      "Kaulah Tuhan Allah",
+      "Yang perkasa"
+     ],
+     "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "Yesus Kau Tuhan, Allah Perkasa",
+      "Yesus Kau Tuhan, Allah Perkasa",
+      "Yesus Kau Tuhan, Allah Perkasa",
+      "Yesus Kau Tuhan, Allah Perkasa"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "_1",
+    "chorus",
+    "ending"
+   ],
+   "slides": [
+    [
+     "Bukan dengan kuat gagahku",
+     "Namun karena kasih-Mu",
+     "Kau yang menebus segenap jiwaku"
+    ],
+    [
+     "Lewati badai tak ku ragu",
+     "Karna Kau tinggal dalamku",
+     "Dengan imanku, kuberseru"
+    ],
+    [
+     "Kaulah raja, Allah perkasa",
+     "Surga bumi pun menyembah",
+     "S'bab firman-Mu"
+    ],
+    [
+     "T’rangi jalanku",
+     "Kaulah Tuhan Allah",
+     "Yang perkasa"
+    ],
+    [
+     "Yesus Kau Tuhan, Allah Perkasa",
+     "Yesus Kau Tuhan, Allah Perkasa",
+     "Yesus Kau Tuhan, Allah Perkasa"
+    ],
+    [
+     "Yesus Kau Tuhan, Allah Perkasa"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    "",
+    "Ending",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1789804631563,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
