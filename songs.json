@@ -8869,38 +8869,16 @@
    ],
    "updatedAt": 1789816662940,
    "updatedBy": "nicole"
+  },
+  {
+   "id": "sl_mu9n556c2p8t",
+   "name": "Setlist 20/9",
+   "entries": [],
+   "updatedAt": 1789898151202,
+   "updatedBy": "aldo"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mu83bx73otus",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83gnimhvw1",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83ibcnv6r8",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83juwxokjc",
-   "ms": 0
-  },
-  {
-   "id": "s_mu97gpx35lyg",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83xmkx34hp",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83ykdzokkd",
-   "ms": 0
-  }
- ],
- "setlistAt": 1789874031814,
- "setlistBy": "Marvella"
+ "setlist": [],
+ "setlistAt": 1789898151202,
+ "setlistBy": "aldo"
 }
