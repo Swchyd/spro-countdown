@@ -8873,12 +8873,22 @@
   {
    "id": "sl_mu9n556c2p8t",
    "name": "Setlist 20/9",
-   "entries": [],
-   "updatedAt": 1789898151202,
+   "entries": [
+    {
+     "id": "s_mtydhe2l7u4e",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1789898164649,
    "updatedBy": "aldo"
   }
  ],
- "setlist": [],
- "setlistAt": 1789898151202,
+ "setlist": [
+  {
+   "id": "s_mtydhe2l7u4e",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1789898164649,
  "setlistBy": "aldo"
 }
