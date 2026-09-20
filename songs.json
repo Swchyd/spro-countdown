@@ -8800,6 +8800,158 @@
    "updatedBy": "Marvella",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu9nd23m3pzb",
+   "title": "[IND] KUSORAKKAN HALELUYA",
+   "authors": [
+    "Symphony Worship"
+   ],
+   "author": "Symphony Worship",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Yesus Kau kekuatan di hidupku",
+      "Takkan gentar langkahku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Kau angkat tanganku di saat 'ku jatuh",
+      "Kaulah sumber kuatku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "Lembah yang kelam 'kan kulewati",
+      "Sebab Engkau sertaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_4",
+     "tag": "",
+     "lines": [
+      "Dengan imanku, ku diselamatkan",
+      "Oleh kuasa Yesusku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_5",
+     "tag": "",
+     "lines": [
+      "Kuangkat tanganku",
+      "kusorakkan Haleluya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_6",
+     "tag": "",
+     "lines": [
+      "Nama-Mu berkuasa",
+      "surga bumi nyatakan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_7",
+     "tag": "",
+     "lines": [
+      "Kuangkat tanganku",
+      "nyatakan Kau hebat"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_8",
+     "tag": "",
+     "lines": [
+      "Allah yang perkasa",
+      "berkuasa selamanya"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "_2",
+    "_3",
+    "_4",
+    "_5",
+    "_6",
+    "_7",
+    "_8"
+   ],
+   "slides": [
+    [
+     "Yesus Kau kekuatan di hidupku",
+     "Takkan gentar langkahku"
+    ],
+    [
+     "Kau angkat tanganku di saat 'ku jatuh",
+     "Kaulah sumber kuatku"
+    ],
+    [
+     "Lembah yang kelam 'kan kulewati",
+     "Sebab Engkau sertaku"
+    ],
+    [
+     "Dengan imanku, ku diselamatkan",
+     "Oleh kuasa Yesusku"
+    ],
+    [
+     "Kuangkat tanganku",
+     "kusorakkan Haleluya"
+    ],
+    [
+     "Nama-Mu berkuasa",
+     "surga bumi nyatakan"
+    ],
+    [
+     "Kuangkat tanganku",
+     "nyatakan Kau hebat"
+    ],
+    [
+     "Allah yang perkasa",
+     "berkuasa selamanya"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1789898519930,
+   "updatedBy": "aldo",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
