@@ -8640,6 +8640,166 @@
    "updatedBy": "Marvella",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mu97gpx35lyg",
+   "title": "[IND] JADI SEPERTIMU",
+   "authors": [
+    "JPCC Worship"
+   ],
+   "author": "JPCC Worship",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Bapa, Kau setia",
+      "Tak kan meninggalkan",
+      "Dan ku percaya Engkau milikku",
+      "Dan ku milikMu",
+      "Kerinduanku tinggikan nama-Mu",
+      "Kar'na ku tahu Engkau dalamku",
+      "Dan ku dalam-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ubah hatiku seputih hati-Mu",
+      "Setulus salib-Mu",
+      "Kasih-Mu Tuhan",
+      "Biar mataku seperti mata-Mu",
+      "Pancarkan kasih-Mu",
+      "Ku mau jadi",
+      "Seperti-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse#1",
+     "tag": "Verse",
+     "lines": [
+      "Kerinduanku tinggikan nama-Mu",
+      "Kar'na ku tahu Engkau dalamku",
+      "Dan ku dalam-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus#2",
+     "tag": "Chorus",
+     "lines": [
+      "Ubah hatiku seputih hati-Mu",
+      "Setulus salib-Mu",
+      "Kasih-Mu Tuhan",
+      "Biar mataku seperti mata-Mu",
+      "Pancarkan kasih-Mu",
+      "Ku mau jadi",
+      "Seperti-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus",
+    "verse#1",
+    "chorus#2"
+   ],
+   "slides": [
+    [
+     "Bapa, Kau setia",
+     "Tak kan meninggalkan"
+    ],
+    [
+     "Dan ku percaya Engkau milikku",
+     "Dan ku milikMu"
+    ],
+    [
+     "Kerinduanku tinggikan nama-Mu",
+     "Kar'na ku tahu Engkau dalamku"
+    ],
+    [
+     "Dan ku dalam-Mu"
+    ],
+    [
+     "Ubah hatiku seputih hati-Mu",
+     "Setulus salib-Mu"
+    ],
+    [
+     "Kasih-Mu Tuhan",
+     "Biar mataku seperti mata-Mu"
+    ],
+    [
+     "Pancarkan kasih-Mu",
+     "Ku mau jadi"
+    ],
+    [
+     "Seperti-Mu"
+    ],
+    [
+     "Kerinduanku tinggikan nama-Mu",
+     "Kar'na ku tahu Engkau dalamku"
+    ],
+    [
+     "Dan ku dalam-Mu"
+    ],
+    [
+     "Ubah hatiku seputih hati-Mu",
+     "Setulus salib-Mu"
+    ],
+    [
+     "Kasih-Mu Tuhan",
+     "Biar mataku seperti mata-Mu"
+    ],
+    [
+     "Pancarkan kasih-Mu",
+     "Ku mau jadi"
+    ],
+    [
+     "Seperti-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    "Verse",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1789871816775,
+   "updatedBy": "Marvella",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
