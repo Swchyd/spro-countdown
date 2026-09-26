@@ -9436,6 +9436,89 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_muibp1rclxmz",
+   "title": "[IND] TIADA YANG LAIN",
+   "authors": [
+    "Redo Daeng Badjie",
+    "Ezra Lewina",
+    "Franky Kuncoro",
+    "Judy Koesmanto"
+   ],
+   "author": "Redo Daeng Badjie, Ezra Lewina, Franky Kuncoro, Judy Koesmanto",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Selain Kau tiada yang lain",
+      "Hanya Kau milikku di surga",
+      "Sekalipun dagingku lenyap",
+      "Hatiku lelah tak berdaya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ku sembah Engkau",
+      "Allah yang perkasa",
+      "Ku sanjung tinggi",
+      "Nama-Mu dihidupku Tuhan",
+      "Tiada yang lain",
+      "Hanya Kau satu di hatiku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Selain Kau tiada yang lain",
+     "Hanya Kau milikku di surga"
+    ],
+    [
+     "Sekalipun dagingku lenyap",
+     "Hatiku lelah tak berdaya"
+    ],
+    [
+     "Ku sembah Engkau",
+     "Allah yang perkasa"
+    ],
+    [
+     "Ku sanjung tinggi",
+     "Nama-Mu dihidupku Tuhan"
+    ],
+    [
+     "Tiada yang lain",
+     "Hanya Kau satu di hatiku"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1790423127191,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
