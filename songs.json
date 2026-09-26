@@ -9519,6 +9519,177 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_muibrc7xjjr0",
+   "title": "[ENG] WASHED",
+   "authors": [
+    "Joe L Barnes",
+    "Joshua Holiday",
+    "Mitch Wong",
+    "Steven Furtick"
+   ],
+   "author": "Joe L Barnes, Joshua Holiday, Mitch Wong, Steven Furtick",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "And I'm clean",
+      "Sin was stained on me",
+      "And shame was running deep",
+      "Your love was spilled on Calvary",
+      "Oh hallelujah",
+      "I'm clean",
+      "And God, how can it be?",
+      "I'm ransomed and redeemed",
+      "I'm standing in Your victory",
+      "Oh hallelujah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "I'm clean",
+      "It's not what I have done",
+      "But what You've done for me",
+      "You paid it all upon that tree",
+      "Oh hallelujah",
+      "I'm clean",
+      "Your love has overcome",
+      "And Your mercy is supreme",
+      "I'm dancing in Your victory",
+      "Oh hallelujah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "I've been washed in the water, washed in the blood",
+      "I'm as good as new, oh hallelujah",
+      "I've been washed in the water, washed in the blood",
+      "All because of You, oh hallelujah (Sing it again)"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "'Cause You took away my shame",
+      "And You nailed it to the cross",
+      "You got me running out the grave",
+      "Oh hallelujah, here I come"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "And I'm clean",
+     "Sin was stained on me"
+    ],
+    [
+     "And shame was running deep",
+     "Your love was spilled on Calvary"
+    ],
+    [
+     "Oh hallelujah",
+     "I'm clean"
+    ],
+    [
+     "And God, how can it be?",
+     "I'm ransomed and redeemed"
+    ],
+    [
+     "I'm standing in Your victory",
+     "Oh hallelujah"
+    ],
+    [
+     "I'm clean",
+     "It's not what I have done"
+    ],
+    [
+     "But what You've done for me",
+     "You paid it all upon that tree"
+    ],
+    [
+     "Oh hallelujah",
+     "I'm clean"
+    ],
+    [
+     "Your love has overcome",
+     "And Your mercy is supreme"
+    ],
+    [
+     "I'm dancing in Your victory",
+     "Oh hallelujah"
+    ],
+    [
+     "I've been washed in the water, washed in the blood",
+     "I'm as good as new, oh hallelujah"
+    ],
+    [
+     "I've been washed in the water, washed in the blood",
+     "All because of You, oh hallelujah (Sing it again)"
+    ],
+    [
+     "'Cause You took away my shame",
+     "And You nailed it to the cross"
+    ],
+    [
+     "You got me running out the grave",
+     "Oh hallelujah, here I come"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1790423228754,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
