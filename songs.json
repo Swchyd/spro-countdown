@@ -9690,6 +9690,122 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_muibufgpyb81",
+   "title": "[ENG] JESUS IS ALIVE",
+   "authors": [
+    "Franky Kuncoro"
+   ],
+   "author": "Franky Kuncoro",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "We can see that God is moving",
+      "All around the world is shaking",
+      "Young and old rising and dancing",
+      "For the King of Glory is coming"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Now is the time for celebration",
+      "The dead arise, All chains set free",
+      "The Victory is on our side",
+      "Come on and Sing",
+      "Let's Shout It Loud"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ooo… Jesus is alive",
+      "Jesus is alive in us"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "He's alive in you",
+      "He's alive in me",
+      "He's alive in everybody"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "We can see that God is moving",
+     "All around the world is shaking"
+    ],
+    [
+     "Young and old rising and dancing",
+     "For the King of Glory is coming"
+    ],
+    [
+     "Now is the time for celebration",
+     "The dead arise, All chains set free"
+    ],
+    [
+     "The Victory is on our side",
+     "Come on and Sing"
+    ],
+    [
+     "Let's Shout It Loud"
+    ],
+    [
+     "Ooo… Jesus is alive",
+     "Jesus is alive in us"
+    ],
+    [
+     "He's alive in you",
+     "He's alive in me"
+    ],
+    [
+     "He's alive in everybody"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "",
+    "Chorus",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1790423370748,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
