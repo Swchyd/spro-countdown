@@ -9810,26 +9810,6 @@
  ],
  "setlists": [
   {
-   "id": "sl_mu9n556c2p8t",
-   "name": "Setlist 20/9",
-   "entries": [
-    {
-     "id": "s_mtydhe2l7u4e",
-     "ms": 0
-    },
-    {
-     "id": "s_mu9nd23m3pzb",
-     "ms": 0
-    },
-    {
-     "id": "s_mu9nlu3cvca5",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1789904915316,
-   "updatedBy": "aldo"
-  },
-  {
    "id": "sl_muibuhidzdi8",
    "name": "Setlist 26/9",
    "entries": [],
