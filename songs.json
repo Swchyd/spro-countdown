@@ -9895,22 +9895,16 @@
    ],
    "updatedAt": 1789904915316,
    "updatedBy": "aldo"
-  }
- ],
- "setlist": [
-  {
-   "id": "s_mtydhe2l7u4e",
-   "ms": 0
   },
   {
-   "id": "s_mu9nd23m3pzb",
-   "ms": 0
-  },
-  {
-   "id": "s_mu9nlu3cvca5",
-   "ms": 0
+   "id": "sl_muibuhidzdi8",
+   "name": "Setlist 26/9",
+   "entries": [],
+   "updatedAt": 1790423374321,
+   "updatedBy": "Owner"
   }
  ],
- "setlistAt": 1789904915316,
- "setlistBy": "aldo"
+ "setlist": [],
+ "setlistAt": 1790423374321,
+ "setlistBy": "Owner"
 }
