@@ -9840,34 +9840,16 @@
    ],
    "updatedAt": 1790425912844,
    "updatedBy": "Owner"
+  },
+  {
+   "id": "sl_muj1jn01q9ya",
+   "name": "Setlist 27/9",
+   "entries": [],
+   "updatedAt": 1790466538060,
+   "updatedBy": "Owner"
   }
  ],
- "setlist": [
-  {
-   "id": "s_muibm7oahpbm",
-   "ms": 0
-  },
-  {
-   "id": "s_muibnejs8vva",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83ibcnv6r8",
-   "ms": 0
-  },
-  {
-   "id": "s_muibp1rclxmz",
-   "ms": 0
-  },
-  {
-   "id": "s_muibrc7xjjr0",
-   "ms": 0
-  },
-  {
-   "id": "s_muibufgpyb81",
-   "ms": 0
-  }
- ],
- "setlistAt": 1790425912844,
+ "setlist": [],
+ "setlistAt": 1790466538060,
  "setlistBy": "Owner"
 }
