@@ -9320,6 +9320,122 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_muibnejs8vva",
+   "title": "[IND] SUNGGUH NYATA",
+   "authors": [
+    "Andre Hermanto"
+   ],
+   "author": "Andre Hermanto",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Seindahnya Pelangi",
+      "Secerahnya mentari",
+      "Namun Kau yang terindah",
+      "Hanya Kau yang termegah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Walau badai menghadang",
+      "Dan bumi pun bergoncang",
+      "Namun Kau kan setia",
+      "Menjaga ku s’lamanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Sungguh nyata kasih-Mu",
+      "di sepanjang hidupku",
+      "Dengan darah-Mu Kau tebus dosaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Sungguh nyata kasih-Mu",
+      "Di sepanjang hidupku",
+      "Seg’nap hatiku hanya untukmu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "verse 2",
+    "chorus",
+    "_1"
+   ],
+   "slides": [
+    [
+     "Seindahnya Pelangi",
+     "Secerahnya mentari"
+    ],
+    [
+     "Namun Kau yang terindah",
+     "Hanya Kau yang termegah"
+    ],
+    [
+     "Walau badai menghadang",
+     "Dan bumi pun bergoncang"
+    ],
+    [
+     "Namun Kau kan setia",
+     "Menjaga ku s’lamanya"
+    ],
+    [
+     "Sungguh nyata kasih-Mu",
+     "di sepanjang hidupku"
+    ],
+    [
+     "Dengan darah-Mu Kau tebus dosaku"
+    ],
+    [
+     "Sungguh nyata kasih-Mu",
+     "Di sepanjang hidupku"
+    ],
+    [
+     "Seg’nap hatiku hanya untukmu"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1790423049693,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
