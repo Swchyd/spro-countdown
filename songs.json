@@ -9808,16 +9808,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_muibuhidzdi8",
-   "name": "Setlist 26/9",
-   "entries": [],
-   "updatedAt": 1790423374321,
-   "updatedBy": "Owner"
-  }
- ],
+ "setlists": [],
  "setlist": [],
- "setlistAt": 1790423374321,
- "setlistBy": "Owner"
+ "setlistAt": 0,
+ "setlistBy": ""
 }
