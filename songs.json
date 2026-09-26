@@ -9808,8 +9808,16 @@
    "hidden": false
   }
  ],
- "setlists": [],
+ "setlists": [
+  {
+   "id": "sl_muibunexfzz2",
+   "name": "Setlist 26/9",
+   "entries": [],
+   "updatedAt": 1790423391783,
+   "updatedBy": "Owner"
+  }
+ ],
  "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlistAt": 1790423391783,
+ "setlistBy": "Owner"
 }
