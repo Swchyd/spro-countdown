@@ -9200,6 +9200,126 @@
    "updatedBy": "aldo",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_muibm7oahpbm",
+   "title": "[IND] DATANGLAH KEBAIT-NYA",
+   "authors": [
+    "Jonathan Prawira"
+   ],
+   "author": "Jonathan Prawira",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Datanglah ke bait-Nya",
+      "Dengan hati bersyukur",
+      "Ke dalam pelataran-Nya",
+      "Dengan hati bersuka"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Rasakan dan lihatlah",
+      "Betapa baiknya Tuhan",
+      "Bagi yang berlindung pada-Nya",
+      "Akan bersorak sorai 2x"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bersyukurlah kepada Tuhan",
+      "Sebab Ia baik",
+      "Bahwasanya ‘tuk selamanya",
+      "Kasih setia-Nya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Bersyukurlah kepada Tuhan",
+      "Sebab Ia baik",
+      "Bahwasanya ‘tuk selamanya",
+      "Kasih setia-Nya"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "_1",
+    "chorus",
+    "_2"
+   ],
+   "slides": [
+    [
+     "Datanglah ke bait-Nya",
+     "Dengan hati bersyukur"
+    ],
+    [
+     "Ke dalam pelataran-Nya",
+     "Dengan hati bersuka"
+    ],
+    [
+     "Rasakan dan lihatlah",
+     "Betapa baiknya Tuhan"
+    ],
+    [
+     "Bagi yang berlindung pada-Nya",
+     "Akan bersorak sorai 2x"
+    ],
+    [
+     "Bersyukurlah kepada Tuhan",
+     "Sebab Ia baik"
+    ],
+    [
+     "Bahwasanya ‘tuk selamanya",
+     "Kasih setia-Nya"
+    ],
+    [
+     "Bersyukurlah kepada Tuhan",
+     "Sebab Ia baik"
+    ],
+    [
+     "Bahwasanya ‘tuk selamanya",
+     "Kasih setia-Nya"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1790422997220,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
