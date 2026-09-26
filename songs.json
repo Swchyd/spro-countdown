@@ -9812,12 +9812,22 @@
   {
    "id": "sl_muibunexfzz2",
    "name": "GMS Taipei 27/9",
-   "entries": [],
-   "updatedAt": 1790423414084,
+   "entries": [
+    {
+     "id": "s_muibm7oahpbm",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1790423425547,
    "updatedBy": "Owner"
   }
  ],
- "setlist": [],
- "setlistAt": 1790423414084,
+ "setlist": [
+  {
+   "id": "s_muibm7oahpbm",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1790423425547,
  "setlistBy": "Owner"
 }
