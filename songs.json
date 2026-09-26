@@ -9810,42 +9810,6 @@
  ],
  "setlists": [
   {
-   "id": "sl_mu7udjknnn5i",
-   "name": "Setlist 19/9",
-   "entries": [
-    {
-     "id": "s_mu83bx73otus",
-     "ms": 0
-    },
-    {
-     "id": "s_mu83gnimhvw1",
-     "ms": 0
-    },
-    {
-     "id": "s_mu83ibcnv6r8",
-     "ms": 0
-    },
-    {
-     "id": "s_mu83juwxokjc",
-     "ms": 0
-    },
-    {
-     "id": "s_mu97gpx35lyg",
-     "ms": 0
-    },
-    {
-     "id": "s_mu83xmkx34hp",
-     "ms": 0
-    },
-    {
-     "id": "s_mu83ykdzokkd",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1789874031814,
-   "updatedBy": "Marvella"
-  },
-  {
    "id": "sl_mu83c4o9ushz",
    "name": "Setlist 19/9 (2)",
    "entries": [],
