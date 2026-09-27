@@ -9991,38 +9991,16 @@
    ],
    "updatedAt": 1790468664770,
    "updatedBy": "Owner"
+  },
+  {
+   "id": "sl_mujds3ctdz3r",
+   "name": "Setlist 27/9 (2)",
+   "entries": [],
+   "updatedAt": 1790487086793,
+   "updatedBy": "Shanise"
   }
  ],
- "setlist": [
-  {
-   "id": "s_muibm7oahpbm",
-   "ms": 0
-  },
-  {
-   "id": "s_muibnejs8vva",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83ibcnv6r8",
-   "ms": 0
-  },
-  {
-   "id": "s_muibp1rclxmz",
-   "ms": 0
-  },
-  {
-   "id": "s_muibrc7xjjr0",
-   "ms": 0
-  },
-  {
-   "id": "s_muibufgpyb81",
-   "ms": 0
-  },
-  {
-   "id": "s_muj2t0jkzsru",
-   "ms": 0
-  }
- ],
- "setlistAt": 1790468673683,
- "setlistBy": "Owner"
+ "setlist": [],
+ "setlistAt": 1790487086793,
+ "setlistBy": "Shanise"
 }
