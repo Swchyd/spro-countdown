@@ -10391,10 +10391,14 @@
     {
      "id": "s_mujenfeh75pi",
      "ms": 0
+    },
+    {
+     "id": "s_mujha6uzxrej",
+     "ms": 0
     }
    ],
-   "updatedAt": 1790488582566,
-   "updatedBy": "Elvido"
+   "updatedAt": 1790493468352,
+   "updatedBy": "aldo"
   },
   {
    "id": "sl_muj1jn01q9ya",
@@ -10468,8 +10472,12 @@
   {
    "id": "s_mujenfeh75pi",
    "ms": 0
+  },
+  {
+   "id": "s_mujha6uzxrej",
+   "ms": 0
   }
  ],
- "setlistAt": 1790488582566,
- "setlistBy": "Elvido"
+ "setlistAt": 1790493468352,
+ "setlistBy": "aldo"
 }
