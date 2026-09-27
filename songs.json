@@ -10127,10 +10127,14 @@
     {
      "id": "s_muj2t0jkzsru",
      "ms": 0
+    },
+    {
+     "id": "s_mujej8iv0zfv",
+     "ms": 0
     }
    ],
-   "updatedAt": 1790468673683,
-   "updatedBy": "Owner"
+   "updatedAt": 1790488361547,
+   "updatedBy": "Elvido"
   },
   {
    "id": "sl_muj1jn01q9ya",
@@ -10168,7 +10172,40 @@
    "updatedBy": "Shanise"
   }
  ],
- "setlist": [],
- "setlistAt": 1790487086793,
- "setlistBy": "Shanise"
+ "setlist": [
+  {
+   "id": "s_muibm7oahpbm",
+   "ms": 0
+  },
+  {
+   "id": "s_muibnejs8vva",
+   "ms": 0
+  },
+  {
+   "id": "s_mu83ibcnv6r8",
+   "ms": 0
+  },
+  {
+   "id": "s_muibp1rclxmz",
+   "ms": 0
+  },
+  {
+   "id": "s_muibrc7xjjr0",
+   "ms": 0
+  },
+  {
+   "id": "s_muibufgpyb81",
+   "ms": 0
+  },
+  {
+   "id": "s_muj2t0jkzsru",
+   "ms": 0
+  },
+  {
+   "id": "s_mujej8iv0zfv",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1790488361547,
+ "setlistBy": "Elvido"
 }
