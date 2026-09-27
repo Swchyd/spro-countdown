@@ -9806,6 +9806,125 @@
    "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_muj2t0jkzsru",
+   "title": "[IND] KASIH KARUNIA",
+   "authors": [
+    "Melitha Sidabutar",
+    "GMS Live"
+   ],
+   "author": "Melitha Sidabutar, GMS Live",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Kasih setiaMu tak pernah pudar",
+      "Sungguh Kau Tuhan",
+      "Yang panjang sabar",
+      "Semua yang baik",
+      "Di dalam hidupku",
+      "Anugerah dari SalibMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Walaupun terkadang aku jatuh",
+      "Tak pernah berubah sayangMu",
+      "Sungguh tak kuduga",
+      "Kau tetap setia",
+      "Menantiku ‘tuk berlari padaMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Besar... Kasih Karunia",
+      "Yang Engkau tunjukkan, Yesus",
+      "Sungguh ‘ku bersyukur",
+      "Tinggi... melebihi langit",
+      "Kau angkat diriku dekat",
+      "Ke tahta kasih karuniaMu."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kasih setiaMu tak pernah pudar",
+     "Sungguh Kau Tuhan"
+    ],
+    [
+     "Yang panjang sabar",
+     "Semua yang baik"
+    ],
+    [
+     "Di dalam hidupku",
+     "Anugerah dari SalibMu."
+    ],
+    [
+     "Walaupun terkadang aku jatuh",
+     "Tak pernah berubah sayangMu"
+    ],
+    [
+     "Sungguh tak kuduga",
+     "Kau tetap setia"
+    ],
+    [
+     "Menantiku ‘tuk berlari padaMu."
+    ],
+    [
+     "Besar... Kasih Karunia",
+     "Yang Engkau tunjukkan, Yesus"
+    ],
+    [
+     "Sungguh ‘ku bersyukur",
+     "Tinggi... melebihi langit"
+    ],
+    [
+     "Kau angkat diriku dekat",
+     "Ke tahta kasih karuniaMu."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1790468653886,
+   "updatedBy": "Owner",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
