@@ -10093,6 +10093,110 @@
    "updatedBy": "Elvido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mujenfeh75pi",
+   "title": "[IND] SETINGGI-TINGGINYA LANGIT",
+   "authors": [
+    "Doremi kids"
+   ],
+   "author": "Doremi kids",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Setinggi tingginya langit",
+      "Lebih tinggi kasih Yesusku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Sedalam-dalam lautan",
+      "Lebih dalam kasih Yesusku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "Seindah-indah pelangi",
+      "Lebih indah kasih Yesusku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_4",
+     "tag": "",
+     "lines": [
+      "Kasih Yesus oh kasih Yesus",
+      "Mengalahkan segalanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_5",
+     "tag": "",
+     "lines": [
+      "Kasih Yesus oh kasih Yesus",
+      "Mengalahkan segalanya"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "_2",
+    "_3",
+    "_4",
+    "_5"
+   ],
+   "slides": [
+    [
+     "Setinggi tingginya langit",
+     "Lebih tinggi kasih Yesusku"
+    ],
+    [
+     "Sedalam-dalam lautan",
+     "Lebih dalam kasih Yesusku"
+    ],
+    [
+     "Seindah-indah pelangi",
+     "Lebih indah kasih Yesusku"
+    ],
+    [
+     "Kasih Yesus oh kasih Yesus",
+     "Mengalahkan segalanya"
+    ],
+    [
+     "Kasih Yesus oh kasih Yesus",
+     "Mengalahkan segalanya"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1790488548568,
+   "updatedBy": "Elvido",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
