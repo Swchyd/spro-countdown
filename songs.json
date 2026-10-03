@@ -10953,6 +10953,130 @@
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mut1y77v5k70",
+   "title": "[IND] SEGENAP HIDUP",
+   "authors": [
+    "Symphony Worship"
+   ],
+   "author": "Symphony Worship",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Verse 1]",
+      "Dalam setiap langkah Kau ada",
+      "Dalam kesesakan Kau hadir",
+      "Lewati sukaku, lewati dukaku",
+      "Kuserahkan..... semua."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Tempatku berharap hanya Kau",
+      "Tempatku bersandar bersamaMu",
+      "Lewati sukaku, lewati dukaku",
+      "Kuserahkan semua... (Kuserahkan semua)",
+      "Biar jadi persembahan bagiMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Seg'nap hidup, segenap nafasku",
+      "Jadi persembahan di bawah kakiMu",
+      "Kebanggaanku, kejayaanku",
+      "Tak ada artinya selain untukMu",
+      "Seg'nap hidup, segenap nafasku",
+      "Jadi persembahan di atas mezbahMu",
+      "Kekuatanku, pengharapanku",
+      "Kuserahkan semua hanya bagiMu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Verse 1]",
+     "Dalam setiap langkah Kau ada"
+    ],
+    [
+     "Dalam kesesakan Kau hadir",
+     "Lewati sukaku, lewati dukaku"
+    ],
+    [
+     "Kuserahkan..... semua."
+    ],
+    [
+     "Tempatku berharap hanya Kau",
+     "Tempatku bersandar bersamaMu"
+    ],
+    [
+     "Lewati sukaku, lewati dukaku",
+     "Kuserahkan semua... (Kuserahkan semua)"
+    ],
+    [
+     "Biar jadi persembahan bagiMu."
+    ],
+    [
+     "Seg'nap hidup, segenap nafasku",
+     "Jadi persembahan di bawah kakiMu"
+    ],
+    [
+     "Kebanggaanku, kejayaanku",
+     "Tak ada artinya selain untukMu"
+    ],
+    [
+     "Seg'nap hidup, segenap nafasku",
+     "Jadi persembahan di atas mezbahMu"
+    ],
+    [
+     "Kekuatanku, pengharapanku",
+     "Kuserahkan semua hanya bagiMu"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1791071878317,
+   "updatedBy": "nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
