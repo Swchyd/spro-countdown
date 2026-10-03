@@ -10349,6 +10349,152 @@
    "updatedBy": "aldo",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_musi5194suan",
+   "title": "[IND] KU KAN BANGKIT",
+   "authors": [
+    "Expresive worship"
+   ],
+   "author": "Expresive worship",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Mari kita semua",
+      "Umat pilihan Allah",
+      "Dengarlah panggilanNya",
+      "'Tuk menggenapi firmanNya."
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Sekaranglah waktunya",
+      "'Tuk berdiri bagi bangsa ini",
+      "Mari maju umat pemenang"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ku 'kan bangkit",
+      "Nyatakan kemuliaanNya",
+      "Ku 'kan bangkit",
+      "Nyatakan kebesaranNya",
+      "Sampai setiap lutut bertelut",
+      "Semua lidah mengaku",
+      "Yesus Kristus Dialah Tuhan",
+      "Raja segala raja",
+      "Dialah Raja."
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus (version 2)",
+     "tag": "Pre-Chorus (Version 2)",
+     "lines": [
+      "Sekaranglah waktunya",
+      "'Tuk berdiri bagi bangsa ini",
+      "Mari maju, mari ma-ju",
+      "Mari maju, mari ma-ju",
+      "Mari maju umat pemenang."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre-chorus",
+    "chorus",
+    "pre-chorus (version 2)"
+   ],
+   "slides": [
+    [
+     "Mari kita semua",
+     "Umat pilihan Allah"
+    ],
+    [
+     "Dengarlah panggilanNya",
+     "'Tuk menggenapi firmanNya."
+    ],
+    [
+     "Sekaranglah waktunya",
+     "'Tuk berdiri bagi bangsa ini"
+    ],
+    [
+     "Mari maju umat pemenang"
+    ],
+    [
+     "Ku 'kan bangkit",
+     "Nyatakan kemuliaanNya"
+    ],
+    [
+     "Ku 'kan bangkit",
+     "Nyatakan kebesaranNya"
+    ],
+    [
+     "Sampai setiap lutut bertelut",
+     "Semua lidah mengaku"
+    ],
+    [
+     "Yesus Kristus Dialah Tuhan",
+     "Raja segala raja"
+    ],
+    [
+     "Dialah Raja."
+    ],
+    [
+     "Sekaranglah waktunya",
+     "'Tuk berdiri bagi bangsa ini"
+    ],
+    [
+     "Mari maju, mari ma-ju",
+     "Mari maju, mari ma-ju"
+    ],
+    [
+     "Mari maju umat pemenang."
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Pre-Chorus",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    "",
+    "Pre-Chorus (Version 2)",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1791038605477,
+   "updatedBy": "Shanise",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
