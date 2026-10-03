@@ -10883,8 +10883,13 @@
   {
    "id": "sl_mut1ajvvc55t",
    "name": "AOG Taipei 4/10",
-   "entries": [],
-   "updatedAt": 1791070791346,
+   "entries": [
+    {
+     "id": "s_mujej8iv0zfv",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1791071575008,
    "updatedBy": "nicole"
   },
   {
@@ -10902,7 +10907,12 @@
    "updatedBy": "nicole"
   }
  ],
- "setlist": [],
- "setlistAt": 1791071564611,
+ "setlist": [
+  {
+   "id": "s_mujej8iv0zfv",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1791071575008,
  "setlistBy": "nicole"
 }
