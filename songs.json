@@ -10820,28 +10820,36 @@
    "slides": [
     [
      "Ku tahu siapa yang pimpin",
-     "Hari depan hidupku",
+     "Hari depan hidupku"
+    ],
+    [
      "Semuanya oleh Tuhan",
      "Tlah diatur sempurna"
     ],
     [
      "Mengatasi gelombang",
-     "Dalam jalan hidupku",
+     "Dalam jalan hidupku"
+    ],
+    [
      "Ku bersandar pada Tuhan",
      "Serahkan semua"
     ]
    ],
    "tags": [
     "Chorus",
+    "",
+    "",
     ""
    ],
    "notes": [
     "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1791071494672,
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1791071983396,
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
