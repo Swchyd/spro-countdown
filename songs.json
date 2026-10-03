@@ -10789,6 +10789,62 @@
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mut1pywnua8h",
+   "title": "[IND] KU TAHU SIAPA YANG PIMPIN",
+   "authors": [
+    "Tri Sansui"
+   ],
+   "author": "Tri Sansui",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ku tahu siapa yang pimpin",
+      "Hari depan hidupku",
+      "Semuanya oleh Tuhan",
+      "Tlah diatur sempurna",
+      "Mengatasi gelombang",
+      "Dalam jalan hidupku",
+      "Ku bersandar pada Tuhan",
+      "Serahkan semua"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ku tahu siapa yang pimpin",
+     "Hari depan hidupku",
+     "Semuanya oleh Tuhan",
+     "Tlah diatur sempurna"
+    ],
+    [
+     "Mengatasi gelombang",
+     "Dalam jalan hidupku",
+     "Ku bersandar pada Tuhan",
+     "Serahkan semua"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1791071494672,
+   "updatedBy": "nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
