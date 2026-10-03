@@ -10963,10 +10963,9 @@
    "author": "Symphony Worship",
    "sections": [
     {
-     "key": "_1",
-     "tag": "",
+     "key": "verse 1",
+     "tag": "Verse 1",
      "lines": [
-      "Verse 1]",
       "Dalam setiap langkah Kau ada",
       "Dalam kesesakan Kau hadir",
       "Lewati sukaku, lewati dukaku",
@@ -11003,20 +11002,17 @@
     }
    ],
    "order": [
-    "_1",
+    "verse 1",
     "verse 2",
     "chorus"
    ],
    "slides": [
     [
-     "Verse 1]",
-     "Dalam setiap langkah Kau ada"
+     "Dalam setiap langkah Kau ada",
+     "Dalam kesesakan Kau hadir"
     ],
     [
-     "Dalam kesesakan Kau hadir",
-     "Lewati sukaku, lewati dukaku"
-    ],
-    [
+     "Lewati sukaku, lewati dukaku",
      "Kuserahkan..... semua."
     ],
     [
@@ -11048,8 +11044,7 @@
     ]
    ],
    "tags": [
-    "",
-    "",
+    "Verse 1",
     "",
     "Verse 2",
     "",
@@ -11068,12 +11063,11 @@
     "",
     "",
     "",
-    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1791071878317,
+   "version": 2,
+   "updatedAt": 1791071966524,
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
