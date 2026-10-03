@@ -10615,6 +10615,124 @@
    "updatedBy": "Shanise",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_musiet86kg6r",
+   "title": "[IND] KAU T'LAH UBAH",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "KemurahanMu tiada terukur",
+      "Dalamnya kasihMu menjamah hatiku",
+      "Kau t'lah angkat hidupku",
+      "Dan tebus dosaku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Betapa berharga diriku di hatiMu",
+      "Tak terbayang Kau mati ganti dosaku",
+      "Kau t'lah angkat hidupku",
+      "Dan tebus dosaku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kau t'lah ubah hidupku jadi baru",
+      "Tiada kata terlukiskan",
+      "Tuk ungkapkan syukurku",
+      "Kau t'lah ubah hidupku jadi indah",
+      "Kini ku hidup hanya untuk memuliakanMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Kau t'lah ubahkan,   s'luruh hidupku",
+      "Kini ku mau bri yang terbaik bagiMu."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "KemurahanMu tiada terukur",
+     "Dalamnya kasihMu menjamah hatiku"
+    ],
+    [
+     "Kau t'lah angkat hidupku",
+     "Dan tebus dosaku."
+    ],
+    [
+     "Betapa berharga diriku di hatiMu",
+     "Tak terbayang Kau mati ganti dosaku"
+    ],
+    [
+     "Kau t'lah angkat hidupku",
+     "Dan tebus dosaku."
+    ],
+    [
+     "Kau t'lah ubah hidupku jadi baru",
+     "Tiada kata terlukiskan"
+    ],
+    [
+     "Tuk ungkapkan syukurku",
+     "Kau t'lah ubah hidupku jadi indah"
+    ],
+    [
+     "Kini ku hidup hanya untuk memuliakanMu."
+    ],
+    [
+     "Kau t'lah ubahkan,   s'luruh hidupku",
+     "Kini ku mau bri yang terbaik bagiMu."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Bridge"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1791039061355,
+   "updatedBy": "Shanise",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
