@@ -10495,6 +10495,126 @@
    "updatedBy": "Shanise",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_musia505zkew",
+   "title": "[IND] HANYA KARNA KASIH",
+   "authors": [
+    "AOG Worship"
+   ],
+   "author": "AOG Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Siapakah aku Tuhan",
+      "Sehingga Kau indahkan",
+      "Kau jadikan biji mataMu",
+      "Dan kesayanganMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Ku yang berlumur dosa",
+      "Engkau tak pandang hina",
+      "Kau membasuh dan sucikanku",
+      "B'ri ku hidup yang baru"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Hanya kar'na kasih",
+      "Kau curahkan darahMu",
+      "Kau menanggung s'mua derita",
+      "Yang seharusnya ku t'rima"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 2",
+     "tag": "Chorus 2",
+     "lines": [
+      "Oleh kar'na salibMu",
+      "Kau hapuskan pelanggaranku",
+      "Kau jadikan ku milikMu",
+      "S'lamanya ku hidup bersamaMu Yesus"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "chorus 2"
+   ],
+   "slides": [
+    [
+     "Siapakah aku Tuhan",
+     "Sehingga Kau indahkan"
+    ],
+    [
+     "Kau jadikan biji mataMu",
+     "Dan kesayanganMu"
+    ],
+    [
+     "Ku yang berlumur dosa",
+     "Engkau tak pandang hina"
+    ],
+    [
+     "Kau membasuh dan sucikanku",
+     "B'ri ku hidup yang baru"
+    ],
+    [
+     "Hanya kar'na kasih",
+     "Kau curahkan darahMu"
+    ],
+    [
+     "Kau menanggung s'mua derita",
+     "Yang seharusnya ku t'rima"
+    ],
+    [
+     "Oleh kar'na salibMu",
+     "Kau hapuskan pelanggaranku"
+    ],
+    [
+     "Kau jadikan ku milikMu",
+     "S'lamanya ku hidup bersamaMu Yesus"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "Chorus 2",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1791038842819,
+   "updatedBy": "Shanise",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
