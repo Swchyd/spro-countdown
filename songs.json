@@ -10893,34 +10893,16 @@
    "entries": [],
    "updatedAt": 1791070793756,
    "updatedBy": "nicole"
+  },
+  {
+   "id": "sl_mut1rgnnzlo4",
+   "name": "Setlist 4/10 (2)",
+   "entries": [],
+   "updatedAt": 1791071564611,
+   "updatedBy": "nicole"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mu83bx73otus",
-   "ms": 0
-  },
-  {
-   "id": "s_musi5194suan",
-   "ms": 0
-  },
-  {
-   "id": "s_msualwhmyi3v",
-   "ms": 0
-  },
-  {
-   "id": "s_musia505zkew",
-   "ms": 0
-  },
-  {
-   "id": "s_musiet86kg6r",
-   "ms": 0
-  },
-  {
-   "id": "s_mut1pywnua8h",
-   "ms": 0
-  }
- ],
- "setlistAt": 1791071552196,
+ "setlist": [],
+ "setlistAt": 1791071564611,
  "setlistBy": "nicole"
 }
