@@ -10355,12 +10355,22 @@
   {
    "id": "sl_muibunexfzz2",
    "name": "GMS Taipei 4/10",
-   "entries": [],
-   "updatedAt": 1791037986988,
+   "entries": [
+    {
+     "id": "s_mu83bx73otus",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1791038313365,
    "updatedBy": "Shanise"
   }
  ],
- "setlist": [],
- "setlistAt": 1791037986988,
+ "setlist": [
+  {
+   "id": "s_mu83bx73otus",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1791038313365,
  "setlistBy": "Shanise"
 }
