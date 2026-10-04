@@ -11145,6 +11145,78 @@
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mutb0owtxnpt",
+   "title": "[IND] YANG TERUTAMA",
+   "authors": [
+    "natasha nikita"
+   ],
+   "author": "natasha nikita",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "verse",
+     "lines": [
+      "Yang terutama di dalam hidup ini",
+      "Meninggikan nama Yesus",
+      "Yang terutama di dalam hidup ini",
+      "Memuliakan nama-Nya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "chorus",
+     "lines": [
+      "Haleluya, haleluya",
+      "Saya mau cinta Yesus",
+      "Haleluya, haleluya",
+      "Saya mau cinta Yesus"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Yang terutama di dalam hidup ini",
+     "Meninggikan nama Yesus",
+     "Yang terutama di dalam hidup ini"
+    ],
+    [
+     "Memuliakan nama-Nya"
+    ],
+    [
+     "Haleluya, haleluya",
+     "Saya mau cinta Yesus",
+     "Haleluya, haleluya"
+    ],
+    [
+     "Saya mau cinta Yesus"
+    ]
+   ],
+   "tags": [
+    "verse",
+    "",
+    "chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1791087110965,
+   "updatedBy": "nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
