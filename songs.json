@@ -11079,6 +11079,94 @@
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mut3c6bs20xu",
+   "title": "[IND] TESUS TUHAN DAN ALLAH KAMI",
+   "authors": [
+    "Ir. Niko Njotorahardjo"
+   ],
+   "author": "Ir. Niko Njotorahardjo",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Yesus Tuhan dan Allah kami",
+      "Engkau layak menerima pujian",
+      "Hormat dan Kuasa",
+      "Sebab Kau t'lah ciptakan segalanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Oleh kar'na kehendak-Mu",
+      "Semuanya itu telah ada",
+      "Dan diciptakan untuk Kemuliaan-Mu",
+      "Terpujilah Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "Ho ho Hosana, terpujilah Tuhan, terpujilah Tuhan Yesus",
+      "Ho ho Hosana, terpujilah Tuhan, terpujilah Tuhan Yesus"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "_2",
+    "_3"
+   ],
+   "slides": [
+    [
+     "Yesus Tuhan dan Allah kami",
+     "Engkau layak menerima pujian"
+    ],
+    [
+     "Hormat dan Kuasa",
+     "Sebab Kau t'lah ciptakan segalanya"
+    ],
+    [
+     "Oleh kar'na kehendak-Mu",
+     "Semuanya itu telah ada"
+    ],
+    [
+     "Dan diciptakan untuk Kemuliaan-Mu",
+     "Terpujilah Tuhan"
+    ],
+    [
+     "Ho ho Hosana, terpujilah Tuhan, terpujilah Tuhan Yesus",
+     "Ho ho Hosana, terpujilah Tuhan, terpujilah Tuhan Yesus"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1791074209593,
+   "updatedBy": "nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
