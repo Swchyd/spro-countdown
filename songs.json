@@ -10364,14 +10364,14 @@
      "lines": [
       "Mari kita semua",
       "Umat pilihan Allah",
-      "Dengarlah panggilanNya",
-      "'Tuk menggenapi firmanNya."
+      "Dengarlah panggilan-Nya",
+      "'Tuk menggenapi firman-Nya"
      ],
      "notes": []
     },
     {
-     "key": "pre-chorus",
-     "tag": "Pre-Chorus",
+     "key": "pre chorus",
+     "tag": "Pre Chorus",
      "lines": [
       "Sekaranglah waktunya",
       "'Tuk berdiri bagi bangsa ini",
@@ -10380,39 +10380,34 @@
      "notes": []
     },
     {
-     "key": "chorus",
-     "tag": "Chorus",
+     "key": "chorus 1",
+     "tag": "Chorus 1",
      "lines": [
       "Ku 'kan bangkit",
-      "Nyatakan kemuliaanNya",
+      "Nyatakan kemuliaan-Nya",
       "Ku 'kan bangkit",
-      "Nyatakan kebesaranNya",
-      "Sampai setiap lutut bertelut",
-      "Semua lidah mengaku",
-      "Yesus Kristus Dialah Tuhan",
-      "Raja segala raja",
-      "Dialah Raja."
+      "Nyatakan kebenaran-Nya"
      ],
      "notes": []
     },
     {
-     "key": "pre-chorus (version 2)",
-     "tag": "Pre-Chorus (Version 2)",
+     "key": "chorus 2",
+     "tag": "Chorus 2",
      "lines": [
-      "Sekaranglah waktunya",
-      "'Tuk berdiri bagi bangsa ini",
-      "Mari maju, mari ma-ju",
-      "Mari maju, mari ma-ju",
-      "Mari maju umat pemenang."
+      "Sampai setiap lutut bertelut",
+      "Semua lidah mengaku",
+      "Yesus Kristus Dialah Tuhan",
+      "Raja segala raja",
+      "Dialah Raja"
      ],
      "notes": []
     }
    ],
    "order": [
     "verse",
-    "pre-chorus",
-    "chorus",
-    "pre-chorus (version 2)"
+    "pre chorus",
+    "chorus 1",
+    "chorus 2"
    ],
    "slides": [
     [
@@ -10420,8 +10415,8 @@
      "Umat pilihan Allah"
     ],
     [
-     "Dengarlah panggilanNya",
-     "'Tuk menggenapi firmanNya."
+     "Dengarlah panggilan-Nya",
+     "'Tuk menggenapi firman-Nya"
     ],
     [
      "Sekaranglah waktunya",
@@ -10432,11 +10427,11 @@
     ],
     [
      "Ku 'kan bangkit",
-     "Nyatakan kemuliaanNya"
+     "Nyatakan kemuliaan-Nya"
     ],
     [
      "Ku 'kan bangkit",
-     "Nyatakan kebesaranNya"
+     "Nyatakan kebenaran-Nya"
     ],
     [
      "Sampai setiap lutut bertelut",
@@ -10447,31 +10442,17 @@
      "Raja segala raja"
     ],
     [
-     "Dialah Raja."
-    ],
-    [
-     "Sekaranglah waktunya",
-     "'Tuk berdiri bagi bangsa ini"
-    ],
-    [
-     "Mari maju, mari ma-ju",
-     "Mari maju, mari ma-ju"
-    ],
-    [
-     "Mari maju umat pemenang."
+     "Dialah Raja"
     ]
    ],
    "tags": [
     "Verse",
     "",
-    "Pre-Chorus",
+    "Pre Chorus",
     "",
-    "Chorus",
+    "Chorus 1",
     "",
-    "",
-    "",
-    "",
-    "Pre-Chorus (Version 2)",
+    "Chorus 2",
     "",
     ""
    ],
@@ -10484,14 +10465,11 @@
     "",
     "",
     "",
-    "",
-    "",
-    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1791038605477,
+   "version": 2,
+   "updatedAt": 1791081994045,
    "updatedBy": "Shanise",
    "lastUsed": 0,
    "hidden": false
