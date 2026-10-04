@@ -11217,6 +11217,96 @@
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mutg5o09edj3",
+   "title": "[IND] KU MAU B’RITAKAN",
+   "authors": [
+    "AOG Worship"
+   ],
+   "author": "AOG Worship",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kau telah memanggilku",
+      "'Tuk menjadi alat kerajaan-Mu",
+      "Ku mau melangkah maju",
+      "S'bab Roh Kuduslah yang memampukanku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Kumau b'ritakan sampai seluruh dunia tahu",
+      "Yesuslah Tuhan atas segala bangsa"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Pakailah Tuhan seluruh kehidupanku",
+      "'Tuk ceritakan kebesaran-Mu, perbuatan-Mu",
+      "Bagi-Mu Tuhan segenap masa mudaku",
+      "Sampai akhir nafas hidupku",
+      "'Kan setia b'ritakan nama-Mu Yesus"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kau telah memanggilku",
+     "'Tuk menjadi alat kerajaan-Mu",
+     "Ku mau melangkah maju"
+    ],
+    [
+     "S'bab Roh Kuduslah yang memampukanku"
+    ],
+    [
+     "Kumau b'ritakan sampai seluruh dunia tahu",
+     "Yesuslah Tuhan atas segala bangsa"
+    ],
+    [
+     "Pakailah Tuhan seluruh kehidupanku",
+     "'Tuk ceritakan kebesaran-Mu, perbuatan-Mu",
+     "Bagi-Mu Tuhan segenap masa mudaku"
+    ],
+    [
+     "Sampai akhir nafas hidupku",
+     "'Kan setia b'ritakan nama-Mu Yesus"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Pre-Chorus",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1791095740690,
+   "updatedBy": "nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
