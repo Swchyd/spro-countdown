@@ -11287,9 +11287,13 @@
     {
      "id": "s_mut1y77v5k70",
      "ms": 0
+    },
+    {
+     "id": "s_mu83ykdzokkd",
+     "ms": 0
     }
    ],
-   "updatedAt": 1791072093889,
+   "updatedAt": 1791094053402,
    "updatedBy": "nicole"
   },
   {
@@ -11309,11 +11313,7 @@
  ],
  "setlist": [
   {
-   "id": "s_mu83bx73otus",
-   "ms": 0
-  },
-  {
-   "id": "s_musi5194suan",
+   "id": "s_mujej8iv0zfv",
    "ms": 0
   },
   {
@@ -11325,11 +11325,7 @@
    "ms": 0
   },
   {
-   "id": "s_musiet86kg6r",
-   "ms": 0
-  },
-  {
-   "id": "s_mut1pywnua8h",
+   "id": "s_mut1vdh8r84n",
    "ms": 0
   },
   {
@@ -11337,14 +11333,10 @@
    "ms": 0
   },
   {
-   "id": "s_mut3c6bs20xu",
-   "ms": 0
-  },
-  {
-   "id": "s_mutb0owtxnpt",
+   "id": "s_mu83ykdzokkd",
    "ms": 0
   }
  ],
- "setlistAt": 1791087114368,
+ "setlistAt": 1791094053402,
  "setlistBy": "nicole"
 }
