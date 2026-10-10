@@ -11537,8 +11537,16 @@
    "hidden": false
   }
  ],
- "setlists": [],
+ "setlists": [
+  {
+   "id": "sl_mv2c3xqd8une",
+   "name": "Setlist 10/10",
+   "entries": [],
+   "updatedAt": 1791633138042,
+   "updatedBy": "Nicole"
+  }
+ ],
  "setlist": [],
- "setlistAt": 0,
- "setlistBy": ""
+ "setlistAt": 1791633138042,
+ "setlistBy": "Nicole"
 }
