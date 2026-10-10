@@ -11309,16 +11309,8 @@
    "hidden": false
   }
  ],
- "setlists": [
-  {
-   "id": "sl_mut1rgnnzlo4",
-   "name": "Setlist 4/10 (2)",
-   "entries": [],
-   "updatedAt": 1791071564611,
-   "updatedBy": "nicole"
-  }
- ],
+ "setlists": [],
  "setlist": [],
- "setlistAt": 1791071564611,
- "setlistBy": "nicole"
+ "setlistAt": 0,
+ "setlistBy": ""
 }
