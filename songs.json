@@ -11640,6 +11640,80 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mv2cjmwvru61",
+   "title": "[IND] MAZMUR 63 (LEBIH DARI HIDUP)",
+   "authors": [
+    "Ardito Kenanya Hudson",
+    "David Amadeus Geraldean",
+    "Yoel Christian Budiyono"
+   ],
+   "author": "Ardito Kenanya Hudson, David Amadeus Geraldean, Yoel Christian Budiyono",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Ya Allah, Engkaulah rinduku",
+      "Jiwaku haus kepada-Mu",
+      "S'perti tanah kering, tiada berair",
+      "Tak tahan ku menantikan-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Dan kupandang Kau di tempat kudus",
+      "Terkagum 'kan kemuliaan-Mu, Yesus",
+      "S'bab kasih setia-mu lebih dari hidup",
+      "Bibirku 'kan memegahkan-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ya Allah, Engkaulah rinduku",
+     "Jiwaku haus kepada-Mu"
+    ],
+    [
+     "S'perti tanah kering, tiada berair",
+     "Tak tahan ku menantikan-Mu"
+    ],
+    [
+     "Dan kupandang Kau di tempat kudus",
+     "Terkagum 'kan kemuliaan-Mu, Yesus"
+    ],
+    [
+     "S'bab kasih setia-mu lebih dari hidup",
+     "Bibirku 'kan memegahkan-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1791633869603,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
