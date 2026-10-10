@@ -11311,42 +11311,6 @@
  ],
  "setlists": [
   {
-   "id": "sl_mut1ajvvc55t",
-   "name": "AOG Taipei 4/10",
-   "entries": [
-    {
-     "id": "s_mujej8iv0zfv",
-     "ms": 0
-    },
-    {
-     "id": "s_msualwhmyi3v",
-     "ms": 0
-    },
-    {
-     "id": "s_musia505zkew",
-     "ms": 0
-    },
-    {
-     "id": "s_mut1vdh8r84n",
-     "ms": 0
-    },
-    {
-     "id": "s_mut1y77v5k70",
-     "ms": 0
-    },
-    {
-     "id": "s_mu83ykdzokkd",
-     "ms": 0
-    },
-    {
-     "id": "s_mutg5o09edj3",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1791095756029,
-   "updatedBy": "nicole"
-  },
-  {
    "id": "sl_mut1aw0eqlk6",
    "name": "Setlist 4/10",
    "entries": [],
@@ -11361,36 +11325,7 @@
    "updatedBy": "nicole"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mujej8iv0zfv",
-   "ms": 0
-  },
-  {
-   "id": "s_msualwhmyi3v",
-   "ms": 0
-  },
-  {
-   "id": "s_musia505zkew",
-   "ms": 0
-  },
-  {
-   "id": "s_mut1vdh8r84n",
-   "ms": 0
-  },
-  {
-   "id": "s_mut1y77v5k70",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83ykdzokkd",
-   "ms": 0
-  },
-  {
-   "id": "s_mutg5o09edj3",
-   "ms": 0
-  }
- ],
- "setlistAt": 1791095756029,
+ "setlist": [],
+ "setlistAt": 1791071564611,
  "setlistBy": "nicole"
 }
