@@ -11311,50 +11311,6 @@
  ],
  "setlists": [
   {
-   "id": "sl_muibunexfzz2",
-   "name": "GMS Taipei 4/10",
-   "entries": [
-    {
-     "id": "s_mu83bx73otus",
-     "ms": 0
-    },
-    {
-     "id": "s_musi5194suan",
-     "ms": 0
-    },
-    {
-     "id": "s_msualwhmyi3v",
-     "ms": 0
-    },
-    {
-     "id": "s_musia505zkew",
-     "ms": 0
-    },
-    {
-     "id": "s_musiet86kg6r",
-     "ms": 0
-    },
-    {
-     "id": "s_mut1pywnua8h",
-     "ms": 0
-    },
-    {
-     "id": "s_mut1y77v5k70",
-     "ms": 0
-    },
-    {
-     "id": "s_mut3c6bs20xu",
-     "ms": 0
-    },
-    {
-     "id": "s_mutb0owtxnpt",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1791087114368,
-   "updatedBy": "nicole"
-  },
-  {
    "id": "sl_mut1ajvvc55t",
    "name": "AOG Taipei 4/10",
    "entries": [
