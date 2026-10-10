@@ -11307,6 +11307,103 @@
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mv2c0f98ahe6",
+   "title": "[IND] AJARKU BERDIAM",
+   "authors": [
+    "Sidney",
+    "LOJ Worship"
+   ],
+   "author": "Sidney, LOJ Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Ajarku berdiam dekat di hati-Mu",
+      "Di saat kuberpaling, temukan cinta-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Di sana Kau menanti tuk bawaku lagi",
+      "Bersekutu dalam damai yang sejati"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Oh kudamba hadir-Mu",
+      "Oh inilah rinduku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Hidupku hanyalah untuk-Mu",
+      "Segenap hatiku kagum akan kebaikan-Mu",
+      "Dan napasku, napasku menc'ritakan kasih-Mu",
+      "Ajarku berdiam dekat di hati-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ajarku berdiam dekat di hati-Mu",
+     "Di saat kuberpaling, temukan cinta-Mu"
+    ],
+    [
+     "Di sana Kau menanti tuk bawaku lagi",
+     "Bersekutu dalam damai yang sejati"
+    ],
+    [
+     "Oh kudamba hadir-Mu",
+     "Oh inilah rinduku"
+    ],
+    [
+     "Hidupku hanyalah untuk-Mu",
+     "Segenap hatiku kagum akan kebaikan-Mu"
+    ],
+    [
+     "Dan napasku, napasku menc'ritakan kasih-Mu",
+     "Ajarku berdiam dekat di hati-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Verse 2",
+    "Pre-Chorus",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1791632973223,
+   "updatedBy": "Nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [],
