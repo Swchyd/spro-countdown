@@ -11678,12 +11678,22 @@
   {
    "id": "sl_mv2cazf450uw",
    "name": "AOG 10/11",
-   "entries": [],
-   "updatedAt": 1791633484071,
+   "entries": [
+    {
+     "id": "s_mu83xmkx34hp",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1791633495178,
    "updatedBy": "Nicole"
   }
  ],
- "setlist": [],
- "setlistAt": 1791633484071,
+ "setlist": [
+  {
+   "id": "s_mu83xmkx34hp",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1791633495178,
  "setlistBy": "Nicole"
 }
