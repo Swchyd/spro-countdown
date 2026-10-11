@@ -11714,6 +11714,102 @@
    "updatedBy": "Nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mv3ayed3r504",
+   "title": "[ENG] JESUS I LOVE YOU",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Thanks for Your stubborn love for me",
+      "Just grace and mercy that I see",
+      "From my heart comes a simple song",
+      "With desire I will sing"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Jesus I love You,",
+      "Jesus I love You",
+      "Though the season may change",
+      "Still Your love will remain",
+      "Jesus I love You.",
+      "Jesus I love You,",
+      "Jesus I love You",
+      "Hear the cry of my heart",
+      "Know every word is true",
+      "Jesus I love You"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Thanks for Your stubborn love for me",
+     "Just grace and mercy that I see"
+    ],
+    [
+     "From my heart comes a simple song",
+     "With desire I will sing"
+    ],
+    [
+     "Jesus I love You,",
+     "Jesus I love You"
+    ],
+    [
+     "Though the season may change",
+     "Still Your love will remain"
+    ],
+    [
+     "Jesus I love You.",
+     "Jesus I love You,"
+    ],
+    [
+     "Jesus I love You",
+     "Hear the cry of my heart"
+    ],
+    [
+     "Know every word is true",
+     "Jesus I love You"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1791691665992,
+   "updatedBy": "Samuel",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
