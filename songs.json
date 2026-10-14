@@ -11956,6 +11956,102 @@
    "updatedBy": "SHERLEEN",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mv7jn6dbnm94",
+   "title": "[IND] MELODI",
+   "authors": [
+    "AOG Worship"
+   ],
+   "author": "AOG Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Betapa disenangi",
+      "Tempat kediaman-Mu",
+      "Jiwaku hancur",
+      "Merindukan pelataran-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Satu yang kupinta",
+      "Diam di rumah-Mu",
+      "Dan terus-menerus memuji Engkau",
+      "Itu bahagiaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Lebih baik satu hari di hadirat-Mu",
+      "Daripada s′ribu hari di tempat yang lain",
+      "Oh, Yesusku, terimalah melodi ini",
+      "Yang mengalun hanya bagi-Mu, Rajaku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Betapa disenangi",
+     "Tempat kediaman-Mu",
+     "Jiwaku hancur"
+    ],
+    [
+     "Merindukan pelataran-Mu"
+    ],
+    [
+     "Satu yang kupinta",
+     "Diam di rumah-Mu",
+     "Dan terus-menerus memuji Engkau"
+    ],
+    [
+     "Itu bahagiaku"
+    ],
+    [
+     "Lebih baik satu hari di hadirat-Mu",
+     "Daripada s′ribu hari di tempat yang lain",
+     "Oh, Yesusku, terimalah melodi ini"
+    ],
+    [
+     "Yang mengalun hanya bagi-Mu, Rajaku"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1791948123455,
+   "updatedBy": "SHERLEEN",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
