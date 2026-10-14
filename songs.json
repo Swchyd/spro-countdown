@@ -11960,28 +11960,20 @@
    "name": "CT COACH FEBE",
    "entries": [
     {
-     "id": "s_mujej8iv0zfv",
-     "ms": 0
-    },
-    {
      "id": "s_mv7jgwatv1ng",
      "ms": 0
     }
    ],
-   "updatedAt": 1791947894069,
+   "updatedAt": 1791947906977,
    "updatedBy": "SHERLEEN"
   }
  ],
  "setlist": [
   {
-   "id": "s_mujej8iv0zfv",
-   "ms": 0
-  },
-  {
    "id": "s_mv7jgwatv1ng",
    "ms": 0
   }
  ],
- "setlistAt": 1791947894069,
+ "setlistAt": 1791947906977,
  "setlistBy": "SHERLEEN"
 }
