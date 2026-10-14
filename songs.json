@@ -11810,6 +11810,80 @@
    "updatedBy": "Samuel",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mv7jgwatv1ng",
+   "title": "[IND] HARI INI KURASA BAHAGIA",
+   "authors": [
+    "AOG Worship"
+   ],
+   "author": "AOG Worship",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Hari ini ku rasa bahagia",
+      "Berkumpul bersama saudara seiman",
+      "Tuhan Yesus mempersatukan kita",
+      "Tanpa memandang di antara kita"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bergandingan tangan dalam kasih",
+      "Dalam satu hati",
+      "Berjalan dalam terang kasih Tuhan",
+      "Kau sahabatku, kau saudara ku",
+      "Tiada yang dapat memisahkan kita"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Hari ini ku rasa bahagia",
+     "Berkumpul bersama saudara seiman",
+     "Tuhan Yesus mempersatukan kita"
+    ],
+    [
+     "Tanpa memandang di antara kita"
+    ],
+    [
+     "Bergandingan tangan dalam kasih",
+     "Dalam satu hati",
+     "Berjalan dalam terang kasih Tuhan"
+    ],
+    [
+     "Kau sahabatku, kau saudara ku",
+     "Tiada yang dapat memisahkan kita"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1791947830453,
+   "updatedBy": "SHERLEEN",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
