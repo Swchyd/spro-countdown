@@ -11954,38 +11954,16 @@
    ],
    "updatedAt": 1791633966531,
    "updatedBy": "Nicole"
+  },
+  {
+   "id": "sl_mv7jhr617xsy",
+   "name": "Setlist 14/10",
+   "entries": [],
+   "updatedAt": 1791947871221,
+   "updatedBy": "SHERLEEN"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mu83xmkx34hp",
-   "ms": 0
-  },
-  {
-   "id": "s_mv2c35ia2skz",
-   "ms": 0
-  },
-  {
-   "id": "s_mu6sum6gkyh4",
-   "ms": 0
-  },
-  {
-   "id": "s_mv2c6v2qqwy2",
-   "ms": 0
-  },
-  {
-   "id": "s_mv2cjmwvru61",
-   "ms": 0
-  },
-  {
-   "id": "s_mu97gpx35lyg",
-   "ms": 0
-  },
-  {
-   "id": "s_mutb0owtxnpt",
-   "ms": 0
-  }
- ],
- "setlistAt": 1791633966531,
- "setlistBy": "Nicole"
+ "setlist": [],
+ "setlistAt": 1791947871221,
+ "setlistBy": "SHERLEEN"
 }
