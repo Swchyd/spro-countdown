@@ -12324,13 +12324,25 @@
    "author": "True Worshippers",
    "sections": [
     {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Selidiki aku, lihat hatiku",
+      "Apakah ku sungguh mengasihiMu Yesus",
+      "Kau yang Maha Tahu",
+      "Dan menilai hidupku",
+      "Tak ada yang tersembunyi bagiMu"
+     ],
+     "notes": []
+    },
+    {
      "key": "chorus",
      "tag": "Chorus",
      "lines": [
-      "T'lah ku lihat,    kebaikan-Mu",
+      "T'lah ku lihat, kebaikan-Mu",
       "Yang tak pernah habis di hidupku",
       "Ku berjuang sampai akhirnya",
-      "Kau dapati aku tetap setia."
+      "Kau dapati aku tetap setia"
      ],
      "notes": []
     },
@@ -12341,40 +12353,35 @@
       "Dan bila saatnya Kau datang",
       "Menjemputku dalam terangMu",
       "Kau 'kan dapatiku setia",
-      "Lakukan firmanMu."
-     ],
-     "notes": []
-    },
-    {
-     "key": "ending",
-     "tag": "Ending",
-     "lines": [
-      "Bapa  ku mau terus setia",
-      "Ajarku untuk tetap ku teguh",
-      "Ku mau terus setia",
-      "Ikuti Engkau mau",
-      "Aga ku tetap setia",
-      "Sampai pada akhirnya",
-      "(Ku mau tetap setia)",
-      "Huhuhm.. (ku mau tetap setia)",
-      "Bapa ajar untuk tetap setia."
+      "Lakukan firmanMu"
      ],
      "notes": []
     }
    ],
    "order": [
+    "verse",
     "chorus",
-    "bridge",
-    "ending"
+    "bridge"
    ],
    "slides": [
     [
-     "T'lah ku lihat,    kebaikan-Mu",
+     "Selidiki aku, lihat hatiku",
+     "Apakah ku sungguh mengasihiMu Yesus"
+    ],
+    [
+     "Kau yang Maha Tahu",
+     "Dan menilai hidupku"
+    ],
+    [
+     "Tak ada yang tersembunyi bagiMu"
+    ],
+    [
+     "T'lah ku lihat, kebaikan-Mu",
      "Yang tak pernah habis di hidupku"
     ],
     [
      "Ku berjuang sampai akhirnya",
-     "Kau dapati aku tetap setia."
+     "Kau dapati aku tetap setia"
     ],
     [
      "Dan bila saatnya Kau datang",
@@ -12382,37 +12389,16 @@
     ],
     [
      "Kau 'kan dapatiku setia",
-     "Lakukan firmanMu."
-    ],
-    [
-     "Bapa  ku mau terus setia",
-     "Ajarku untuk tetap ku teguh"
-    ],
-    [
-     "Ku mau terus setia",
-     "Ikuti Engkau mau"
-    ],
-    [
-     "Aga ku tetap setia",
-     "Sampai pada akhirnya"
-    ],
-    [
-     "(Ku mau tetap setia)",
-     "Huhuhm.. (ku mau tetap setia)"
-    ],
-    [
-     "Bapa ajar untuk tetap setia."
+     "Lakukan firmanMu"
     ]
    ],
    "tags": [
+    "Verse",
+    "",
+    "",
     "Chorus",
     "",
     "Bridge",
-    "",
-    "Ending",
-    "",
-    "",
-    "",
     ""
    ],
    "notes": [
@@ -12422,13 +12408,11 @@
     "",
     "",
     "",
-    "",
-    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1792236254753,
+   "version": 2,
+   "updatedAt": 1792239264123,
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
