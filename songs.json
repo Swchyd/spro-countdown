@@ -12052,6 +12052,96 @@
    "updatedBy": "SHERLEEN",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvc9d9wgvqne",
+   "title": "[IND] MENGIKUT YESUS",
+   "authors": [
+    "Franky Kuncoro"
+   ],
+   "author": "Franky Kuncoro",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "S'mua kar'na anug'rah-Mu",
+      "Hari ini ada",
+      "Bukan kar'na kuatku",
+      "Namun, kar'na Roh-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Kubawa hatiku, penyembahanku",
+      "Ku s'makin berkurang",
+      "Yesus s'makin bertambah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Mengikut Yesus",
+      "Itulah kesukaan hatiku",
+      "Kulepas semua hakku untuk",
+      "Mengenal kehendak-Nya di hidupku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "S'mua kar'na anug'rah-Mu",
+     "Hari ini ada",
+     "Bukan kar'na kuatku"
+    ],
+    [
+     "Namun, kar'na Roh-Mu"
+    ],
+    [
+     "Kubawa hatiku, penyembahanku",
+     "Ku s'makin berkurang",
+     "Yesus s'makin bertambah"
+    ],
+    [
+     "Mengikut Yesus",
+     "Itulah kesukaan hatiku",
+     "Kulepas semua hakku untuk"
+    ],
+    [
+     "Mengenal kehendak-Nya di hidupku"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Pre-Chorus",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1792233196359,
+   "updatedBy": "Sherleen",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
