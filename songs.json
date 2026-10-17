@@ -12956,6 +12956,128 @@
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvcd967n0gsl",
+   "title": "[ENG] THIS IS THE DAY",
+   "authors": [
+    "Lakewood Music"
+   ],
+   "author": "Lakewood Music",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "There's a light that shines with hope and grace",
+      "Fills the sky with new mercy each day",
+      "We're alive let your glory pour out Jesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "There's a joy that overwhelms our souls",
+      "'Cause we know our God is in control",
+      "Overflow let your favor pour out Jesus (Jesus)"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "This is the day that the Lord has made",
+      "We will rejoice and be glad in it",
+      "This is the day that the Lord has made",
+      "We'll rejoice we'll rejoice and be glad in it",
+      "We'll rejoice we'll rejoice and be glad in it"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Leave behind what happened yesterday",
+      "'Cause today there's a new thing happening",
+      "Leave behind what happened yesterday",
+      "'Cause today there's a good thing happening"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "There's a light that shines with hope and grace",
+     "Fills the sky with new mercy each day"
+    ],
+    [
+     "We're alive let your glory pour out Jesus"
+    ],
+    [
+     "There's a joy that overwhelms our souls",
+     "'Cause we know our God is in control"
+    ],
+    [
+     "Overflow let your favor pour out Jesus (Jesus)"
+    ],
+    [
+     "This is the day that the Lord has made",
+     "We will rejoice and be glad in it"
+    ],
+    [
+     "This is the day that the Lord has made",
+     "We'll rejoice we'll rejoice and be glad in it"
+    ],
+    [
+     "We'll rejoice we'll rejoice and be glad in it"
+    ],
+    [
+     "Leave behind what happened yesterday",
+     "'Cause today there's a new thing happening"
+    ],
+    [
+     "Leave behind what happened yesterday",
+     "'Cause today there's a good thing happening"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792239723451,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
