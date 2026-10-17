@@ -12289,7 +12289,7 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "headset in ear tidak rapi"
+      "test"
      ],
      "notes": []
     }
@@ -12299,7 +12299,7 @@
    ],
    "slides": [
     [
-     "headset in ear tidak rapi"
+     "test"
     ]
    ],
    "tags": [
@@ -12309,8 +12309,8 @@
     ""
    ],
    "perSlide": 3,
-   "version": 3,
-   "updatedAt": 1792234379215,
+   "version": 4,
+   "updatedAt": 1792234545298,
    "updatedBy": "Sherleen",
    "lastUsed": 0,
    "hidden": false
