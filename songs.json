@@ -12520,6 +12520,140 @@
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvcbt8xqrz2e",
+   "title": "[IND] NYALAKAN APIMU",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Jiwa bebas terlepas",
+      "Kuasa maut t'lah terhempas",
+      "Nama Yesus pemenang",
+      "Nama Yesus jawaban"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Langkah takkan berhenti",
+      "Berlari sampai  akhir",
+      "S'rukan tinggi nama-Nya",
+      "S'rukan Raja namaNya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Roh Kudus membakar setiap kami",
+      "Naikan pujian mujizat terjadi"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Mengalir kuasaMu, nyalakan apiMu",
+      "Kunyanyi oe oo oe o..",
+      "(Kunyanyi hosanna..)",
+      "oe o oo..",
+      "(Haleluya.. hosana)",
+      "Tercurah kuasaMu, nyalakan apiMu",
+      "Kunyanyi oe oo oe o..",
+      "(Kunyanyi hosanna haleluya..)",
+      "Keajaiban terjadi"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "pre-chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Jiwa bebas terlepas",
+     "Kuasa maut t'lah terhempas"
+    ],
+    [
+     "Nama Yesus pemenang",
+     "Nama Yesus jawaban"
+    ],
+    [
+     "Langkah takkan berhenti",
+     "Berlari sampai  akhir"
+    ],
+    [
+     "S'rukan tinggi nama-Nya",
+     "S'rukan Raja namaNya"
+    ],
+    [
+     "Roh Kudus membakar setiap kami",
+     "Naikan pujian mujizat terjadi"
+    ],
+    [
+     "Mengalir kuasaMu, nyalakan apiMu",
+     "Kunyanyi oe oo oe o.."
+    ],
+    [
+     "(Kunyanyi hosanna..)",
+     "oe o oo.."
+    ],
+    [
+     "(Haleluya.. hosana)",
+     "Tercurah kuasaMu, nyalakan apiMu"
+    ],
+    [
+     "Kunyanyi oe oo oe o..",
+     "(Kunyanyi hosanna haleluya..)"
+    ],
+    [
+     "Keajaiban terjadi"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Pre-Chorus",
+    "Chorus",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792237300711,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
