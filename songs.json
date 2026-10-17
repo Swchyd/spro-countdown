@@ -12083,8 +12083,8 @@
      "notes": []
     },
     {
-     "key": "chorus",
-     "tag": "Chorus",
+     "key": "chorus 1",
+     "tag": "Chorus 1",
      "lines": [
       "Mengikut Yesus",
       "Itulah kesukaan hatiku",
@@ -12092,12 +12092,25 @@
       "Mengenal kehendak-Nya di hidupku"
      ],
      "notes": []
+    },
+    {
+     "key": "chorus 2",
+     "tag": "Chorus 2",
+     "lines": [
+      "Mengiring Yesus",
+      "Itulah kekuatan hidupku",
+      "Ku yakin anug'rah-Nya mampu",
+      "Jadikanku hamba",
+      "Yang berkenan s'lalu"
+     ],
+     "notes": []
     }
    ],
    "order": [
     "verse",
     "pre-chorus",
-    "chorus"
+    "chorus 1",
+    "chorus 2"
    ],
    "slides": [
     [
@@ -12120,13 +12133,24 @@
     ],
     [
      "Mengenal kehendak-Nya di hidupku"
+    ],
+    [
+     "Mengiring Yesus",
+     "Itulah kekuatan hidupku",
+     "Ku yakin anug'rah-Nya mampu"
+    ],
+    [
+     "Jadikanku hamba",
+     "Yang berkenan s'lalu"
     ]
    ],
    "tags": [
     "Verse",
     "",
     "Pre-Chorus",
-    "Chorus",
+    "Chorus 1",
+    "",
+    "Chorus 2",
     ""
    ],
    "notes": [
@@ -12134,11 +12158,13 @@
     "",
     "",
     "",
+    "",
+    "",
     ""
    ],
    "perSlide": 3,
-   "version": 1,
-   "updatedAt": 1792233196359,
+   "version": 2,
+   "updatedAt": 1792233290168,
    "updatedBy": "Sherleen",
    "lastUsed": 0,
    "hidden": false
