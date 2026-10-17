@@ -12378,34 +12378,16 @@
    ],
    "updatedAt": 1792233697145,
    "updatedBy": "Sherleen"
+  },
+  {
+   "id": "sl_mvc9yijh15d4",
+   "name": "Setlist 17/10",
+   "entries": [],
+   "updatedAt": 1792234187788,
+   "updatedBy": "Sherleen"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mv7jgwatv1ng",
-   "ms": 0
-  },
-  {
-   "id": "s_mujej8iv0zfv",
-   "ms": 0
-  },
-  {
-   "id": "s_mv7jkerybux3",
-   "ms": 0
-  },
-  {
-   "id": "s_mv7jn6dbnm94",
-   "ms": 0
-  },
-  {
-   "id": "s_mvc9d9wgvqne",
-   "ms": 0
-  },
-  {
-   "id": "s_mvc9ltldcwj0",
-   "ms": 0
-  }
- ],
- "setlistAt": 1792233697145,
+ "setlist": [],
+ "setlistAt": 1792234187788,
  "setlistBy": "Sherleen"
 }
