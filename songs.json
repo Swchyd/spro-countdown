@@ -13230,6 +13230,10 @@
    "name": "AOG 10/16",
    "entries": [
     {
+     "id": "s_mvcd967n0gsl",
+     "ms": 0
+    },
+    {
      "id": "s_mvcbt8xqrz2e",
      "ms": 0
     },
@@ -13242,15 +13246,11 @@
      "ms": 0
     },
     {
-     "id": "s_mvcd967n0gsl",
-     "ms": 0
-    },
-    {
      "id": "s_mvcdbewgmdyi",
      "ms": 0
     }
    ],
-   "updatedAt": 1792239842544,
+   "updatedAt": 1792239873053,
    "updatedBy": "Gloria"
   },
   {
@@ -13292,6 +13292,10 @@
  ],
  "setlist": [
   {
+   "id": "s_mvcd967n0gsl",
+   "ms": 0
+  },
+  {
    "id": "s_mvcbt8xqrz2e",
    "ms": 0
   },
@@ -13304,14 +13308,10 @@
    "ms": 0
   },
   {
-   "id": "s_mvcd967n0gsl",
-   "ms": 0
-  },
-  {
    "id": "s_mvcdbewgmdyi",
    "ms": 0
   }
  ],
- "setlistAt": 1792239842544,
+ "setlistAt": 1792239873053,
  "setlistBy": "Gloria"
 }
