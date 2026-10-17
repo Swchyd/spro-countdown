@@ -12276,6 +12276,44 @@
    "updatedBy": "Sherleen",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvca0ayfnxti",
+   "title": "[IND] PENGUMUMAN",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "IN EAR KURANG RAPI"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1"
+   ],
+   "slides": [
+    [
+     "IN EAR KURANG RAPI"
+    ]
+   ],
+   "tags": [
+    ""
+   ],
+   "notes": [
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1792234270216,
+   "updatedBy": "Sherleen",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
