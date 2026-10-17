@@ -12289,7 +12289,7 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "bajunya ga rapi"
+      "headset in ear tidak rapi"
      ],
      "notes": []
     }
@@ -12299,7 +12299,7 @@
    ],
    "slides": [
     [
-     "bajunya ga rapi"
+     "headset in ear tidak rapi"
     ]
    ],
    "tags": [
@@ -12309,8 +12309,8 @@
     ""
    ],
    "perSlide": 3,
-   "version": 2,
-   "updatedAt": 1792234345426,
+   "version": 3,
+   "updatedAt": 1792234379215,
    "updatedBy": "Sherleen",
    "lastUsed": 0,
    "hidden": false
