@@ -12900,6 +12900,78 @@
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvccm1mp0hz6",
+   "title": "[IND] KITA DIPILIH   DARI S`GALA BANGSA",
+   "authors": [
+    "Mark Altrogge"
+   ],
+   "author": "Mark Altrogge",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kita dipilih dari s’gala bangsa",
+      "Ya kita dipilih jadi umatNya",
+      "Kita dipilih dan dikuduskanNya",
+      "Membawa kemuliaan hanya bagi Dia"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "T`rimalah kemuliaan dan hormat kami",
+      "T`rimalah sembah kami, pujian kami",
+      "T`rimalah kemuliaan dan hormat kami",
+      "T`rimalah sembah dan pujian kami"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kita dipilih dari s’gala bangsa",
+     "Ya kita dipilih jadi umatNya"
+    ],
+    [
+     "Kita dipilih dan dikuduskanNya",
+     "Membawa kemuliaan hanya bagi Dia"
+    ],
+    [
+     "T`rimalah kemuliaan dan hormat kami",
+     "T`rimalah sembah kami, pujian kami"
+    ],
+    [
+     "T`rimalah kemuliaan dan hormat kami",
+     "T`rimalah sembah dan pujian kami"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792238644310,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
