@@ -12314,6 +12314,124 @@
    "updatedBy": "Sherleen",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvcb6tqg1874",
+   "title": "[IND] TETAP SETIA",
+   "authors": [
+    "True Worshippers"
+   ],
+   "author": "True Worshippers",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "T'lah ku lihat,    kebaikan-Mu",
+      "Yang tak pernah habis di hidupku",
+      "Ku berjuang sampai akhirnya",
+      "Kau dapati aku tetap setia."
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Dan bila saatnya Kau datang",
+      "Menjemputku dalam terangMu",
+      "Kau 'kan dapatiku setia",
+      "Lakukan firmanMu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "Bapa  ku mau terus setia",
+      "Ajarku untuk tetap ku teguh",
+      "Ku mau terus setia",
+      "Ikuti Engkau mau",
+      "Aga ku tetap setia",
+      "Sampai pada akhirnya",
+      "(Ku mau tetap setia)",
+      "Huhuhm.. (ku mau tetap setia)",
+      "Bapa ajar untuk tetap setia."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus",
+    "bridge",
+    "ending"
+   ],
+   "slides": [
+    [
+     "T'lah ku lihat,    kebaikan-Mu",
+     "Yang tak pernah habis di hidupku"
+    ],
+    [
+     "Ku berjuang sampai akhirnya",
+     "Kau dapati aku tetap setia."
+    ],
+    [
+     "Dan bila saatnya Kau datang",
+     "Menjemputku dalam terangMu"
+    ],
+    [
+     "Kau 'kan dapatiku setia",
+     "Lakukan firmanMu."
+    ],
+    [
+     "Bapa  ku mau terus setia",
+     "Ajarku untuk tetap ku teguh"
+    ],
+    [
+     "Ku mau terus setia",
+     "Ikuti Engkau mau"
+    ],
+    [
+     "Aga ku tetap setia",
+     "Sampai pada akhirnya"
+    ],
+    [
+     "(Ku mau tetap setia)",
+     "Huhuhm.. (ku mau tetap setia)"
+    ],
+    [
+     "Bapa ajar untuk tetap setia."
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    "Bridge",
+    "",
+    "Ending",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792236254753,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
