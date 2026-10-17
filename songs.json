@@ -12352,37 +12352,8 @@
   {
    "id": "sl_mv2cazf450uw",
    "name": "AOG 10/16",
-   "entries": [
-    {
-     "id": "s_mu83xmkx34hp",
-     "ms": 0
-    },
-    {
-     "id": "s_mv2c35ia2skz",
-     "ms": 0
-    },
-    {
-     "id": "s_mu6sum6gkyh4",
-     "ms": 0
-    },
-    {
-     "id": "s_mv2c6v2qqwy2",
-     "ms": 0
-    },
-    {
-     "id": "s_mv2cjmwvru61",
-     "ms": 0
-    },
-    {
-     "id": "s_mu97gpx35lyg",
-     "ms": 0
-    },
-    {
-     "id": "s_mutb0owtxnpt",
-     "ms": 0
-    }
-   ],
-   "updatedAt": 1792235700938,
+   "entries": [],
+   "updatedAt": 1792235717293,
    "updatedBy": "Gloria"
   },
   {
@@ -12422,36 +12393,7 @@
    "updatedBy": "Sherleen"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mu83xmkx34hp",
-   "ms": 0
-  },
-  {
-   "id": "s_mv2c35ia2skz",
-   "ms": 0
-  },
-  {
-   "id": "s_mu6sum6gkyh4",
-   "ms": 0
-  },
-  {
-   "id": "s_mv2c6v2qqwy2",
-   "ms": 0
-  },
-  {
-   "id": "s_mv2cjmwvru61",
-   "ms": 0
-  },
-  {
-   "id": "s_mu97gpx35lyg",
-   "ms": 0
-  },
-  {
-   "id": "s_mutb0owtxnpt",
-   "ms": 0
-  }
- ],
- "setlistAt": 1792235700938,
+ "setlist": [],
+ "setlistAt": 1792235717293,
  "setlistBy": "Gloria"
 }
