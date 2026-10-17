@@ -12289,7 +12289,7 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "IN EAR KURANG RAPI"
+      "bajunya ga rapi"
      ],
      "notes": []
     }
@@ -12299,7 +12299,7 @@
    ],
    "slides": [
     [
-     "IN EAR KURANG RAPI"
+     "bajunya ga rapi"
     ]
    ],
    "tags": [
@@ -12309,8 +12309,8 @@
     ""
    ],
    "perSlide": 3,
-   "version": 1,
-   "updatedAt": 1792234270216,
+   "version": 2,
+   "updatedAt": 1792234345426,
    "updatedBy": "Sherleen",
    "lastUsed": 0,
    "hidden": false
