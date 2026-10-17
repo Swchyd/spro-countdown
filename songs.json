@@ -12654,6 +12654,102 @@
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvcbw03pe1hd",
+   "title": "[IND] MENGALIRLAH S’KARANG",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Roh Kudus Kau hadir di sini",
+      "Mengalir dalam pujian kami",
+      "Berhembuslah, berkaryalah",
+      "Roh Kudus nyatakanlah s'karang"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Roh Kudus Kau hadir di sini",
+      "Mengalir dalam pujian kami",
+      "Berhembuslah, berkaryalah",
+      "Roh Kudus nyatakanlah s'karang"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Roh Kudus penuhi",
+      "Roh Yesus urapi",
+      "Jamahlah setiap hati kami",
+      "Mengalirlah s'karang"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Roh Kudus Kau hadir di sini",
+     "Mengalir dalam pujian kami"
+    ],
+    [
+     "Berhembuslah, berkaryalah",
+     "Roh Kudus nyatakanlah s'karang"
+    ],
+    [
+     "Roh Kudus Kau hadir di sini",
+     "Mengalir dalam pujian kami"
+    ],
+    [
+     "Berhembuslah, berkaryalah",
+     "Roh Kudus nyatakanlah s'karang"
+    ],
+    [
+     "Roh Kudus penuhi",
+     "Roh Yesus urapi"
+    ],
+    [
+     "Jamahlah setiap hati kami",
+     "Mengalirlah s'karang"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792237429208,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
