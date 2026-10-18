@@ -13290,6 +13290,92 @@
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvd44an2kvp9",
+   "title": "[IND] OLEH DARAH ANAK DOMBA",
+   "authors": [
+    "Franky Sihombing"
+   ],
+   "author": "Franky Sihombing",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Sekarang t'lah tiba",
+      "Kes'lamatan dan kuasa",
+      "Dan p'mrintahan Allah kita",
+      "Kuasa-Nya yang diurapiNya",
+      "Kar'na t'lah dilemparkanNya",
+      "Para pendakwa kita"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Oleh darah Anak Domba",
+      "Oleh kesaksian kita",
+      "Iblis dikalahkan",
+      "Kuasanya dihancurkan",
+      "Oleh darah Anak Domba"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Sekarang t'lah tiba",
+     "Kes'lamatan dan kuasa"
+    ],
+    [
+     "Dan p'mrintahan Allah kita",
+     "Kuasa-Nya yang diurapiNya"
+    ],
+    [
+     "Kar'na t'lah dilemparkanNya",
+     "Para pendakwa kita"
+    ],
+    [
+     "Oleh darah Anak Domba",
+     "Oleh kesaksian kita"
+    ],
+    [
+     "Iblis dikalahkan",
+     "Kuasanya dihancurkan"
+    ],
+    [
+     "Oleh darah Anak Domba"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792284845021,
+   "updatedBy": "Gloria",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
