@@ -12996,12 +12996,40 @@
      "tag": "Chorus",
      "lines": [
       "This is the day",
-      "that the Lord has made",
-      "We will rejoice and be glad in it",
+      "that the Lord has made"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "We will rejoice and be glad in it"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
       "This is the day",
-      "that the Lord has made",
+      "that the Lord has made"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
       "We'll rejoice we'll rejoice",
-      "and be glad in it",
+      "and be glad in it"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_4",
+     "tag": "",
+     "lines": [
       "We'll rejoice we'll rejoice",
       "and be glad in it"
      ],
@@ -13011,10 +13039,31 @@
      "key": "bridge",
      "tag": "Bridge",
      "lines": [
-      "Leave behind what happened yesterday",
+      "Leave behind what happened yesterday"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_5",
+     "tag": "",
+     "lines": [
       "'Cause today there's",
-      "a new thing happening",
-      "Leave behind what happened yesterday",
+      "a new thing happening"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_6",
+     "tag": "",
+     "lines": [
+      "Leave behind what happened yesterday"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_7",
+     "tag": "",
+     "lines": [
       "'Cause today there's",
       "a good thing happening"
      ],
@@ -13025,7 +13074,14 @@
     "verse 1",
     "verse 2",
     "chorus",
-    "bridge"
+    "_1",
+    "_2",
+    "_3",
+    "_4",
+    "bridge",
+    "_5",
+    "_6",
+    "_7"
    ],
    "slides": [
     [
@@ -13057,26 +13113,28 @@
      "that the Lord has made"
     ],
     [
-     "We will rejoice and be glad in it",
-     "This is the day"
+     "We will rejoice and be glad in it"
     ],
     [
-     "that the Lord has made",
-     "We'll rejoice we'll rejoice"
+     "This is the day",
+     "that the Lord has made"
     ],
     [
-     "and be glad in it",
-     "We'll rejoice we'll rejoice"
-    ],
-    [
+     "We'll rejoice we'll rejoice",
      "and be glad in it"
     ],
     [
-     "Leave behind what happened yesterday",
-     "'Cause today there's"
+     "We'll rejoice we'll rejoice",
+     "and be glad in it"
     ],
     [
-     "a new thing happening",
+     "Leave behind what happened yesterday"
+    ],
+    [
+     "'Cause today there's",
+     "a new thing happening"
+    ],
+    [
      "Leave behind what happened yesterday"
     ],
     [
@@ -13098,6 +13156,7 @@
     "",
     "Bridge",
     "",
+    "",
     ""
    ],
    "notes": [
@@ -13114,11 +13173,12 @@
     "",
     "",
     "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 4,
-   "updatedAt": 1792283342402,
+   "version": 5,
+   "updatedAt": 1792283411864,
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
