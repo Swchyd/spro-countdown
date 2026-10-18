@@ -12969,7 +12969,8 @@
      "key": "verse 1",
      "tag": "Verse 1",
      "lines": [
-      "There's a light that shines with hope and grace",
+      "There's a light that shines",
+      "with hope and grace",
       "Fills the sky with new mercy each day",
       "We're alive let your glory pour out Jesus"
      ],
@@ -12979,9 +12980,11 @@
      "key": "verse 2",
      "tag": "Verse 2",
      "lines": [
-      "There's a joy that overwhelms our souls",
+      "There's a joy",
+      "that overwhelms our souls",
       "'Cause we know our God is in control",
-      "Overflow let your favor pour out Jesus (Jesus)"
+      "Overflow let your favor",
+      "pour out Jesus (Jesus)"
      ],
      "notes": []
     },
@@ -12992,8 +12995,10 @@
       "This is the day that the Lord has made",
       "We will rejoice and be glad in it",
       "This is the day that the Lord has made",
-      "We'll rejoice we'll rejoice and be glad in it",
-      "We'll rejoice we'll rejoice and be glad in it"
+      "We'll rejoice we'll rejoice",
+      "and be glad in it",
+      "We'll rejoice we'll rejoice",
+      "and be glad in it"
      ],
      "notes": []
     },
@@ -13002,9 +13007,11 @@
      "tag": "Bridge",
      "lines": [
       "Leave behind what happened yesterday",
-      "'Cause today there's a new thing happening",
+      "'Cause today there's",
+      "a new thing happening",
       "Leave behind what happened yesterday",
-      "'Cause today there's a good thing happening"
+      "'Cause today there's",
+      "a good thing happening"
      ],
      "notes": []
     }
@@ -13017,18 +13024,23 @@
    ],
    "slides": [
     [
-     "There's a light that shines with hope and grace",
-     "Fills the sky with new mercy each day"
+     "There's a light that shines",
+     "with hope and grace"
     ],
     [
+     "Fills the sky with new mercy each day",
      "We're alive let your glory pour out Jesus"
     ],
     [
-     "There's a joy that overwhelms our souls",
-     "'Cause we know our God is in control"
+     "There's a joy",
+     "that overwhelms our souls"
     ],
     [
-     "Overflow let your favor pour out Jesus (Jesus)"
+     "'Cause we know our God is in control",
+     "Overflow let your favor"
+    ],
+    [
+     "pour out Jesus (Jesus)"
     ],
     [
      "This is the day that the Lord has made",
@@ -13036,18 +13048,26 @@
     ],
     [
      "This is the day that the Lord has made",
-     "We'll rejoice we'll rejoice and be glad in it"
+     "We'll rejoice we'll rejoice"
     ],
     [
-     "We'll rejoice we'll rejoice and be glad in it"
+     "and be glad in it",
+     "We'll rejoice we'll rejoice"
+    ],
+    [
+     "and be glad in it"
     ],
     [
      "Leave behind what happened yesterday",
-     "'Cause today there's a new thing happening"
+     "'Cause today there's"
     ],
     [
-     "Leave behind what happened yesterday",
-     "'Cause today there's a good thing happening"
+     "a new thing happening",
+     "Leave behind what happened yesterday"
+    ],
+    [
+     "'Cause today there's",
+     "a good thing happening"
     ]
    ],
    "tags": [
@@ -13055,10 +13075,13 @@
     "",
     "Verse 2",
     "",
+    "",
     "Chorus",
     "",
     "",
+    "",
     "Bridge",
+    "",
     ""
    ],
    "notes": [
@@ -13070,11 +13093,14 @@
     "",
     "",
     "",
+    "",
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1792239723451,
+   "version": 2,
+   "updatedAt": 1792283194487,
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
