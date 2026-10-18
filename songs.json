@@ -12995,9 +12995,11 @@
      "key": "chorus",
      "tag": "Chorus",
      "lines": [
-      "This is the day that the Lord has made",
+      "This is the day",
+      "that the Lord has made",
       "We will rejoice and be glad in it",
-      "This is the day that the Lord has made",
+      "This is the day",
+      "that the Lord has made",
       "We'll rejoice we'll rejoice",
       "and be glad in it",
       "We'll rejoice we'll rejoice",
@@ -13051,11 +13053,15 @@
      "pour out Jesus (Jesus)"
     ],
     [
-     "This is the day that the Lord has made",
-     "We will rejoice and be glad in it"
+     "This is the day",
+     "that the Lord has made"
     ],
     [
-     "This is the day that the Lord has made",
+     "We will rejoice and be glad in it",
+     "This is the day"
+    ],
+    [
+     "that the Lord has made",
      "We'll rejoice we'll rejoice"
     ],
     [
@@ -13089,6 +13095,7 @@
     "",
     "",
     "",
+    "",
     "Bridge",
     "",
     ""
@@ -13106,11 +13113,12 @@
     "",
     "",
     "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 3,
-   "updatedAt": 1792283287554,
+   "version": 4,
+   "updatedAt": 1792283342402,
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
