@@ -12971,8 +12971,10 @@
      "lines": [
       "There's a light that shines",
       "with hope and grace",
-      "Fills the sky with new mercy each day",
-      "We're alive let your glory pour out Jesus"
+      "Fills the sky",
+      "with new mercy each day",
+      "We're alive",
+      "let your glory pour out Jesus"
      ],
      "notes": []
     },
@@ -12982,7 +12984,8 @@
      "lines": [
       "There's a joy",
       "that overwhelms our souls",
-      "'Cause we know our God is in control",
+      "'Cause we know",
+      "our God is in control",
       "Overflow let your favor",
       "pour out Jesus (Jesus)"
      ],
@@ -13028,18 +13031,23 @@
      "with hope and grace"
     ],
     [
-     "Fills the sky with new mercy each day",
-     "We're alive let your glory pour out Jesus"
+     "Fills the sky",
+     "with new mercy each day"
+    ],
+    [
+     "We're alive",
+     "let your glory pour out Jesus"
     ],
     [
      "There's a joy",
      "that overwhelms our souls"
     ],
     [
-     "'Cause we know our God is in control",
-     "Overflow let your favor"
+     "'Cause we know",
+     "our God is in control"
     ],
     [
+     "Overflow let your favor",
      "pour out Jesus (Jesus)"
     ],
     [
@@ -13073,6 +13081,7 @@
    "tags": [
     "Verse 1",
     "",
+    "",
     "Verse 2",
     "",
     "",
@@ -13096,11 +13105,12 @@
     "",
     "",
     "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1792283194487,
+   "version": 3,
+   "updatedAt": 1792283287554,
    "updatedBy": "Gloria",
    "lastUsed": 0,
    "hidden": false
