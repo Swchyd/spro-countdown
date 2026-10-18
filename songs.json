@@ -13444,10 +13444,14 @@
     {
      "id": "s_mvd44an2kvp9",
      "ms": 0
+    },
+    {
+     "id": "s_muj2t0jkzsru",
+     "ms": 0
     }
    ],
-   "updatedAt": 1792284848655,
-   "updatedBy": "Gloria"
+   "updatedAt": 1792300463161,
+   "updatedBy": "aldo"
   },
   {
    "id": "sl_mv7jhr617xsy",
@@ -13488,11 +13492,11 @@
  ],
  "setlist": [
   {
-   "id": "s_mvccm1mp0hz6",
+   "id": "s_mvcd967n0gsl",
    "ms": 0
   },
   {
-   "id": "s_mtlbdpozicy3",
+   "id": "s_mvcdbewgmdyi",
    "ms": 0
   },
   {
@@ -13508,18 +13512,14 @@
    "ms": 0
   },
   {
-   "id": "s_mvcb6tqg1874",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83bx73otus",
-   "ms": 0
-  },
-  {
    "id": "s_mvd44an2kvp9",
+   "ms": 0
+  },
+  {
+   "id": "s_muj2t0jkzsru",
    "ms": 0
   }
  ],
- "setlistAt": 1792289469268,
- "setlistBy": "Owner"
+ "setlistAt": 1792300463161,
+ "setlistBy": "aldo"
 }
