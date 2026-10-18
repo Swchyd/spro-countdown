@@ -12550,13 +12550,17 @@
      "lines": [
       "Mengalir kuasaMu, nyalakan apiMu",
       "Kunyanyi oe oo oe o..",
-      "(Kunyanyi hosanna..)",
-      "oe o oo..",
-      "(Haleluya.. hosana)",
       "Tercurah kuasaMu, nyalakan apiMu",
       "Kunyanyi oe oo oe o..",
-      "(Kunyanyi hosanna haleluya..)",
       "Keajaiban terjadi"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Oe oo oe o"
      ],
      "notes": []
     }
@@ -12565,7 +12569,8 @@
     "verse 1",
     "verse 2",
     "pre-chorus",
-    "chorus"
+    "chorus",
+    "bridge"
    ],
    "slides": [
     [
@@ -12593,19 +12598,14 @@
      "Kunyanyi oe oo oe o.."
     ],
     [
-     "(Kunyanyi hosanna..)",
-     "oe o oo.."
-    ],
-    [
-     "(Haleluya.. hosana)",
-     "Tercurah kuasaMu, nyalakan apiMu"
-    ],
-    [
-     "Kunyanyi oe oo oe o..",
-     "(Kunyanyi hosanna haleluya..)"
+     "Tercurah kuasaMu, nyalakan apiMu",
+     "Kunyanyi oe oo oe o.."
     ],
     [
      "Keajaiban terjadi"
+    ],
+    [
+     "Oe oo oe o"
     ]
    ],
    "tags": [
@@ -12617,11 +12617,9 @@
     "Chorus",
     "",
     "",
-    "",
-    ""
+    "Bridge"
    ],
    "notes": [
-    "",
     "",
     "",
     "",
@@ -12633,9 +12631,9 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1792237300711,
-   "updatedBy": "Gloria",
+   "version": 2,
+   "updatedAt": 1792287579664,
+   "updatedBy": "Owner",
    "lastUsed": 0,
    "hidden": false
   },
