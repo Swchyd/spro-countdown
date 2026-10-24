@@ -13488,38 +13488,16 @@
    ],
    "updatedAt": 1792234293104,
    "updatedBy": "Sherleen"
+  },
+  {
+   "id": "sl_mvmwl1dcxvqo",
+   "name": "Setlist 25/10",
+   "entries": [],
+   "updatedAt": 1792876851963,
+   "updatedBy": "Pido"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mvcd967n0gsl",
-   "ms": 0
-  },
-  {
-   "id": "s_mvcdbewgmdyi",
-   "ms": 0
-  },
-  {
-   "id": "s_mvcbt8xqrz2e",
-   "ms": 0
-  },
-  {
-   "id": "s_mvcbw03pe1hd",
-   "ms": 0
-  },
-  {
-   "id": "s_mvcbzrdz32xo",
-   "ms": 0
-  },
-  {
-   "id": "s_mvd44an2kvp9",
-   "ms": 0
-  },
-  {
-   "id": "s_muj2t0jkzsru",
-   "ms": 0
-  }
- ],
- "setlistAt": 1792300463161,
- "setlistBy": "aldo"
+ "setlist": [],
+ "setlistAt": 1792876851963,
+ "setlistBy": "Pido"
 }
