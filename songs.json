@@ -13534,6 +13534,90 @@
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvmwy8ytaxmq",
+   "title": "[IND] S’KALI YESUS SELAMANYA YESUS",
+   "authors": [
+    "Franky Kuncoro"
+   ],
+   "author": "Franky Kuncoro",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Dalam s'gala keadaan",
+      "Waktu berlimpah maupun kurang",
+      "Tetap Yesus yang mempesona hatiku",
+      "Dia b'ri damai dan kesempatan baru"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Di s'tiap musim kehidupan",
+      "Waktu ku kuat maupun lemah",
+      "Tetap Yesus yang mempesona hatiku",
+      "Dia b'ri hidup dan kesempatan baru"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "S'kali Yesus, selamanya Yesus",
+      "Harapanku tak akan hilang",
+      "Kar'na kasih-Nya, s'karang ku ada",
+      "Oh, Yesusku, kucinta Kau s'lamanya"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Dalam s'gala keadaan",
+     "Waktu berlimpah maupun kurang",
+     "Tetap Yesus yang mempesona hatiku",
+     "Dia b'ri damai dan kesempatan baru"
+    ],
+    [
+     "Di s'tiap musim kehidupan",
+     "Waktu ku kuat maupun lemah",
+     "Tetap Yesus yang mempesona hatiku",
+     "Dia b'ri hidup dan kesempatan baru"
+    ],
+    [
+     "S'kali Yesus, selamanya Yesus",
+     "Harapanku tak akan hilang",
+     "Kar'na kasih-Nya, s'karang ku ada",
+     "Oh, Yesusku, kucinta Kau s'lamanya"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Verse 2",
+    "Chorus"
+   ],
+   "notes": [
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1792877467507,
+   "updatedBy": "Pido",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
