@@ -13618,6 +13618,94 @@
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvmx4iseyouf",
+   "title": "[IND] MAHKOTA KEHIDUPAN",
+   "authors": [
+    "NDC Worship"
+   ],
+   "author": "NDC Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Tak akan pernah kusesali",
+      "Mengiring Yesus sepanjang hidupku",
+      "Lewati lembah air mata",
+      "Kusaksikan kemuliaan-Mu dinyatakan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre chorus",
+     "tag": "Pre Chorus",
+     "lines": [
+      "Berapapun harga yang harus kubayar",
+      "Kukan tetap setia"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Melayani mengasihi-Mu",
+      "Mengiring-Mu seumur hidupku",
+      "Janji-Mu kan tetap kupegang teguh",
+      "Sampai kudapat mahkota kehidupan"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "pre chorus",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Tak akan pernah kusesali",
+     "Mengiring Yesus sepanjang hidupku"
+    ],
+    [
+     "Lewati lembah air mata",
+     "Kusaksikan kemuliaan-Mu dinyatakan"
+    ],
+    [
+     "Berapapun harga yang harus kubayar",
+     "Kukan tetap setia"
+    ],
+    [
+     "Melayani mengasihi-Mu",
+     "Mengiring-Mu seumur hidupku"
+    ],
+    [
+     "Janji-Mu kan tetap kupegang teguh",
+     "Sampai kudapat mahkota kehidupan"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Pre Chorus",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792877760070,
+   "updatedBy": "Pido",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
