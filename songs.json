@@ -13492,12 +13492,22 @@
   {
    "id": "sl_mvmwl1dcxvqo",
    "name": "UMUM AOG 10/25",
-   "entries": [],
-   "updatedAt": 1792876862139,
+   "entries": [
+    {
+     "id": "s_mt40pvjc01yp",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1792876889715,
    "updatedBy": "Pido"
   }
  ],
- "setlist": [],
- "setlistAt": 1792876862139,
+ "setlist": [
+  {
+   "id": "s_mt40pvjc01yp",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1792876889715,
  "setlistBy": "Pido"
 }
