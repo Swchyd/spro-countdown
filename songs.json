@@ -13706,6 +13706,110 @@
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvn03vo7tqbz",
+   "title": "[IND] BAPA YANG KEKAL",
+   "authors": [
+    "Julita Manik"
+   ],
+   "author": "Julita Manik",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kasih yang sempurna telah",
+      "Kut'rima dariMu",
+      "Bukan kar'na kebaikanku",
+      "Hanya oleh kasih karuniaMu",
+      "Kau pulihkan aku layakkanku",
+      "Tuk dapat memanggilMu, Bapa"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 1",
+     "tag": "Chorus 1",
+     "lines": [
+      "Kau b'ri yang kupinta",
+      "Saat kumencari kumendapatkan",
+      "Kuketuk pintuMu dan Kau bukakan",
+      "S'bab Kau Bapaku, Bapa yang kekal"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus 2",
+     "tag": "Chorus 2",
+     "lines": [
+      "Takkan Kau biarkan",
+      "Aku melangkah hanya sendirian",
+      "Kau selalu ada bagiku",
+      "S'bab Kau Bapaku, Bapa yang kekal"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus 1",
+    "chorus 2"
+   ],
+   "slides": [
+    [
+     "Kasih yang sempurna telah",
+     "Kut'rima dariMu"
+    ],
+    [
+     "Bukan kar'na kebaikanku",
+     "Hanya oleh kasih karuniaMu"
+    ],
+    [
+     "Kau pulihkan aku layakkanku",
+     "Tuk dapat memanggilMu, Bapa"
+    ],
+    [
+     "Kau b'ri yang kupinta",
+     "Saat kumencari kumendapatkan"
+    ],
+    [
+     "Kuketuk pintuMu dan Kau bukakan",
+     "S'bab Kau Bapaku, Bapa yang kekal"
+    ],
+    [
+     "Takkan Kau biarkan",
+     "Aku melangkah hanya sendirian"
+    ],
+    [
+     "Kau selalu ada bagiku",
+     "S'bab Kau Bapaku, Bapa yang kekal"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "Chorus 1",
+    "",
+    "Chorus 2",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792882768924,
+   "updatedBy": "Pido",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
