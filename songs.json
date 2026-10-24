@@ -13810,6 +13810,102 @@
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvn07lyjiuh3",
+   "title": "[ENG] I GIVE YOU MY HEART",
+   "authors": [
+    "Hillsong Worship"
+   ],
+   "author": "Hillsong Worship",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "This is my desire",
+      "To honour You",
+      "Lord with all my heart",
+      "I worship You",
+      "All I have within me",
+      "I give You praise",
+      "All that I adore",
+      "Is in You"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Lord I give You my heart",
+      "I give You my soul",
+      "I live for You alone",
+      "Every breath that I take",
+      "Every moment I’m awake",
+      "Lord have Your way in me"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "This is my desire",
+     "To honour You"
+    ],
+    [
+     "Lord with all my heart",
+     "I worship You"
+    ],
+    [
+     "All I have within me",
+     "I give You praise"
+    ],
+    [
+     "All that I adore",
+     "Is in You"
+    ],
+    [
+     "Lord I give You my heart",
+     "I give You my soul"
+    ],
+    [
+     "I live for You alone",
+     "Every breath that I take"
+    ],
+    [
+     "Every moment I’m awake",
+     "Lord have Your way in me"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792882942999,
+   "updatedBy": "Pido",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
