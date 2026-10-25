@@ -13731,12 +13731,12 @@
      "key": "verse",
      "tag": "Verse",
      "lines": [
-      "Kasih yang sempurna telah",
-      "Kut'rima dariMu",
+      "Kasih yang sempurna",
+      "Telah kut'rima dariMu",
       "Bukan kar'na kebaikanku",
       "Hanya oleh kasih karuniaMu",
-      "Kau pulihkan aku layakkanku",
-      "Tuk dapat memanggilMu, Bapa"
+      "Kau pulihkan aku",
+      "Layakkanku tuk dapat memanggilMu"
      ],
      "notes": []
     },
@@ -13744,7 +13744,7 @@
      "key": "chorus 1",
      "tag": "Chorus 1",
      "lines": [
-      "Kau b'ri yang kupinta",
+      "Bapa, Kau b'ri yang kupinta",
       "Saat kumencari kumendapatkan",
       "Kuketuk pintuMu dan Kau bukakan",
       "S'bab Kau Bapaku, Bapa yang kekal"
@@ -13770,19 +13770,19 @@
    ],
    "slides": [
     [
-     "Kasih yang sempurna telah",
-     "Kut'rima dariMu"
+     "Kasih yang sempurna",
+     "Telah kut'rima dariMu"
     ],
     [
      "Bukan kar'na kebaikanku",
      "Hanya oleh kasih karuniaMu"
     ],
     [
-     "Kau pulihkan aku layakkanku",
-     "Tuk dapat memanggilMu, Bapa"
+     "Kau pulihkan aku",
+     "Layakkanku tuk dapat memanggilMu"
     ],
     [
-     "Kau b'ri yang kupinta",
+     "Bapa, Kau b'ri yang kupinta",
      "Saat kumencari kumendapatkan"
     ],
     [
@@ -13817,9 +13817,9 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1792882768924,
-   "updatedBy": "Pido",
+   "version": 2,
+   "updatedAt": 1792898218532,
+   "updatedBy": "Samuel",
    "lastUsed": 0,
    "hidden": false
   },
