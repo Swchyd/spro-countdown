@@ -12289,7 +12289,7 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "PAW MUNDUR SUPAYA CE FEBE BISA NAIK"
+      "PAW MUNDUR"
      ],
      "notes": []
     }
@@ -12299,7 +12299,7 @@
    ],
    "slides": [
     [
-     "PAW MUNDUR SUPAYA CE FEBE BISA NAIK"
+     "PAW MUNDUR"
     ]
    ],
    "tags": [
@@ -12309,8 +12309,8 @@
     ""
    ],
    "perSlide": 3,
-   "version": 5,
-   "updatedAt": 1792924960259,
+   "version": 6,
+   "updatedAt": 1792925149965,
    "updatedBy": "sherleen",
    "lastUsed": 0,
    "hidden": false
