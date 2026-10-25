@@ -13585,37 +13585,49 @@
    "slides": [
     [
      "Dalam s'gala keadaan",
-     "Waktu berlimpah maupun kurang",
+     "Waktu berlimpah maupun kurang"
+    ],
+    [
      "Tetap Yesus yang mempesona hatiku",
      "Dia b'ri damai dan kesempatan baru"
     ],
     [
      "Di s'tiap musim kehidupan",
-     "Waktu ku kuat maupun lemah",
+     "Waktu ku kuat maupun lemah"
+    ],
+    [
      "Tetap Yesus yang mempesona hatiku",
      "Dia b'ri hidup dan kesempatan baru"
     ],
     [
      "S'kali Yesus, selamanya Yesus",
-     "Harapanku tak akan hilang",
+     "Harapanku tak akan hilang"
+    ],
+    [
      "Kar'na kasih-Nya, s'karang ku ada",
      "Oh, Yesusku, kucinta Kau s'lamanya"
     ]
    ],
    "tags": [
     "Verse 1",
+    "",
     "Verse 2",
-    "Chorus"
+    "",
+    "Chorus",
+    ""
    ],
    "notes": [
     "",
     "",
+    "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1792877467507,
-   "updatedBy": "Pido",
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1792891929311,
+   "updatedBy": "Samuel",
    "lastUsed": 0,
    "hidden": false
   },
