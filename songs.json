@@ -13918,6 +13918,122 @@
    "updatedBy": "Pido",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvne0mqc8ok7",
+   "title": "[ENG] REVIVAL",
+   "authors": [
+    "Army of God"
+   ],
+   "author": "Army of God",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Standing tall for this generation",
+      "We reach out and claim Your place",
+      "We won't rest, we won't fade away",
+      "'Till You reign forevermore"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre chorus",
+     "tag": "Pre Chorus",
+     "lines": [
+      "This is our generation",
+      "Chosen, young, and precious",
+      "This is our Almighty God",
+      "Wonderful, strong, and ageless"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Jesus, Jesus",
+      "We live to see Your revival",
+      "To the sky, to the sky",
+      "Revival fire in the most high",
+      "Revive us now!"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "We will die leaving a revival behind behind"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "pre chorus",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Standing tall for this generation",
+     "We reach out and claim Your place"
+    ],
+    [
+     "We won't rest, we won't fade away",
+     "'Till You reign forevermore"
+    ],
+    [
+     "This is our generation",
+     "Chosen, young, and precious"
+    ],
+    [
+     "This is our Almighty God",
+     "Wonderful, strong, and ageless"
+    ],
+    [
+     "Jesus, Jesus",
+     "We live to see Your revival"
+    ],
+    [
+     "To the sky, to the sky",
+     "Revival fire in the most high"
+    ],
+    [
+     "Revive us now!"
+    ],
+    [
+     "We will die leaving a revival behind behind"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Pre Chorus",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Bridge"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1792906132213,
+   "updatedBy": "Samuel",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
