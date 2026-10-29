@@ -14281,6 +14281,86 @@
    "updatedBy": "Jennifer",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvtj9ugpn947",
+   "title": "[IND] LINGKUPIKU",
+   "authors": [
+    "Gloria Trio"
+   ],
+   "author": "Gloria Trio",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Lingkupiku dengan sayapMu",
+      "Na - ungiku dengan kuasa - Mu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Di saat badai bergelora",
+      "Ku akan terbang bersamaMu",
+      "Bapa, Kau Raja atas semesta",
+      "Ku tenang sbab Kau Allahku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Jiwa-ku tenang dalam Kristus",
+      "Lihat kuasaNya dalam keheningan."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "chorus",
+    "verse 2"
+   ],
+   "slides": [
+    [
+     "Lingkupiku dengan sayapMu",
+     "Na - ungiku dengan kuasa - Mu."
+    ],
+    [
+     "Di saat badai bergelora",
+     "Ku akan terbang bersamaMu"
+    ],
+    [
+     "Bapa, Kau Raja atas semesta",
+     "Ku tenang sbab Kau Allahku."
+    ],
+    [
+     "Jiwa-ku tenang dalam Kristus",
+     "Lihat kuasaNya dalam keheningan."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Chorus",
+    "",
+    "Verse 2"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793277758063,
+   "updatedBy": "Jennifer",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
