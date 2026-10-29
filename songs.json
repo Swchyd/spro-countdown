@@ -14337,9 +14337,13 @@
     {
      "id": "s_mv7jgwatv1ng",
      "ms": 0
+    },
+    {
+     "id": "s_mvtj324m0fft",
+     "ms": 0
     }
    ],
-   "updatedAt": 1793277478874,
+   "updatedAt": 1793277539706,
    "updatedBy": "Jennifer"
   },
   {
@@ -14350,7 +14354,16 @@
    "updatedBy": "Jennifer"
   }
  ],
- "setlist": [],
- "setlistAt": 1793277529238,
+ "setlist": [
+  {
+   "id": "s_mv7jgwatv1ng",
+   "ms": 0
+  },
+  {
+   "id": "s_mvtj324m0fft",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1793277539706,
  "setlistBy": "Jennifer"
 }
