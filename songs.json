@@ -14361,6 +14361,78 @@
    "updatedBy": "Jennifer",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvtjimdshb6u",
+   "title": "[IND] JADIKAN KAMI SATU",
+   "authors": [
+    "Jonathan Prawira"
+   ],
+   "author": "Jonathan Prawira",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kami rendahkan diri di hadapan-Mu",
+      "Membawa hancur hati saat berseru",
+      "Agar kami saling melengkapi tubuh-Mu",
+      "Seperti Kau dan Yesus adalah satu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Jadikan kami satu s'perti kerinduan-Mu",
+      "Agar dunia tahu bukti nyata dari kasih-Mu",
+      "Sebelum kami pergi memb'ritakan kasih-Mu",
+      "Mulailah dari kami lebih dulu, jadikan kami satu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kami rendahkan diri di hadapan-Mu",
+     "Membawa hancur hati saat berseru"
+    ],
+    [
+     "Agar kami saling melengkapi tubuh-Mu",
+     "Seperti Kau dan Yesus adalah satu"
+    ],
+    [
+     "Jadikan kami satu s'perti kerinduan-Mu",
+     "Agar dunia tahu bukti nyata dari kasih-Mu"
+    ],
+    [
+     "Sebelum kami pergi memb'ritakan kasih-Mu",
+     "Mulailah dari kami lebih dulu, jadikan kami satu"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793278166369,
+   "updatedBy": "nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
