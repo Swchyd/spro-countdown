@@ -14034,6 +14034,143 @@
    "updatedBy": "Samuel",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvtj324m0fft",
+   "title": "[IND] AKU DAN SEISI RUMAHKU",
+   "authors": [
+    "David Leroy Santoso",
+    "GMS Live Kids"
+   ],
+   "author": "David Leroy Santoso, GMS Live Kids",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Terima kasih, Tuhan",
+      "Kau beriku Papa, Mama",
+      "Yang ‘tak kenal lelah",
+      "Ajarku hidup setia."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Terima kasih, Tuhan",
+      "Kau beriku saudara",
+      "Saling mengasihi",
+      "Dan saling mengampuni."
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "Pre-Chorus",
+     "lines": [
+      "Sehati, sepikir",
+      "Melangkah genapi visi Bapa."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Aku dan seisi rumahku",
+      "Kami mau selalu memujiMu",
+      "Menc'ritakan semua kebaikanMu",
+      "Menjadi terang saksiMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Aku dan seisi rumahku",
+      "Kami mau selalu menyembahMu",
+      "Seumur hidup melayaniMu",
+      "Tuhan, ini doaku."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "pre-chorus",
+    "chorus",
+    "_1"
+   ],
+   "slides": [
+    [
+     "Terima kasih, Tuhan",
+     "Kau beriku Papa, Mama"
+    ],
+    [
+     "Yang ‘tak kenal lelah",
+     "Ajarku hidup setia."
+    ],
+    [
+     "Terima kasih, Tuhan",
+     "Kau beriku saudara"
+    ],
+    [
+     "Saling mengasihi",
+     "Dan saling mengampuni."
+    ],
+    [
+     "Sehati, sepikir",
+     "Melangkah genapi visi Bapa."
+    ],
+    [
+     "Aku dan seisi rumahku",
+     "Kami mau selalu memujiMu"
+    ],
+    [
+     "Menc'ritakan semua kebaikanMu",
+     "Menjadi terang saksiMu"
+    ],
+    [
+     "Aku dan seisi rumahku",
+     "Kami mau selalu menyembahMu"
+    ],
+    [
+     "Seumur hidup melayaniMu",
+     "Tuhan, ini doaku."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Pre-Chorus",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793277440638,
+   "updatedBy": "nicole",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
