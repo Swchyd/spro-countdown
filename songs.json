@@ -14333,12 +14333,22 @@
   {
    "id": "sl_mvtiz5z9xy4o",
    "name": "CT Taoyuan 10/31",
-   "entries": [],
-   "updatedAt": 1793277271106,
-   "updatedBy": "Jennifer"
+   "entries": [
+    {
+     "id": "s_mvtj324m0fft",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1793277453835,
+   "updatedBy": "nicole"
   }
  ],
- "setlist": [],
- "setlistAt": 1793277271106,
- "setlistBy": "Jennifer"
+ "setlist": [
+  {
+   "id": "s_mvtj324m0fft",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1793277453835,
+ "setlistBy": "nicole"
 }
