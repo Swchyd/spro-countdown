@@ -14192,46 +14192,16 @@
    ],
    "updatedAt": 1792906136615,
    "updatedBy": "Samuel"
+  },
+  {
+   "id": "sl_mvtiz2eko14i",
+   "name": "Setlist 29/10",
+   "entries": [],
+   "updatedAt": 1793277255221,
+   "updatedBy": "nicole"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mt40pvjc01yp",
-   "ms": 0
-  },
-  {
-   "id": "s_mvmwsvo1rfyr",
-   "ms": 0
-  },
-  {
-   "id": "s_mu87fn5abswr",
-   "ms": 0
-  },
-  {
-   "id": "s_mvmwy8ytaxmq",
-   "ms": 0
-  },
-  {
-   "id": "s_mvmx4iseyouf",
-   "ms": 0
-  },
-  {
-   "id": "s_mvn03vo7tqbz",
-   "ms": 0
-  },
-  {
-   "id": "s_msuarobbucm0",
-   "ms": 0
-  },
-  {
-   "id": "s_mvn07lyjiuh3",
-   "ms": 0
-  },
-  {
-   "id": "s_mvne0mqc8ok7",
-   "ms": 0
-  }
- ],
- "setlistAt": 1792906136615,
- "setlistBy": "Samuel"
+ "setlist": [],
+ "setlistAt": 1793277255221,
+ "setlistBy": "nicole"
 }
