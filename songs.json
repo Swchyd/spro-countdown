@@ -14341,14 +14341,16 @@
    ],
    "updatedAt": 1793277478874,
    "updatedBy": "Jennifer"
-  }
- ],
- "setlist": [
+  },
   {
-   "id": "s_mv7jgwatv1ng",
-   "ms": 0
+   "id": "sl_mvtj4wzihe95",
+   "name": "Setlist 29/10",
+   "entries": [],
+   "updatedAt": 1793277529238,
+   "updatedBy": "Jennifer"
   }
  ],
- "setlistAt": 1793277478874,
+ "setlist": [],
+ "setlistAt": 1793277529238,
  "setlistBy": "Jennifer"
 }
