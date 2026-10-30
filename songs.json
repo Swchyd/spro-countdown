@@ -14433,6 +14433,94 @@
    "updatedBy": "nicole",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvuwjrvlg3nb",
+   "title": "[IND] DENGAR DIA PANGGIL NAMA SAYA",
+   "authors": [
+    "Yehuda Singers"
+   ],
+   "author": "Yehuda Singers",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Oh, giranglah",
+      "Oh, giranglah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Yesus amat cinta pada saya",
+      "Oh, giranglah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "Dengar Dia panggil nama saya",
+      "Dengar Dia panggil namamu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_4",
+     "tag": "",
+     "lines": [
+      "Dengar Dia panggil nama saya",
+      "Juga Dia panggil namamu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "_2",
+    "_3",
+    "_4"
+   ],
+   "slides": [
+    [
+     "Oh, giranglah",
+     "Oh, giranglah"
+    ],
+    [
+     "Yesus amat cinta pada saya",
+     "Oh, giranglah"
+    ],
+    [
+     "Dengar Dia panggil nama saya",
+     "Dengar Dia panggil namamu"
+    ],
+    [
+     "Dengar Dia panggil nama saya",
+     "Juga Dia panggil namamu"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793360521082,
+   "updatedBy": "aldo",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
