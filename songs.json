@@ -14630,34 +14630,16 @@
    "entries": [],
    "updatedAt": 1793277529238,
    "updatedBy": "Jennifer"
+  },
+  {
+   "id": "sl_mvuwdj8usimg",
+   "name": "Setlist 30/10",
+   "entries": [],
+   "updatedAt": 1793360230738,
+   "updatedBy": "aldo"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mv7jgwatv1ng",
-   "ms": 0
-  },
-  {
-   "id": "s_mvtj324m0fft",
-   "ms": 0
-  },
-  {
-   "id": "s_mv7jn6dbnm94",
-   "ms": 0
-  },
-  {
-   "id": "s_mvtj867k5wxo",
-   "ms": 0
-  },
-  {
-   "id": "s_mvtj9ugpn947",
-   "ms": 0
-  },
-  {
-   "id": "s_mvtjimdshb6u",
-   "ms": 0
-  }
- ],
- "setlistAt": 1793278183217,
- "setlistBy": "nicole"
+ "setlist": [],
+ "setlistAt": 1793360230738,
+ "setlistBy": "aldo"
 }
