@@ -14507,12 +14507,22 @@
   {
    "id": "sl_mvuwdj8usimg",
    "name": "CT Coach Edward",
-   "entries": [],
-   "updatedAt": 1793360258458,
+   "entries": [
+    {
+     "id": "s_mv7jgwatv1ng",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1793360378213,
    "updatedBy": "aldo"
   }
  ],
- "setlist": [],
- "setlistAt": 1793360258458,
+ "setlist": [
+  {
+   "id": "s_mv7jgwatv1ng",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1793360378213,
  "setlistBy": "aldo"
 }
