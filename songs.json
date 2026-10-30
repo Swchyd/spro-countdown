@@ -14998,11 +14998,13 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1793373029585,
+   "version": 2,
+   "updatedAt": 1793373105260,
    "updatedBy": "Jennifer",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1793373105260,
+   "deletedBy": "Jennifer"
   }
  ],
  "setlists": [
