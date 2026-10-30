@@ -14849,30 +14849,16 @@
    ],
    "updatedAt": 1793361139862,
    "updatedBy": "aldo"
+  },
+  {
+   "id": "sl_mvv3mix9rutd",
+   "name": "Setlist 30/10",
+   "entries": [],
+   "updatedAt": 1793372406024,
+   "updatedBy": "Jennifer"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mv7jgwatv1ng",
-   "ms": 0
-  },
-  {
-   "id": "s_mvuwjrvlg3nb",
-   "ms": 0
-  },
-  {
-   "id": "s_mvtj324m0fft",
-   "ms": 0
-  },
-  {
-   "id": "s_mvuwqho776gu",
-   "ms": 0
-  },
-  {
-   "id": "s_mvuwwv53o393",
-   "ms": 0
-  }
- ],
- "setlistAt": 1793361139862,
- "setlistBy": "aldo"
+ "setlist": [],
+ "setlistAt": 1793372406024,
+ "setlistBy": "Jennifer"
 }
