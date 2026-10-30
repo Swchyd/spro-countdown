@@ -14889,6 +14889,120 @@
    "updatedBy": "Jennifer",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvv3zvc9t1qi",
+   "title": "[IND] BERTUMBUH DALAM KASIH",
+   "authors": [
+    "Joshua Parda",
+    "Paulin Irene",
+    "VG GP Immanuel"
+   ],
+   "author": "Joshua Parda, Paulin Irene, VG GP Immanuel",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Sebagai saudara seiman",
+      "Di dalam tubuh Kristus",
+      "Mengerahkan s’luruh hidupnya",
+      "Berbagi kasih bersama."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Kadang tawa dan kadang tangis",
+      "Suka duka bersama",
+      "Yang kuat menanggung yang lemah",
+      "Dalam anugrahNya."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kita bertumbuh",
+      "Bertumbuh di dalam kasih",
+      "Sehati sepikir setujuan",
+      "Melangkah bersama",
+      "Tuaian besar telah",
+      "Menanti dihadapan kita",
+      "Siapkanlah dirimu songsong hari esok",
+      "Dan Tuhan dimuliakan melalui gerejaNya."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Sebagai saudara seiman",
+     "Di dalam tubuh Kristus"
+    ],
+    [
+     "Mengerahkan s’luruh hidupnya",
+     "Berbagi kasih bersama."
+    ],
+    [
+     "Kadang tawa dan kadang tangis",
+     "Suka duka bersama"
+    ],
+    [
+     "Yang kuat menanggung yang lemah",
+     "Dalam anugrahNya."
+    ],
+    [
+     "Kita bertumbuh",
+     "Bertumbuh di dalam kasih"
+    ],
+    [
+     "Sehati sepikir setujuan",
+     "Melangkah bersama"
+    ],
+    [
+     "Tuaian besar telah",
+     "Menanti dihadapan kita"
+    ],
+    [
+     "Siapkanlah dirimu songsong hari esok",
+     "Dan Tuhan dimuliakan melalui gerejaNya."
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793373029585,
+   "updatedBy": "Jennifer",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
