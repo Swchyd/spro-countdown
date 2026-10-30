@@ -14521,6 +14521,96 @@
    "updatedBy": "aldo",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvuwqho776gu",
+   "title": "[IND] KUMAU CINTA YESUS",
+   "authors": [
+    "Citra Scholastika"
+   ],
+   "author": "Citra Scholastika",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Ku mau cinta Yesus selamanya",
+      "Ku mau cinta Yesus selamanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Meskipun badai silih",
+      "berganti dalam hidupku",
+      "Ku tetap cinta Yesus selamanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "Ya Abba Bapa ini aku anak-Mu",
+      "Layakkanlah seluruh hidupku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_4",
+     "tag": "",
+     "lines": [
+      "Ya Abba Bapa ini aku anak-Mu",
+      "Pakailah sesuai dengan rencana-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "_2",
+    "_3",
+    "_4"
+   ],
+   "slides": [
+    [
+     "Ku mau cinta Yesus selamanya",
+     "Ku mau cinta Yesus selamanya"
+    ],
+    [
+     "Meskipun badai silih",
+     "berganti dalam hidupku",
+     "Ku tetap cinta Yesus selamanya"
+    ],
+    [
+     "Ya Abba Bapa ini aku anak-Mu",
+     "Layakkanlah seluruh hidupku"
+    ],
+    [
+     "Ya Abba Bapa ini aku anak-Mu",
+     "Pakailah sesuai dengan rencana-Mu"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1793360834893,
+   "updatedBy": "aldo",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
