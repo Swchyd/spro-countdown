@@ -15183,7 +15183,7 @@
    "name": "CT Taoyuan 10/31",
    "entries": [
     {
-     "id": "s_mv7jgwatv1ng",
+     "id": "s_mvtj324m0fft",
      "ms": 0
     },
     {
@@ -15191,7 +15191,7 @@
      "ms": 0
     },
     {
-     "id": "s_mvtj324m0fft",
+     "id": "s_mv7jgwatv1ng",
      "ms": 0
     },
     {
@@ -15215,7 +15215,7 @@
      "ms": 0
     }
    ],
-   "updatedAt": 1793417860610,
+   "updatedAt": 1793417866621,
    "updatedBy": "violla"
   },
   {
@@ -15249,7 +15249,7 @@
  ],
  "setlist": [
   {
-   "id": "s_mv7jgwatv1ng",
+   "id": "s_mvtj324m0fft",
    "ms": 0
   },
   {
@@ -15257,7 +15257,7 @@
    "ms": 0
   },
   {
-   "id": "s_mvtj324m0fft",
+   "id": "s_mv7jgwatv1ng",
    "ms": 0
   },
   {
@@ -15281,6 +15281,6 @@
    "ms": 0
   }
  ],
- "setlistAt": 1793417860610,
+ "setlistAt": 1793417866621,
  "setlistBy": "violla"
 }
