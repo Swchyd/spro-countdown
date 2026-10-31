@@ -15517,12 +15517,22 @@
   {
    "id": "sl_mvx18ilftgu4",
    "name": "Ibadah umum 1/11",
-   "entries": [],
-   "updatedAt": 1793489351286,
+   "entries": [
+    {
+     "id": "s_mu87a4mrp4tp",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1793489380718,
    "updatedBy": "Lid"
   }
  ],
- "setlist": [],
- "setlistAt": 1793489351286,
+ "setlist": [
+  {
+   "id": "s_mu87a4mrp4tp",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1793489380718,
  "setlistBy": "Lid"
 }
