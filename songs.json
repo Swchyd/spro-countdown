@@ -15505,46 +15505,42 @@
     {
      "id": "s_mvuwwv53o393",
      "ms": 0
+    },
+    {
+     "id": "s_mvwdts781jyk",
+     "ms": 0
     }
    ],
-   "updatedAt": 1793361139862,
+   "updatedAt": 1793450012856,
    "updatedBy": "aldo"
   }
  ],
  "setlist": [
   {
-   "id": "s_mvtj324m0fft",
-   "ms": 0
-  },
-  {
-   "id": "s_mvvumhj0od1j",
-   "ms": 0
-  },
-  {
-   "id": "s_mv7jn6dbnm94",
-   "ms": 0
-  },
-  {
-   "id": "s_mvtj867k5wxo",
-   "ms": 0
-  },
-  {
-   "id": "s_mvtj9ugpn947",
-   "ms": 0
-  },
-  {
-   "id": "s_mvtjimdshb6u",
-   "ms": 0
-  },
-  {
    "id": "s_mv7jgwatv1ng",
    "ms": 0
   },
   {
-   "id": "s_mvc9ltldcwj0",
+   "id": "s_mvuwjrvlg3nb",
+   "ms": 0
+  },
+  {
+   "id": "s_mvtj324m0fft",
+   "ms": 0
+  },
+  {
+   "id": "s_mvuwqho776gu",
+   "ms": 0
+  },
+  {
+   "id": "s_mvuwwv53o393",
+   "ms": 0
+  },
+  {
+   "id": "s_mvwdts781jyk",
    "ms": 0
   }
  ],
- "setlistAt": 1793417977713,
- "setlistBy": "violla"
+ "setlistAt": 1793450012856,
+ "setlistBy": "aldo"
 }
