@@ -15884,6 +15884,124 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvx23i7hr20p",
+   "title": "[ENG] WHAT A BEAUTIFUL NAME",
+   "authors": [
+    "Hillsong Worship"
+   ],
+   "author": "Hillsong Worship",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "What a beautiful Name it is What a beautiful Name it is The Name of Jesus Christ my King",
+      "What a beautiful Name it is",
+      "Nothing compares to this",
+      "What a beautiful Name it is The Name of Jesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge 1",
+     "tag": "Bridge 1",
+     "lines": [
+      "Death could not hold You",
+      "The veil tore before You",
+      "You silence the boast of sin and grave",
+      "The heavens are roaring",
+      "The praise of Your glory For",
+      "You are raised to life again"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge 2",
+     "tag": "Bridge 2",
+     "lines": [
+      "You have no rival",
+      "You have no equal",
+      "Now and forever",
+      "God You reign",
+      "Yours is the kingdom",
+      "Yours is the glory",
+      "Yours is the Name above all names"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus",
+    "bridge 1",
+    "bridge 2"
+   ],
+   "slides": [
+    [
+     "What a beautiful Name it is What a beautiful Name it is The Name of Jesus Christ my King",
+     "What a beautiful Name it is"
+    ],
+    [
+     "Nothing compares to this",
+     "What a beautiful Name it is The Name of Jesus"
+    ],
+    [
+     "Death could not hold You",
+     "The veil tore before You"
+    ],
+    [
+     "You silence the boast of sin and grave",
+     "The heavens are roaring"
+    ],
+    [
+     "The praise of Your glory For",
+     "You are raised to life again"
+    ],
+    [
+     "You have no rival",
+     "You have no equal"
+    ],
+    [
+     "Now and forever",
+     "God You reign"
+    ],
+    [
+     "Yours is the kingdom",
+     "Yours is the glory"
+    ],
+    [
+     "Yours is the Name above all names"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    "Bridge 1",
+    "",
+    "",
+    "Bridge 2",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793490772463,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
