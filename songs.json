@@ -16002,6 +16002,78 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvx26e2ydcdm",
+   "title": "[IND] DOA YABES",
+   "authors": [
+    "Angel Pieters"
+   ],
+   "author": "Angel Pieters",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Kiranya engkau memberkati aku",
+      "Berlimpah-limpah",
+      "Dan memperluas",
+      "Daerahku",
+      "Dan kiranya",
+      "TanganMu menyertai aku",
+      "Dan melindungi aku",
+      "Dari pada malapetaka",
+      "Sehingga kesakitan",
+      "Tidak menimpa aku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1"
+   ],
+   "slides": [
+    [
+     "Kiranya engkau memberkati aku",
+     "Berlimpah-limpah"
+    ],
+    [
+     "Dan memperluas",
+     "Daerahku"
+    ],
+    [
+     "Dan kiranya",
+     "TanganMu menyertai aku"
+    ],
+    [
+     "Dan melindungi aku",
+     "Dari pada malapetaka"
+    ],
+    [
+     "Sehingga kesakitan",
+     "Tidak menimpa aku"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793490907507,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
