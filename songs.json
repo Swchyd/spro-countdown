@@ -15403,6 +15403,156 @@
    "updatedBy": "aldo",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvx1edtj8az7",
+   "title": "[IND] STOP BERPIKIR ANEH-ANEH",
+   "authors": [
+    "Fedrian Oktavian Tjeleni"
+   ],
+   "author": "Fedrian Oktavian Tjeleni",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Jang talalu banyak pikiran",
+      "Nanti bikin hati susah",
+      "Seng boleh stres, frustasi, dan depresi",
+      "Samua itu seng ada gunanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Pikirkanlah perkara mulia",
+      "Stop berpikir aneh-aneh",
+      "Daripada pikir yang aneh-aneh",
+      "Lebe bae renungkan firman Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Penting sekali",
+      "Penting sekali",
+      "Firman Tuhan penting sekali",
+      "Renungkan firman Tuhan setiap hari",
+      "Itu sangat penting s’kali"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 3",
+     "tag": "Verse 3",
+     "lines": [
+      "Kuatkanlah dan teguhkanlah hati",
+      "Beta seng boleh kuatir",
+      "Jangan kecut dan jangan tawar hati",
+      "Tuhan janji s’lalu menyertai"
+     ],
+     "notes": []
+    },
+    {
+     "key": "refrein",
+     "tag": "Refrein",
+     "lines": [
+      "E...Heiii Jang malas",
+      "Dilarang malas baca Alkitab",
+      "Renungkan firman Tuhan setiap hari",
+      "Itu sangat penting sekali"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "verse 3",
+    "refrein"
+   ],
+   "slides": [
+    [
+     "Jang talalu banyak pikiran",
+     "Nanti bikin hati susah"
+    ],
+    [
+     "Seng boleh stres, frustasi, dan depresi",
+     "Samua itu seng ada gunanya"
+    ],
+    [
+     "Pikirkanlah perkara mulia",
+     "Stop berpikir aneh-aneh"
+    ],
+    [
+     "Daripada pikir yang aneh-aneh",
+     "Lebe bae renungkan firman Tuhan"
+    ],
+    [
+     "Penting sekali",
+     "Penting sekali"
+    ],
+    [
+     "Firman Tuhan penting sekali",
+     "Renungkan firman Tuhan setiap hari"
+    ],
+    [
+     "Itu sangat penting s’kali"
+    ],
+    [
+     "Kuatkanlah dan teguhkanlah hati",
+     "Beta seng boleh kuatir"
+    ],
+    [
+     "Jangan kecut dan jangan tawar hati",
+     "Tuhan janji s’lalu menyertai"
+    ],
+    [
+     "E...Heiii Jang malas",
+     "Dilarang malas baca Alkitab"
+    ],
+    [
+     "Renungkan firman Tuhan setiap hari",
+     "Itu sangat penting sekali"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Verse 3",
+    "",
+    "Refrein",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793489600664,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
