@@ -15725,6 +15725,165 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvx21nygxfxy",
+   "title": "[ENG] I SPEAK JESUS",
+   "authors": [
+    "Abby Benton",
+    "Carlene Prince"
+   ],
+   "author": "Abby Benton, Carlene Prince",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "I just want to speak the Name of Jesus",
+      "Over every heart and every mind",
+      "'Cause I know there is peace within Your presence",
+      "I speak Jesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "I just want to speak the Name of Jesus",
+      "'Til every dark addiction starts to break",
+      "Declaring there is hope and there is freedom",
+      "I speak Jesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "'Cause Your Name is power",
+      "Your Name is healing",
+      "Your Name is life",
+      "Break every stronghold",
+      "Shine through the shadows",
+      "Burn like a fire"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 3",
+     "tag": "Verse 3",
+     "lines": [
+      "I just want to speak the Name of Jesus",
+      "Over fear and all anxiety",
+      "To every soul held captive by depression",
+      "I speak Jesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Shout Jesus from the mountains",
+      "Jesus in the streets",
+      "Jesus in the darkness over every enemy",
+      "Jesus for my family",
+      "I speak the holy Name Jesus"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "verse 3",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "I just want to speak the Name of Jesus",
+     "Over every heart and every mind"
+    ],
+    [
+     "'Cause I know there is peace within Your presence",
+     "I speak Jesus"
+    ],
+    [
+     "I just want to speak the Name of Jesus",
+     "'Til every dark addiction starts to break"
+    ],
+    [
+     "Declaring there is hope and there is freedom",
+     "I speak Jesus"
+    ],
+    [
+     "'Cause Your Name is power",
+     "Your Name is healing"
+    ],
+    [
+     "Your Name is life",
+     "Break every stronghold"
+    ],
+    [
+     "Shine through the shadows",
+     "Burn like a fire"
+    ],
+    [
+     "I just want to speak the Name of Jesus",
+     "Over fear and all anxiety"
+    ],
+    [
+     "To every soul held captive by depression",
+     "I speak Jesus"
+    ],
+    [
+     "Shout Jesus from the mountains",
+     "Jesus in the streets"
+    ],
+    [
+     "Jesus in the darkness over every enemy",
+     "Jesus for my family"
+    ],
+    [
+     "I speak the holy Name Jesus"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Verse 3",
+    "",
+    "Bridge",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793490686971,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
