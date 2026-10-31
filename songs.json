@@ -16074,6 +16074,68 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvx2959jjn7a",
+   "title": "[IND] AKU MAU PERCAYA",
+   "authors": [
+    "Alberd Tanoni"
+   ],
+   "author": "Alberd Tanoni",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Aku mau percaya",
+      "Karena kasih setia-Mu",
+      "Hatiku bersorak karena penyelamatan-Mu",
+      "Aku mau bernyanyi",
+      "Aku mau bernyanyi",
+      "Kepada Tuhan Yesusku",
+      "Karena Dia telah berbuat baik kepadaku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1"
+   ],
+   "slides": [
+    [
+     "Aku mau percaya",
+     "Karena kasih setia-Mu"
+    ],
+    [
+     "Hatiku bersorak karena penyelamatan-Mu",
+     "Aku mau bernyanyi"
+    ],
+    [
+     "Aku mau bernyanyi",
+     "Kepada Tuhan Yesusku"
+    ],
+    [
+     "Karena Dia telah berbuat baik kepadaku"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793491036243,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
