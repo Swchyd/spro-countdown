@@ -15669,6 +15669,62 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvx1qwcm9hll",
+   "title": "[IND] KUHIDUP BAGIMU",
+   "authors": [
+    "Sari Simorangkir"
+   ],
+   "author": "Sari Simorangkir",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kalau ku hidup, ku hidup bagiMu",
+      "Hatiku tetap, tetap menyembahMu",
+      "Dunia tak bisa menjauhkanku dari kasihMu",
+      "S’lama ku hidup, ku hidup bagiMu",
+      "Mataku tetap, tetap memandangMu",
+      "Dunia tak bisa menjauhkanku dari kasihMu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Kalau ku hidup, ku hidup bagiMu",
+     "Hatiku tetap, tetap menyembahMu"
+    ],
+    [
+     "Dunia tak bisa menjauhkanku dari kasihMu",
+     "S’lama ku hidup, ku hidup bagiMu"
+    ],
+    [
+     "Mataku tetap, tetap memandangMu",
+     "Dunia tak bisa menjauhkanku dari kasihMu"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793490184796,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
