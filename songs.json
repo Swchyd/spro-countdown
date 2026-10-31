@@ -15005,6 +15005,140 @@
    "hidden": true,
    "deletedAt": 1793373105260,
    "deletedBy": "Jennifer"
+  },
+  {
+   "id": "s_mvvumhj0od1j",
+   "title": "[IND] SUKACITA SURGA",
+   "authors": [
+    "JPCC Worship"
+   ],
+   "author": "JPCC Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Terima sukacita surga",
+      "Itulah kekuatan bagi jiwa",
+      "'Ku dapat rasakan kasih-Nya",
+      "Di tengah badai yang bergelora"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Terima sukacita surga",
+      "Itulah kekuatan bagi jiwa",
+      "'Ku dapat saksikan kuasa-Nya",
+      "Takhlukkan badai yang bergelora"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Haleluya",
+      "Kau ada dalam hatiku",
+      "Takkan patah semangatku",
+      "Takkan hilang kekuatanku",
+      "Haleluya",
+      "'Ku mau bersorak bagi-Mu",
+      "Sukacita surga nyata penuhiku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2#1",
+     "tag": "Verse 2",
+     "lines": [
+      "Terima sukacita surga",
+      "Itulah kekuatan bagi jiwa",
+      "'Ku dapat saksikan kuasa-Nya",
+      "Takhlukkan badai yang bergelora"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "verse 2#1"
+   ],
+   "slides": [
+    [
+     "Terima sukacita surga",
+     "Itulah kekuatan bagi jiwa"
+    ],
+    [
+     "'Ku dapat rasakan kasih-Nya",
+     "Di tengah badai yang bergelora"
+    ],
+    [
+     "Terima sukacita surga",
+     "Itulah kekuatan bagi jiwa"
+    ],
+    [
+     "'Ku dapat saksikan kuasa-Nya",
+     "Takhlukkan badai yang bergelora"
+    ],
+    [
+     "Haleluya",
+     "Kau ada dalam hatiku"
+    ],
+    [
+     "Takkan patah semangatku",
+     "Takkan hilang kekuatanku"
+    ],
+    [
+     "Haleluya",
+     "'Ku mau bersorak bagi-Mu"
+    ],
+    [
+     "Sukacita surga nyata penuhiku"
+    ],
+    [
+     "Terima sukacita surga",
+     "Itulah kekuatan bagi jiwa"
+    ],
+    [
+     "'Ku dapat saksikan kuasa-Nya",
+     "Takhlukkan badai yang bergelora"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    "Verse 2",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793417756701,
+   "updatedBy": "violla",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
