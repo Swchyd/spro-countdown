@@ -12289,7 +12289,7 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "PAW MUNDUR"
+      "Perpanjang PAW"
      ],
      "notes": []
     }
@@ -12299,7 +12299,7 @@
    ],
    "slides": [
     [
-     "PAW MUNDUR"
+     "Perpanjang PAW"
     ]
    ],
    "tags": [
@@ -12308,10 +12308,10 @@
    "notes": [
     ""
    ],
-   "perSlide": 3,
-   "version": 6,
-   "updatedAt": 1792925149965,
-   "updatedBy": "sherleen",
+   "perSlide": 2,
+   "version": 7,
+   "updatedAt": 1793493420262,
+   "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
   },
