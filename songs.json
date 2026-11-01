@@ -16191,7 +16191,8 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "Streaming ready"
+      "Streaming ready",
+      "Pengumuman"
      ],
      "notes": []
     }
@@ -16201,7 +16202,8 @@
    ],
    "slides": [
     [
-     "Streaming ready"
+     "Streaming ready",
+     "Pengumuman"
     ]
    ],
    "tags": [
@@ -16211,8 +16213,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1793493618853,
+   "version": 2,
+   "updatedAt": 1793493763392,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
