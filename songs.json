@@ -16394,10 +16394,6 @@
    "name": "Ibadah umum 1/11",
    "entries": [
     {
-     "id": "s_mvx3sia5wpdf",
-     "ms": 0
-    },
-    {
      "id": "s_mu87a4mrp4tp",
      "ms": 0
     },
@@ -16418,6 +16414,10 @@
      "ms": 0
     },
     {
+     "id": "s_mvx3sia5wpdf",
+     "ms": 0
+    },
+    {
      "id": "s_mvx26e2ydcdm",
      "ms": 0
     },
@@ -16430,15 +16430,11 @@
      "ms": 0
     }
    ],
-   "updatedAt": 1793494609417,
+   "updatedAt": 1793494625784,
    "updatedBy": "Lid"
   }
  ],
  "setlist": [
-  {
-   "id": "s_mvx3sia5wpdf",
-   "ms": 0
-  },
   {
    "id": "s_mu87a4mrp4tp",
    "ms": 0
@@ -16460,6 +16456,10 @@
    "ms": 0
   },
   {
+   "id": "s_mvx3sia5wpdf",
+   "ms": 0
+  },
+  {
    "id": "s_mvx26e2ydcdm",
    "ms": 0
   },
@@ -16472,6 +16472,6 @@
    "ms": 0
   }
  ],
- "setlistAt": 1793494609417,
+ "setlistAt": 1793494625784,
  "setlistBy": "Lid"
 }
