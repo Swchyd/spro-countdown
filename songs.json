@@ -16478,6 +16478,148 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvxb4dcs042n",
+   "title": "[IND] AKU BERSERAH",
+   "authors": [
+    "Winfield"
+   ],
+   "author": "Winfield",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "verse 1",
+     "lines": [
+      "Berserah kepada Yesus",
+      "Tubuh, roh, dan jiwaku",
+      "Aku akan t'rus percaya",
+      "Dan tetap beserta-Mu."
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Aku berserah, aku berserah",
+      "Pada Yesus Jurus'lamat",
+      "Aku berserah."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "verse 2",
+     "lines": [
+      "Berserah kepada Yesus",
+      "Aku sujud padaNya",
+      "Ku tinggalkan nafsu dunia",
+      "T'rimalah 'ku ya Yesus."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 3",
+     "tag": "verse 3",
+     "lines": [
+      "Berserah kepada Yesus",
+      "T'rima aku milik-Mu",
+      "B'rilah Roh-Mu menyadarkan",
+      "Bahwa Kau pun milikku."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 4",
+     "tag": "Verse 4",
+     "lines": [
+      "Berserah kepada Yesus",
+      "'ku berikan diriku",
+      "Isi aku dengan kasih",
+      "B'ri berkat dan kuasa-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "chorus",
+    "verse 2",
+    "verse 3",
+    "verse 4"
+   ],
+   "slides": [
+    [
+     "Berserah kepada Yesus",
+     "Tubuh, roh, dan jiwaku"
+    ],
+    [
+     "Aku akan t'rus percaya",
+     "Dan tetap beserta-Mu."
+    ],
+    [
+     "Aku berserah, aku berserah",
+     "Pada Yesus Jurus'lamat"
+    ],
+    [
+     "Aku berserah."
+    ],
+    [
+     "Berserah kepada Yesus",
+     "Aku sujud padaNya"
+    ],
+    [
+     "Ku tinggalkan nafsu dunia",
+     "T'rimalah 'ku ya Yesus."
+    ],
+    [
+     "Berserah kepada Yesus",
+     "T'rima aku milik-Mu"
+    ],
+    [
+     "B'rilah Roh-Mu menyadarkan",
+     "Bahwa Kau pun milikku."
+    ],
+    [
+     "Berserah kepada Yesus",
+     "'ku berikan diriku"
+    ],
+    [
+     "Isi aku dengan kasih",
+     "B'ri berkat dan kuasa-Mu"
+    ]
+   ],
+   "tags": [
+    "verse 1",
+    "",
+    "Chorus",
+    "",
+    "verse 2",
+    "",
+    "verse 3",
+    "",
+    "Verse 4",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793505930393,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
