@@ -16194,7 +16194,8 @@
       "Streaming ready",
       ".",
       "Perpanjang PAW",
-      "."
+      ".",
+      "Ulangi lagu"
      ],
      "notes": []
     }
@@ -16210,19 +16211,24 @@
     [
      "Perpanjang PAW",
      "."
+    ],
+    [
+     "Ulangi lagu"
     ]
    ],
    "tags": [
+    "",
     "",
     ""
    ],
    "notes": [
     "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 7,
-   "updatedAt": 1793493874216,
+   "version": 8,
+   "updatedAt": 1793496456425,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
