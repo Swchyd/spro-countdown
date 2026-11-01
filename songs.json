@@ -16191,8 +16191,7 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "Streaming ready",
-      "Fhf"
+      "Streaming ready"
      ],
      "notes": []
     }
@@ -16202,8 +16201,7 @@
    ],
    "slides": [
     [
-     "Streaming ready",
-     "Fhf"
+     "Streaming ready"
     ]
    ],
    "tags": [
@@ -16213,8 +16211,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 5,
-   "updatedAt": 1793493824460,
+   "version": 6,
+   "updatedAt": 1793493839091,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
