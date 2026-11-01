@@ -12309,11 +12309,13 @@
     ""
    ],
    "perSlide": 2,
-   "version": 7,
-   "updatedAt": 1793493420262,
+   "version": 8,
+   "updatedAt": 1793493544013,
    "updatedBy": "Lid",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1793493544013,
+   "deletedBy": "Lid"
   },
   {
    "id": "s_mvcb6tqg1874",
@@ -16204,13 +16206,9 @@
     {
      "id": "s_mvc9ltldcwj0",
      "ms": 0
-    },
-    {
-     "id": "s_mvca0ayfnxti",
-     "ms": 0
     }
    ],
-   "updatedAt": 1792234293104,
+   "updatedAt": 1793493544013,
    "updatedBy": "Sherleen"
   },
   {
@@ -16316,50 +16314,38 @@
     {
      "id": "s_mvx2959jjn7a",
      "ms": 0
-    },
-    {
-     "id": "s_mvca0ayfnxti",
-     "ms": 0
     }
    ],
-   "updatedAt": 1793493364644,
+   "updatedAt": 1793493544013,
    "updatedBy": "Lid"
   }
  ],
  "setlist": [
   {
-   "id": "s_mu87a4mrp4tp",
+   "id": "s_mv7jgwatv1ng",
    "ms": 0
   },
   {
-   "id": "s_mtedns1arbmc",
+   "id": "s_mujej8iv0zfv",
    "ms": 0
   },
   {
-   "id": "s_mvx1edtj8az7",
+   "id": "s_mv7jkerybux3",
    "ms": 0
   },
   {
-   "id": "s_mvx1h5khavh8",
+   "id": "s_mv7jn6dbnm94",
    "ms": 0
   },
   {
-   "id": "s_mvx1qwcm9hll",
+   "id": "s_mvc9d9wgvqne",
    "ms": 0
   },
   {
-   "id": "s_mvx26e2ydcdm",
-   "ms": 0
-  },
-  {
-   "id": "s_mvx2959jjn7a",
-   "ms": 0
-  },
-  {
-   "id": "s_mvca0ayfnxti",
+   "id": "s_mvc9ltldcwj0",
    "ms": 0
   }
  ],
- "setlistAt": 1793493364644,
- "setlistBy": "Lid"
+ "setlistAt": 1793493544013,
+ "setlistBy": "Sherleen"
 }
