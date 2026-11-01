@@ -16178,6 +16178,44 @@
    "hidden": true,
    "deletedAt": 1793493572112,
    "deletedBy": "Lid"
+  },
+  {
+   "id": "s_mvx3sia5wpdf",
+   "title": "[IND] PENGUMUMAN",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Streaming ready"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1"
+   ],
+   "slides": [
+    [
+     "Streaming ready"
+    ]
+   ],
+   "tags": [
+    ""
+   ],
+   "notes": [
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793493618853,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
