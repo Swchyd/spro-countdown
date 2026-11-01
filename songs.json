@@ -16873,7 +16873,7 @@
   },
   {
    "id": "s_mvxikvt5npwy",
-   "title": "[IND] .",
+   "title": "[IND] HADIRATMU MEMENUHIKU",
    "authors": [
     "Symphony Worship"
    ],
@@ -16881,6 +16881,23 @@
    "sections": [
     {
      "key": "_1",
+     "tag": "",
+     "lines": [
+      "Tuhan hadir di bait kudus-Nya",
+      "Saat umat mencari wajah-Nya",
+      "Berseru berdoa",
+      "Bersujud menyembah",
+      "Dan menikmati kehadiran-Nya",
+      "Tuhan mau dekat dengan umat-Nya",
+      "Yang datang dengan seg'nap hatinya",
+      "Berseru berdoa",
+      "Bersujud menyembah",
+      "Dan menikmati kehadiran-Nya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
      "tag": "",
      "lines": [
       "Hadirat-Mu memenuhiku",
@@ -16892,9 +16909,30 @@
     }
    ],
    "order": [
-    "_1"
+    "_1",
+    "_2"
    ],
    "slides": [
+    [
+     "Tuhan hadir di bait kudus-Nya",
+     "Saat umat mencari wajah-Nya"
+    ],
+    [
+     "Berseru berdoa",
+     "Bersujud menyembah"
+    ],
+    [
+     "Dan menikmati kehadiran-Nya",
+     "Tuhan mau dekat dengan umat-Nya"
+    ],
+    [
+     "Yang datang dengan seg'nap hatinya",
+     "Berseru berdoa"
+    ],
+    [
+     "Bersujud menyembah",
+     "Dan menikmati kehadiran-Nya"
+    ],
     [
      "Hadirat-Mu memenuhiku",
      "Hadirat kudus-Mu penuhi bait-Mu"
@@ -16906,15 +16944,25 @@
    ],
    "tags": [
     "",
+    "",
+    "",
+    "",
+    "",
+    "",
     ""
    ],
    "notes": [
     "",
+    "",
+    "",
+    "",
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1793518457434,
+   "version": 2,
+   "updatedAt": 1793518601848,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
