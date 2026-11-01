@@ -16336,6 +16336,148 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvxb0oq7hl78",
+   "title": "[ENG] I SURRENDER",
+   "authors": [
+    "Winfield"
+   ],
+   "author": "Winfield",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "I surrender all, I surrender all,",
+      "All to Thee, my blessed Savior,",
+      "I surrender all."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "All to Jesus, I surrender;",
+      "All to Him I freely give;",
+      "I will ever love and trust Him,",
+      "In His presence daily live."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "All to Jesus I surrender;",
+      "Humbly at His feet I bow,",
+      "Worldly pleasures all forsaken;",
+      "Take me, Jesus, take me now."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 3",
+     "tag": "Verse 3",
+     "lines": [
+      "All to Jesus, I surrender;",
+      "Make me, Savior, wholly Thine;",
+      "Let me feel the Holy Spirit,",
+      "Truly know that Thou art mine."
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 4",
+     "tag": "Verse 4",
+     "lines": [
+      "All to Jesus, I surrender;",
+      "Lord, I give myself to Thee;",
+      "Fill me with Thy love and power;",
+      "Let Thy blessing fall on me."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus",
+    "verse 1",
+    "verse 2",
+    "verse 3",
+    "verse 4"
+   ],
+   "slides": [
+    [
+     "I surrender all, I surrender all,",
+     "All to Thee, my blessed Savior,"
+    ],
+    [
+     "I surrender all."
+    ],
+    [
+     "All to Jesus, I surrender;",
+     "All to Him I freely give;"
+    ],
+    [
+     "I will ever love and trust Him,",
+     "In His presence daily live."
+    ],
+    [
+     "All to Jesus I surrender;",
+     "Humbly at His feet I bow,"
+    ],
+    [
+     "Worldly pleasures all forsaken;",
+     "Take me, Jesus, take me now."
+    ],
+    [
+     "All to Jesus, I surrender;",
+     "Make me, Savior, wholly Thine;"
+    ],
+    [
+     "Let me feel the Holy Spirit,",
+     "Truly know that Thou art mine."
+    ],
+    [
+     "All to Jesus, I surrender;",
+     "Lord, I give myself to Thee;"
+    ],
+    [
+     "Fill me with Thy love and power;",
+     "Let Thy blessing fall on me."
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Verse 3",
+    "",
+    "Verse 4",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793505757461,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
