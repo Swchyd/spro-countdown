@@ -16216,6 +16216,44 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvx3v5c9fexj",
+   "title": "[IND] PENGUMUMAN",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Perpanjang PAW"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1"
+   ],
+   "slides": [
+    [
+     "Perpanjang PAW"
+    ]
+   ],
+   "tags": [
+    ""
+   ],
+   "notes": [
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793493741771,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
