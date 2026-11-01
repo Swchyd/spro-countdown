@@ -16744,6 +16744,132 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvxdmmrw6fix",
+   "title": "[ENG] SECRET PLACE",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "verse 1",
+     "lines": [
+      "In this quiet place",
+      "Secret place",
+      "I wait only for him",
+      "In this quiet place",
+      "Secret place",
+      "I wait only for him"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "chorus",
+     "lines": [
+      "I wanna see Jesus face to face",
+      "I want to run deep into the secret place",
+      "Here in his presence",
+      "I wanna see Jesus face to face",
+      "Worship in his holiness",
+      "′Til less of me and more of him"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "verse 2",
+     "lines": [
+      "There is no better moment",
+      "Than being in his presence",
+      "Seek his face and listen to his voice",
+      "I want to walk away",
+      "From the clamor of the world",
+      "And dwell in his house",
+      "All the days of my life"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "chorus",
+    "verse 2"
+   ],
+   "slides": [
+    [
+     "In this quiet place",
+     "Secret place"
+    ],
+    [
+     "I wait only for him",
+     "In this quiet place"
+    ],
+    [
+     "Secret place",
+     "I wait only for him"
+    ],
+    [
+     "I wanna see Jesus face to face",
+     "I want to run deep into the secret place"
+    ],
+    [
+     "Here in his presence",
+     "I wanna see Jesus face to face"
+    ],
+    [
+     "Worship in his holiness",
+     "′Til less of me and more of him"
+    ],
+    [
+     "There is no better moment",
+     "Than being in his presence"
+    ],
+    [
+     "Seek his face and listen to his voice",
+     "I want to walk away"
+    ],
+    [
+     "From the clamor of the world",
+     "And dwell in his house"
+    ],
+    [
+     "All the days of my life"
+    ]
+   ],
+   "tags": [
+    "verse 1",
+    "",
+    "",
+    "chorus",
+    "",
+    "",
+    "verse 2",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793510140703,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
