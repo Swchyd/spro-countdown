@@ -16191,7 +16191,10 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "Streaming ready"
+      "Streaming ready",
+      ".",
+      "Perpanjang PAW",
+      "."
      ],
      "notes": []
     }
@@ -16201,18 +16204,25 @@
    ],
    "slides": [
     [
-     "Streaming ready"
+     "Streaming ready",
+     "."
+    ],
+    [
+     "Perpanjang PAW",
+     "."
     ]
    ],
    "tags": [
+    "",
     ""
    ],
    "notes": [
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 6,
-   "updatedAt": 1793493839091,
+   "version": 7,
+   "updatedAt": 1793493874216,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
