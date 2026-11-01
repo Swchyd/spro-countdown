@@ -16229,7 +16229,7 @@
   },
   {
    "id": "s_mvx3v5c9fexj",
-   "title": "[IND] PENGUMUMAN",
+   "title": "[IND] PENGUMUMAN GREETER",
    "authors": [
     "GMS Live"
    ],
@@ -16239,7 +16239,12 @@
      "key": "_1",
      "tag": "",
      "lines": [
-      "Perpanjang PAW"
+      "1. Welcome home",
+      "2. CG",
+      "3. Prayer corner",
+      "4. MSJ 1",
+      "5. KKR Anak",
+      "6. Persembahan & perpuluhan"
      ],
      "notes": []
     }
@@ -16249,18 +16254,31 @@
    ],
    "slides": [
     [
-     "Perpanjang PAW"
+     "1. Welcome home",
+     "2. CG"
+    ],
+    [
+     "3. Prayer corner",
+     "4. MSJ 1"
+    ],
+    [
+     "5. KKR Anak",
+     "6. Persembahan & perpuluhan"
     ]
    ],
    "tags": [
+    "",
+    "",
     ""
    ],
    "notes": [
+    "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1793493741771,
+   "version": 2,
+   "updatedAt": 1793494443351,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
