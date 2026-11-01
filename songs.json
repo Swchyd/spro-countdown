@@ -16171,11 +16171,13 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1793493536979,
+   "version": 2,
+   "updatedAt": 1793493572112,
    "updatedBy": "Lid",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1793493572112,
+   "deletedBy": "Lid"
   }
  ],
  "setlists": [
