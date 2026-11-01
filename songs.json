@@ -16702,27 +16702,45 @@
       "Aku berserah."
      ],
      "notes": []
+    },
+    {
+     "key": "eng",
+     "tag": "ENG",
+     "lines": [
+      "I surrender all, I surrender all,",
+      "All to Thee, my blessed Savior,",
+      "I surrender all."
+     ],
+     "notes": []
     }
    ],
    "order": [
-    "ind"
+    "ind",
+    "eng"
    ],
    "slides": [
     [
      "Aku berserah, aku berserah",
      "Pada Yesus Jurus'lamat",
      "Aku berserah."
+    ],
+    [
+     "I surrender all, I surrender all,",
+     "All to Thee, my blessed Savior,",
+     "I surrender all."
     ]
    ],
    "tags": [
-    "IND"
+    "IND",
+    "ENG"
    ],
    "notes": [
+    "",
     ""
    ],
    "perSlide": 3,
-   "version": 1,
-   "updatedAt": 1793507120048,
+   "version": 2,
+   "updatedAt": 1793507174779,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
