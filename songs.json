@@ -16684,6 +16684,48 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvxbtvyc6pm7",
+   "title": "[IND] AKU BERSERAH - I SURRENDER",
+   "authors": [
+    "Winfield"
+   ],
+   "author": "Winfield",
+   "sections": [
+    {
+     "key": "ind",
+     "tag": "IND",
+     "lines": [
+      "Aku berserah, aku berserah",
+      "Pada Yesus Jurus'lamat",
+      "Aku berserah."
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "ind"
+   ],
+   "slides": [
+    [
+     "Aku berserah, aku berserah",
+     "Pada Yesus Jurus'lamat",
+     "Aku berserah."
+    ]
+   ],
+   "tags": [
+    "IND"
+   ],
+   "notes": [
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1793507120048,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
