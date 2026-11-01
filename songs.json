@@ -16870,6 +16870,54 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mvxikvt5npwy",
+   "title": "[IND] .",
+   "authors": [
+    "Symphony Worship"
+   ],
+   "author": "Symphony Worship",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Hadirat-Mu memenuhiku",
+      "Hadirat kudus-Mu penuhi bait-Mu",
+      "Dan kutersungkur menyembah-Mu",
+      "Yang kunampak hanya kemuliaan-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1"
+   ],
+   "slides": [
+    [
+     "Hadirat-Mu memenuhiku",
+     "Hadirat kudus-Mu penuhi bait-Mu"
+    ],
+    [
+     "Dan kutersungkur menyembah-Mu",
+     "Yang kunampak hanya kemuliaan-Mu"
+    ]
+   ],
+   "tags": [
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1793518457434,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
