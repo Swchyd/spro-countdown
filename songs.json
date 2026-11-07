@@ -17876,6 +17876,182 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw6ec4fgkxvy",
+   "title": "[ENG] EVERYBODY GET UP",
+   "authors": [
+    "AOG Worship"
+   ],
+   "author": "AOG Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Can you feel the atmosphere?",
+      "We surely know that God is here",
+      "Breaking chains, making ways",
+      "So I declare it now"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "When I'm sure, I′ll praise You",
+      "When I'm doubting, I'll praise You",
+      "No matter what, I′ll praise You still",
+      "Praise His holy name"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 3",
+     "tag": "Verse 3",
+     "lines": [
+      "In the fire, I′ll praise You",
+      "Deep in the waters, I'll praise You",
+      "Come on, sing na, na, na, na",
+      "Bless His holy name"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Everybody get up, get up (Sing)",
+      "Praise His holy name",
+      "Everybody get up, get up",
+      "Bless His holy name",
+      "Sing like hey (Hey)",
+      "Sing like yo (Yo)",
+      "Sing like na, na, na, na",
+      "Praise His holy name"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Get up, get up, get up",
+      "Get up, get up, get up",
+      "Get up, get up, get up",
+      "Praise His holy name",
+      "Get up, get up, get up",
+      "Get up, get up, get up",
+      "Get up, get up, get up",
+      "Bless His holy name"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "verse 3",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Can you feel the atmosphere?",
+     "We surely know that God is here"
+    ],
+    [
+     "Breaking chains, making ways",
+     "So I declare it now"
+    ],
+    [
+     "When I'm sure, I′ll praise You",
+     "When I'm doubting, I'll praise You"
+    ],
+    [
+     "No matter what, I′ll praise You still",
+     "Praise His holy name"
+    ],
+    [
+     "In the fire, I′ll praise You",
+     "Deep in the waters, I'll praise You"
+    ],
+    [
+     "Come on, sing na, na, na, na",
+     "Bless His holy name"
+    ],
+    [
+     "Everybody get up, get up (Sing)",
+     "Praise His holy name"
+    ],
+    [
+     "Everybody get up, get up",
+     "Bless His holy name"
+    ],
+    [
+     "Sing like hey (Hey)",
+     "Sing like yo (Yo)"
+    ],
+    [
+     "Sing like na, na, na, na",
+     "Praise His holy name"
+    ],
+    [
+     "Get up, get up, get up",
+     "Get up, get up, get up"
+    ],
+    [
+     "Get up, get up, get up",
+     "Praise His holy name"
+    ],
+    [
+     "Get up, get up, get up",
+     "Get up, get up, get up"
+    ],
+    [
+     "Get up, get up, get up",
+     "Bless His holy name"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Verse 3",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    "Bridge",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794055525523,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
