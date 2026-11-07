@@ -16992,7 +16992,6 @@
      "key": "_2",
      "tag": "",
      "lines": [
-      "[Chorus] 2X",
       "Glo..ry..  Hallelujah",
       "Glo..ry..  Hallelujah",
       "Glo..ry..  Halle-lu-jah",
@@ -17002,28 +17001,8 @@
      "notes": []
     },
     {
-     "key": "change  key",
-     "tag": "Change  key",
-     "lines": [
-      "[Chorus (Overtone)] 2X"
-     ],
-     "notes": []
-    },
-    {
-     "key": "key",
-     "tag": "Key",
-     "lines": [
-      "Glo..ry..  Hallelujah",
-      "Glo..ry..  Hallelujah",
-      "Glo..ry..  Halle-lu-jah",
-      "In His Name",
-      "Victory unleashed."
-     ],
-     "notes": []
-    },
-    {
-     "key": "coda",
-     "tag": "Coda",
+     "key": "_3",
+     "tag": "",
      "lines": [
       "In His Name",
       "Victory unleashed",
@@ -17033,20 +17012,8 @@
      "notes": []
     },
     {
-     "key": "ending 1",
-     "tag": "Ending 1",
-     "lines": [
-      "Let’s sing Hallelujah",
-      "Let’s sing Hallelujah",
-      "Let’s sing Hallelu..jah",
-      "In His Name",
-      "Victory Unleashed"
-     ],
-     "notes": []
-    },
-    {
-     "key": "ending 2",
-     "tag": "Ending 2",
+     "key": "_4",
+     "tag": "",
      "lines": [
       "Let’s sing Hallelujah",
       "Let’s sing Hallelujah",
@@ -17060,11 +17027,8 @@
    "order": [
     "_1",
     "_2",
-    "change  key",
-    "key",
-    "coda",
-    "ending 1",
-    "ending 2"
+    "_3",
+    "_4"
    ],
    "slides": [
     [
@@ -17076,19 +17040,6 @@
      "Jehovah Nissi, our Mighty Fortress",
      "To His Name, we rise in praise",
      "In His triumph, our anthem ablaze."
-    ],
-    [
-     "[Chorus] 2X",
-     "Glo..ry..  Hallelujah",
-     "Glo..ry..  Hallelujah"
-    ],
-    [
-     "Glo..ry..  Halle-lu-jah",
-     "In His Name",
-     "Victory unleashed."
-    ],
-    [
-     "[Chorus (Overtone)] 2X"
     ],
     [
      "Glo..ry..  Hallelujah",
@@ -17115,15 +17066,6 @@
     [
      "In His Name",
      "Victory Unleashed"
-    ],
-    [
-     "Let’s sing Hallelujah",
-     "Let’s sing Hallelujah",
-     "Let’s sing Hallelu..jah"
-    ],
-    [
-     "In His Name",
-     "Victory Unleashed"
     ]
    ],
    "tags": [
@@ -17131,14 +17073,9 @@
     "",
     "",
     "",
-    "Change  key",
-    "Key",
     "",
-    "Coda",
     "",
-    "Ending 1",
     "",
-    "Ending 2",
     ""
    ],
    "notes": [
@@ -17149,16 +17086,11 @@
     "",
     "",
     "",
-    "",
-    "",
-    "",
-    "",
-    "",
     ""
    ],
    "perSlide": 3,
-   "version": 1,
-   "updatedAt": 1794029645907,
+   "version": 2,
+   "updatedAt": 1794029831115,
    "updatedBy": "CT Halbert",
    "lastUsed": 0,
    "hidden": false
