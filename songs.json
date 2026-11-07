@@ -16247,10 +16247,10 @@
      "lines": [
       "1. Welcome home",
       "2. CG",
-      "3. Prayer corner",
+      "3. Persembahan",
       "4. MSJ 1",
       "5. KKR Anak",
-      "6. Persembahan & perpuluhan"
+      "6. Doa"
      ],
      "notes": []
     }
@@ -16264,12 +16264,12 @@
      "2. CG"
     ],
     [
-     "3. Prayer corner",
+     "3. Persembahan",
      "4. MSJ 1"
     ],
     [
      "5. KKR Anak",
-     "6. Persembahan & perpuluhan"
+     "6. Doa"
     ]
    ],
    "tags": [
@@ -16283,8 +16283,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 2,
-   "updatedAt": 1793494443351,
+   "version": 3,
+   "updatedAt": 1794056693097,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
