@@ -17748,6 +17748,78 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw6e9zkzfhzw",
+   "title": "[IND] LEKAT DALAM HATIMU (TENANGLAH JIWAKU)",
+   "authors": [
+    "Robert & Lea Sutanto"
+   ],
+   "author": "Robert & Lea Sutanto",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Lebih dari segalanya, kuberharap padaMu",
+      "Lebih dari para penjaga mengharap fajar pagi",
+      "Begitu rindu hatiku berada dekatMu",
+      "Alangkah dalam kasihMu memenuhi hidupku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Tenanglah jiwaku dalam naungan sayapMu",
+      "menembus awan kelabu, pandang kemuliaanMu",
+      "Selalu kurindu lekat dalam hatiMu",
+      "mengikuti rencanaMu, Yesus Tuhan Rajaku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Lebih dari segalanya, kuberharap padaMu",
+     "Lebih dari para penjaga mengharap fajar pagi"
+    ],
+    [
+     "Begitu rindu hatiku berada dekatMu",
+     "Alangkah dalam kasihMu memenuhi hidupku"
+    ],
+    [
+     "Tenanglah jiwaku dalam naungan sayapMu",
+     "menembus awan kelabu, pandang kemuliaanMu"
+    ],
+    [
+     "Selalu kurindu lekat dalam hatiMu",
+     "mengikuti rencanaMu, Yesus Tuhan Rajaku"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794055425897,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
