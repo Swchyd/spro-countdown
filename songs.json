@@ -17294,6 +17294,102 @@
    "updatedBy": "CT Halbert",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw5zcwhpz6dm",
+   "title": "[IND] AKU DAN SEISI RUMAH KU",
+   "authors": [
+    "Edward Chen"
+   ],
+   "author": "Edward Chen",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Bersatu dalam kasih",
+      "bersama melayani",
+      "Dan saling mengampuni",
+      "ini doa kami, ini rindu kami"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Aku dan seisi rumahku",
+      "memuji dan memuliakanMu",
+      "Penebusku, penyelamatku",
+      "penolong dalam hidupku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "Aku dan seisi rumahku",
+      "mengangkat tangan mengandalkanMu",
+      "bersatu hati mengasihiMu",
+      "melayani Tuhan seumur hidupku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "_2",
+    "_3"
+   ],
+   "slides": [
+    [
+     "Bersatu dalam kasih",
+     "bersama melayani",
+     "Dan saling mengampuni"
+    ],
+    [
+     "ini doa kami, ini rindu kami"
+    ],
+    [
+     "Aku dan seisi rumahku",
+     "memuji dan memuliakanMu",
+     "Penebusku, penyelamatku"
+    ],
+    [
+     "penolong dalam hidupku"
+    ],
+    [
+     "Aku dan seisi rumahku",
+     "mengangkat tangan mengandalkanMu",
+     "bersatu hati mengasihiMu"
+    ],
+    [
+     "melayani Tuhan seumur hidupku"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1794030369468,
+   "updatedBy": "CT Halbert",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
