@@ -18220,6 +18220,118 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw6eii0nf2m6",
+   "title": "[IND] KAU MENUNGGU HIDUPKU",
+   "authors": [
+    "AOG Worship"
+   ],
+   "author": "AOG Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Tuhan Engkau memilihku",
+      "Sebelum ‘ku ada",
+      "Jemari-Mu yang menenunku",
+      "Serupa gambaran-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Sebelum ‘ku mengenal-Mu",
+      "Kubuang hidupku",
+      "Namun Engkau tak pernah lelah",
+      "Mencari diriku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Tak kusangka sejak dulu",
+      "Kau menunggu hidupku",
+      "Di altar-Mu kusadari",
+      "S’lama ini Kau menanti",
+      "Kuakui s’mua dosaku",
+      "Kulepas kehendakku",
+      "Biar s’luruh nafasku memuliakan-Mu",
+      "Yesus Tuhan Kau Rajaku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Tuhan Engkau memilihku",
+     "Sebelum ‘ku ada"
+    ],
+    [
+     "Jemari-Mu yang menenunku",
+     "Serupa gambaran-Mu"
+    ],
+    [
+     "Sebelum ‘ku mengenal-Mu",
+     "Kubuang hidupku"
+    ],
+    [
+     "Namun Engkau tak pernah lelah",
+     "Mencari diriku"
+    ],
+    [
+     "Tak kusangka sejak dulu",
+     "Kau menunggu hidupku"
+    ],
+    [
+     "Di altar-Mu kusadari",
+     "S’lama ini Kau menanti"
+    ],
+    [
+     "Kuakui s’mua dosaku",
+     "Kulepas kehendakku"
+    ],
+    [
+     "Biar s’luruh nafasku memuliakan-Mu",
+     "Yesus Tuhan Kau Rajaku"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794055823186,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
