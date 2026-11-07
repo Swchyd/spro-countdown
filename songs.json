@@ -17222,6 +17222,78 @@
    "updatedBy": "CT Halbert",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw5z8jd3dt1d",
+   "title": "[IND] BAPA ENGKAU SUNGGUH BAIK",
+   "authors": [
+    "Natashia Nikita"
+   ],
+   "author": "Natashia Nikita",
+   "sections": [
+    {
+     "key": "_1",
+     "tag": "",
+     "lines": [
+      "Bapa Engkau sungguh baik",
+      "KasihMu melimpah di hidup ku",
+      "Bapa ku berterima kasih",
+      "BerkatMu hari ini yang Kau sediakan bagi ku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Ku naikkan syukur ku buat hari yang Kau bri",
+      "Tak habis habisnya kasih dan rahmatMu",
+      "Selalu baru dan tak pernah terlambat pertolonganMu",
+      "Besar setiaMu di sepanjang hidup ku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "_1",
+    "_2"
+   ],
+   "slides": [
+    [
+     "Bapa Engkau sungguh baik",
+     "KasihMu melimpah di hidup ku",
+     "Bapa ku berterima kasih"
+    ],
+    [
+     "BerkatMu hari ini yang Kau sediakan bagi ku"
+    ],
+    [
+     "Ku naikkan syukur ku buat hari yang Kau bri",
+     "Tak habis habisnya kasih dan rahmatMu",
+     "Selalu baru dan tak pernah terlambat pertolonganMu"
+    ],
+    [
+     "Besar setiaMu di sepanjang hidup ku"
+    ]
+   ],
+   "tags": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1794030168841,
+   "updatedBy": "CT Halbert",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
