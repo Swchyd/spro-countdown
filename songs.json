@@ -17390,6 +17390,118 @@
    "updatedBy": "CT Halbert",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw6dqi3o3d0u",
+   "title": "[IND] KAU T’LAH UBAHKAN RATAPANKU",
+   "authors": [
+    "Adi Prasodjjo"
+   ],
+   "author": "Adi Prasodjjo",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kau t’lah ubahkan",
+      "Ratapanku kini menjadi tarian",
+      "Ku kan bersuka",
+      "Nyanyikan kidung pujian"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Di dalam kesesakan",
+      "Kau b’ri kelegaan",
+      "Di dalam kesedihan",
+      "Kau b’ri penghiburan",
+      "Kasih-Mu t’lah menyingkirkan",
+      "S’gala keg’lapan",
+      "Fajar pagi pun merekah",
+      "Membawa damai dan sukacita"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Amarah-Mu hanya sekejap saja",
+      "Namun kemurahan-Mu",
+      "Dalam hidupku",
+      "Sepanjang masa"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus",
+    "verse",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Kau t’lah ubahkan",
+     "Ratapanku kini menjadi tarian"
+    ],
+    [
+     "Ku kan bersuka",
+     "Nyanyikan kidung pujian"
+    ],
+    [
+     "Di dalam kesesakan",
+     "Kau b’ri kelegaan"
+    ],
+    [
+     "Di dalam kesedihan",
+     "Kau b’ri penghiburan"
+    ],
+    [
+     "Kasih-Mu t’lah menyingkirkan",
+     "S’gala keg’lapan"
+    ],
+    [
+     "Fajar pagi pun merekah",
+     "Membawa damai dan sukacita"
+    ],
+    [
+     "Amarah-Mu hanya sekejap saja",
+     "Namun kemurahan-Mu"
+    ],
+    [
+     "Dalam hidupku",
+     "Sepanjang masa"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    "Verse",
+    "",
+    "",
+    "",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794054517231,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
