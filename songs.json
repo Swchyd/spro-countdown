@@ -17502,6 +17502,114 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw6dtt18arwf",
+   "title": "[IND] SETIA DAN BENAR",
+   "authors": [
+    "Victor Gunawan"
+   ],
+   "author": "Victor Gunawan",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Aku 'kan bersuka karena kasih-Mu",
+      "Menari memuji kebesaran-Mu",
+      "Karena Kau yang terhebat",
+      "Kau layak ditinggikan",
+      "Jiwaku pun bersorak sebab Engkau"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Allah yang setia dan benar",
+      "Tak pernah tinggalkanku",
+      "Kau selalu bersamaku",
+      "Yesus Kau sumber kekuatan",
+      "Ku hidup untuk menyenangkan-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "Kau Allah yang setia",
+      "Selalu bersamaku",
+      "Yesus Tuhan mulia",
+      "Hidupku milik-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Aku 'kan bersuka karena kasih-Mu",
+     "Menari memuji kebesaran-Mu"
+    ],
+    [
+     "Karena Kau yang terhebat",
+     "Kau layak ditinggikan"
+    ],
+    [
+     "Jiwaku pun bersorak sebab Engkau"
+    ],
+    [
+     "Allah yang setia dan benar",
+     "Tak pernah tinggalkanku"
+    ],
+    [
+     "Kau selalu bersamaku",
+     "Yesus Kau sumber kekuatan"
+    ],
+    [
+     "Ku hidup untuk menyenangkan-Mu"
+    ],
+    [
+     "Kau Allah yang setia",
+     "Selalu bersamaku"
+    ],
+    [
+     "Yesus Tuhan mulia",
+     "Hidupku milik-Mu"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794054671636,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
