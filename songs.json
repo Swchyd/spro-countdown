@@ -17820,6 +17820,62 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw6eb3lnjvkw",
+   "title": "[IND] ROH KUDUS DATANGLAH",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ya Roh Kudus, datanglah",
+      "Kubuka hatiku",
+      "‘Tuk suara-Mu",
+      "Sahabatku yang setia",
+      "Kuingin s’lalu",
+      "Bersama dengan-Mu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Ya Roh Kudus, datanglah",
+     "Kubuka hatiku"
+    ],
+    [
+     "‘Tuk suara-Mu",
+     "Sahabatku yang setia"
+    ],
+    [
+     "Kuingin s’lalu",
+     "Bersama dengan-Mu"
+    ]
+   ],
+   "tags": [
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794055478025,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
