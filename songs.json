@@ -18052,6 +18052,174 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw6ehaap33z9",
+   "title": "[ENG] GOODBYE YESTERDAY",
+   "authors": [
+    "Elevation Worship"
+   ],
+   "author": "Elevation Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Goodbye, yesterday",
+      "I'm livin' in the light of a new day",
+      "I won't waste another minute in my old ways",
+      "Praise the Lord, I've been born again"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Goodbye, yesterday",
+      "The Spirit of the Lord is upon me",
+      "I've got resurrection in my veins",
+      "Praise the Lord, I've been born again"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Again and again and again and again",
+      "You rescued me out of the mess I was in",
+      "You traded my sorrow for something to sing",
+      "Now, I'm dancin' on the grave that I once lived in"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge 1",
+     "tag": "Bridge 1",
+     "lines": [
+      "And I have decided",
+      "To follow Jesus",
+      "The world behind, the Cross before",
+      "And I won't turn back"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge 2",
+     "tag": "Bridge 2",
+     "lines": [
+      "I won't turn back",
+      "I won't turn back",
+      "The world behind and the Cross before",
+      "And I won't turn back"
+     ],
+     "notes": []
+    },
+    {
+     "key": "post chorus",
+     "tag": "Post Chorus",
+     "lines": [
+      "Praise the Lord, I've been born again",
+      "Praise the Lord, I've been born again",
+      "Vamp",
+      "Now, I'm dancin' on the grave that I once lived in 4x"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "bridge 1",
+    "bridge 2",
+    "post chorus"
+   ],
+   "slides": [
+    [
+     "Goodbye, yesterday",
+     "I'm livin' in the light of a new day"
+    ],
+    [
+     "I won't waste another minute in my old ways",
+     "Praise the Lord, I've been born again"
+    ],
+    [
+     "Goodbye, yesterday",
+     "The Spirit of the Lord is upon me"
+    ],
+    [
+     "I've got resurrection in my veins",
+     "Praise the Lord, I've been born again"
+    ],
+    [
+     "Again and again and again and again",
+     "You rescued me out of the mess I was in"
+    ],
+    [
+     "You traded my sorrow for something to sing",
+     "Now, I'm dancin' on the grave that I once lived in"
+    ],
+    [
+     "And I have decided",
+     "To follow Jesus"
+    ],
+    [
+     "The world behind, the Cross before",
+     "And I won't turn back"
+    ],
+    [
+     "I won't turn back",
+     "I won't turn back"
+    ],
+    [
+     "The world behind and the Cross before",
+     "And I won't turn back"
+    ],
+    [
+     "Praise the Lord, I've been born again",
+     "Praise the Lord, I've been born again"
+    ],
+    [
+     "Vamp",
+     "Now, I'm dancin' on the grave that I once lived in 4x"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "Bridge 1",
+    "",
+    "Bridge 2",
+    "",
+    "Post Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794055766677,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
