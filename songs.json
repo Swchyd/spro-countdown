@@ -17308,12 +17308,22 @@
   {
    "id": "sl_mw5yq464z3wa",
    "name": "CT Coach Halbert",
-   "entries": [],
-   "updatedAt": 1794029383942,
+   "entries": [
+    {
+     "id": "s_mw5yxdttvtul",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1794029660526,
    "updatedBy": "CT Halbert"
   }
  ],
- "setlist": [],
- "setlistAt": 1794029383942,
+ "setlist": [
+  {
+   "id": "s_mw5yxdttvtul",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1794029660526,
  "setlistBy": "CT Halbert"
 }
