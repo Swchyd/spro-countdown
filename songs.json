@@ -7322,7 +7322,9 @@
    "slides": [
     [
      "Walau badai menerpa s’tiap langkahku",
-     "Namun kupercaya Kau besertaku",
+     "Namun kupercaya Kau besertaku"
+    ],
+    [
      "S’gnap firman-Mu menerangi jalanku",
      "Memberi kekuatan dalam jiwaku"
     ],
@@ -7332,7 +7334,9 @@
     ],
     [
      "Takkan kugoyah",
-     "Takkan kugentar",
+     "Takkan kugentar"
+    ],
+    [
      "Hadapi semua",
      "Kau yang setia"
     ],
@@ -7342,29 +7346,37 @@
     ],
     [
      "Kusorakkan kemenangan",
-     "Ada dalam-Mu, ada dalam-Mu",
+     "Ada dalam-Mu, ada dalam-Mu"
+    ],
+    [
      "Kusaksikan kemenangan",
      "Ada dalamku, ada dalamku"
     ]
    ],
    "tags": [
     "Verse",
+    "",
     "Pre-Chorus",
     "Chorus",
     "",
-    "Bridge"
+    "",
+    "Bridge",
+    ""
    ],
    "notes": [
     "",
     "",
     "",
     "",
+    "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1789726338104,
-   "updatedBy": "Marvella",
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1794118263281,
+   "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
   },
