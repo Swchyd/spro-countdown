@@ -18332,6 +18332,98 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw736x6zzmlm",
+   "title": "[IND] AKU MENGASIHI ENGKAU YESUS",
+   "authors": [
+    "Symphony Worship"
+   ],
+   "author": "Symphony Worship",
+   "sections": [
+    {
+     "key": "intro",
+     "tag": "Intro",
+     "lines": [
+      "Komitmen lagi waktu kita mengatakan kita mengasihi Tuhan Yesus",
+      "Dengan segenap hati kita dengan segenap jiwa kita",
+      "Bapa hambaMu mau melakukan firmanMu",
+      "Dengan segenap hati",
+      "Karna tujuan kami untuk menyenangkan hatiMu Yesus",
+      "Haleluya, thank you, Jesus"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Aku mengasihi Engkau Yesus",
+      "Dengan segenap hatiku",
+      "Aku mengasihi Engkau Yesus",
+      "Dengan segenap jiwaku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Ku renungkan FirmanMu siang dan malam",
+      "Ku pegang printahMu dan kulakukan",
+      "Engkau tahu ya Tuhan tujuan hidupku",
+      "Hanyalah untuk menyenangkan hatiMu"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "intro",
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Komitmen lagi waktu kita mengatakan kita mengasihi Tuhan Yesus",
+     "Dengan segenap hati kita dengan segenap jiwa kita",
+     "Bapa hambaMu mau melakukan firmanMu",
+     "Dengan segenap hati"
+    ],
+    [
+     "Karna tujuan kami untuk menyenangkan hatiMu Yesus",
+     "Haleluya, thank you, Jesus"
+    ],
+    [
+     "Aku mengasihi Engkau Yesus",
+     "Dengan segenap hatiku",
+     "Aku mengasihi Engkau Yesus",
+     "Dengan segenap jiwaku"
+    ],
+    [
+     "Ku renungkan FirmanMu siang dan malam",
+     "Ku pegang printahMu dan kulakukan",
+     "Engkau tahu ya Tuhan tujuan hidupku",
+     "Hanyalah untuk menyenangkan hatiMu"
+    ]
+   ],
+   "tags": [
+    "Intro",
+    "",
+    "Verse",
+    "Chorus"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1794097273475,
+   "updatedBy": "Veve",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
