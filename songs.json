@@ -18558,6 +18558,130 @@
    "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw7ejb7wx6kx",
+   "title": "[IND] KARYA TERBESAR",
+   "authors": [
+    "Sari Simorangkir"
+   ],
+   "author": "Sari Simorangkir",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Kasih yang terindah",
+      "Hati yang mulia",
+      "Hanya kutemukan",
+      "Di dalamMu Yesusku",
+      "Pujian dari hatiku",
+      "Selalu di setiap waktuku",
+      "Tiada pernah berubah kasihku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Karya terbesar",
+      "Dalam hidupku",
+      "PengorbananMu",
+      "Yang selamatkanku",
+      "Engkaulah harta",
+      "Yang tak ternilai",
+      "Yang kumiliki dan kuhargai",
+      "Yesus Engkau kukagumi"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "Bridge",
+     "lines": [
+      "KematianMu menghidupkanku",
+      "Dan kupastikan pengorbananMu",
+      "Tak akan pernah sia sia"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Kasih yang terindah",
+     "Hati yang mulia"
+    ],
+    [
+     "Hanya kutemukan",
+     "Di dalamMu Yesusku"
+    ],
+    [
+     "Pujian dari hatiku",
+     "Selalu di setiap waktuku"
+    ],
+    [
+     "Tiada pernah berubah kasihku"
+    ],
+    [
+     "Karya terbesar",
+     "Dalam hidupku"
+    ],
+    [
+     "PengorbananMu",
+     "Yang selamatkanku"
+    ],
+    [
+     "Engkaulah harta",
+     "Yang tak ternilai"
+    ],
+    [
+     "Yang kumiliki dan kuhargai",
+     "Yesus Engkau kukagumi"
+    ],
+    [
+     "KematianMu menghidupkanku",
+     "Dan kupastikan pengorbananMu"
+    ],
+    [
+     "Tak akan pernah sia sia"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    "",
+    "Bridge",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794116327600,
+   "updatedBy": "Veve",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
