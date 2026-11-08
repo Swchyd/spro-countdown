@@ -18796,6 +18796,120 @@
    "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw7hqqiqt55z",
+   "title": "[ENG] FATHER, BRING ME BACK",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Oh Lord, would You hear my cry",
+      "And restore my rightousness",
+      "Pour Your grace over me",
+      "And flood me with Your love",
+      "May Your hands embrace me now"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Father, would You change my heart",
+      "And let Your passion stand",
+      "Pour Your mercy over me",
+      "and sanctify me, Lord",
+      "Take not Your Spirit from me"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Father, bring me back to You",
+      "Fix my heart and make it true",
+      "Come revive me, Lord",
+      "And heal this life",
+      "Bring me back to Your presence again"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Oh Lord, would You hear my cry",
+     "And restore my rightousness"
+    ],
+    [
+     "Pour Your grace over me",
+     "And flood me with Your love"
+    ],
+    [
+     "May Your hands embrace me now"
+    ],
+    [
+     "Father, would You change my heart",
+     "And let Your passion stand"
+    ],
+    [
+     "Pour Your mercy over me",
+     "and sanctify me, Lord"
+    ],
+    [
+     "Take not Your Spirit from me"
+    ],
+    [
+     "Father, bring me back to You",
+     "Fix my heart and make it true"
+    ],
+    [
+     "Come revive me, Lord",
+     "And heal this life"
+    ],
+    [
+     "Bring me back to Your presence again"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "",
+    "Verse 2",
+    "",
+    "",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794121712815,
+   "updatedBy": "Veve",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
