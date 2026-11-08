@@ -18490,51 +18490,71 @@
    "slides": [
     [
      "Bila hati terasa berat",
-     "Tak seorang pun mengerti bebanku",
+     "Tak seorang pun mengerti bebanku"
+    ],
+    [
      "Ku ta - nya Yesus",
      "Apa yang harus kubuat"
     ],
     [
      "Dia berfirman mari datanglah",
-     "Dia selalu pedulikan aku",
+     "Dia selalu pedulikan aku"
+    ],
+    [
      "Ku da - tang Yesus",
      "Dia pikul s'gala bebanku"
     ],
     [
      "Sujud di altarNya  kubawa hidupku",
-     "Kuterima anugrahNya",
+     "Kuterima anugrahNya"
+    ],
+    [
      "Dia ampuniku dan bebaskanku",
      "Dia ubah hidupku"
     ],
     [
      "Baharui hatiku",
-     "Sesuatu terjadi",
+     "Sesuatu terjadi"
+    ],
+    [
      "Saat datang di altarNya"
     ],
     [
      "Pemulihan terjadi",
-     "Mujizat terjadi",
+     "Mujizat terjadi"
+    ],
+    [
      "Kemenangan terjadi",
      "Saat datang di altarNya"
     ]
    ],
    "tags": [
     "Verse 1",
+    "",
     "Verse 2",
+    "",
     "Chorus",
     "",
-    "Ending"
+    "",
+    "",
+    "Ending",
+    ""
    ],
    "notes": [
     "",
     "",
     "",
     "",
+    "",
+    "",
+    "",
+    "",
+    "",
     ""
    ],
-   "perSlide": 4,
-   "version": 1,
-   "updatedAt": 1794097478145,
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1794106604106,
    "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
