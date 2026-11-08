@@ -16273,11 +16273,20 @@
       "TIDAK ADA REPRAISE"
      ],
      "notes": []
+    },
+    {
+     "key": "_3",
+     "tag": "",
+     "lines": [
+      "SETELAH DOA PAW TETAP ON STAGE"
+     ],
+     "notes": []
     }
    ],
    "order": [
     "_1",
-    "_2"
+    "_2",
+    "_3"
    ],
    "slides": [
     [
@@ -16294,9 +16303,13 @@
     ],
     [
      "TIDAK ADA REPRAISE"
+    ],
+    [
+     "SETELAH DOA PAW TETAP ON STAGE"
     ]
    ],
    "tags": [
+    "",
     "",
     "",
     "",
@@ -16306,11 +16319,12 @@
     "",
     "",
     "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 4,
-   "updatedAt": 1794124370208,
+   "version": 5,
+   "updatedAt": 1794124854845,
    "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
