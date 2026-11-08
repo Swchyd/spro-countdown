@@ -18424,6 +18424,120 @@
    "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw73bb9p5xyz",
+   "title": "[IND] SUJUD DI ALTARNYA",
+   "authors": [
+    "Symphony Worship"
+   ],
+   "author": "Symphony Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Bila hati terasa berat",
+      "Tak seorang pun mengerti bebanku",
+      "Ku ta - nya Yesus",
+      "Apa yang harus kubuat"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Dia berfirman mari datanglah",
+      "Dia selalu pedulikan aku",
+      "Ku da - tang Yesus",
+      "Dia pikul s'gala bebanku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Sujud di altarNya  kubawa hidupku",
+      "Kuterima anugrahNya",
+      "Dia ampuniku dan bebaskanku",
+      "Dia ubah hidupku",
+      "Baharui hatiku",
+      "Sesuatu terjadi",
+      "Saat datang di altarNya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "ending",
+     "tag": "Ending",
+     "lines": [
+      "Pemulihan terjadi",
+      "Mujizat terjadi",
+      "Kemenangan terjadi",
+      "Saat datang di altarNya"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "ending"
+   ],
+   "slides": [
+    [
+     "Bila hati terasa berat",
+     "Tak seorang pun mengerti bebanku",
+     "Ku ta - nya Yesus",
+     "Apa yang harus kubuat"
+    ],
+    [
+     "Dia berfirman mari datanglah",
+     "Dia selalu pedulikan aku",
+     "Ku da - tang Yesus",
+     "Dia pikul s'gala bebanku"
+    ],
+    [
+     "Sujud di altarNya  kubawa hidupku",
+     "Kuterima anugrahNya",
+     "Dia ampuniku dan bebaskanku",
+     "Dia ubah hidupku"
+    ],
+    [
+     "Baharui hatiku",
+     "Sesuatu terjadi",
+     "Saat datang di altarNya"
+    ],
+    [
+     "Pemulihan terjadi",
+     "Mujizat terjadi",
+     "Kemenangan terjadi",
+     "Saat datang di altarNya"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "Verse 2",
+    "Chorus",
+    "",
+    "Ending"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 4,
+   "version": 1,
+   "updatedAt": 1794097478145,
+   "updatedBy": "Veve",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
