@@ -16259,10 +16259,9 @@
      "lines": [
       "1. Welcome home",
       "2. CG",
-      "3. Persembahan",
-      "4. MSJ 1",
-      "5. KKR Anak",
-      "6. Doa"
+      "3. MSJ 1",
+      "4. ulang tahun Oktober",
+      "5. Doa"
      ],
      "notes": []
     },
@@ -16294,12 +16293,11 @@
      "2. CG"
     ],
     [
-     "3. Persembahan",
-     "4. MSJ 1"
+     "3. MSJ 1",
+     "4. ulang tahun Oktober"
     ],
     [
-     "5. KKR Anak",
-     "6. Doa"
+     "5. Doa"
     ],
     [
      "TIDAK ADA REPRAISE"
@@ -16323,8 +16321,8 @@
     ""
    ],
    "perSlide": 2,
-   "version": 5,
-   "updatedAt": 1794124854845,
+   "version": 6,
+   "updatedAt": 1794124912419,
    "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
