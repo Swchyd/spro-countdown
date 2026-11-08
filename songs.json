@@ -18694,6 +18694,108 @@
    "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw7hoj2arvdg",
+   "title": "[IND] SEJAUH TIMUR DARI BARAT",
+   "authors": [
+    "natasha nikita"
+   ],
+   "author": "natasha nikita",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Sejauh timur dari barat",
+      "Engkau membuang dosaku",
+      "Tiada Kau ingat lagi",
+      "Pelanggaranku",
+      "Jauh ke dalam tubir laut",
+      "Kau melemparkan dosaku",
+      "Tiada Kau perhitungkan",
+      "Kesalahanku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Betapa besar kasih",
+      "PengampunanMu Tuhan",
+      "Tak Kau pandang hina hati",
+      "yang hancur",
+      "Ku berterimakasih kepadaMu ya Tuhan",
+      "Pengampunan yang Kau beri",
+      "Pulihkanku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Sejauh timur dari barat",
+     "Engkau membuang dosaku"
+    ],
+    [
+     "Tiada Kau ingat lagi",
+     "Pelanggaranku"
+    ],
+    [
+     "Jauh ke dalam tubir laut",
+     "Kau melemparkan dosaku"
+    ],
+    [
+     "Tiada Kau perhitungkan",
+     "Kesalahanku"
+    ],
+    [
+     "Betapa besar kasih",
+     "PengampunanMu Tuhan"
+    ],
+    [
+     "Tak Kau pandang hina hati",
+     "yang hancur"
+    ],
+    [
+     "Ku berterimakasih kepadaMu ya Tuhan",
+     "Pengampunan yang Kau beri"
+    ],
+    [
+     "Pulihkanku"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "",
+    "",
+    "Chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794121609278,
+   "updatedBy": "Veve",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
