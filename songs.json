@@ -16265,10 +16265,19 @@
       "6. Doa"
      ],
      "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "TIDAK ADA REPRAISE"
+     ],
+     "notes": []
     }
    ],
    "order": [
-    "_1"
+    "_1",
+    "_2"
    ],
    "slides": [
     [
@@ -16282,9 +16291,13 @@
     [
      "5. KKR Anak",
      "6. Doa"
+    ],
+    [
+     "TIDAK ADA REPRAISE"
     ]
    ],
    "tags": [
+    "",
     "",
     "",
     ""
@@ -16292,12 +16305,13 @@
    "notes": [
     "",
     "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 3,
-   "updatedAt": 1794056693097,
-   "updatedBy": "Lid",
+   "version": 4,
+   "updatedAt": 1794124370208,
+   "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
   },
