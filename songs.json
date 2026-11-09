@@ -19493,12 +19493,22 @@
   {
    "id": "sl_mw91h6okxsib",
    "name": "LC 13 NOV",
-   "entries": [],
-   "updatedAt": 1794215340492,
+   "entries": [
+    {
+     "id": "s_mtedzln2rs8z",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1794215352338,
    "updatedBy": "sherleen"
   }
  ],
- "setlist": [],
- "setlistAt": 1794215340492,
+ "setlist": [
+  {
+   "id": "s_mtedzln2rs8z",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1794215352338,
  "setlistBy": "sherleen"
 }
