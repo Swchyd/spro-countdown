@@ -19439,6 +19439,126 @@
    "updatedBy": "sherleen",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw931grm87tz",
+   "title": "[IND] YESUS",
+   "authors": [
+    "JPCC Worship"
+   ],
+   "author": "JPCC Worship",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "verse",
+     "lines": [
+      "Kubuka mataku",
+      "Lihat sek'lilingku",
+      "Ku harus nyatakan",
+      "Kebenaran-Nya yang membebaskan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "bridge",
+     "lines": [
+      "Kar′na kuasa-Mu",
+      "Kar'na kehebatan-Mu",
+      "Ku dapat lakukan",
+      "Perkara Besar",
+      "Yang Engkau janjikan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "chorus",
+     "lines": [
+      "Yesus Kaulah sahabatku",
+      "Yesus Kau yang akan s'lalu berada di sisiku",
+      "Kau sumber kuatku",
+      "Yesus Kaulah sahabatku",
+      "Yesus Kau yang tak pernah jemu-jemu di sisiku",
+      "Kau sumber kuatku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "outro",
+     "tag": "outro",
+     "lines": [
+      "Kau sahabatku berada di sisiku",
+      "Kau sahabatku selama-lamanya",
+      "Kau sahabatku berada di sisiku selama-lamanya"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "bridge",
+    "chorus",
+    "outro"
+   ],
+   "slides": [
+    [
+     "Kubuka mataku",
+     "Lihat sek'lilingku",
+     "Ku harus nyatakan"
+    ],
+    [
+     "Kebenaran-Nya yang membebaskan"
+    ],
+    [
+     "Kar′na kuasa-Mu",
+     "Kar'na kehebatan-Mu",
+     "Ku dapat lakukan"
+    ],
+    [
+     "Perkara Besar",
+     "Yang Engkau janjikan"
+    ],
+    [
+     "Yesus Kaulah sahabatku",
+     "Yesus Kau yang akan s'lalu berada di sisiku",
+     "Kau sumber kuatku"
+    ],
+    [
+     "Yesus Kaulah sahabatku",
+     "Yesus Kau yang tak pernah jemu-jemu di sisiku",
+     "Kau sumber kuatku"
+    ],
+    [
+     "Kau sahabatku berada di sisiku",
+     "Kau sahabatku selama-lamanya",
+     "Kau sahabatku berada di sisiku selama-lamanya"
+    ]
+   ],
+   "tags": [
+    "verse",
+    "",
+    "bridge",
+    "",
+    "chorus",
+    "",
+    "outro"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1794217951228,
+   "updatedBy": "sherleen",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
