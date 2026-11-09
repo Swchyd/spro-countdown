@@ -19489,86 +19489,16 @@
    ],
    "updatedAt": 1794035642531,
    "updatedBy": "CT Halbert"
+  },
+  {
+   "id": "sl_mw91gzdxd2jt",
+   "name": "Setlist 9/11",
+   "entries": [],
+   "updatedAt": 1794215317159,
+   "updatedBy": "sherleen"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mvx3v5c9fexj",
-   "ms": 0
-  },
-  {
-   "id": "s_mw6dqi3o3d0u",
-   "ms": 0
-  },
-  {
-   "id": "s_mw6dtt18arwf",
-   "ms": 0
-  },
-  {
-   "id": "s_mw6e90r0itw7",
-   "ms": 0
-  },
-  {
-   "id": "s_mw6e9zkzfhzw",
-   "ms": 0
-  },
-  {
-   "id": "s_mw6eb3lnjvkw",
-   "ms": 0
-  },
-  {
-   "id": "s_mw6ec4fgkxvy",
-   "ms": 0
-  },
-  {
-   "id": "s_mw6ehaap33z9",
-   "ms": 0
-  },
-  {
-   "id": "s_mu6sum6gkyh4",
-   "ms": 0
-  },
-  {
-   "id": "s_mw6eii0nf2m6",
-   "ms": 0
-  },
-  {
-   "id": "s_mw73bb9p5xyz",
-   "ms": 0
-  },
-  {
-   "id": "s_mw736x6zzmlm",
-   "ms": 0
-  },
-  {
-   "id": "s_mw7ejb7wx6kx",
-   "ms": 0
-  },
-  {
-   "id": "s_mw7hoj2arvdg",
-   "ms": 0
-  },
-  {
-   "id": "s_mw7hqqiqt55z",
-   "ms": 0
-  },
-  {
-   "id": "s_mskjwqfpagxo",
-   "ms": 0
-  },
-  {
-   "id": "s_mu83xmkx34hp",
-   "ms": 0
-  },
-  {
-   "id": "s_mw7hu9eiyl4w",
-   "ms": 0
-  },
-  {
-   "id": "s_mw7jli44rleu",
-   "ms": 0
-  }
- ],
- "setlistAt": 1794124833851,
- "setlistBy": "Veve"
+ "setlist": [],
+ "setlistAt": 1794215317159,
+ "setlistBy": "sherleen"
 }
