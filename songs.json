@@ -19559,6 +19559,114 @@
    "updatedBy": "sherleen",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw939hb6lbck",
+   "title": "[IND] BERSAMAMU",
+   "authors": [
+    "JPCC Worship"
+   ],
+   "author": "JPCC Worship",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "VERSE 1",
+     "lines": [
+      "Engkau ada bersamaku",
+      "Di setiap musim hidupku",
+      "Tak pernah Kau biarkan",
+      "'Ku sendiri"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "VERSE 2",
+     "lines": [
+      "Kekuatan di jiwaku",
+      "Adalah bersama-Mu",
+      "Tak pernah kuragukan",
+      "Kasih-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Bersama-Mu Bapa",
+      "Kulewati semua",
+      "Perkenanan-Mu yang",
+      "Teguhkan hatiku",
+      "Engkau yang bertindak",
+      "Memb'ri pertolongan",
+      "Anug'rah-Mu besar",
+      "Melimpah bagiku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Engkau ada bersamaku",
+     "Di setiap musim hidupku",
+     "Tak pernah Kau biarkan"
+    ],
+    [
+     "'Ku sendiri"
+    ],
+    [
+     "Kekuatan di jiwaku",
+     "Adalah bersama-Mu",
+     "Tak pernah kuragukan"
+    ],
+    [
+     "Kasih-Mu"
+    ],
+    [
+     "Bersama-Mu Bapa",
+     "Kulewati semua",
+     "Perkenanan-Mu yang"
+    ],
+    [
+     "Teguhkan hatiku",
+     "Engkau yang bertindak",
+     "Memb'ri pertolongan"
+    ],
+    [
+     "Anug'rah-Mu besar",
+     "Melimpah bagiku"
+    ]
+   ],
+   "tags": [
+    "VERSE 1",
+    "",
+    "VERSE 2",
+    "",
+    "Chorus",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1794218325220,
+   "updatedBy": "sherleen",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
