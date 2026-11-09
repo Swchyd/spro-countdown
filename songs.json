@@ -19271,6 +19271,174 @@
    "updatedBy": "Veve",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw929yiddsk7",
+   "title": "[IND] MENGAPI-APIKAN DIRI",
+   "authors": [
+    "GMS Live"
+   ],
+   "author": "GMS Live",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Masuk gerbang-Nya dengan pujian",
+      "Bertepuk tangan bersorak-sorai",
+      "Mari bersama melompat luapkan ekspresimu",
+      "S′bab ada kuasa dalam pujian"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Mari bersama kita tanggalkan",
+      "Beban dan dosa yang merintangi",
+      "Mengapi-apikan diri",
+      "S'perti Daud menari",
+      "Bangkitlah menjadi laskar pujian"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Masuk hadirat-Nya dengan hati bersyukur",
+      "Gerakan kakimu dengan riang gembira",
+      "S′bab Tuhan itu baik bahwasanya tuk s'lamanya",
+      "Biar s'gala yang bernafas memuji Dia"
+     ],
+     "notes": []
+    },
+    {
+     "key": "pre-chorus",
+     "tag": "pre-chorus",
+     "lines": [
+      "Satu harmoni (satu harmoni)",
+      "Satu simfoni (satu simfoni)",
+      "Kita bernyanyi (kita bernyanyi)",
+      "Memuji Dia (memuji Dia)",
+      "Bersukacita (bersukacita)",
+      "Bertepuk tangan (bertepuk tangan)",
+      "Mari bersama (mari bersama)",
+      "Kita melompat (kita melompat)"
+     ],
+     "notes": []
+    },
+    {
+     "key": "outro",
+     "tag": "outro",
+     "lines": [
+      "Masuk hadirat-Nya dengan hati bersyukur",
+      "Gerakan kakimu dengan riang gembira",
+      "S'bab Tuhan itu baik bahwasanya tuk s′lamanya",
+      "Biar s'gala yang bernafas",
+      "Biar s′gala yang bernafas",
+      "Biar s'gala yang bernafas",
+      "Memuji Dia"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "pre-chorus",
+    "outro"
+   ],
+   "slides": [
+    [
+     "Masuk gerbang-Nya dengan pujian",
+     "Bertepuk tangan bersorak-sorai",
+     "Mari bersama melompat luapkan ekspresimu"
+    ],
+    [
+     "S′bab ada kuasa dalam pujian"
+    ],
+    [
+     "Mari bersama kita tanggalkan",
+     "Beban dan dosa yang merintangi",
+     "Mengapi-apikan diri"
+    ],
+    [
+     "S'perti Daud menari",
+     "Bangkitlah menjadi laskar pujian"
+    ],
+    [
+     "Masuk hadirat-Nya dengan hati bersyukur",
+     "Gerakan kakimu dengan riang gembira",
+     "S′bab Tuhan itu baik bahwasanya tuk s'lamanya"
+    ],
+    [
+     "Biar s'gala yang bernafas memuji Dia"
+    ],
+    [
+     "Satu harmoni (satu harmoni)",
+     "Satu simfoni (satu simfoni)",
+     "Kita bernyanyi (kita bernyanyi)"
+    ],
+    [
+     "Memuji Dia (memuji Dia)",
+     "Bersukacita (bersukacita)",
+     "Bertepuk tangan (bertepuk tangan)"
+    ],
+    [
+     "Mari bersama (mari bersama)",
+     "Kita melompat (kita melompat)"
+    ],
+    [
+     "Masuk hadirat-Nya dengan hati bersyukur",
+     "Gerakan kakimu dengan riang gembira",
+     "S'bab Tuhan itu baik bahwasanya tuk s′lamanya"
+    ],
+    [
+     "Biar s'gala yang bernafas",
+     "Biar s′gala yang bernafas",
+     "Biar s'gala yang bernafas"
+    ],
+    [
+     "Memuji Dia"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "pre-chorus",
+    "",
+    "",
+    "outro",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1794216667833,
+   "updatedBy": "sherleen",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
