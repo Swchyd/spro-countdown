@@ -19667,6 +19667,134 @@
    "updatedBy": "sherleen",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mw93rxa3h1tp",
+   "title": "[IND] I AM HERE",
+   "authors": [
+    "Welyar Kauntu"
+   ],
+   "author": "Welyar Kauntu",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "Verse",
+     "lines": [
+      "Ku ada s'bab anugrahMu",
+      "Ku ada karna kasihMu",
+      "Tuhan Yesus ku bert'rima kasih",
+      "Buat kasih rahmatMu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "T'rima kasih Yesus",
+      "Yesus t'rima kasih",
+      "Hanya anugrahMu buat hidupku sekarang",
+      "Ku kan memujiMu selamanya"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse#1",
+     "tag": "Verse",
+     "lines": [
+      "I'am here because of your grace",
+      "I'am here because of your love"
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Lord Jesus, I'am so thankful",
+      "For your grace abounds to me"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus#3",
+     "tag": "Chorus",
+     "lines": [
+      "Thank you Jesus, Jesus, Jesus",
+      "Thank you Jesus",
+      "It's only by your grace, that I could live today",
+      "Forever I will praise Your name"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus",
+    "verse#1",
+    "_2",
+    "chorus#3"
+   ],
+   "slides": [
+    [
+     "Ku ada s'bab anugrahMu",
+     "Ku ada karna kasihMu",
+     "Tuhan Yesus ku bert'rima kasih"
+    ],
+    [
+     "Buat kasih rahmatMu"
+    ],
+    [
+     "T'rima kasih Yesus",
+     "Yesus t'rima kasih",
+     "Hanya anugrahMu buat hidupku sekarang"
+    ],
+    [
+     "Ku kan memujiMu selamanya"
+    ],
+    [
+     "I'am here because of your grace",
+     "I'am here because of your love"
+    ],
+    [
+     "Lord Jesus, I'am so thankful",
+     "For your grace abounds to me"
+    ],
+    [
+     "Thank you Jesus, Jesus, Jesus",
+     "Thank you Jesus",
+     "It's only by your grace, that I could live today"
+    ],
+    [
+     "Forever I will praise Your name"
+    ]
+   ],
+   "tags": [
+    "Verse",
+    "",
+    "Chorus",
+    "",
+    "Verse",
+    "",
+    "Chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 3,
+   "version": 1,
+   "updatedAt": 1794219185862,
+   "updatedBy": "sherleen",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
