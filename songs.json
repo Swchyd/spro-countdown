@@ -19795,6 +19795,68 @@
    "updatedBy": "sherleen",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mwevpdwjgr0z",
+   "title": "[IND] SAATKU MENYEMBAHMU",
+   "authors": [
+    "Gloria Trio"
+   ],
+   "author": "Gloria Trio",
+   "sections": [
+    {
+     "key": "verse",
+     "tag": "verse",
+     "lines": [
+      "Saat ku menyembahMu rohMu bekerja",
+      "Saat ku memujiMu Kau bertahta di atas pujian"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "chorus",
+     "lines": [
+      "Ku angkat hatiku ku pandang kekudusanMu",
+      "Saat ku sembah ku pujiMu",
+      "Ku rasakan kehadiranMu Tuhan"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Saat ku menyembahMu rohMu bekerja",
+     "Saat ku memujiMu Kau bertahta di atas pujian"
+    ],
+    [
+     "Ku angkat hatiku ku pandang kekudusanMu",
+     "Saat ku sembah ku pujiMu"
+    ],
+    [
+     "Ku rasakan kehadiranMu Tuhan"
+    ]
+   ],
+   "tags": [
+    "verse",
+    "chorus",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794568428000,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
