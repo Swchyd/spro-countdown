@@ -19614,27 +19614,29 @@
    "slides": [
     [
      "Engkau ada bersamaku",
-     "Di setiap musim hidupku",
-     "Tak pernah Kau biarkan"
+     "Di setiap musim hidupku"
     ],
     [
+     "Tak pernah Kau biarkan",
      "'Ku sendiri"
     ],
     [
      "Kekuatan di jiwaku",
-     "Adalah bersama-Mu",
-     "Tak pernah kuragukan"
+     "Adalah bersama-Mu"
     ],
     [
+     "Tak pernah kuragukan",
      "Kasih-Mu"
     ],
     [
      "Bersama-Mu Bapa",
-     "Kulewati semua",
-     "Perkenanan-Mu yang"
+     "Kulewati semua"
     ],
     [
-     "Teguhkan hatiku",
+     "Perkenanan-Mu yang",
+     "Teguhkan hatiku"
+    ],
+    [
      "Engkau yang bertindak",
      "Memb'ri pertolongan"
     ],
@@ -19650,6 +19652,7 @@
     "",
     "Chorus",
     "",
+    "",
     ""
    ],
    "notes": [
@@ -19659,12 +19662,13 @@
     "",
     "",
     "",
+    "",
     ""
    ],
-   "perSlide": 3,
-   "version": 1,
-   "updatedAt": 1794218325220,
-   "updatedBy": "sherleen",
+   "perSlide": 2,
+   "version": 2,
+   "updatedAt": 1794568695518,
+   "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
   },
