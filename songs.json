@@ -19861,6 +19861,186 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mwewawb7qubf",
+   "title": "[IND] KUBERSYUKUR BAPA",
+   "authors": [
+    "Symphony Worship"
+   ],
+   "author": "Symphony Worship",
+   "sections": [
+    {
+     "key": "verse1",
+     "tag": "verse1",
+     "lines": [
+      "Banyak yang Kau perbuat",
+      "Didalam hidupku",
+      "Rancangan indahMu",
+      "Terjadi di hidupku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse2",
+     "tag": "verse2",
+     "lines": [
+      "Bapa yang mengerti",
+      "Segala yang kuperlu",
+      "KasihMu sempurna",
+      "Nyata dalam hidupku"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus1",
+     "tag": "chorus1",
+     "lines": [
+      "Kubersyukur Bapa",
+      "Kubersyukur Tuhan",
+      "Buat kasih setiaMu",
+      "Didalam hidupku",
+      "Kubersyukur"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus2",
+     "tag": "chorus2",
+     "lines": [
+      "Kubersyukur Bapa",
+      "Kubersyukur Tuhan",
+      "Buat kasih setiaMu",
+      "Didalam hidupku",
+      "Kubersyukur",
+      "Tuhan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "bridge",
+     "tag": "bridge",
+     "lines": [
+      "Tak ada lembah kelam",
+      "Yang tak kulewati",
+      "Tanpa hadirMu",
+      "Hatiku takkan gentar",
+      "Sbab kutau tanganMu yang menopangku",
+      "Kaulah Yesus Kaulah Tuhan",
+      "Hanya Kau kupercaya",
+      "Kaulah Yesus Kaulah Tuhan",
+      "Harapan hidupku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse1",
+    "verse2",
+    "chorus1",
+    "chorus2",
+    "bridge"
+   ],
+   "slides": [
+    [
+     "Banyak yang Kau perbuat",
+     "Didalam hidupku"
+    ],
+    [
+     "Rancangan indahMu",
+     "Terjadi di hidupku"
+    ],
+    [
+     "Bapa yang mengerti",
+     "Segala yang kuperlu"
+    ],
+    [
+     "KasihMu sempurna",
+     "Nyata dalam hidupku"
+    ],
+    [
+     "Kubersyukur Bapa",
+     "Kubersyukur Tuhan"
+    ],
+    [
+     "Buat kasih setiaMu",
+     "Didalam hidupku"
+    ],
+    [
+     "Kubersyukur"
+    ],
+    [
+     "Kubersyukur Bapa",
+     "Kubersyukur Tuhan"
+    ],
+    [
+     "Buat kasih setiaMu",
+     "Didalam hidupku"
+    ],
+    [
+     "Kubersyukur",
+     "Tuhan"
+    ],
+    [
+     "Tak ada lembah kelam",
+     "Yang tak kulewati"
+    ],
+    [
+     "Tanpa hadirMu",
+     "Hatiku takkan gentar"
+    ],
+    [
+     "Sbab kutau tanganMu yang menopangku",
+     "Kaulah Yesus Kaulah Tuhan"
+    ],
+    [
+     "Hanya Kau kupercaya",
+     "Kaulah Yesus Kaulah Tuhan"
+    ],
+    [
+     "Harapan hidupku"
+    ]
+   ],
+   "tags": [
+    "verse1",
+    "",
+    "verse2",
+    "",
+    "chorus1",
+    "",
+    "",
+    "chorus2",
+    "",
+    "",
+    "bridge",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794569431061,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
