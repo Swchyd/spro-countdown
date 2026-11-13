@@ -16207,13 +16207,23 @@
       ".",
       "Perpanjang PAW",
       ".",
-      "Ulangi lagu"
+      "Ulangi lagu",
+      "."
+     ],
+     "notes": []
+    },
+    {
+     "key": "_2",
+     "tag": "",
+     "lines": [
+      "Ps kevin pake mic singer"
      ],
      "notes": []
     }
    ],
    "order": [
-    "_1"
+    "_1",
+    "_2"
    ],
    "slides": [
     [
@@ -16225,10 +16235,15 @@
      "."
     ],
     [
-     "Ulangi lagu"
+     "Ulangi lagu",
+     "."
+    ],
+    [
+     "Ps kevin pake mic singer"
     ]
    ],
    "tags": [
+    "",
     "",
     "",
     ""
@@ -16236,11 +16251,12 @@
    "notes": [
     "",
     "",
+    "",
     ""
    ],
    "perSlide": 2,
-   "version": 8,
-   "updatedAt": 1793496456425,
+   "version": 9,
+   "updatedAt": 1794576971651,
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
