@@ -20057,6 +20057,116 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mwfvgy5u7x17",
+   "title": "[IND] SEPERTI YANG KAU INGINI",
+   "authors": [
+    "natasha nikita"
+   ],
+   "author": "natasha nikita",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "verse 1",
+     "lines": [
+      "Bukan dengan barang fana",
+      "Kau membayar dosaku",
+      "Dengan darah yang maha",
+      "Tiada noda dan celah"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "verse 2",
+     "lines": [
+      "Bukan dengan emas perak",
+      "Kau menebus diriku",
+      "Oleh segenap kasih",
+      "Dan pengorbanan-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "chorus",
+     "lines": [
+      "Ku telah mati dan tinggalkan",
+      "Cara hidupku yang lama",
+      "Semuanya sia-sia",
+      "Dan tak berarti lagi",
+      "Hidup ini kuletakkan",
+      "Pada mezbah-Mu, ya Tuhan",
+      "Jadilah padaku seperti yang Kauingini"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus"
+   ],
+   "slides": [
+    [
+     "Bukan dengan barang fana",
+     "Kau membayar dosaku"
+    ],
+    [
+     "Dengan darah yang maha",
+     "Tiada noda dan celah"
+    ],
+    [
+     "Bukan dengan emas perak",
+     "Kau menebus diriku"
+    ],
+    [
+     "Oleh segenap kasih",
+     "Dan pengorbanan-Mu"
+    ],
+    [
+     "Ku telah mati dan tinggalkan",
+     "Cara hidupku yang lama"
+    ],
+    [
+     "Semuanya sia-sia",
+     "Dan tak berarti lagi"
+    ],
+    [
+     "Hidup ini kuletakkan",
+     "Pada mezbah-Mu, ya Tuhan"
+    ],
+    [
+     "Jadilah padaku seperti yang Kauingini"
+    ]
+   ],
+   "tags": [
+    "verse 1",
+    "",
+    "verse 2",
+    "",
+    "chorus",
+    "",
+    "",
+    ""
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794628500511,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
