@@ -20274,11 +20274,13 @@
     ""
    ],
    "perSlide": 2,
-   "version": 1,
-   "updatedAt": 1794640898782,
+   "version": 2,
+   "updatedAt": 1794640949833,
    "updatedBy": "Lid",
    "lastUsed": 0,
-   "hidden": false
+   "hidden": true,
+   "deletedAt": 1794640949833,
+   "deletedBy": "Lid"
   }
  ],
  "setlists": [
