@@ -20315,42 +20315,16 @@
    ],
    "updatedAt": 1794578320626,
    "updatedBy": "Lid"
+  },
+  {
+   "id": "sl_mwfvaj08s57m",
+   "name": "Setlist 14/11",
+   "entries": [],
+   "updatedAt": 1794628201634,
+   "updatedBy": "Lid"
   }
  ],
- "setlist": [
-  {
-   "id": "s_mtedzln2rs8z",
-   "ms": 0
-  },
-  {
-   "id": "s_mw929yiddsk7",
-   "ms": 0
-  },
-  {
-   "id": "s_mw931grm87tz",
-   "ms": 0
-  },
-  {
-   "id": "s_mw939hb6lbck",
-   "ms": 0
-  },
-  {
-   "id": "s_mw93rxa3h1tp",
-   "ms": 0
-  },
-  {
-   "id": "s_mwevpdwjgr0z",
-   "ms": 0
-  },
-  {
-   "id": "s_mvx3sia5wpdf",
-   "ms": 0
-  },
-  {
-   "id": "s_mwewawb7qubf",
-   "ms": 0
-  }
- ],
- "setlistAt": 1794578320626,
+ "setlist": [],
+ "setlistAt": 1794628201634,
  "setlistBy": "Lid"
 }
