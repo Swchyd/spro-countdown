@@ -20167,6 +20167,118 @@
    "updatedBy": "Lid",
    "lastUsed": 0,
    "hidden": false
+  },
+  {
+   "id": "s_mwg2uozzi2wy",
+   "title": "[IND] KUPERSEMBAHKAN HIDUPKU",
+   "authors": [
+    "Maria Shandi"
+   ],
+   "author": "Maria Shandi",
+   "sections": [
+    {
+     "key": "verse 1",
+     "tag": "Verse 1",
+     "lines": [
+      "Ini aku, s'mua milikku",
+      "Kuserahkan pada-Mu Tuhan",
+      "Penyesalan dan kebanggaan",
+      "Suka dan duka, s'mua kuserahkan"
+     ],
+     "notes": []
+    },
+    {
+     "key": "verse 2",
+     "tag": "Verse 2",
+     "lines": [
+      "Yang t'lah lalu, yang 'kan datang",
+      "Hasrat dan harapan yang terbayang",
+      "Masa depan dan rencanaku",
+      "S'mua kuserahkan dalam tangan-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "chorus",
+     "tag": "Chorus",
+     "lines": [
+      "Kupersembahkan hidupku kepada-Mu Tuhan",
+      "'Tuk kemuliaan-Mu",
+      "Kuberikan hidup ini s'bagai persembahan",
+      "Yang berkenan pada-Mu"
+     ],
+     "notes": []
+    },
+    {
+     "key": "outro",
+     "tag": "Outro",
+     "lines": [
+      "Kuberikan hidupku",
+      "Kepada-Mu Tuhanku"
+     ],
+     "notes": []
+    }
+   ],
+   "order": [
+    "verse 1",
+    "verse 2",
+    "chorus",
+    "outro"
+   ],
+   "slides": [
+    [
+     "Ini aku, s'mua milikku",
+     "Kuserahkan pada-Mu Tuhan"
+    ],
+    [
+     "Penyesalan dan kebanggaan",
+     "Suka dan duka, s'mua kuserahkan"
+    ],
+    [
+     "Yang t'lah lalu, yang 'kan datang",
+     "Hasrat dan harapan yang terbayang"
+    ],
+    [
+     "Masa depan dan rencanaku",
+     "S'mua kuserahkan dalam tangan-Mu"
+    ],
+    [
+     "Kupersembahkan hidupku kepada-Mu Tuhan",
+     "'Tuk kemuliaan-Mu"
+    ],
+    [
+     "Kuberikan hidup ini s'bagai persembahan",
+     "Yang berkenan pada-Mu"
+    ],
+    [
+     "Kuberikan hidupku",
+     "Kepada-Mu Tuhanku"
+    ]
+   ],
+   "tags": [
+    "Verse 1",
+    "",
+    "Verse 2",
+    "",
+    "Chorus",
+    "",
+    "Outro"
+   ],
+   "notes": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "perSlide": 2,
+   "version": 1,
+   "updatedAt": 1794640898782,
+   "updatedBy": "Lid",
+   "lastUsed": 0,
+   "hidden": false
   }
  ],
  "setlists": [
