@@ -20319,12 +20319,22 @@
   {
    "id": "sl_mwfvanncl123",
    "name": "MSJ 1 14 Nov",
-   "entries": [],
-   "updatedAt": 1794628242910,
+   "entries": [
+    {
+     "id": "s_mu83ykdzokkd",
+     "ms": 0
+    }
+   ],
+   "updatedAt": 1794628326515,
    "updatedBy": "Lid"
   }
  ],
- "setlist": [],
- "setlistAt": 1794628242910,
+ "setlist": [
+  {
+   "id": "s_mu83ykdzokkd",
+   "ms": 0
+  }
+ ],
+ "setlistAt": 1794628326515,
  "setlistBy": "Lid"
 }
